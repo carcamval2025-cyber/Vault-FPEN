@@ -1,0 +1,17 @@
+# Estado de UI de Obsidian (personal, cambia todo el tiempo, no aporta nada versionado)
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/workspace-mobile.json.bak
+
+# Codigo de los plugins de la comunidad: Obsidian lo vuelve a descargar
+# automaticamente a partir de .obsidian/community-plugins.json.
+# Se conserva cada data.json (tu configuracion real de cada plugin).
+.obsidian/plugins/*/main.js
+.obsidian/plugins/*/styles.css
+.obsidian/plugins/*/manifest.json
+
+# Papelera local de Obsidian
+.trash/
+
+# Basura del sistema operativo
+.DS_Store
