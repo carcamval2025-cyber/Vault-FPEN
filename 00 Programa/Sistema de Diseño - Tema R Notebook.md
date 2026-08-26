@@ -79,6 +79,27 @@ R no puede ejecutarse de forma confiable con JavaScript vanilla. Dos caminos vá
 - Responsive.
 - Textareas editables con progreso en memoria de JS (sin `localStorage`).
 
+## Identidad visual del sitio
+
+Dirección aprobada por Carlos el 26 de agosto de 2026: un prompt de consola conectado a barras de datos por una órbita de aprendizaje. La marca resume programación, análisis y progresión sin copiar el logotipo oficial de R.
+
+- **Wordmark maestro para fondo oscuro:** `docs/assets/brand/fpen-logo.svg`. El texto exacto se compone de forma controlada; no se genera con IA.
+- **Favicon y símbolo compacto:** `docs/assets/brand/fpen-favicon.svg`. Se usa en el índice y en cada material publicado.
+- **Ilustración del hero:** `docs/assets/brand/fpen-hero-data-lab.svg`. Es decorativa, transparente y reutiliza solo los tokens existentes.
+- **Previews raster:** `fpen-logo-preview.png` y `fpen-favicon-256.png`, ambos con canal alfa real. Los SVG son siempre la fuente editable.
+
+ImageGen se usa para exploración de composición, no como fuente del wordmark ni del texto final. Toda salida raster candidata debe verificarse por formato y alfa antes de integrarse; una cuadrícula visible no demuestra transparencia real.
+
+### Serie visual del índice
+
+El índice utiliza tres ilustraciones editoriales generadas con ImageGen y optimizadas como WebP de 960×640:
+
+- `fpen-programar.webp` — consola, objetos y vectores.
+- `fpen-analizar.webp` — tabla, transformación y patrones.
+- `fpen-comunicar.webp` — verificación, informe y presentación.
+
+Se consumen como una secuencia conceptual, no como decoración aislada. Los títulos y explicaciones permanecen en HTML; las imágenes no contienen texto y siempre llevan `alt` específico, dimensiones declaradas y carga diferida.
+
 ## Higiene anti-AI-slop (checklist para cada sesión nueva)
 
 Reglas destiladas de un archivo personal de skills de diseño (`design-taste-frontend`, `high-end-visual-design`, `impeccable`), filtradas a lo *register-agnostic* — la mayoría de esas skills están pensadas para landing pages de marketing (React/Tailwind/GSAP), un registro distinto al de este curso, así que **no** se adoptaron reglas que entrarían en conflicto con este documento (ban a serifs, ban a secciones numeradas, bento grids, etc.). Solo lo universal:

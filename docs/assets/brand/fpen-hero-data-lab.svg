@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 470" role="img" aria-labelledby="title desc">
+  <title id="title">Laboratorio de datos FPEN</title>
+  <desc id="desc">Una órbita conecta una consola, una tabla, barras y una curva de análisis.</desc>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="350" cy="250" r="103" stroke="#4c9aff" stroke-opacity=".14" stroke-width="2" stroke-dasharray="4 12"/>
+    <circle cx="350" cy="250" r="58" stroke="#2dd4bf" stroke-opacity=".18" stroke-width="2" stroke-dasharray="3 10"/>
+    <path d="M82 324C101 397 218 426 346 418C480 410 572 354 559 279" stroke="#4c9aff" stroke-width="8"/>
+    <path d="M559 279C554 246 541 229 516 217" stroke="#a78bfa" stroke-width="8"/>
+    <path d="M82 324C70 277 90 229 129 207L208 160" stroke="#4c9aff" stroke-width="8"/>
+    <path d="M442 82C489 55 552 77 555 132" stroke="#2dd4bf" stroke-width="8"/>
+    <path d="M217 163L250 130" stroke="#4c9aff" stroke-width="5"/>
+    <path d="M443 82L410 102" stroke="#2dd4bf" stroke-width="5"/>
+  </g>
+  <g>
+    <circle cx="82" cy="324" r="11" fill="#4c9aff"/>
+    <circle cx="208" cy="160" r="9" fill="#4c9aff"/>
+    <circle cx="442" cy="82" r="10" fill="#2dd4bf"/>
+    <circle cx="516" cy="217" r="10" fill="#a78bfa"/>
+    <circle cx="559" cy="279" r="11" fill="#4c9aff"/>
+    <circle cx="346" cy="418" r="10" fill="#a78bfa"/>
+  </g>
+  <g transform="translate(93 262)">
+    <rect width="126" height="82" rx="18" fill="#111a30" stroke="#edf1fa" stroke-opacity=".12"/>
+    <path d="M24 23L43 41L24 59" fill="none" stroke="#edf1fa" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M50 61H76" fill="none" stroke="#edf1fa" stroke-width="7" stroke-linecap="round"/>
+    <rect x="82" y="46" width="8" height="18" rx="3" fill="#4c9aff"/>
+    <rect x="96" y="36" width="8" height="28" rx="3" fill="#2dd4bf"/>
+  </g>
+  <g transform="translate(226 72)">
+    <rect width="190" height="126" rx="18" fill="#111a30" stroke="#edf1fa" stroke-opacity=".72" stroke-width="3"/>
+    <path d="M0 38H190M61 38V126M126 38V126M0 80H190" fill="none" stroke="#edf1fa" stroke-opacity=".42" stroke-width="2"/>
+    <rect x="18" y="53" width="27" height="8" rx="4" fill="#4c9aff"/>
+    <rect x="80" y="53" width="30" height="8" rx="4" fill="#2dd4bf"/>
+    <rect x="145" y="94" width="27" height="8" rx="4" fill="#4c9aff"/>
+    <rect x="18" y="95" width="27" height="8" rx="4" fill="#edf1fa" fill-opacity=".8"/>
+  </g>
+  <g transform="translate(423 126)">
+    <path d="M0 137H154" fill="none" stroke="#4c9aff" stroke-width="5" stroke-linecap="round"/>
+    <rect x="18" y="77" width="28" height="60" rx="9" fill="#4c9aff"/>
+    <rect x="61" y="50" width="28" height="87" rx="9" fill="#2dd4bf"/>
+    <rect x="104" y="15" width="28" height="122" rx="9" fill="#edf1fa"/>
+  </g>
+  <g transform="translate(286 278)">
+    <path d="M0 77C52 70 85 44 119 49C153 54 174 23 218 15" fill="none" stroke="#2dd4bf" stroke-width="6"/>
+    <path d="M0 77V98M68 57V98M119 49V98M166 34V98M218 15V98" fill="none" stroke="#a78bfa" stroke-opacity=".7" stroke-width="2" stroke-dasharray="5 7"/>
+    <circle cx="0" cy="77" r="7" fill="#a78bfa"/>
+    <circle cx="68" cy="57" r="7" fill="#2dd4bf"/>
+    <circle cx="119" cy="49" r="7" fill="#2dd4bf"/>
+    <circle cx="166" cy="34" r="7" fill="#2dd4bf"/>
+    <circle cx="218" cy="15" r="7" fill="#2dd4bf"/>
+  </g>
+</svg>

@@ -40,7 +40,7 @@ SORT fecha DESC
 
 ## Estado actual
 
-Todavía no hay entradas — este vault se creó antes del primer material del curso, así que no ha habido oportunidad de que Carlos reaccione a nada todavía. La primera vez que dé una opinión sobre un material generado (o sobre este mismo vault), esa es la primera entrada.
+Ya existe feedback directo. Entrada más reciente: [[2026-08-26 - Aprobación de identidad visual FPEN]]. El historial completo se mantiene en `03 Aprendizaje del Agente/Feedback/`.
 
 ## Notas relacionadas
 

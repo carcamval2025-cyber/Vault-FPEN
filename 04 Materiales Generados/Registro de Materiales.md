@@ -13,7 +13,7 @@ Tabla de seguimiento de cada archivo `.html` generado para el curso (`FPEN_Seman
 
 | Semana | Archivo | Fecha | Estado | Bitácora | Feedback |
 |---|---|---|---|---|---|
-| 01 | `FPEN_Semana01_R_Como_Herramienta_Para_Pensar.html` | 2026-08-26 | `borrador` | [[2026-08-26 - Primer material HTML (Semana 01)]] | *(pendiente — Carlos aún no lo revisa)* |
+| 01 | `FPEN_Semana01_R_Como_Herramienta_Para_Pensar.html` | 2026-08-26 | `borrador` | [[2026-08-26 - Primer material HTML (Semana 01)]] | [[2026-08-26 - Aprobación de identidad visual FPEN]] *(aprobación visual; revisión completa pendiente)* |
 
 **Estado** usa siempre uno de: `borrador` · `revisado` · `aprobado` · `en uso en clase`.
 
@@ -35,7 +35,7 @@ SORT numero ASC
 
 ## Estándar de calidad de referencia
 
-`FPEN_Semana01_R_Como_Herramienta_Para_Pensar.html` (26 de agosto de 2026, tras tres pases: contenido inicial, curación técnica anti-AI-slop, y elevación visual/composición) — ver detalle en [[Sistema de Diseño - Tema R Notebook]] y en [[2026-08-26 - Elevación visual (tercer pase) y multi-material por semana]]. Estado `borrador`: cumple todas las reglas del documento maestro (verificado con capturas de pantalla, prueba de interacción y revisión automática de dependencias externas), pero todavía no lo revisa Carlos ni se usa en clase — pasa a `revisado`/`aprobado` cuando eso ocurra.
+`FPEN_Semana01_R_Como_Herramienta_Para_Pensar.html` (26 de agosto de 2026, tras tres pases: contenido inicial, curación técnica anti-AI-slop, y elevación visual/composición) — ver detalle en [[Sistema de Diseño - Tema R Notebook]] y en [[2026-08-26 - Elevación visual (tercer pase) y multi-material por semana]]. Estado `borrador`: cumple todas las reglas del documento maestro (verificado con capturas de pantalla, prueba de interacción y revisión automática de dependencias externas). Carlos aprobó la nueva identidad visual del sitio, pero la revisión completa del material y su uso en clase siguen pendientes; pasa a `revisado`/`aprobado` cuando eso ocurra.
 
 ## Publicación (GitHub Pages)
 
@@ -43,6 +43,7 @@ Desde el 26 de agosto de 2026, cada material publicado también vive en `docs/` 
 
 - `docs/index.html` — índice central de las 12 semanas (mismo Tema "R Notebook"), con Semana 01 enlazada y 02-12 marcadas "Próxima".
 - `docs/semana-NN/index.html` — copia curada de cada material semanal, ya pasada por el [[Sistema de Diseño - Tema R Notebook|checklist de curación]].
+- `docs/assets/brand/` — identidad compartida del sitio: logo, favicon, ilustración del hero, previews raster y la serie visual “Programar · Analizar · Comunicar”. Registro → [[2026-08-26 - Serie visual Programar Analizar Comunicar]].
 
 Cada semana nueva se agrega igual: su carpeta `docs/semana-NN/` + una tarjeta nueva en `docs/index.html` (cambiar su badge de "Próxima" a "Disponible" y agregar el `href`). **Si una semana tiene más de un material**, usar `docs/semana-NN-a/`, `docs/semana-NN-b/` (etc.) para cada uno, y mostrar una tarjeta por material en el índice — agrupadas visualmente bajo el mismo número de semana, cada una con su propio título y estado.
 
