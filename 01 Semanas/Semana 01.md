@@ -43,6 +43,8 @@ Tasas de crecimiento, variaciones porcentuales, ingresos/costos/utilidad, índic
 
 `<-` (no `=`) para asignar; `snake_case` en nombres de objetos; comentarios con `#` explicando el *por qué*; espacios alrededor de operadores (`x <- 5`, no `x<-5`).
 
+Fuente completa de estas reglas (con ejemplos correctos/incorrectos) → [[R4DS - Cap 4 - Flujo de Trabajo, Estilo de Código]]. No es la lectura asignada de esta semana (esa es el Cap. 2), pero es de donde vienen estas reglas de estilo.
+
 ## Estado del material
 
 - [ ] Guía de Estudio
@@ -58,4 +60,4 @@ Registro completo → [[Registro de Materiales]]
 
 ## Notas relacionadas
 
-[[Mapa Curricular]] · [[Semana 02]] · [[Proyecto Grupal]]
+[[Mapa Curricular]] · [[Semana 02]] · [[Proyecto Grupal]] · [[R4DS - Cap 4 - Flujo de Trabajo, Estilo de Código]]
