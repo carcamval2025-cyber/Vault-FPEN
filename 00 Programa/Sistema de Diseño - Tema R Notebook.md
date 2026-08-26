@@ -79,9 +79,24 @@ R no puede ejecutarse de forma confiable con JavaScript vanilla. Dos caminos vá
 - Responsive.
 - Textareas editables con progreso en memoria de JS (sin `localStorage`).
 
+## Higiene anti-AI-slop (checklist para cada sesión nueva)
+
+Reglas destiladas de un archivo personal de skills de diseño (`design-taste-frontend`, `high-end-visual-design`, `impeccable`), filtradas a lo *register-agnostic* — la mayoría de esas skills están pensadas para landing pages de marketing (React/Tailwind/GSAP), un registro distinto al de este curso, así que **no** se adoptaron reglas que entrarían en conflicto con este documento (ban a serifs, ban a secciones numeradas, bento grids, etc.). Solo lo universal:
+
+- **Cero guiones largos (—)** en el texto visible. Es la señal de IA más citada en estas skills. Reescribir con coma, dos puntos, punto y seguido o punto medio, según el contexto de cada frase — nunca con un reemplazo automático ciego.
+- **`@media (prefers-reduced-motion: reduce)`** obligatorio en todo archivo con animaciones (fade-in, hover, transiciones). Debe declararse **al final** de la hoja de estilos, no al inicio — si no, pierde la cascada contra reglas posteriores con la misma especificidad.
+- **Animaciones GPU-safe**: animar solo `transform` y `opacity`, nunca `width`/`height`/`top`/`left` (ej. la barra de progreso usa `transform:scaleX()`, no `width`).
+- **Contraste explícito en `::placeholder`** de cualquier textarea/input — no depender del gris por defecto del navegador.
+- **Límite de ancho de línea** en prosa (`max-width` en `ch`, ~65–75) para que los párrafos no corran de borde a borde en pantallas anchas.
+- **Escala de radios de borde limitada** (3–4 valores como máximo, vía variables CSS) en vez de valores sueltos repartidos por todo el archivo.
+- **Ojo con los hijos de CSS Grid con `white-space:pre`** (bloques de código): pueden desbordar su celda en móvil por el `min-width:auto` por defecto — fijar `min-width:0` explícito.
+- **Bordes laterales de color como "acento" están señalados como patrón genérico** — si se necesita codificación semántica por color en una tarjeta, preferir una barra superior degradada (como `.card::before`) sobre un `border-left` plano.
+
+Lo que se decidió **no** tocar y por qué: la paleta de colores de este documento ya evita las dos alertas más citadas contra "paletas de IA" (el morado por defecto en todo, y la paleta beige+bronce "premium-consumer"), así que sus valores hex se mantienen fijos — la mejora de calidad se aplica a nivel de disciplina de tokens (arriba), no de color. Igual se mantiene la tipografía Fraunces, el grain texture con `feTurbulence` y las secciones numeradas 01–09, aunque skills genéricas los señalen como "Tell": aquí son requisitos deliberados de este documento, no defaults perezosos. Detalle completo del primer pase de auditoría en [[2026-08-26 - Primer material HTML (Semana 01)]].
+
 ## Estándar de calidad de referencia
 
-Establecido el 26 de agosto de 2026: **`FPEN_Semana01_R_Como_Herramienta_Para_Pensar.html`** (carpeta del curso, fuera del vault — registro completo en [[Registro de Materiales]] y en [[2026-08-26 - Primer material HTML (Semana 01)]]). Se construyó combinando varias herramientas de diseño (frontend-design, ui-ux-pro-max, principios visuales de canvas-design) **dentro** de la paleta y tipografía ya fijas de este documento, no reemplazándolas — ese es el patrón a repetir: usar herramientas de diseño para elevar la ejecución (jerarquía, composición, motion, pulido), nunca para renegociar el sistema de marca del curso.
+Establecido el 26 de agosto de 2026: **`FPEN_Semana01_R_Como_Herramienta_Para_Pensar.html`** (carpeta del curso, fuera del vault — registro completo en [[Registro de Materiales]] y en [[2026-08-26 - Primer material HTML (Semana 01)]]). Se construyó combinando varias herramientas de diseño (frontend-design, ui-ux-pro-max, principios visuales de canvas-design) **dentro** de la paleta y tipografía ya fijas de este documento, no reemplazándolas, y luego se pasó por la checklist de higiene anti-AI-slop de arriba — ese es el patrón a repetir: usar herramientas de diseño para elevar la ejecución (jerarquía, composición, motion, pulido) y aplicar higiene register-agnostic, nunca para renegociar el sistema de marca del curso.
 
 Cualquier sesión nueva debe compararse contra este archivo antes de darse por terminada.
 
