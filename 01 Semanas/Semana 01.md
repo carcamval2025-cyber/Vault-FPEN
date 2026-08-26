@@ -3,7 +3,7 @@ tags: [semana, semana-01]
 numero: 1
 r4ds_cap: "Cap. 2 (Workflow: basics)"
 fase_proyecto: "Formación de equipos, elección de tema y datos"
-estado: "material no creado"
+estado: "borrador"
 ---
 
 # Semana 01 — ¿Qué puedo hacer con R y cómo le doy instrucciones?
@@ -29,6 +29,8 @@ Abrir un script, crear objetos, hacer cálculos, usar funciones.
 
 Asignación `<-`, tipos de datos (numeric, character, logical), operadores aritméticos y de comparación, `c()` para vectores, sintaxis básica de llamada a función `nombre_funcion(argumento)`.
 
+Ampliado al construir el material (26 de agosto): `class()`, `length()`, `sum()`, `mean()`, `round(x, digits =)`, y `?nombre` para pedir ayuda — todas funciones R base razonables para introducir junto con vectores y "funciones y argumentos", ninguna es de `dplyr`/`ggplot2`. Ver [[2026-08-26 - Primer material HTML (Semana 01)]] para el razonamiento completo.
+
 **Regla estricta:** solo R base. Nada de `dplyr`/`ggplot2` todavía, aunque Carlos ya tenga RStudio instalado.
 
 ## Acumulado permitido hasta esta semana
@@ -47,16 +49,16 @@ Fuente completa de estas reglas (con ejemplos correctos/incorrectos) → [[R4DS 
 
 ## Estado del material
 
-- [ ] Guía de Estudio
-- [ ] Laboratorio
-- [ ] R Playground
-- [ ] Cheat Sheet
+- [x] Guía de Estudio
+- [x] Laboratorio
+- [x] R Playground
+- [x] Cheat Sheet
 
-Registro completo → [[Registro de Materiales]]
+Las 4 pestañas están en un solo archivo: `FPEN_Semana01_R_Como_Herramienta_Para_Pensar.html` (carpeta del curso, fuera del vault). Estado `borrador` — falta revisión de Carlos. Registro completo → [[Registro de Materiales]]
 
 ## Notas de esta sesión
 
-*(vacío — se llena después de crear el material, con enlace a la entrada correspondiente en [[Bitácora de Aprendizaje]])*
+**2026-08-26:** primer material `.html` del curso, ahora estándar de calidad de referencia (ver [[Sistema de Diseño - Tema R Notebook]]). Detalle completo de la sesión → [[2026-08-26 - Primer material HTML (Semana 01)]].
 
 ## Notas relacionadas
 

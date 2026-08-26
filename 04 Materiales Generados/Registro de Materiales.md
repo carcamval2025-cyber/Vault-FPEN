@@ -11,7 +11,7 @@ Tabla de seguimiento de cada archivo `.html` generado para el curso (`FPEN_Seman
 
 | Semana | Archivo | Fecha | Estado | Bitácora | Feedback |
 |---|---|---|---|---|---|
-| — | *(sin materiales todavía)* | — | — | — | — |
+| 01 | `FPEN_Semana01_R_Como_Herramienta_Para_Pensar.html` | 2026-08-26 | `borrador` | [[2026-08-26 - Primer material HTML (Semana 01)]] | *(pendiente — Carlos aún no lo revisa)* |
 
 **Estado** usa siempre uno de: `borrador` · `revisado` · `aprobado` · `en uso en clase`.
 
@@ -33,7 +33,7 @@ SORT numero ASC
 
 ## Estándar de calidad de referencia
 
-Todavía no existe (ver [[Home]] y [[Sistema de Diseño - Tema R Notebook]]). Cuando la primera sesión (idealmente Semana 1) se construya y apruebe, enlazarla aquí como el archivo contra el que se comparan todas las siguientes.
+`FPEN_Semana01_R_Como_Herramienta_Para_Pensar.html` (26 de agosto de 2026) — ver detalle en [[Sistema de Diseño - Tema R Notebook]]. Estado `borrador`: cumple todas las reglas del documento maestro (verificado con capturas de pantalla y revisión automática de dependencias externas), pero todavía no lo revisa Carlos ni se usa en clase — pasa a `revisado`/`aprobado` cuando eso ocurra.
 
 ## Notas relacionadas
 

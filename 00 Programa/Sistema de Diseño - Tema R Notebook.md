@@ -81,7 +81,9 @@ R no puede ejecutarse de forma confiable con JavaScript vanilla. Dos caminos vá
 
 ## Estándar de calidad de referencia
 
-Todavía no existe una sesión de referencia establecida (ver [[Home]]). La primera sesión construida sobre este sistema (idealmente Semana 1) debe tratarse como el estándar — cuando exista, enlazarla aquí y en [[Registro de Materiales]].
+Establecido el 26 de agosto de 2026: **`FPEN_Semana01_R_Como_Herramienta_Para_Pensar.html`** (carpeta del curso, fuera del vault — registro completo en [[Registro de Materiales]] y en [[2026-08-26 - Primer material HTML (Semana 01)]]). Se construyó combinando varias herramientas de diseño (frontend-design, ui-ux-pro-max, principios visuales de canvas-design) **dentro** de la paleta y tipografía ya fijas de este documento, no reemplazándolas — ese es el patrón a repetir: usar herramientas de diseño para elevar la ejecución (jerarquía, composición, motion, pulido), nunca para renegociar el sistema de marca del curso.
+
+Cualquier sesión nueva debe compararse contra este archivo antes de darse por terminada.
 
 ## Notas relacionadas
 
