@@ -4,10 +4,10 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>FPEN · Semana 01: R como herramienta para pensar</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='2' y='2' width='20' height='20' rx='5' fill='%230a0f1c' stroke='%234c9aff' stroke-width='1.6'/%3E%3Cpath d='M8 16V8m4 8V8m4 8v-4a2 2 0 0 0-2-2h-2' stroke='%234c9aff' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,800&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;1,7..72,400&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='2' y='2' width='20' height='20' rx='5' fill='%230a0f1c' stroke='%234c9aff' stroke-width='1.6'/%3E%3Cpath d='M8 16V8m4 8V8m4 8v-4a2 2 0 0 0-2-2h-2' stroke='%234c9aff' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E" />
 <style>
 /* ===================================================================
    FPEN. Semana 01. Tema "R Notebook"
@@ -140,6 +140,19 @@ main{ position:relative; z-index:var(--z-base); }
 .cycle-step.now{ color:var(--bg0); background:var(--blue); border-color:var(--blue); font-weight:600; }
 .cycle-arrow{ color:var(--ts); padding:0 6px; opacity:.6; }
 
+/* diagrama orbital del ciclo, versión gráfica del hero principal (decorativo, ecos la marca del curso) */
+.hero-diagram{
+  position:absolute; right:clamp(8px,3vw,48px); top:50%; transform:translateY(-50%);
+  width:clamp(240px,24vw,340px); height:clamp(240px,24vw,340px); pointer-events:none;
+}
+@media (max-width:1080px){ .hero-diagram{ display:none; } }
+.hero-diagram .node-ring{ fill:none; stroke:var(--border-strong); stroke-width:1; stroke-dasharray:2 6; stroke-linecap:round; }
+.hero-diagram .node-arc{ fill:none; stroke:var(--teal); stroke-width:1.5; opacity:.55; stroke-linecap:round; }
+.hero-diagram .node{ fill:var(--bg1); stroke:var(--border-strong); stroke-width:1.5; }
+.hero-diagram .node.now{ fill:var(--blue); stroke:var(--blue); }
+.hero-diagram text{ font-family:var(--font-mono); font-size:10px; fill:var(--ts); }
+.hero-diagram .node.now ~ text, .hero-diagram text.now-label{ fill:var(--bg0); font-weight:700; }
+
 /* ---------- sub nav within a tab ---------- */
 .subnav{
   position:sticky; top:57px; z-index:var(--z-subnav); display:flex; gap:4px; flex-wrap:wrap;
@@ -152,9 +165,20 @@ main{ position:relative; z-index:var(--z-base); }
 }
 .subnav a:hover{ color:var(--tp); border-color:var(--border); }
 
-section.block{ padding:clamp(40px,6vw,64px) 0; border-bottom:1px solid var(--border); }
+section.block{
+  padding:clamp(40px,6vw,64px) 0; border-bottom:1px solid var(--border);
+  position:relative; isolation:isolate; counter-increment:blocknum;
+}
 section.block:last-of-type{ border-bottom:none; }
-.block-head{ display:flex; align-items:baseline; gap:14px; margin-bottom:28px; }
+/* numeral editorial de fondo por sección, ritmo visual recurrente en vez de bloques idénticos */
+section.block::before{
+  content:counter(blocknum, decimal-leading-zero);
+  position:absolute; left:clamp(-16px,-3.2vw,-38px); top:-.06em; z-index:-1;
+  font-family:var(--font-display); font-weight:800; font-size:clamp(4rem,9vw,7.2rem); line-height:1;
+  color:var(--tp); opacity:.035; pointer-events:none; user-select:none;
+}
+@media (max-width:900px){ section.block::before{ display:none; } }
+.block-head{ display:flex; align-items:baseline; gap:14px; margin-bottom:28px; position:relative; }
 .block-num{ font-family:var(--font-mono); color:var(--ts); font-size:.85rem; }
 .fade-in{ opacity:0; transform:translateY(14px); transition:opacity .6s cubic-bezier(0.16,1,0.3,1), transform .6s cubic-bezier(0.16,1,0.3,1); }
 .fade-in.in{ opacity:1; transform:translateY(0); }
@@ -162,7 +186,7 @@ section.block:last-of-type{ border-bottom:none; }
 /* ---------- concept cards ---------- */
 .grid-cards{ display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:16px; }
 .card{
-  position:relative; background:var(--bg1); border:1px solid var(--border); border-radius:var(--radius);
+  position:relative; background:linear-gradient(165deg, var(--bg2) 0%, var(--bg1) 60%); border:1px solid var(--border); border-radius:var(--radius);
   padding:22px 22px 20px; overflow:hidden; transition:transform .22s cubic-bezier(0.16,1,0.3,1), border-color .22s cubic-bezier(0.16,1,0.3,1), box-shadow .22s cubic-bezier(0.16,1,0.3,1);
 }
 .card::before{
@@ -212,15 +236,22 @@ section.block:last-of-type{ border-bottom:none; }
 /* ---------- lab exercise ---------- */
 .progress-wrap{ margin:26px 0 6px; }
 .progress-label{ display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:.75rem; color:var(--ts); margin-bottom:7px; }
-.progress-track{ height:8px; border-radius:999px; background:var(--bg1); border:1px solid var(--border); overflow:hidden; }
+.progress-track{ position:relative; height:12px; border-radius:999px; background:var(--bg1); border:1px solid var(--border); overflow:hidden; }
 .progress-fill{
   height:100%; width:100%; transform:scaleX(0); transform-origin:left;
   background:linear-gradient(90deg, var(--blue), var(--teal));
   transition:transform .5s cubic-bezier(0.16,1,0.3,1); border-radius:var(--r-pill);
 }
+/* marcas de los 5 ejercicios sobre la barra, capa aparte para no interferir con el fill */
+.progress-track::after{
+  content:''; position:absolute; inset:0; pointer-events:none; z-index:1;
+  background-image:repeating-linear-gradient(90deg, var(--bg0) 0, var(--bg0) 2px, transparent 2px, transparent 20%);
+  background-size:100% 100%;
+  opacity:.9;
+}
 
 .exercise{
-  background:var(--bg1); border:1px solid var(--border); border-radius:var(--r-lg); padding:28px clamp(20px,3vw,32px);
+  background:linear-gradient(165deg, var(--bg2) 0%, var(--bg1) 45%); border:1px solid var(--border); border-radius:var(--r-lg); padding:28px clamp(20px,3vw,32px);
   margin-bottom:22px; position:relative; overflow:hidden;
 }
 .exercise::before{
@@ -281,7 +312,7 @@ textarea.answer::placeholder{ color:var(--ts); opacity:1; }
 
 /* ---------- playground ---------- */
 .pg-dataset{
-  background:var(--bg1); border:1px solid var(--border); border-radius:var(--r-lg); padding:20px 22px; margin:24px 0 32px;
+  background:linear-gradient(165deg, var(--bg2) 0%, var(--bg1) 55%); border:1px solid var(--border); border-radius:var(--r-lg); padding:20px 22px; margin:24px 0 32px;
 }
 .pg-dataset h3{ font-size:.95rem; font-family:var(--font-mono); text-transform:uppercase; letter-spacing:.04em; color:var(--teal); margin-bottom:12px; }
 table.dataset{ width:100%; border-collapse:collapse; font-family:var(--font-mono); font-size:.86rem; display:block; overflow-x:auto; }
@@ -303,7 +334,7 @@ table.dataset th{ color:var(--ts); font-weight:500; }
 
 /* ---------- cheat sheet ---------- */
 .cheat-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:16px; }
-.cheat-card{ background:var(--bg1); border:1px solid var(--border); border-radius:var(--r-lg); padding:20px 22px; }
+.cheat-card{ background:linear-gradient(165deg, var(--bg2) 0%, var(--bg1) 55%); border:1px solid var(--border); border-radius:var(--r-lg); padding:20px 22px; }
 .cheat-card h3{ font-size:.92rem; font-family:var(--font-mono); text-transform:uppercase; letter-spacing:.04em; color:var(--ts); margin-bottom:14px; }
 table.cheat{ width:100%; border-collapse:collapse; font-size:.86rem; }
 table.cheat td{ padding:6px 4px; border-bottom:1px solid var(--border); vertical-align:top; }
@@ -370,6 +401,34 @@ footer .foot-inner{ border-top:1px solid var(--border); padding-top:24px; displa
 
   <div class="hero">
     <div class="hero-grid" aria-hidden="true"></div>
+    <svg class="hero-diagram" viewBox="0 0 300 300" aria-hidden="true" focusable="false">
+      <circle class="node-ring" cx="150" cy="150" r="105"/>
+      <path class="node-arc" d="M150,45 A105,105 0 0,1 240.9,97.5"/>
+      <g>
+        <circle class="node now" cx="150" cy="45" r="15"/>
+        <text x="150" y="45" text-anchor="middle" dy=".35em" class="now-label">1</text>
+      </g>
+      <g>
+        <circle class="node" cx="240.9" cy="97.5" r="13"/>
+        <text x="240.9" y="97.5" text-anchor="middle" dy=".35em">2</text>
+      </g>
+      <g>
+        <circle class="node" cx="240.9" cy="202.5" r="13"/>
+        <text x="240.9" y="202.5" text-anchor="middle" dy=".35em">3</text>
+      </g>
+      <g>
+        <circle class="node" cx="150" cy="255" r="13"/>
+        <text x="150" y="255" text-anchor="middle" dy=".35em">4</text>
+      </g>
+      <g>
+        <circle class="node" cx="59.1" cy="202.5" r="13"/>
+        <text x="59.1" y="202.5" text-anchor="middle" dy=".35em">5</text>
+      </g>
+      <g>
+        <circle class="node" cx="59.1" cy="97.5" r="13"/>
+        <text x="59.1" y="97.5" text-anchor="middle" dy=".35em">6</text>
+      </g>
+    </svg>
     <div class="container hero-inner">
       <div class="chips">
         <span class="chip c-blue"><b>Semana 01</b></span>

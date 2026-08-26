@@ -71,8 +71,8 @@ R no puede ejecutarse de forma confiable con JavaScript vanilla. Dos caminos vá
 
 ## Formato de entrega
 
-- Un solo archivo `.html` por sesión, todo integrado en pestañas.
-- Nombre: `FPEN_Semana[NN]_[Titulo].html` (ej. `FPEN_Semana01_R_Como_Herramienta_Para_Pensar.html`).
+- Un solo archivo `.html` por sesión/material, todo integrado en pestañas. **Una semana puede tener más de un material** (por ejemplo, si hay más de una sesión de clase esa semana, o si un tema se divide en dos entregas) — no asumir una relación 1:1 entre semana y archivo.
+- Nombre: `FPEN_Semana[NN]_[Titulo].html` (ej. `FPEN_Semana01_R_Como_Herramienta_Para_Pensar.html`). Cuando una semana tiene más de un material, el `[Titulo]` de cada uno ya los distingue de forma natural (títulos distintos → nombres de archivo distintos); si dos materiales de la misma semana compartieran título, agregar un sufijo `a`/`b` al número de semana (`Semana01b`).
 - Offline salvo Google Fonts (y webR si se pidió explícitamente).
 - Sin librerías JS externas (nada de jQuery, Bootstrap, Chart.js, resaltado de sintaxis externo) — todo vanilla.
 - Íconos SVG inline, nunca Font Awesome ni emojis funcionales.
@@ -108,9 +108,22 @@ Checklist técnico, adaptado del archivo personal de skills de Carlos (`impeccab
 
 Registro completo de ambos pases (incluyendo por qué el bug del checkbox y los otros hallazgos no se detectaron en el primer pase) en [[2026-08-26 - Primer material HTML (Semana 01)]].
 
+## Elevación visual (26 de agosto de 2026, tercer pase — composición, no higiene)
+
+A diferencia de los dos pases anteriores (higiene técnica: accesibilidad, motion, contraste), este pase respondió a feedback subjetivo directo de Carlos ("el diseño no es el mejor de todos") sobre `FPEN_Semana01_R_Como_Herramienta_Para_Pensar.html`. Diagnóstico (vía capturas de pantalla de las 4 pestañas, revisadas con el framework de `design-critique`): el archivo cumplía todas las reglas técnicas pero se sentía plano y monótono — secciones numeradas 01-09 con el mismo patrón visual repetido sin variación de ritmo, tarjetas con relleno uniforme sin profundidad, y el hero sin un elemento gráfico propio (el "diagrama del ciclo" de este documento existía solo como fila de píldoras de texto, no como imagen). Mejoras aplicadas, **todas dentro de los tokens de color/tipografía ya fijos, sin agregar ninguno nuevo**:
+
+1. **Diagrama orbital del ciclo en el hero principal**: SVG decorativo (nodos 1-6 en círculo, arco activo entre el paso actual y el siguiente) posicionado junto al título, visible solo en escritorio ancho (≥1080px) para no competir con el texto en móvil, donde ya existe la fila de píldoras equivalente. Le da al hero una identidad gráfica real en vez de solo texto y un fondo de grid casi imperceptible.
+2. **Profundidad sutil en tarjetas** (`.card`, `.exercise`, `.cheat-card`, `.pg-dataset`): de relleno plano `var(--bg1)` a un degradado diagonal `var(--bg2)` → `var(--bg1)` de 165°, casi imperceptible pero suficiente para separar visualmente cada tarjeta del fondo de página en vez de fundirse con él.
+3. **Numeral editorial de fondo por sección** (solo pestaña Guía, las 9 secciones `section.block`): un contador CSS (`counter-increment`/`counter()`, sin tocar el HTML de cada sección) genera un numeral grande (hasta ~7rem) en Fraunces al `opacity:.035` detrás del encabezado de cada sección, colgando parcialmente en el margen izquierdo. Rompe la monotonía de "bloque tras bloque idéntico" con un motivo editorial recurrente, oculto en móvil (`max-width:900px`) para no estorbar en pantallas angostas.
+4. **Barra de progreso segmentada** en el Laboratorio: de una barra lisa de 8px a 12px con 4 marcas verticales (vía `repeating-linear-gradient` en una capa `::after` separada del relleno) que dividen visualmente los 5 ejercicios — refuerza la lectura de "voy en el ejercicio 2 de 5" que antes solo daba el porcentaje.
+
+**Gotcha técnico encontrado**: el numeral de fondo (punto 3) usa `position:absolute` + `z-index:-1` dentro de `section.block`, pero `position:relative` por sí solo **no crea un contexto de apilamiento** — sin `isolation:isolate` explícito en `section.block`, el numeral se pintaba por encima del contenido en vez de detrás (el orden de pintado de CSS pone los descendientes posicionados con `z-index:auto/0` *después* del contenido en flujo no posicionado, así que un simple `z-index` negativo sin contexto propio se escapa al ancestro de apilamiento más cercano). Se corrigió agregando `isolation:isolate` a `section.block`.
+
+**Verificación**: Playwright en escritorio (1440×900) y móvil (390×844) sin desbordamiento horizontal en ninguna pestaña, prueba de interacción completa (textarea → revelar → XP → checkbox por label) repetida y funcionando igual que antes de estos cambios, y prueba de `reducedMotion:'reduce'` (el `fade-in` sigue resolviendo a opacidad 1). También se regeneró `docs/semana-01/index.html` a partir del archivo corregido (reaplicando solo sus dos diferencias propias: favicon y enlace de vuelta al índice) y se verificó de nuevo contra un servidor HTTP local, no `file://` (ver [[2026-08-26 - Curación técnica (segundo pase) y publicación en GitHub Pages]] para por qué eso importa).
+
 ## Estándar de calidad de referencia
 
-Establecido el 26 de agosto de 2026: **`FPEN_Semana01_R_Como_Herramienta_Para_Pensar.html`** (carpeta del curso, fuera del vault — registro completo en [[Registro de Materiales]] y en [[2026-08-26 - Primer material HTML (Semana 01)]]). Se construyó combinando varias herramientas de diseño (frontend-design, ui-ux-pro-max, principios visuales de canvas-design) **dentro** de la paleta y tipografía ya fijas de este documento, no reemplazándolas, y luego se pasó por la checklist de higiene anti-AI-slop de arriba — ese es el patrón a repetir: usar herramientas de diseño para elevar la ejecución (jerarquía, composición, motion, pulido) y aplicar higiene register-agnostic, nunca para renegociar el sistema de marca del curso.
+Establecido el 26 de agosto de 2026, actualizado el mismo día tras el tercer pase: **`FPEN_Semana01_R_Como_Herramienta_Para_Pensar.html`** (carpeta del curso, fuera del vault — registro completo en [[Registro de Materiales]] y en [[2026-08-26 - Primer material HTML (Semana 01)]]). Se construyó combinando varias herramientas de diseño (frontend-design, ui-ux-pro-max, principios visuales de canvas-design) **dentro** de la paleta y tipografía ya fijas de este documento, no reemplazándolas, se pasó por la checklist de higiene anti-AI-slop de arriba, y finalmente por un pase de composición/ritmo visual (sección anterior) — ese es el patrón completo a repetir: elevar la ejecución (jerarquía, composición, motion, pulido) y aplicar higiene register-agnostic, nunca renegociar el sistema de marca del curso.
 
 Cualquier sesión nueva debe compararse contra este archivo antes de darse por terminada.
 
