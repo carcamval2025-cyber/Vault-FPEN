@@ -62,6 +62,21 @@ Nunca tipografías genéricas (Inter, Roboto, Arial, system-ui) para el display.
 3. **R Playground** — 4 fragmentos progresivos con SOLO funciones ya enseñadas hasta esa semana, dataset simulado con contexto económico, salida junto al código
 4. **Cheat Sheet** — compacto, vocabulario con badges, tabla de funciones de la semana, diagrama de la regla central, footer con bibliografía
 
+## Objetivo: la Guía debe poder sustituir la lectura (26 de agosto de 2026)
+
+Ambición explícita de Carlos, más alta que la de "Estructura de cada archivo de sesión" de arriba: la pestaña **Guía de Estudio** no es solo un resumen de apoyo antes o después de la lectura asignada de R4DS — la meta es que pueda funcionar como sustituto real de esa lectura, visualizando los mismos conceptos que el capítulo explica en prosa. No cambia la estructura de 4 pestañas ni ningún token de marca; cambia el nivel de exigencia de cada sección de concepto dentro de la Guía.
+
+Técnicas a aplicar por sección de concepto, en las 12 semanas (no solo donde ya se probó):
+
+1. **Diagramar el comportamiento invisible de R**, no solo el resultado. Cosas que R4DS explica con párrafos porque no se ven en el código (qué pasa al asignar con `<-`, por qué un vector es "una cosa" con varios valores, por qué una operación vectorizada ocurre elemento por elemento a la vez, por qué un data frame es columnas de vectores del mismo largo) necesitan su propio diagrama SVG inline (cajas, flechas, color semántico del documento) en vez de solo una frase. Misma técnica que las ilustraciones del libro, en el lenguaje visual propio de este curso — nunca copiar las ilustraciones originales de R4DS.
+2. **Transformaciones como antes/después**, no como código junto a su salida. `filter`, `mutate`, `group_by`+`summarise`, pivots, joins: mostrar una tabla antes → la operación → una tabla después, con filas o celdas resaltadas conectando ambas, para que la transformación se vea en vez de tener que simularse mentalmente leyendo el código.
+3. **Recorrido narrativo con pregunta real primero**, no definición aislada seguida de un ejemplo. Plantear la pregunta económica concreta, resolverla en 3-4 pasos con un cambio visual en cada paso, generalizar la regla al final — el mismo orden que usa el libro para dar ganas de seguir leyendo.
+4. **Interactividad honesta** donde el cálculo es simple: un "evaluador de juguete" en JS vanilla, restringido a las funciones ya vistas esa semana, que deje cambiar un valor y ver el resultado recalcularse en vivo. Sigue siendo sujeto a la regla de "Ejecución real vs. simulada" de abajo: se debe etiquetar explícitamente como simulación en JS, nunca como ejecución real de R.
+5. **Mapa conceptual propio de la semana**, distinto del ciclo global de 6 pasos que ya vive en el hero — un segundo visual, más pequeño, que muestre cómo se conectan entre sí los 4-6 conceptos de esa semana específica.
+6. **Verificar contra el capítulo real antes de llamarlo sustituto**: hoy el proyecto solo tiene subido el Capítulo 4 de R4DS (estilo de código), no los capítulos conceptuales que cada semana necesita según el mapa curricular. Antes de dar por buena una sección como "capaz de reemplazar la lectura", habría que poder compararla concepto por concepto contra el capítulo asignado real — pedirle a Carlos que suba los capítulos de R4DS correspondientes a la Knowledge del proyecto conforme se vayan necesitando, en vez de trabajar solo con paráfrasis general del libro (ya es regla existente en "Conexión con el libro" del programa maestro, aquí se vuelve más urgente).
+
+Piloto: se probó primero en una sola sección de la Guía de la Semana 01 antes de generalizarse a las demás secciones o semanas — ver [[2026-08-26 - Piloto de sustitución de lectura (Semana 01)]] para el resultado y qué se ajustó.
+
 ## Ejecución real vs. simulada en el R Playground
 
 R no puede ejecutarse de forma confiable con JavaScript vanilla. Dos caminos válidos, **nunca mezclados en el mismo archivo sin dejarlo explícito**:
@@ -78,27 +93,6 @@ R no puede ejecutarse de forma confiable con JavaScript vanilla. Dos caminos vá
 - Íconos SVG inline, nunca Font Awesome ni emojis funcionales.
 - Responsive.
 - Textareas editables con progreso en memoria de JS (sin `localStorage`).
-
-## Identidad visual del sitio
-
-Dirección aprobada por Carlos el 26 de agosto de 2026: un prompt de consola conectado a barras de datos por una órbita de aprendizaje. La marca resume programación, análisis y progresión sin copiar el logotipo oficial de R.
-
-- **Wordmark maestro para fondo oscuro:** `docs/assets/brand/fpen-logo.svg`. El texto exacto se compone de forma controlada; no se genera con IA.
-- **Favicon y símbolo compacto:** `docs/assets/brand/fpen-favicon.svg`. Se usa en el índice y en cada material publicado.
-- **Ilustración del hero:** `docs/assets/brand/fpen-hero-data-lab.svg`. Es decorativa, transparente y reutiliza solo los tokens existentes.
-- **Previews raster:** `fpen-logo-preview.png` y `fpen-favicon-256.png`, ambos con canal alfa real. Los SVG son siempre la fuente editable.
-
-ImageGen se usa para exploración de composición, no como fuente del wordmark ni del texto final. Toda salida raster candidata debe verificarse por formato y alfa antes de integrarse; una cuadrícula visible no demuestra transparencia real.
-
-### Serie visual del índice
-
-El índice utiliza tres ilustraciones editoriales generadas con ImageGen y optimizadas como WebP de 960×640:
-
-- `fpen-programar.webp` — consola, objetos y vectores.
-- `fpen-analizar.webp` — tabla, transformación y patrones.
-- `fpen-comunicar.webp` — verificación, informe y presentación.
-
-Se consumen como una secuencia conceptual, no como decoración aislada. Los títulos y explicaciones permanecen en HTML; las imágenes no contienen texto y siempre llevan `alt` específico, dimensiones declaradas y carga diferida.
 
 ## Higiene anti-AI-slop (checklist para cada sesión nueva)
 

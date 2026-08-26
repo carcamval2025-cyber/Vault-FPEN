@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,800&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;1,7..72,400&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
-<link rel="icon" href="../assets/brand/fpen-favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='2' y='2' width='20' height='20' rx='5' fill='%230a0f1c' stroke='%234c9aff' stroke-width='1.6'/%3E%3Cpath d='M8 16V8m4 8V8m4 8v-4a2 2 0 0 0-2-2h-2' stroke='%234c9aff' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E" />
 <style>
 /* ===================================================================
    FPEN. Semana 01. Tema "R Notebook"
@@ -209,6 +209,101 @@ section.block::before{
 .card.asym{ grid-column:span 2; }
 @media (max-width:640px){ .card.asym{ grid-column:span 1; } }
 
+/* ---------- diagrama de ambiente + evaluador de juguete (Objetos y asignación) ---------- */
+.env-diagram{ display:flex; align-items:stretch; gap:18px; margin:22px 0 18px; flex-wrap:wrap; }
+.env-panel{ flex:1 1 220px; min-width:220px; }
+.env-panel-label{ display:block; font-family:var(--font-mono); font-size:.78rem; color:var(--ts); margin-bottom:8px; }
+.env-panel-label code{ color:var(--tp); }
+.env-box{
+  background:linear-gradient(165deg, var(--bg2) 0%, var(--bg1) 60%); border:1px solid var(--border); border-radius:var(--r-lg);
+  padding:16px 18px; min-height:92px; display:flex; flex-direction:column; gap:10px; justify-content:center;
+}
+.env-box-filled{ border-color:rgba(76,154,255,.35); justify-content:flex-start; }
+.env-box-title{ font-family:var(--font-mono); font-size:.72rem; text-transform:uppercase; letter-spacing:.04em; color:var(--ts); }
+.env-box-hint{ text-transform:none; letter-spacing:0; }
+.env-empty{ font-family:var(--font-mono); font-size:.85rem; color:var(--ts); font-style:italic; opacity:.7; }
+.env-entry{
+  display:flex; align-items:center; gap:8px; font-family:var(--font-mono); font-size:.9rem;
+  background:var(--bg0); border:1px solid var(--border-strong); border-radius:var(--r-sm); padding:8px 12px; width:fit-content;
+  transition:background-color .5s cubic-bezier(0.16,1,0.3,1);
+}
+.env-entry.flash{ background-color:rgba(76,154,255,.22); transition-duration:.05s; }
+.env-entry-name{ color:var(--blue); }
+.env-entry-arrow{ color:var(--ts); }
+.env-entry-value{ color:var(--tp); font-weight:600; }
+.env-arrow{ display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; flex:0 0 auto; color:var(--teal); padding:4px; }
+.env-arrow-label{ font-family:var(--font-mono); font-size:.68rem; color:var(--ts); text-align:center; max-width:110px; }
+@media (max-width:760px){ .env-arrow{ transform:rotate(90deg); } .env-arrow-label{ transform:rotate(-90deg); max-width:140px; } }
+
+.toy-eval{
+  background:linear-gradient(165deg, var(--bg2) 0%, var(--bg1) 55%); border:1px dashed var(--border-strong); border-radius:var(--r-lg);
+  padding:20px 22px; margin:20px 0;
+}
+.toy-eval-head{ display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin-bottom:12px; }
+.toy-eval-flag{
+  font-family:var(--font-mono); font-size:.66rem; text-transform:uppercase; letter-spacing:.05em; color:var(--amber);
+  border:1px solid rgba(245,166,35,.4); padding:3px 9px; border-radius:999px; flex:none;
+}
+.toy-eval-head p{ margin:0; color:var(--ts); font-size:.9rem; }
+.toy-eval-controls{ display:flex; flex-wrap:wrap; align-items:flex-end; gap:12px; margin-bottom:14px; }
+.toy-eval-controls label{ display:block; font-family:var(--font-mono); font-size:.78rem; color:var(--ts); margin-bottom:6px; }
+.toy-eval-row{ display:flex; gap:8px; }
+#toyValue{
+  background:var(--bg0); color:var(--tp); border:1px solid var(--border-strong); border-radius:var(--r-sm);
+  padding:9px 12px; font-family:var(--font-mono); font-size:.92rem; width:140px;
+}
+#toyValue:focus{ border-color:var(--blue); }
+.toy-eval-btn{
+  appearance:none; border:1px solid var(--blue); background:var(--blue); color:var(--bg0); font-family:var(--font-body);
+  font-weight:600; font-size:.9rem; padding:9px 18px; border-radius:var(--r-sm); cursor:pointer; transition:all .18s cubic-bezier(0.16,1,0.3,1);
+}
+.toy-eval-btn:hover{ background:var(--teal); border-color:var(--teal); }
+.toy-eval-console{
+  background:#060a13; border:1px solid var(--border); border-radius:var(--r-md); padding:14px 16px;
+  font-family:var(--font-mono); font-size:.85rem; line-height:1.7; overflow-x:auto;
+}
+.toy-eval-console .te-line{ white-space:pre; }
+
+/* ---------- diagramas conceptuales reutilizables (Tipos de datos, Operadores, Vectores) ---------- */
+.cpanel{
+  background:linear-gradient(165deg, var(--bg2) 0%, var(--bg1) 60%); border:1px solid var(--border); border-radius:var(--r-lg);
+  padding:18px 20px; margin:18px 0;
+}
+.cpanel-cap{ font-family:var(--font-mono); font-size:.76rem; color:var(--ts); margin-bottom:12px; }
+.cpanel-cap b{ color:var(--tp); }
+.cflow{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+.cflow + .cflow{ margin-top:14px; }
+.cbox{
+  background:var(--bg0); border:1px solid var(--border-strong); border-radius:var(--r-sm);
+  padding:9px 13px; font-family:var(--font-mono); font-size:.85rem; text-align:center; color:var(--tp); flex:none;
+}
+.cbox.accent{ border-color:rgba(76,154,255,.45); color:var(--blue); font-weight:600; }
+.cop{ font-family:var(--font-mono); font-weight:700; color:var(--amber); font-size:.95rem; flex:none; }
+.carrow{ color:var(--teal); flex:none; display:flex; align-items:center; }
+.cbool{ font-family:var(--font-mono); font-weight:700; font-size:.8rem; padding:6px 12px; border-radius:999px; border:1px solid; flex:none; }
+.cbool.t{ color:var(--green); border-color:rgba(52,211,153,.45); background:rgba(52,211,153,.08); }
+.vec-op-row{ display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
+.vec-op-row .cbox{ width:100%; box-sizing:border-box; }
+.vec-op-mid{ text-align:center; font-family:var(--font-mono); font-size:.78rem; color:var(--ts); padding:10px 0; }
+.vec-op-mid .cop{ margin:0 4px; }
+.type-tag-row{ display:flex; flex-wrap:wrap; gap:22px; }
+.type-tag{ display:flex; flex-direction:column; align-items:center; gap:6px; }
+.type-tag-pin{
+  font-family:var(--font-mono); font-size:.68rem; text-transform:uppercase; letter-spacing:.04em;
+  padding:3px 10px; border-radius:999px; border:1px solid;
+}
+
+/* ---------- figuras conceptuales (ilustraciones SVG, complementarias a .cpanel) ---------- */
+.concept-figure{
+  margin:18px 0; border:1px solid var(--border); border-radius:var(--r-lg); overflow:hidden;
+  background:linear-gradient(165deg, var(--bg2) 0%, var(--bg1) 60%);
+}
+.concept-figure svg{ display:block; width:100%; height:auto; }
+.concept-figure figcaption{
+  font-family:var(--font-mono); font-size:.76rem; color:var(--ts); line-height:1.5;
+  padding:12px 20px; border-top:1px solid var(--border);
+}
+
 /* ---------- code blocks (manual highlighting) ---------- */
 .code{
   background:var(--bg1); border:1px solid var(--border); border-radius:var(--r-md); padding:16px 18px;
@@ -377,7 +472,7 @@ footer .foot-inner{ border-top:1px solid var(--border); padding-top:24px; displa
 <nav class="topnav">
   <div class="topnav-inner">
     <a class="brand" href="../" style="text-decoration:none" aria-label="Volver al índice del curso">
-      <img src="../assets/brand/fpen-favicon.svg" width="24" height="24" alt="" aria-hidden="true">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" stroke="#4c9aff" stroke-width="1.6"/><path d="M8 16V8m4 8V8m4 8v-4a2 2 0 0 0-2-2h-2" stroke="#4c9aff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
       FPEN <span class="sem">· Semana 01</span>
     </a>
     <div class="tabs" role="tablist" aria-label="Secciones de la sesión">
@@ -486,18 +581,180 @@ footer .foot-inner{ border-top:1px solid var(--border); padding-top:24px; displa
 
     <section class="block fade-in" id="g-objetos">
       <div class="block-head"><span class="block-num">02</span><h2>Objetos y asignación</h2></div>
-      <p>Un <b>objeto</b> es un nombre que guarda un valor en la memoria de R, para poder reutilizarlo. Se crea con el operador de asignación <code>&lt;-</code>, no con <code>=</code> (ver <a href="#g-tabla">por qué, en la tabla de estilo</a>).</p>
-      <div class="code"><span class="c-cm"># ingresos del mes, en dólares: el nombre describe qué guarda, no cómo se calculó</span>
-<span class="c-fn">ingresos_enero</span> <span class="c-op">&lt;-</span> <span class="c-num">4200</span>
-<span class="c-fn">ingresos_enero</span>
-<span class="c-out">#&gt; [1] 4200</span></div>
-      <p>Cada vez que ejecutas <code>ingresos_enero &lt;- 4200</code>, R no imprime nada: solo guarda el valor. Para verlo, escribes el nombre del objeto solo, en su propia línea.</p>
-      <p style="color:var(--ts);font-size:.92rem">Atajo en RStudio: Alt/Option + guion (<code>-</code>) escribe <code>&lt;-</code> con los espacios correctos automáticamente. Úsalo desde ya: es el hábito que más tiempo te ahorra en todo el curso.</p>
+      <p>Tu emprendimiento generó $4,200 en enero. Quieres usar ese número más adelante en el mismo script, sin volver a escribirlo ni buscarlo. ¿Qué hace R exactamente cuando escribes <code>ingresos_enero &lt;- 4200</code>? La línea no imprime nada, pero algo sí pasó. Esto es lo que pasó:</p>
+
+      <div class="env-diagram" role="img" aria-label="Diagrama: antes de ejecutar la línea, el ambiente de R está vacío. Después de ejecutar ingresos_enero asignado a 4200, el ambiente contiene un objeto llamado ingresos_enero con el valor 4200.">
+        <div class="env-panel">
+          <span class="env-panel-label">Antes de ejecutar la línea</span>
+          <div class="env-box">
+            <span class="env-box-title">Ambiente de R <span class="env-box-hint">(el panel "Environment" de RStudio)</span></span>
+            <div class="env-empty">vacío, todavía no existe ningún objeto</div>
+          </div>
+        </div>
+        <div class="env-arrow" aria-hidden="true">
+          <svg width="30" height="20" viewBox="0 0 40 24" fill="none"><path d="M2 12h32m0 0l-8-8m8 8l-8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="env-arrow-label">R evalúa <code>4200</code> y lo guarda</span>
+        </div>
+        <div class="env-panel">
+          <span class="env-panel-label">Después de <code>ingresos_enero &lt;- 4200</code></span>
+          <div class="env-box env-box-filled">
+            <span class="env-box-title">Ambiente de R</span>
+            <div class="env-entry">
+              <span class="env-entry-name">ingresos_enero</span>
+              <span class="env-entry-arrow">→</span>
+              <span class="env-entry-value" id="envValue">4200</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="toy-eval">
+        <div class="toy-eval-head">
+          <span class="toy-eval-flag">Simulación en JavaScript, no ejecución real de R</span>
+          <p>Cambia el valor y mira qué pasa en el ambiente y en la consola.</p>
+        </div>
+        <div class="toy-eval-controls">
+          <div>
+            <label for="toyValue">Nuevo valor de <code>ingresos_enero</code></label>
+            <div class="toy-eval-row">
+              <input type="number" id="toyValue" value="4200" step="1" inputmode="decimal">
+              <button type="button" class="toy-eval-btn" id="toyAssignBtn">Asignar</button>
+            </div>
+          </div>
+        </div>
+        <div class="toy-eval-console" id="toyConsole" aria-live="polite">
+          <div class="te-line"><span class="c-fn">ingresos_enero</span> <span class="c-op">&lt;-</span> <span class="c-num">4200</span></div>
+          <div class="te-line"><span class="c-fn">ingresos_enero</span></div>
+          <div class="te-line c-out">#&gt; [1] 4200</div>
+        </div>
+      </div>
+
+      <p>Fíjate en algo importante: la primera línea <b>no imprimió nada</b>, ni antes ni ahora que cambiaste el valor arriba. R evaluó el número, lo guardó bajo el nombre <code>ingresos_enero</code> y se quedó en silencio, exactamente como en el diagrama. Solo cuando escribes el nombre del objeto solo, en su propia línea, R busca esa caja y te muestra lo que hay adentro.</p>
+      <p style="color:var(--ts);font-size:.92rem">Se crea con el operador de asignación <code>&lt;-</code>, no con <code>=</code> (ver <a href="#g-tabla">por qué, en la tabla de estilo</a>). Atajo en RStudio: Alt/Option + guion (<code>-</code>) escribe <code>&lt;-</code> con los espacios correctos automáticamente. Úsalo desde ya: es el hábito que más tiempo te ahorra en todo el curso.</p>
     </section>
 
     <section class="block fade-in" id="g-tipos">
       <div class="block-head"><span class="block-num">03</span><h2>Tipos de datos</h2></div>
-      <p>No todos los valores son iguales para R. Los tres tipos que necesitas esta semana:</p>
+      <p>No todos los valores son iguales para R. El tipo no es algo que tú declares aparte: viaja pegado al valor desde el momento en que lo creas, como una etiqueta.</p>
+      <div class="cpanel">
+        <div class="cpanel-cap">El tipo es una propiedad del valor, no un paso extra</div>
+        <div class="type-tag-row">
+          <div class="type-tag">
+            <span class="type-tag-pin" style="color:var(--amber);border-color:rgba(245,166,35,.4)">numeric</span>
+            <div class="cbox">3.75</div>
+          </div>
+          <div class="type-tag">
+            <span class="type-tag-pin" style="color:var(--green);border-color:rgba(52,211,153,.4)">character</span>
+            <div class="cbox">"comercio"</div>
+          </div>
+          <div class="type-tag">
+            <span class="type-tag-pin" style="color:var(--violet);border-color:rgba(167,139,250,.4)">logical</span>
+            <div class="cbox">TRUE</div>
+          </div>
+        </div>
+      </div>
+      <figure class="concept-figure">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 640" width="100%" height="100%" role="img" aria-labelledby="tdtitle tddesc">
+          <title id="tdtitle">Tipos de Datos en R — Valor con Etiqueta Física</title>
+          <desc id="tddesc">Tres valores distintos (número, texto, interruptor lógico) cada uno con su etiqueta de tipo pegada: numeric, character y logical.</desc>
+          <defs>
+            <pattern id="grid-pattern-td" width="40" height="40" patternUnits="userSpaceOnUse">
+              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#4c9aff" stroke-width="1" stroke-opacity="0.04" />
+            </pattern>
+            <linearGradient id="card-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#182645" stop-opacity="0.9" />
+              <stop offset="100%" stop-color="#111a30" stop-opacity="0.9" />
+            </linearGradient>
+            <radialGradient id="amber-glow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#f5a623" stop-opacity="0.25" />
+              <stop offset="100%" stop-color="#f5a623" stop-opacity="0" />
+            </radialGradient>
+            <radialGradient id="green-glow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#34d399" stop-opacity="0.25" />
+              <stop offset="100%" stop-color="#34d399" stop-opacity="0" />
+            </radialGradient>
+            <radialGradient id="violet-glow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#a78bfa" stop-opacity="0.25" />
+              <stop offset="100%" stop-color="#a78bfa" stop-opacity="0" />
+            </radialGradient>
+          </defs>
+          <rect width="960" height="640" fill="#0a0f1c" />
+          <rect width="960" height="640" fill="url(#grid-pattern-td)" />
+          <g fill="none" stroke-linecap="round">
+            <line x1="80" y1="320" x2="880" y2="320" stroke="#4c9aff" stroke-opacity="0.07" stroke-width="1" stroke-dasharray="4 8" />
+            <circle cx="200" cy="320" r="140" stroke="#f5a623" stroke-opacity="0.05" stroke-width="1.5" stroke-dasharray="4 12" />
+            <circle cx="480" cy="320" r="140" stroke="#34d399" stroke-opacity="0.05" stroke-width="1.5" stroke-dasharray="4 12" />
+            <circle cx="760" cy="320" r="140" stroke="#a78bfa" stroke-opacity="0.05" stroke-width="1.5" stroke-dasharray="4 12" />
+          </g>
+          <g transform="translate(90, 160)">
+            <circle cx="110" cy="160" r="120" fill="url(#amber-glow)" />
+            <rect width="220" height="320" rx="22" fill="url(#card-grad)" stroke="#f5a623" stroke-opacity="0.3" stroke-width="1.5" />
+            <rect x="2" y="2" width="216" height="5" rx="2.5" fill="#f5a623" />
+            <g transform="translate(110, 95)">
+              <circle cx="0" cy="0" r="48" fill="#111a30" stroke="#f5a623" stroke-width="3" />
+              <circle cx="0" cy="0" r="40" fill="#182645" stroke="#f5a623" stroke-opacity="0.4" stroke-width="1.5" stroke-dasharray="3 5" />
+              <text x="0" y="9" fill="#f5a623" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="26" font-weight="800" text-anchor="middle" letter-spacing="-1">42.5</text>
+              <circle cx="28" cy="-28" r="3" fill="#f5a623" />
+            </g>
+            <path d="M 138 128 C 150 160 140 180 125 195" fill="none" stroke="#f5a623" stroke-width="2" stroke-dasharray="4 3" stroke-linecap="round" />
+            <circle cx="138" cy="128" r="3.5" fill="#f5a623" />
+            <g transform="translate(38, 205)">
+              <path d="M 18 0 L 132 0 C 138 0 144 6 144 12 L 144 48 C 144 54 138 60 132 60 L 18 60 C 10 60 0 48 0 30 C 0 12 10 0 18 0 Z" fill="#0a0f1c" stroke="#f5a623" stroke-width="2" />
+              <circle cx="15" cy="30" r="5" fill="#111a30" stroke="#f5a623" stroke-width="1.5" />
+              <circle cx="15" cy="30" r="2" fill="#0a0f1c" />
+              <text x="80" y="36" fill="#f5a623" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="16" font-weight="700" text-anchor="middle" letter-spacing="1">numeric</text>
+            </g>
+          </g>
+          <g transform="translate(370, 160)">
+            <circle cx="110" cy="160" r="120" fill="url(#green-glow)" />
+            <rect width="220" height="320" rx="22" fill="url(#card-grad)" stroke="#34d399" stroke-opacity="0.3" stroke-width="1.5" />
+            <rect x="2" y="2" width="216" height="5" rx="2.5" fill="#34d399" />
+            <g transform="translate(110, 95)">
+              <rect x="-65" y="-36" width="130" height="72" rx="16" fill="#111a30" stroke="#34d399" stroke-width="3" />
+              <rect x="-57" y="-28" width="114" height="56" rx="10" fill="#182645" stroke="#34d399" stroke-opacity="0.3" stroke-width="1" />
+              <text x="0" y="9" fill="#edf1fa" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="21" font-weight="700" text-anchor="middle">
+                <tspan fill="#34d399" font-size="24">“</tspan>ESEN<tspan fill="#34d399" font-size="24">”</tspan>
+              </text>
+              <circle cx="50" cy="-20" r="3" fill="#34d399" />
+            </g>
+            <path d="M 148 120 C 158 155 145 178 128 195" fill="none" stroke="#34d399" stroke-width="2" stroke-dasharray="4 3" stroke-linecap="round" />
+            <circle cx="148" cy="120" r="3.5" fill="#34d399" />
+            <g transform="translate(38, 205)">
+              <path d="M 18 0 L 132 0 C 138 0 144 6 144 12 L 144 48 C 144 54 138 60 132 60 L 18 60 C 10 60 0 48 0 30 C 0 12 10 0 18 0 Z" fill="#0a0f1c" stroke="#34d399" stroke-width="2" />
+              <circle cx="15" cy="30" r="5" fill="#111a30" stroke="#34d399" stroke-width="1.5" />
+              <circle cx="15" cy="30" r="2" fill="#0a0f1c" />
+              <text x="80" y="36" fill="#34d399" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="14.5" font-weight="700" text-anchor="middle" letter-spacing="0.5">character</text>
+            </g>
+          </g>
+          <g transform="translate(650, 160)">
+            <circle cx="110" cy="160" r="120" fill="url(#violet-glow)" />
+            <rect width="220" height="320" rx="22" fill="url(#card-grad)" stroke="#a78bfa" stroke-opacity="0.3" stroke-width="1.5" />
+            <rect x="2" y="2" width="216" height="5" rx="2.5" fill="#a78bfa" />
+            <g transform="translate(110, 95)">
+              <rect x="-60" y="-30" width="120" height="60" rx="30" fill="#0a0f1c" stroke="#a78bfa" stroke-width="3" />
+              <circle cx="-32" cy="0" r="4" fill="#182645" stroke="#a78bfa" stroke-opacity="0.4" stroke-width="1.5" />
+              <circle cx="28" cy="0" r="22" fill="#a78bfa" />
+              <circle cx="28" cy="0" r="15" fill="#111a30" stroke="#a78bfa" stroke-width="2" />
+              <text x="28" y="6" fill="#a78bfa" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="16" font-weight="800" text-anchor="middle">T</text>
+              <circle cx="48" cy="-22" r="3" fill="#a78bfa" />
+            </g>
+            <path d="M 148 118 C 158 152 145 178 128 195" fill="none" stroke="#a78bfa" stroke-width="2" stroke-dasharray="4 3" stroke-linecap="round" />
+            <circle cx="148" cy="118" r="3.5" fill="#a78bfa" />
+            <g transform="translate(38, 205)">
+              <path d="M 18 0 L 132 0 C 138 0 144 6 144 12 L 144 48 C 144 54 138 60 132 60 L 18 60 C 10 60 0 48 0 30 C 0 12 10 0 18 0 Z" fill="#0a0f1c" stroke="#a78bfa" stroke-width="2" />
+              <circle cx="15" cy="30" r="5" fill="#111a30" stroke="#a78bfa" stroke-width="1.5" />
+              <circle cx="15" cy="30" r="2" fill="#0a0f1c" />
+              <text x="80" y="36" fill="#a78bfa" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="16" font-weight="700" text-anchor="middle" letter-spacing="1">logical</text>
+            </g>
+          </g>
+          <g transform="translate(90, 520)">
+            <line x1="0" y1="0" x2="780" y2="0" stroke="#4c9aff" stroke-opacity="0.2" stroke-width="1.5" stroke-dasharray="6 8" />
+            <circle cx="390" cy="0" r="4" fill="#4c9aff" fill-opacity="0.6" />
+          </g>
+        </svg>
+        <figcaption>Ilustración de apoyo (generada con asistencia de IA): cada valor lleva su tipo pegado, como una etiqueta física — <b>numeric</b>, <b>character</b> y <b>logical</b> son las tres etiquetas de esta semana.</figcaption>
+      </figure>
+      <p>Los tres tipos que necesitas esta semana:</p>
       <div class="grid-cards">
         <div class="card" style="--accent:var(--amber)">
           <div class="card-glow"></div>
@@ -523,6 +780,153 @@ footer .foot-inner{ border-top:1px solid var(--border); padding-top:24px; displa
 
     <section class="block fade-in" id="g-operadores">
       <div class="block-head"><span class="block-num">04</span><h2>Operadores</h2></div>
+      <div class="cpanel">
+        <div class="cpanel-cap"><b>Aritméticos</b>: dos números entran, un número sale</div>
+        <div class="cflow">
+          <div class="cbox">ingresos_enero: 4200</div>
+          <span class="cop">−</span>
+          <div class="cbox">costos_enero: 3100</div>
+          <span class="carrow"><svg width="20" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 12h14m0 0l-5-5m5 5l-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <div class="cbox accent">utilidad: 1100</div>
+        </div>
+        <div class="cpanel-cap" style="margin-top:18px"><b>De comparación</b>: dos valores entran, un <code>TRUE</code>/<code>FALSE</code> sale</div>
+        <div class="cflow">
+          <div class="cbox">utilidad: 1100</div>
+          <span class="cop">&gt;</span>
+          <div class="cbox">0</div>
+          <span class="carrow"><svg width="20" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 12h14m0 0l-5-5m5 5l-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="cbool t">TRUE</span>
+        </div>
+      </div>
+      <figure class="concept-figure">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 640" width="100%" height="100%" role="img" aria-labelledby="actitle acdesc">
+          <title id="actitle">Aritmética vs Comparación en R</title>
+          <desc id="acdesc">Aritmética: dos números entran y sale un número. Comparación: dos valores entran y sale un valor lógico (TRUE/FALSE).</desc>
+          <defs>
+            <pattern id="grid-pattern-ac" width="40" height="40" patternUnits="userSpaceOnUse">
+              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#4c9aff" stroke-width="1" stroke-opacity="0.04" />
+            </pattern>
+            <linearGradient id="panel-grad-ac" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#182645" stop-opacity="0.85" />
+              <stop offset="100%" stop-color="#111a30" stop-opacity="0.85" />
+            </linearGradient>
+            <linearGradient id="arrow-grad-ar" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#f5a623" />
+              <stop offset="100%" stop-color="#4c9aff" />
+            </linearGradient>
+            <linearGradient id="arrow-grad-cp" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#2dd4bf" />
+              <stop offset="100%" stop-color="#34d399" />
+            </linearGradient>
+            <radialGradient id="true-glow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#34d399" stop-opacity="0.9" />
+              <stop offset="60%" stop-color="#34d399" stop-opacity="0.4" />
+              <stop offset="100%" stop-color="#34d399" stop-opacity="0" />
+            </radialGradient>
+          </defs>
+          <rect width="960" height="640" fill="#0a0f1c" />
+          <rect width="960" height="640" fill="url(#grid-pattern-ac)" />
+          <g fill="none" stroke-linecap="round">
+            <line x1="480" y1="50" x2="480" y2="590" stroke="#4c9aff" stroke-opacity="0.18" stroke-width="1.5" stroke-dasharray="4 8" />
+            <circle cx="480" cy="320" r="16" fill="#0a0f1c" stroke="#4c9aff" stroke-opacity="0.3" stroke-width="1.5" />
+            <circle cx="480" cy="320" r="4" fill="#4c9aff" fill-opacity="0.7" />
+          </g>
+          <g transform="translate(48, 70)">
+            <rect width="404" height="500" rx="24" fill="url(#panel-grad-ac)" stroke="#4c9aff" stroke-opacity="0.28" stroke-width="1.5" />
+            <rect x="2" y="2" width="400" height="5" rx="2.5" fill="#4c9aff" />
+            <g transform="translate(24, 28)">
+              <rect width="110" height="26" rx="6" fill="#0a0f1c" stroke="#4c9aff" stroke-opacity="0.35" />
+              <circle cx="14" cy="13" r="3.5" fill="#4c9aff" />
+              <text x="64" y="18" fill="#4c9aff" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700" text-anchor="middle" letter-spacing="1">ARITMÉTICA</text>
+            </g>
+            <g transform="translate(72, 140)">
+              <circle cx="0" cy="0" r="34" fill="#111a30" stroke="#f5a623" stroke-width="2.5" />
+              <circle cx="0" cy="0" r="28" fill="#182645" stroke="#f5a623" stroke-opacity="0.3" stroke-dasharray="3 4" />
+              <text x="0" y="7" fill="#f5a623" font-family="'JetBrains Mono', monospace" font-size="20" font-weight="800" text-anchor="middle">8</text>
+            </g>
+            <g transform="translate(72, 280)">
+              <circle cx="0" cy="0" r="34" fill="#111a30" stroke="#f5a623" stroke-width="2.5" />
+              <circle cx="0" cy="0" r="28" fill="#182645" stroke="#f5a623" stroke-opacity="0.3" stroke-dasharray="3 4" />
+              <text x="0" y="7" fill="#f5a623" font-family="'JetBrains Mono', monospace" font-size="20" font-weight="800" text-anchor="middle">3</text>
+            </g>
+            <g fill="none" stroke-linecap="round">
+              <path d="M 108 140 C 145 140 148 210 172 210" stroke="#f5a623" stroke-width="2.5" stroke-dasharray="4 4" />
+              <path d="M 108 280 C 145 280 148 210 172 210" stroke="#f5a623" stroke-width="2.5" stroke-dasharray="4 4" />
+            </g>
+            <g transform="translate(196, 210)">
+              <circle cx="0" cy="0" r="25" fill="#0a0f1c" stroke="#4c9aff" stroke-width="2.5" />
+              <path d="M -8 0 H 8 M 0 -8 V 8" stroke="#4c9aff" stroke-width="3" stroke-linecap="round" />
+            </g>
+            <g transform="translate(221, 210)">
+              <line x1="0" y1="0" x2="48" y2="0" stroke="url(#arrow-grad-ar)" stroke-width="3" stroke-linecap="round" />
+              <polygon points="44,-6 56,0 44,6" fill="#4c9aff" />
+            </g>
+            <g transform="translate(324, 210)">
+              <circle cx="0" cy="0" r="46" fill="#4c9aff" fill-opacity="0.08" />
+              <circle cx="0" cy="0" r="38" fill="#111a30" stroke="#4c9aff" stroke-width="3" />
+              <circle cx="0" cy="0" r="31" fill="#182645" stroke="#4c9aff" stroke-opacity="0.4" stroke-dasharray="3 4" />
+              <text x="0" y="8" fill="#4c9aff" font-family="'JetBrains Mono', monospace" font-size="22" font-weight="800" text-anchor="middle">11</text>
+            </g>
+            <g transform="translate(36, 420)">
+              <rect width="332" height="46" rx="12" fill="#0a0f1c" stroke="#4c9aff" stroke-opacity="0.25" />
+              <text x="166" y="28" fill="#8792ae" font-family="'JetBrains Mono', monospace" font-size="13" font-weight="600" text-anchor="middle">
+                número <tspan fill="#4c9aff">+</tspan> número <tspan fill="#4c9aff">→</tspan> <tspan fill="#4c9aff" font-weight="800">número</tspan>
+              </text>
+            </g>
+          </g>
+          <g transform="translate(508, 70)">
+            <rect width="404" height="500" rx="24" fill="url(#panel-grad-ac)" stroke="#2dd4bf" stroke-opacity="0.28" stroke-width="1.5" />
+            <rect x="2" y="2" width="400" height="5" rx="2.5" fill="#2dd4bf" />
+            <g transform="translate(24, 28)">
+              <rect width="124" height="26" rx="6" fill="#0a0f1c" stroke="#2dd4bf" stroke-opacity="0.35" />
+              <circle cx="14" cy="13" r="3.5" fill="#2dd4bf" />
+              <text x="70" y="18" fill="#2dd4bf" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700" text-anchor="middle" letter-spacing="1">COMPARACIÓN</text>
+            </g>
+            <g transform="translate(72, 140)">
+              <circle cx="0" cy="0" r="34" fill="#111a30" stroke="#f5a623" stroke-width="2.5" />
+              <circle cx="0" cy="0" r="28" fill="#182645" stroke="#f5a623" stroke-opacity="0.3" stroke-dasharray="3 4" />
+              <text x="0" y="7" fill="#f5a623" font-family="'JetBrains Mono', monospace" font-size="20" font-weight="800" text-anchor="middle">8</text>
+            </g>
+            <g transform="translate(72, 280)">
+              <circle cx="0" cy="0" r="34" fill="#111a30" stroke="#f5a623" stroke-width="2.5" />
+              <circle cx="0" cy="0" r="28" fill="#182645" stroke="#f5a623" stroke-opacity="0.3" stroke-dasharray="3 4" />
+              <text x="0" y="7" fill="#f5a623" font-family="'JetBrains Mono', monospace" font-size="20" font-weight="800" text-anchor="middle">3</text>
+            </g>
+            <g fill="none" stroke-linecap="round">
+              <path d="M 108 140 C 145 140 148 210 172 210" stroke="#f5a623" stroke-width="2.5" stroke-dasharray="4 4" />
+              <path d="M 108 280 C 145 280 148 210 172 210" stroke="#f5a623" stroke-width="2.5" stroke-dasharray="4 4" />
+            </g>
+            <g transform="translate(196, 210)">
+              <circle cx="0" cy="0" r="25" fill="#0a0f1c" stroke="#2dd4bf" stroke-width="2.5" />
+              <path d="M -5 -8 L 5 0 L -5 8" fill="none" stroke="#2dd4bf" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+            </g>
+            <g transform="translate(221, 210)">
+              <line x1="0" y1="0" x2="48" y2="0" stroke="url(#arrow-grad-cp)" stroke-width="3" stroke-linecap="round" />
+              <polygon points="44,-6 56,0 44,6" fill="#34d399" />
+            </g>
+            <g transform="translate(324, 210)">
+              <rect x="-24" y="-54" width="48" height="108" rx="24" fill="#0a0f1c" stroke="#34d399" stroke-width="2.5" />
+              <circle cx="0" cy="-27" r="26" fill="url(#true-glow)" />
+              <circle cx="0" cy="-27" r="16" fill="#34d399" />
+              <circle cx="0" cy="-27" r="10" fill="#edf1fa" fill-opacity="0.85" />
+              <line x1="-14" y1="0" x2="14" y2="0" stroke="#182645" stroke-width="2" />
+              <circle cx="0" cy="27" r="14" fill="#182645" stroke="#ff6b6b" stroke-opacity="0.35" stroke-width="1.5" />
+              <circle cx="0" cy="27" r="5" fill="#111a30" />
+              <g transform="translate(0, 72)">
+                <rect x="-32" y="-12" width="64" height="24" rx="6" fill="#0a0f1c" stroke="#34d399" stroke-width="1.5" />
+                <text x="0" y="4.5" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="800" text-anchor="middle">TRUE</text>
+              </g>
+            </g>
+            <g transform="translate(36, 420)">
+              <rect width="332" height="46" rx="12" fill="#0a0f1c" stroke="#2dd4bf" stroke-opacity="0.25" />
+              <text x="166" y="28" fill="#8792ae" font-family="'JetBrains Mono', monospace" font-size="13" font-weight="600" text-anchor="middle">
+                valor <tspan fill="#2dd4bf">&gt;</tspan> valor <tspan fill="#34d399">→</tspan> <tspan fill="#34d399" font-weight="800">logical</tspan>
+              </text>
+            </g>
+          </g>
+        </svg>
+        <figcaption>Ilustración de apoyo (generada con asistencia de IA): a la izquierda, aritmética (dos números entran, un número sale); a la derecha, comparación (dos valores entran, un <code>TRUE</code>/<code>FALSE</code> sale).</figcaption>
+      </figure>
       <div class="grid-cards">
         <div class="card asym" style="--accent:var(--blue)">
           <div class="card-glow"></div>
@@ -558,9 +962,222 @@ footer .foot-inner{ border-top:1px solid var(--border); padding-top:24px; displa
 <span class="c-fn">ingresos</span> <span class="c-op">&lt;-</span> <span class="c-fn">c</span>(<span class="c-num">4200</span>, <span class="c-num">4550</span>, <span class="c-num">4100</span>, <span class="c-num">4800</span>)
 <span class="c-fn">ingresos</span>
 <span class="c-out">#&gt; [1] 4200 4550 4100 4800</span></div>
+
+      <div class="cpanel">
+        <div class="cpanel-cap">Las 4 cajas de abajo son <b>un solo objeto</b>, no cuatro objetos sueltos: todas viven bajo el nombre <code>ingresos</code></div>
+        <div class="vec-op-row">
+          <div class="cbox">4200</div><div class="cbox">4550</div><div class="cbox">4100</div><div class="cbox">4800</div>
+        </div>
+        <div class="vec-op-mid">↑ las cuatro juntas, en este orden, son <code>ingresos</code></div>
+      </div>
+      <figure class="concept-figure">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 640" width="100%" height="100%" role="img" aria-labelledby="v1title v1desc">
+          <title id="v1title">Concepto de Vector — Fila de Cajas en R</title>
+          <desc id="v1desc">Cuatro cajas contiguas del mismo tamaño y tono azul con valores numéricos mensuales, unidas como un solo objeto vector.</desc>
+          <defs>
+            <pattern id="grid-pattern-v1" width="40" height="40" patternUnits="userSpaceOnUse">
+              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#4c9aff" stroke-width="1" stroke-opacity="0.035" />
+            </pattern>
+            <linearGradient id="vbox-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#182645" />
+              <stop offset="100%" stop-color="#111a30" />
+            </linearGradient>
+          </defs>
+          <rect width="960" height="640" fill="#0a0f1c" />
+          <rect width="960" height="640" fill="url(#grid-pattern-v1)" />
+          <g fill="none" stroke-linecap="round">
+            <line x1="120" y1="275" x2="840" y2="275" stroke="#4c9aff" stroke-opacity="0.08" stroke-width="1" stroke-dasharray="4 8" />
+          </g>
+          <g transform="translate(320, 100)">
+            <rect width="320" height="38" rx="8" fill="#111a30" stroke="#4c9aff" stroke-opacity="0.3" stroke-width="1.5" />
+            <text x="160" y="24" fill="#8792ae" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="14" font-weight="600" text-anchor="middle">
+              <tspan fill="#4c9aff" font-weight="700">ingresos</tspan> <tspan fill="#2dd4bf">&lt;-</tspan> <tspan fill="#4c9aff">c</tspan>(<tspan fill="#edf1fa">4200, 4550, 4100, 4800</tspan>)
+            </text>
+          </g>
+          <g transform="translate(170, 175)">
+            <rect width="620" height="230" rx="20" fill="#111a30" fill-opacity="0.35" stroke="#4c9aff" stroke-opacity="0.5" stroke-width="1.5" stroke-dasharray="6 8" />
+            <g transform="translate(180, 212)">
+              <rect width="260" height="36" rx="8" fill="#0a0f1c" stroke="#4c9aff" stroke-width="1.5" />
+              <circle cx="20" cy="18" r="4" fill="#4c9aff" />
+              <text x="140" y="23" fill="#4c9aff" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="13" font-weight="700" text-anchor="middle" letter-spacing="0.5">un solo objeto: ingresos</text>
+            </g>
+          </g>
+          <g fill="#182645" stroke="#4c9aff" stroke-opacity="0.5" stroke-width="1.5">
+            <rect x="326" y="270" width="20" height="10" rx="2" />
+            <line x1="326" y1="275" x2="346" y2="275" stroke="#4c9aff" stroke-width="2" />
+            <rect x="470" y="270" width="20" height="10" rx="2" />
+            <line x1="470" y1="275" x2="490" y2="275" stroke="#4c9aff" stroke-width="2" />
+            <rect x="614" y="270" width="20" height="10" rx="2" />
+            <line x1="614" y1="275" x2="634" y2="275" stroke="#4c9aff" stroke-width="2" />
+          </g>
+          <g transform="translate(202, 213)">
+            <rect width="124" height="124" rx="16" fill="url(#vbox-grad)" stroke="#4c9aff" stroke-width="2" />
+            <rect x="4" y="3" width="116" height="4" rx="2" fill="#4c9aff" />
+            <text x="14" y="26" fill="#8792ae" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="11" font-weight="600">[1]</text>
+            <text x="62" y="74" fill="#edf1fa" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="24" font-weight="700" text-anchor="middle" letter-spacing="-0.5">4200</text>
+          </g>
+          <g transform="translate(346, 213)">
+            <rect width="124" height="124" rx="16" fill="url(#vbox-grad)" stroke="#4c9aff" stroke-width="2" />
+            <rect x="4" y="3" width="116" height="4" rx="2" fill="#4c9aff" />
+            <text x="14" y="26" fill="#8792ae" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="11" font-weight="600">[2]</text>
+            <text x="62" y="74" fill="#edf1fa" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="24" font-weight="700" text-anchor="middle" letter-spacing="-0.5">4550</text>
+          </g>
+          <g transform="translate(490, 213)">
+            <rect width="124" height="124" rx="16" fill="url(#vbox-grad)" stroke="#4c9aff" stroke-width="2" />
+            <rect x="4" y="3" width="116" height="4" rx="2" fill="#4c9aff" />
+            <text x="14" y="26" fill="#8792ae" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="11" font-weight="600">[3]</text>
+            <text x="62" y="74" fill="#edf1fa" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="24" font-weight="700" text-anchor="middle" letter-spacing="-0.5">4100</text>
+          </g>
+          <g transform="translate(634, 213)">
+            <rect width="124" height="124" rx="16" fill="url(#vbox-grad)" stroke="#4c9aff" stroke-width="2" />
+            <rect x="4" y="3" width="116" height="4" rx="2" fill="#4c9aff" />
+            <text x="14" y="26" fill="#8792ae" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="11" font-weight="600">[4]</text>
+            <text x="62" y="74" fill="#edf1fa" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="24" font-weight="700" text-anchor="middle" letter-spacing="-0.5">4800</text>
+          </g>
+        </svg>
+        <figcaption>Ilustración de apoyo (generada con asistencia de IA): las 4 cajas comparten el mismo tono porque son un solo objeto — <code>ingresos</code> — no cuatro variables sueltas.</figcaption>
+      </figure>
+
       <p>La aritmética sobre un vector se aplica a <b>cada elemento a la vez</b>: no necesitas un ciclo para esto (ese tema llega en la Semana 09):</p>
       <div class="code"><span class="c-fn">ingresos</span> <span class="c-op">*</span> <span class="c-num">1.05</span>  <span class="c-cm"># proyección con 5% de crecimiento</span>
 <span class="c-out">#&gt; [1] 4410.0 4777.5 4305.0 5040.0</span></div>
+
+      <div class="cpanel">
+        <div class="cpanel-cap">La misma operación ocurre en las 4 posiciones <b>a la vez</b>, no una por una en secuencia</div>
+        <div class="vec-op-row">
+          <div class="cbox">4200</div><div class="cbox">4550</div><div class="cbox">4100</div><div class="cbox">4800</div>
+        </div>
+        <div class="vec-op-mid">↓ <span class="cop">× (1 + 0.05)</span> aplicado a las 4 a la vez ↓</div>
+        <div class="vec-op-row">
+          <div class="cbox accent">4410</div><div class="cbox accent">4777.5</div><div class="cbox accent">4305</div><div class="cbox accent">5040</div>
+        </div>
+      </div>
+      <figure class="concept-figure">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 640" width="100%" height="100%" role="img" aria-labelledby="v2title v2desc">
+          <title id="v2title">Operación Vectorizada en R — Todo a la Vez</title>
+          <desc id="v2desc">Cuatro flechas verticales paralelas aplican la misma operación por 1.05 simultáneamente a los 4 elementos de un vector, produciendo un vector resultado.</desc>
+          <defs>
+            <pattern id="grid-pattern-v2" width="40" height="40" patternUnits="userSpaceOnUse">
+              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#4c9aff" stroke-width="1" stroke-opacity="0.035" />
+            </pattern>
+            <linearGradient id="in-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#182645" />
+              <stop offset="100%" stop-color="#111a30" />
+            </linearGradient>
+            <linearGradient id="res-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#142c33" />
+              <stop offset="100%" stop-color="#0e1f26" />
+            </linearGradient>
+            <linearGradient id="v-arrow-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#4c9aff" />
+              <stop offset="50%" stop-color="#2dd4bf" />
+              <stop offset="100%" stop-color="#34d399" />
+            </linearGradient>
+          </defs>
+          <rect width="960" height="640" fill="#0a0f1c" />
+          <rect width="960" height="640" fill="url(#grid-pattern-v2)" />
+          <g transform="translate(350, 24)">
+            <rect width="260" height="34" rx="8" fill="#111a30" stroke="#2dd4bf" stroke-opacity="0.3" stroke-width="1.5" />
+            <text x="130" y="22" fill="#8792ae" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="13.5" font-weight="600" text-anchor="middle">
+              <tspan fill="#4c9aff" font-weight="700">ingresos</tspan> <tspan fill="#2dd4bf">*</tspan> <tspan fill="#34d399" font-weight="700">1.05</tspan>
+            </text>
+          </g>
+          <g transform="translate(186, 68)">
+            <rect width="588" height="114" rx="16" fill="#111a30" fill-opacity="0.25" stroke="#4c9aff" stroke-opacity="0.35" stroke-width="1.2" stroke-dasharray="5 7" />
+          </g>
+          <g transform="translate(210, 78)">
+            <rect width="120" height="96" rx="14" fill="url(#in-grad)" stroke="#4c9aff" stroke-width="2" />
+            <rect x="3" y="3" width="114" height="3.5" rx="2" fill="#4c9aff" />
+            <text x="12" y="22" fill="#8792ae" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="600">[1]</text>
+            <text x="60" y="58" fill="#edf1fa" font-family="'JetBrains Mono', monospace" font-size="20" font-weight="700" text-anchor="middle">4200</text>
+          </g>
+          <g transform="translate(350, 78)">
+            <rect width="120" height="96" rx="14" fill="url(#in-grad)" stroke="#4c9aff" stroke-width="2" />
+            <rect x="3" y="3" width="114" height="3.5" rx="2" fill="#4c9aff" />
+            <text x="12" y="22" fill="#8792ae" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="600">[2]</text>
+            <text x="60" y="58" fill="#edf1fa" font-family="'JetBrains Mono', monospace" font-size="20" font-weight="700" text-anchor="middle">4550</text>
+          </g>
+          <g transform="translate(490, 78)">
+            <rect width="120" height="96" rx="14" fill="url(#in-grad)" stroke="#4c9aff" stroke-width="2" />
+            <rect x="3" y="3" width="114" height="3.5" rx="2" fill="#4c9aff" />
+            <text x="12" y="22" fill="#8792ae" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="600">[3]</text>
+            <text x="60" y="58" fill="#edf1fa" font-family="'JetBrains Mono', monospace" font-size="20" font-weight="700" text-anchor="middle">4100</text>
+          </g>
+          <g transform="translate(630, 78)">
+            <rect width="120" height="96" rx="14" fill="url(#in-grad)" stroke="#4c9aff" stroke-width="2" />
+            <rect x="3" y="3" width="114" height="3.5" rx="2" fill="#4c9aff" />
+            <text x="12" y="22" fill="#8792ae" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="600">[4]</text>
+            <text x="60" y="58" fill="#edf1fa" font-family="'JetBrains Mono', monospace" font-size="20" font-weight="700" text-anchor="middle">4800</text>
+          </g>
+          <line x1="200" y1="280" x2="760" y2="280" stroke="#2dd4bf" stroke-opacity="0.18" stroke-width="1" stroke-dasharray="3 6" />
+          <g transform="translate(270, 188)">
+            <line x1="0" y1="0" x2="0" y2="182" stroke="url(#v-arrow-grad)" stroke-width="3" stroke-linecap="round" />
+            <polygon points="-6,176 0,192 6,176" fill="#34d399" />
+            <g transform="translate(0, 92)">
+              <rect x="-35" y="-14" width="70" height="28" rx="6" fill="#0a0f1c" stroke="#2dd4bf" stroke-width="1.5" />
+              <text x="0" y="5" fill="#2dd4bf" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700" text-anchor="middle">× 1.05</text>
+            </g>
+          </g>
+          <g transform="translate(410, 188)">
+            <line x1="0" y1="0" x2="0" y2="182" stroke="url(#v-arrow-grad)" stroke-width="3" stroke-linecap="round" />
+            <polygon points="-6,176 0,192 6,176" fill="#34d399" />
+            <g transform="translate(0, 92)">
+              <rect x="-35" y="-14" width="70" height="28" rx="6" fill="#0a0f1c" stroke="#2dd4bf" stroke-width="1.5" />
+              <text x="0" y="5" fill="#2dd4bf" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700" text-anchor="middle">× 1.05</text>
+            </g>
+          </g>
+          <g transform="translate(550, 188)">
+            <line x1="0" y1="0" x2="0" y2="182" stroke="url(#v-arrow-grad)" stroke-width="3" stroke-linecap="round" />
+            <polygon points="-6,176 0,192 6,176" fill="#34d399" />
+            <g transform="translate(0, 92)">
+              <rect x="-35" y="-14" width="70" height="28" rx="6" fill="#0a0f1c" stroke="#2dd4bf" stroke-width="1.5" />
+              <text x="0" y="5" fill="#2dd4bf" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700" text-anchor="middle">× 1.05</text>
+            </g>
+          </g>
+          <g transform="translate(690, 188)">
+            <line x1="0" y1="0" x2="0" y2="182" stroke="url(#v-arrow-grad)" stroke-width="3" stroke-linecap="round" />
+            <polygon points="-6,176 0,192 6,176" fill="#34d399" />
+            <g transform="translate(0, 92)">
+              <rect x="-35" y="-14" width="70" height="28" rx="6" fill="#0a0f1c" stroke="#2dd4bf" stroke-width="1.5" />
+              <text x="0" y="5" fill="#2dd4bf" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700" text-anchor="middle">× 1.05</text>
+            </g>
+          </g>
+          <g transform="translate(186, 382)">
+            <rect width="588" height="152" rx="16" fill="#111a30" fill-opacity="0.35" stroke="#34d399" stroke-opacity="0.5" stroke-width="1.5" stroke-dasharray="5 7" />
+            <g transform="translate(154, 134)">
+              <rect width="280" height="34" rx="8" fill="#0a0f1c" stroke="#34d399" stroke-width="1.5" />
+              <circle cx="18" cy="17" r="4" fill="#34d399" />
+              <text x="148" y="22" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="12.5" font-weight="700" text-anchor="middle" letter-spacing="0.5">resultado: ingresos * 1.05</text>
+            </g>
+          </g>
+          <g transform="translate(210, 394)">
+            <rect width="120" height="96" rx="14" fill="url(#res-grad)" stroke="#34d399" stroke-width="2.5" />
+            <rect x="3" y="3" width="114" height="3.5" rx="2" fill="#34d399" />
+            <text x="12" y="22" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="600">[1]</text>
+            <text x="60" y="58" fill="#edf1fa" font-family="'JetBrains Mono', monospace" font-size="20" font-weight="700" text-anchor="middle">4410</text>
+          </g>
+          <g transform="translate(350, 394)">
+            <rect width="120" height="96" rx="14" fill="url(#res-grad)" stroke="#34d399" stroke-width="2.5" />
+            <rect x="3" y="3" width="114" height="3.5" rx="2" fill="#34d399" />
+            <text x="12" y="22" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="600">[2]</text>
+            <text x="60" y="58" fill="#edf1fa" font-family="'JetBrains Mono', monospace" font-size="18.5" font-weight="700" text-anchor="middle">4777.5</text>
+          </g>
+          <g transform="translate(490, 394)">
+            <rect width="120" height="96" rx="14" fill="url(#res-grad)" stroke="#34d399" stroke-width="2.5" />
+            <rect x="3" y="3" width="114" height="3.5" rx="2" fill="#34d399" />
+            <text x="12" y="22" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="600">[3]</text>
+            <text x="60" y="58" fill="#edf1fa" font-family="'JetBrains Mono', monospace" font-size="20" font-weight="700" text-anchor="middle">4305</text>
+          </g>
+          <g transform="translate(630, 394)">
+            <rect width="120" height="96" rx="14" fill="url(#res-grad)" stroke="#34d399" stroke-width="2.5" />
+            <rect x="3" y="3" width="114" height="3.5" rx="2" fill="#34d399" />
+            <text x="12" y="22" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="600">[4]</text>
+            <text x="60" y="58" fill="#edf1fa" font-family="'JetBrains Mono', monospace" font-size="20" font-weight="700" text-anchor="middle">5040</text>
+          </g>
+        </svg>
+        <figcaption>Ilustración de apoyo (generada con asistencia de IA): 4 flechas paralelas, no una detrás de otra — la misma operación <code>× 1.05</code> ocurre en las 4 posiciones al mismo tiempo.</figcaption>
+      </figure>
+
       <p style="color:var(--ts);font-size:.92rem"><b>Todavía no</b> vamos a extraer un elemento individual de un vector (<code>ingresos[1]</code>): eso, junto con más operaciones vectorizadas, es contenido de la Semana 02.</p>
     </section>
 
@@ -1060,6 +1677,35 @@ footer .foot-inner{ border-top:1px solid var(--border); padding-top:24px; displa
       document.querySelectorAll('.fade-in:not(.in)').forEach(function(el){ el.classList.add('in'); });
     }, 1500);
   });
+
+  /* ---------------- evaluador de juguete: Objetos y asignación (simulación en JS, no R real) ---------------- */
+  (function(){
+    var toyInput = document.getElementById('toyValue');
+    var toyBtn = document.getElementById('toyAssignBtn');
+    var envValueEl = document.getElementById('envValue');
+    var envEntry = envValueEl ? envValueEl.closest('.env-entry') : null;
+    var consoleEl = document.getElementById('toyConsole');
+    if(!(toyBtn && toyInput && envValueEl && consoleEl)) return;
+    function assign(){
+      var raw = toyInput.value.trim();
+      var n = Number(raw);
+      if(raw === '' || isNaN(n)) return;
+      var display = String(n);
+      envValueEl.textContent = display;
+      consoleEl.innerHTML =
+        '<div class="te-line"><span class="c-fn">ingresos_enero</span> <span class="c-op">&lt;-</span> <span class="c-num">' + display + '</span></div>' +
+        '<div class="te-line"><span class="c-fn">ingresos_enero</span></div>' +
+        '<div class="te-line c-out">#&gt; [1] ' + display + '</div>';
+      if(envEntry){
+        envEntry.classList.remove('flash');
+        void envEntry.offsetWidth; /* fuerza reflow para reiniciar la transición */
+        envEntry.classList.add('flash');
+        setTimeout(function(){ envEntry.classList.remove('flash'); }, 700);
+      }
+    }
+    toyBtn.addEventListener('click', assign);
+    toyInput.addEventListener('keydown', function(e){ if(e.key === 'Enter'){ e.preventDefault(); assign(); } });
+  })();
 
   /* ---------------- subnav interna: activar pestaña Guía si se llega por enlace ---------------- */
   document.querySelectorAll('.subnav a').forEach(function(a){

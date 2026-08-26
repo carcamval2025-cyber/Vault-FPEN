@@ -1,0 +1,199 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 640" width="100%" height="100%" role="img" aria-labelledby="actitle acdesc">
+  <title id="actitle">Aritmética vs Comparación en R</title>
+  <desc id="acdesc">Aritmética: dos números entran y sale un número. Comparación: dos valores entran y sale un valor lógico (TRUE/FALSE).</desc>
+  
+  <defs>
+    <!-- Background subtle grid pattern -->
+    <pattern id="grid-pattern-ac" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#4c9aff" stroke-width="1" stroke-opacity="0.04" />
+    </pattern>
+
+    <!-- Linear Gradients for Panels -->
+    <linearGradient id="panel-grad-ac" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#182645" stop-opacity="0.85" />
+      <stop offset="100%" stop-color="#111a30" stop-opacity="0.85" />
+    </linearGradient>
+
+    <!-- Arrow Gradient Arithmetic -->
+    <linearGradient id="arrow-grad-ar" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#f5a623" />
+      <stop offset="100%" stop-color="#4c9aff" />
+    </linearGradient>
+
+    <!-- Arrow Gradient Comparison -->
+    <linearGradient id="arrow-grad-cp" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#2dd4bf" />
+      <stop offset="100%" stop-color="#34d399" />
+    </linearGradient>
+
+    <!-- Radial Green Glow for TRUE light -->
+    <radialGradient id="true-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#34d399" stop-opacity="0.9" />
+      <stop offset="60%" stop-color="#34d399" stop-opacity="0.4" />
+      <stop offset="100%" stop-color="#34d399" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <!-- 1. Background Base -->
+  <rect width="960" height="640" fill="#0a0f1c" />
+  <rect width="960" height="640" fill="url(#grid-pattern-ac)" />
+
+  <!-- 2. Central Vertical Divider & Editorial Guides -->
+  <g fill="none" stroke-linecap="round">
+    <line x1="480" y1="50" x2="480" y2="590" stroke="#4c9aff" stroke-opacity="0.18" stroke-width="1.5" stroke-dasharray="4 8" />
+    <circle cx="480" cy="320" r="16" fill="#0a0f1c" stroke="#4c9aff" stroke-opacity="0.3" stroke-width="1.5" />
+    <circle cx="480" cy="320" r="4" fill="#4c9aff" fill-opacity="0.7" />
+  </g>
+
+  <!-- ============================================================== -->
+  <!-- LEFT HALF: ARITMÉTICA ("Dos números entran, un número sale")   -->
+  <!-- ============================================================== -->
+  <g transform="translate(48, 70)">
+    <!-- Panel Container -->
+    <rect width="404" height="500" rx="24" fill="url(#panel-grad-ac)" stroke="#4c9aff" stroke-opacity="0.28" stroke-width="1.5" />
+    <!-- Top Accent Bar (Blue) -->
+    <rect x="2" y="2" width="400" height="5" rx="2.5" fill="#4c9aff" />
+
+    <!-- Top Discrete Tag -->
+    <g transform="translate(24, 28)">
+      <rect width="110" height="26" rx="6" fill="#0a0f1c" stroke="#4c9aff" stroke-opacity="0.35" />
+      <circle cx="14" cy="13" r="3.5" fill="#4c9aff" />
+      <text x="64" y="18" fill="#4c9aff" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700" text-anchor="middle" letter-spacing="1">ARITMÉTICA</text>
+    </g>
+
+    <!-- Inputs Group (Left) -->
+    <!-- Input 1 (Top) -->
+    <g transform="translate(72, 140)">
+      <circle cx="0" cy="0" r="34" fill="#111a30" stroke="#f5a623" stroke-width="2.5" />
+      <circle cx="0" cy="0" r="28" fill="#182645" stroke="#f5a623" stroke-opacity="0.3" stroke-dasharray="3 4" />
+      <text x="0" y="7" fill="#f5a623" font-family="'JetBrains Mono', monospace" font-size="20" font-weight="800" text-anchor="middle">8</text>
+    </g>
+
+    <!-- Input 2 (Bottom) -->
+    <g transform="translate(72, 280)">
+      <circle cx="0" cy="0" r="34" fill="#111a30" stroke="#f5a623" stroke-width="2.5" />
+      <circle cx="0" cy="0" r="28" fill="#182645" stroke="#f5a623" stroke-opacity="0.3" stroke-dasharray="3 4" />
+      <text x="0" y="7" fill="#f5a623" font-family="'JetBrains Mono', monospace" font-size="20" font-weight="800" text-anchor="middle">3</text>
+    </g>
+
+    <!-- Converging Flow Lines -->
+    <g fill="none" stroke-linecap="round">
+      <path d="M 108 140 C 145 140 148 210 172 210" stroke="#f5a623" stroke-width="2.5" stroke-dasharray="4 4" />
+      <path d="M 108 280 C 145 280 148 210 172 210" stroke="#f5a623" stroke-width="2.5" stroke-dasharray="4 4" />
+    </g>
+
+    <!-- Central Operator Node (Arithmetic: +) -->
+    <g transform="translate(196, 210)">
+      <circle cx="0" cy="0" r="25" fill="#0a0f1c" stroke="#4c9aff" stroke-width="2.5" />
+      <!-- Plus Operator -->
+      <path d="M -8 0 H 8 M 0 -8 V 8" stroke="#4c9aff" stroke-width="3" stroke-linecap="round" />
+    </g>
+
+    <!-- Output Flow Arrow -->
+    <g transform="translate(221, 210)">
+      <line x1="0" y1="0" x2="48" y2="0" stroke="url(#arrow-grad-ar)" stroke-width="3" stroke-linecap="round" />
+      <polygon points="44,-6 56,0 44,6" fill="#4c9aff" />
+    </g>
+
+    <!-- Result Output Group (Right) - Same Numeric Type -->
+    <g transform="translate(324, 210)">
+      <!-- Outer Result Aura -->
+      <circle cx="0" cy="0" r="46" fill="#4c9aff" fill-opacity="0.08" />
+      <circle cx="0" cy="0" r="38" fill="#111a30" stroke="#4c9aff" stroke-width="3" />
+      <circle cx="0" cy="0" r="31" fill="#182645" stroke="#4c9aff" stroke-opacity="0.4" stroke-dasharray="3 4" />
+      <!-- Result Value -->
+      <text x="0" y="8" fill="#4c9aff" font-family="'JetBrains Mono', monospace" font-size="22" font-weight="800" text-anchor="middle">11</text>
+    </g>
+
+    <!-- Bottom Caption Pill -->
+    <g transform="translate(36, 420)">
+      <rect width="332" height="46" rx="12" fill="#0a0f1c" stroke="#4c9aff" stroke-opacity="0.25" />
+      <text x="166" y="28" fill="#8792ae" font-family="'JetBrains Mono', monospace" font-size="13" font-weight="600" text-anchor="middle">
+        número <tspan fill="#4c9aff">+</tspan> número <tspan fill="#4c9aff">→</tspan> <tspan fill="#4c9aff" font-weight="800">número</tspan>
+      </text>
+    </g>
+  </g>
+
+  <!-- ============================================================== -->
+  <!-- RIGHT HALF: COMPARACIÓN ("Dos valores entran, un sí/no sale")  -->
+  <!-- ============================================================== -->
+  <g transform="translate(508, 70)">
+    <!-- Panel Container -->
+    <rect width="404" height="500" rx="24" fill="url(#panel-grad-ac)" stroke="#2dd4bf" stroke-opacity="0.28" stroke-width="1.5" />
+    <!-- Top Accent Bar (Teal) -->
+    <rect x="2" y="2" width="400" height="5" rx="2.5" fill="#2dd4bf" />
+
+    <!-- Top Discrete Tag -->
+    <g transform="translate(24, 28)">
+      <rect width="124" height="26" rx="6" fill="#0a0f1c" stroke="#2dd4bf" stroke-opacity="0.35" />
+      <circle cx="14" cy="13" r="3.5" fill="#2dd4bf" />
+      <text x="70" y="18" fill="#2dd4bf" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700" text-anchor="middle" letter-spacing="1">COMPARACIÓN</text>
+    </g>
+
+    <!-- Inputs Group (Left) - Same base values -->
+    <!-- Input 1 (Top) -->
+    <g transform="translate(72, 140)">
+      <circle cx="0" cy="0" r="34" fill="#111a30" stroke="#f5a623" stroke-width="2.5" />
+      <circle cx="0" cy="0" r="28" fill="#182645" stroke="#f5a623" stroke-opacity="0.3" stroke-dasharray="3 4" />
+      <text x="0" y="7" fill="#f5a623" font-family="'JetBrains Mono', monospace" font-size="20" font-weight="800" text-anchor="middle">8</text>
+    </g>
+
+    <!-- Input 2 (Bottom) -->
+    <g transform="translate(72, 280)">
+      <circle cx="0" cy="0" r="34" fill="#111a30" stroke="#f5a623" stroke-width="2.5" />
+      <circle cx="0" cy="0" r="28" fill="#182645" stroke="#f5a623" stroke-opacity="0.3" stroke-dasharray="3 4" />
+      <text x="0" y="7" fill="#f5a623" font-family="'JetBrains Mono', monospace" font-size="20" font-weight="800" text-anchor="middle">3</text>
+    </g>
+
+    <!-- Converging Flow Lines -->
+    <g fill="none" stroke-linecap="round">
+      <path d="M 108 140 C 145 140 148 210 172 210" stroke="#f5a623" stroke-width="2.5" stroke-dasharray="4 4" />
+      <path d="M 108 280 C 145 280 148 210 172 210" stroke="#f5a623" stroke-width="2.5" stroke-dasharray="4 4" />
+    </g>
+
+    <!-- Central Comparator Node (Comparison: >) -->
+    <g transform="translate(196, 210)">
+      <circle cx="0" cy="0" r="25" fill="#0a0f1c" stroke="#2dd4bf" stroke-width="2.5" />
+      <!-- Greater-than Operator -->
+      <path d="M -5 -8 L 5 0 L -5 8" fill="none" stroke="#2dd4bf" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+    </g>
+
+    <!-- Output Flow Arrow -->
+    <g transform="translate(221, 210)">
+      <line x1="0" y1="0" x2="48" y2="0" stroke="url(#arrow-grad-cp)" stroke-width="3" stroke-linecap="round" />
+      <polygon points="44,-6 56,0 44,6" fill="#34d399" />
+    </g>
+
+    <!-- Result Output Group (Right) - Binary Signal / Two-State Beacon -->
+    <g transform="translate(324, 210)">
+      <!-- Beacon Housing Track -->
+      <rect x="-24" y="-54" width="48" height="108" rx="24" fill="#0a0f1c" stroke="#34d399" stroke-width="2.5" />
+
+      <!-- Top Light: TRUE (Illuminated Green with Glow) -->
+      <circle cx="0" cy="-27" r="26" fill="url(#true-glow)" />
+      <circle cx="0" cy="-27" r="16" fill="#34d399" />
+      <circle cx="0" cy="-27" r="10" fill="#edf1fa" fill-opacity="0.85" />
+
+      <!-- Divider internal slit -->
+      <line x1="-14" y1="0" x2="14" y2="0" stroke="#182645" stroke-width="2" />
+
+      <!-- Bottom Light: FALSE (Dim / Offline) -->
+      <circle cx="0" cy="27" r="14" fill="#182645" stroke="#ff6b6b" stroke-opacity="0.35" stroke-width="1.5" />
+      <circle cx="0" cy="27" r="5" fill="#111a30" />
+
+      <!-- Result Label Badge below -->
+      <g transform="translate(0, 72)">
+        <rect x="-32" y="-12" width="64" height="24" rx="6" fill="#0a0f1c" stroke="#34d399" stroke-width="1.5" />
+        <text x="0" y="4.5" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="800" text-anchor="middle">TRUE</text>
+      </g>
+    </g>
+
+    <!-- Bottom Caption Pill -->
+    <g transform="translate(36, 420)">
+      <rect width="332" height="46" rx="12" fill="#0a0f1c" stroke="#2dd4bf" stroke-opacity="0.25" />
+      <text x="166" y="28" fill="#8792ae" font-family="'JetBrains Mono', monospace" font-size="13" font-weight="600" text-anchor="middle">
+        valor <tspan fill="#2dd4bf">&gt;</tspan> valor <tspan fill="#34d399">→</tspan> <tspan fill="#34d399" font-weight="800">logical</tspan>
+      </text>
+    </g>
+  </g>
+</svg>
