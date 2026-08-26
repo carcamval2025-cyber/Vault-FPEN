@@ -35,6 +35,15 @@ SORT numero ASC
 
 `FPEN_Semana01_R_Como_Herramienta_Para_Pensar.html` (26 de agosto de 2026) — ver detalle en [[Sistema de Diseño - Tema R Notebook]]. Estado `borrador`: cumple todas las reglas del documento maestro (verificado con capturas de pantalla y revisión automática de dependencias externas), pero todavía no lo revisa Carlos ni se usa en clase — pasa a `revisado`/`aprobado` cuando eso ocurra.
 
+## Publicación (GitHub Pages)
+
+Desde el 26 de agosto de 2026, cada material publicado también vive en `docs/` en la raíz del repo `Vault-FPEN`, para servirse como sitio estático vía GitHub Pages (Settings → Pages → Deploy from a branch → `main`/`master`, carpeta `/docs`, todavía pendiente de activar por Carlos). Estructura:
+
+- `docs/index.html` — índice central de las 12 semanas (mismo Tema "R Notebook"), con Semana 01 enlazada y 02-12 marcadas "Próxima".
+- `docs/semana-NN/index.html` — copia curada de cada material semanal, ya pasada por el [[Sistema de Diseño - Tema R Notebook|checklist de curación]].
+
+Cada semana nueva se agrega igual: su carpeta `docs/semana-NN/` + una tarjeta nueva en `docs/index.html` (cambiar su badge de "Próxima" a "Disponible" y agregar el `href`).
+
 ## Notas relacionadas
 
 [[Home]] · [[Mapa Curricular]] · [[Bitácora de Aprendizaje]] · [[Plantilla - Revisión de Material]]

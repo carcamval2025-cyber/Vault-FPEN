@@ -1,3 +1,4 @@
+
 ---
 tags: [inicio, moc]
 aliases: [Home, Índice, Inicio]
@@ -6,11 +7,14 @@ banner: "![[home.svg]]"
 
 # Vault FPEN
 
-**Repositorio:** [github.com/carcamval2025-cyber/Vault-FPEN](https://github.com/carcamval2025-cyber/Vault-FPEN) (privado) — versionado desde el 25 de agosto de 2026.
+**Repositorio:** [github.com/carcamval2025-cyber/Vault-FPEN](https://github.com/carcamval2025-cyber/Vault-FPEN) (público) — versionado desde el 25 de agosto de 2026.
 
 Base de conocimiento persistente para **Fundamentos de Programación para Economía y Negocios** (ESEN · Ciclo III/2026 · catedrático Alvin Javier Portillo Tiliano) y para el trabajo conjunto entre Carlos Navas y Claude en la creación de materiales de estudio (guías, laboratorios, playgrounds de R y cheat sheets en HTML).
 
 Este vault no reemplaza al Proyecto de Claude — el Proyecto sigue siendo la fuente de las instrucciones maestras y el lugar donde se generan los archivos `.html`. Este vault es la **memoria de largo plazo alrededor de ese trabajo**: qué dice el programa, qué se ha construido, qué funcionó, qué no, y qué se ajustó. Se abre en Obsidian junto al Proyecto, no en su lugar.
+
+> [!info] ¿Usas Antigravity, Codex u otro agente que no sea Claude?
+> Este vault también tiene [`AGENTS.md`](AGENTS.md) en la raíz — la misma orientación que esta nota, pero en markdown plano sin wikilinks ni Dataview, para que cualquier agente de IA la lea sin depender de plugins de Obsidian.
 
 ## Por qué existe
 
