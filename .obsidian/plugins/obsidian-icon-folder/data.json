@@ -6,11 +6,11 @@
     "emojiStyle": "native",
     "iconColor": null,
     "recentlyUsedIcons": [
+      "LiHome",
+      "LiCog",
       "LiLayoutTemplate",
       "LiFolderCode",
-      "LiBrainCircuit",
-      "LiRefreshCcwDot",
-      "LiCalendarDays"
+      "LiBrainCircuit"
     ],
     "recentlyUsedIconsSize": 5,
     "rules": [],
@@ -57,5 +57,13 @@
   "05 Plantillas": {
     "iconName": "LiLayoutTemplate",
     "iconColor": "#a88c00"
+  },
+  "assets": {
+    "iconName": "LiCog",
+    "iconColor": "#042bf1"
+  },
+  "Home.md": {
+    "iconName": "LiHome",
+    "iconColor": "#99ff00"
   }
 }
