@@ -77,6 +77,26 @@ Técnicas a aplicar por sección de concepto, en las 12 semanas (no solo donde y
 
 Piloto: se probó primero en una sola sección de la Guía de la Semana 01 antes de generalizarse a las demás secciones o semanas — ver [[2026-08-26 - Piloto de sustitución de lectura (Semana 01)]] para el resultado y qué se ajustó.
 
+## Ilustraciones SVG generadas con IA (26 de agosto de 2026)
+
+Complemento válido a la técnica 1 de la sección anterior ("diagramar el comportamiento invisible... SVG inline"): además de los diagramas construidos a mano en CSS/SVG dentro del propio HTML, se puede pedir a una herramienta externa de generación de imágenes (en este curso, Antigravity, fuera de esta sesión) que genere una ilustración SVG más elaborada para el mismo concepto. Esta sección documenta el flujo que hay que seguir cada vez que se haga esto, no solo el resultado de la primera vez — los agentes futuros deben repetir este proceso, no solo copiar el patrón de inserción.
+
+**Regla de formato, no negociable:** la ilustración se incrusta como **SVG inline**, nunca como `<img src="ruta/al/archivo.svg">`. El documento maestro exige que cada sesión sea un solo archivo `.html` autocontenido y offline (ver "Formato de entrega" abajo); el archivo ni siquiera usa una referencia externa para su propio favicon (va como `data:` URI). Antes de agregar la primera ilustración se debe verificar que el archivo objetivo siga sin dependencias externas — si alguna vez esa premisa cambia, esta regla habría que revisarla explícitamente, no asumir que sigue aplicando.
+
+**Flujo a seguir (verificar en cada paso, no solo al final):**
+
+1. **Prompt específico y literal**, no una descripción vaga del concepto. Incluir: la paleta exacta del documento (hex de cada token), qué NO debe aparecer (nombrar explícitamente los motivos genéricos de IA que hay que evitar — ver el hallazgo de abajo), y si es posible adjuntar como referencia visual una ilustración ya aprobada del mismo curso para igualar estilo exacto, no solo paleta.
+2. **Nunca integrar a ciegas lo que devuelve la herramienta externa.** Verificar el archivo real primero: confirmar que existe en la ruta correcta (no una copia vieja en otra carpeta), que el SVG es válido, y renderizarlo a PNG (Playwright con el SVG embebido en una página mínima) para inspeccionarlo visualmente antes de tocar el HTML.
+3. **Evaluar fidelidad al concepto, no solo si "se ve bien".** Una ilustración pulida visualmente puede no comunicar el concepto pedido. Hallazgo real de la Semana 01: los primeros 2 de 4 SVG pedidos para "Vectores" salieron como iconografía genérica de "dashboard conectado" (pantallas, gráficos de barras/líneas dentro de tarjetas) en vez de la fila de cajas conectadas que pedía el prompt — un motivo de IA por defecto que se cuela incluso con un prompt razonable si no se prohíbe explícitamente. Los otros 2 (Tipos de datos, Operadores) sí coincidieron bien al primer intento.
+4. **Si la fidelidad falla, regenerar con un prompt más restrictivo que nombre explícitamente el motivo genérico a evitar**, en vez de aceptar el resultado igual o descartar la ilustración por completo. En la Semana 01 esto funcionó: el segundo prompt para "Vectores" prohibió explícitamente "iconos de pantallas, gráficas de barras o de líneas como elemento decorativo" y describió la composición exacta (4 cajas idénticas, subíndices `[1]`-`[4]`, mismos valores que el diagrama CSS ya existente) — el resultado coincidió con el concepto al segundo intento.
+5. **Reportar la evaluación de fidelidad al usuario antes de integrar**, con las previsualizaciones, cuando el resultado sea desigual entre varias piezas de un mismo pedido — no integrar automáticamente solo porque una instrucción (propia o de un documento externo tipo "handoff") lo pida.
+6. **Insertar como complemento, no como reemplazo**, del diagrama ya construido a mano para esa misma sección — inmediatamente después de él, dentro de un `<figure class="concept-figure">` (componente CSS nuevo: mismo degradado/borde que `.cpanel`, para que se lea como la misma familia visual, con `<figcaption>` debajo).
+7. **Rotular la ilustración como generada con IA** en el propio `<figcaption>` visible — no queda oculto ni se presenta como si fuera un dibujo hecho a mano para el curso.
+8. **Verificar colisión de `id` internos** (gradientes, patrones, `<title>`/`<desc>`) entre las distintas piezas SVG incrustadas y contra los `id` ya existentes en el archivo — cada SVG generado externamente trae sus propios nombres de `id`, y no hay garantía de que sean únicos entre piezas distintas.
+9. **Verificación final igual que cualquier otro cambio de esta sección**: Playwright en escritorio y móvil, sin desbordamiento horizontal, en ambos archivos (`FPEN_SemanaNN_...html` y su copia `docs/semana-NN/index.html`).
+
+Caso completo (las 4 ilustraciones de la Semana 01, incluyendo el prompt de regeneración exacto que corrigió el problema de "Vectores") en [[2026-08-26 - Integración de ilustraciones SVG generadas con IA (Semana 01)]].
+
 ## Ejecución real vs. simulada en el R Playground
 
 R no puede ejecutarse de forma confiable con JavaScript vanilla. Dos caminos válidos, **nunca mezclados en el mismo archivo sin dejarlo explícito**:

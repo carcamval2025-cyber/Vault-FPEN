@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,800&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;1,7..72,400&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='2' y='2' width='20' height='20' rx='5' fill='%230a0f1c' stroke='%234c9aff' stroke-width='1.6'/%3E%3Cpath d='M8 16V8m4 8V8m4 8v-4a2 2 0 0 0-2-2h-2' stroke='%234c9aff' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E" />
+<link rel="icon" href="../assets/brand/fpen-favicon.svg" type="image/svg+xml" />
 <style>
 /* ===================================================================
    FPEN. Semana 01. Tema "R Notebook"
@@ -67,9 +67,13 @@ code, pre, .mono{ font-family:var(--font-mono); }
   border-bottom:1px solid var(--border);
 }
 .topnav-inner{ display:flex; align-items:center; gap:18px; padding:12px clamp(16px,4vw,40px); max-width:var(--maxw); margin:0 auto; }
-.brand{ display:flex; align-items:center; gap:10px; font-family:var(--font-display); font-weight:700; font-size:1.05rem; white-space:nowrap; color:var(--tp); }
-.brand svg{ flex:none; }
-.brand .sem{ color:var(--ts); font-family:var(--font-mono); font-size:.75rem; font-weight:500; }
+.brand{ display:flex; align-items:center; gap:10px; color:var(--tp); text-decoration:none; flex-shrink:0; }
+.brand img{ display:block; width:clamp(140px, 16vw, 185px); height:auto; }
+.brand .sem{ color:var(--ts); font-family:var(--font-mono); font-size:.76rem; font-weight:600; padding:3px 8px; border-radius:var(--r-pill); border:1px solid var(--border-strong); background:rgba(255,255,255,0.02); white-space:nowrap; }
+@media (max-width:560px){
+  .brand img{ width:120px; }
+  .brand .sem{ display:none; }
+}
 
 .tabs{ display:flex; gap:6px; flex:1; overflow-x:auto; scrollbar-width:none; }
 .tabs::-webkit-scrollbar{ display:none; }
@@ -471,9 +475,9 @@ footer .foot-inner{ border-top:1px solid var(--border); padding-top:24px; displa
 <!-- ============================================================ NAV ============================================================ -->
 <nav class="topnav">
   <div class="topnav-inner">
-    <a class="brand" href="../" style="text-decoration:none" aria-label="Volver al índice del curso">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" stroke="#4c9aff" stroke-width="1.6"/><path d="M8 16V8m4 8V8m4 8v-4a2 2 0 0 0-2-2h-2" stroke="#4c9aff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      FPEN <span class="sem">· Semana 01</span>
+    <a class="brand" href="../" aria-label="Volver al índice de FPEN">
+      <img src="../assets/brand/fpen-logo.svg" width="420" height="96" alt="FPEN, Programación, Economía y Negocios">
+      <span class="sem">· Semana 01</span>
     </a>
     <div class="tabs" role="tablist" aria-label="Secciones de la sesión">
       <button class="pill" id="tab-guia" role="tab" aria-selected="true" aria-controls="panel-guia" data-tab="guia"><span class="dot" style="background:var(--blue)"></span>Guía de Estudio</button>
