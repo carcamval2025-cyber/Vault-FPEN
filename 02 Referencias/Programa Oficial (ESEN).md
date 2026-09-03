@@ -5,7 +5,7 @@ banner: "![[referencias.svg]]"
 
 # Programa Oficial (ESEN)
 
-Extracto organizado del documento original del Proyecto: `Programa - Fundamentos de Programación para Economía y Negocios - 2026.docx`, catedrático Alvin Javier Portillo Tiliano. Esta nota existe para que el resto del vault (en particular `01 Semanas/`) pueda enlazar al texto oficial completo sin duplicarlo en cada nota semanal. Las notas de `00 Programa/` y `01 Semanas/` son la versión curada y de trabajo; esta nota es la fuente primaria casi textual.
+Extracto organizado del documento original: [`Programa - Fundamentos de Programación para Economía y Negocios - 2026.docx`](Fuentes/Programa%20-%20Fundamentos%20de%20Programación%20para%20Economía%20y%20Negocios%20-%202026.docx) (también vive en el Claude Project del curso; copia incorporada a este vault el 2026-09-03), catedrático Alvin Javier Portillo Tiliano. Esta nota existe para que el resto del vault (en particular `01 Semanas/`) pueda enlazar al texto oficial completo sin duplicarlo en cada nota semanal. Las notas de `00 Programa/` y `01 Semanas/` son la versión curada y de trabajo; esta nota es la fuente primaria casi textual.
 
 Sitio de clases (Moodle): https://moodle.esen.edu.sv/
 

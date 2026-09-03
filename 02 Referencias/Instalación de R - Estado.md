@@ -4,7 +4,7 @@ tags: [referencia, instalacion]
 
 # Instalación de R — Estado
 
-Archivo original: `20255766 - Carlos Navas - Instalación de R.docx` (carpeta del curso, creado 2026-08-24). No es una guía de instalación — es la **entrega/prueba de instalación de Carlos**, con un único elemento: una captura de pantalla de RStudio.
+Archivo original: [`20255766 - Carlos Navas - Instalación de R.docx`](Fuentes/20255766%20-%20Carlos%20Navas%20-%20Instalación%20de%20R.docx) (incorporado al vault el 2026-09-03, creado originalmente 2026-08-24). No es una guía de instalación — es la **entrega/prueba de instalación de Carlos**, con un único elemento: una captura de pantalla de RStudio.
 
 ## Qué muestra la captura
 
@@ -16,7 +16,7 @@ Archivo original: `20255766 - Carlos Navas - Instalación de R.docx` (carpeta de
 
 - La instalación de R y RStudio de la Semana 1 (contenidos → [[Semana 01]]) **ya está resuelta** para Carlos, un día antes de que este vault se creara (24 → 25 de agosto de 2026).
 - No hay evidencia en la captura de que exista todavía un **proyecto de RStudio** (`.Rproj`) dedicado al curso — al construir el primer laboratorio, vale la pena que el material recomiende crear uno, ya que ninguna sesión previa lo dejó configurado.
-- El archivo hermano `Captura de pantalla 2026-08-24 a la(s) 4.30.31 p. m..png` en la misma carpeta es, por nombre y fecha, casi con seguridad la misma captura o una relacionada — no se incorporó a este vault todavía.
+- El archivo hermano [`Captura de pantalla 2026-08-24 a la(s) 4.30.31 p. m..png`](Fuentes/Captura%20de%20pantalla%202026-08-24%20a%20la(s)%204.30.31%20p.%20m..png) en la misma carpeta es, por nombre y fecha, casi con seguridad la misma captura o una relacionada — incorporado junto con el docx el 2026-09-03 (ver [[2026-09-03 - Incorporación de archivos sueltos de la carpeta del curso]]).
 
 ## Notas relacionadas
 

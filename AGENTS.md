@@ -52,7 +52,8 @@ es mejor preguntar al usuario que inventar contenido nuevo.
 - `01 Semanas/` — una nota por semana (`Semana 01` … `Semana 12`), con su propio
   contenido, funciones nuevas permitidas y estado del material.
 - `02 Referencias/` — notas-resumen de los documentos originales del curso (programa
-  oficial, guía de instalación de R, extractos de R4DS).
+  oficial, guía de instalación de R, extractos de R4DS). `Fuentes/` contiene los
+  documentos originales mismos (`.docx`, capturas) que esas notas resumen.
 - `03 Aprendizaje del Agente/` — `Bitácora de Aprendizaje.md` (registro cronológico de
   qué funcionó y qué no), `Errores Comunes a Evitar.md`, `Patrones que Funcionan
   Bien.md`, `Feedback de Carlos.md`. Revisar antes de generar material nuevo.
@@ -60,6 +61,8 @@ es mejor preguntar al usuario que inventar contenido nuevo.
   `.html` generado, su estado y notas asociadas.
 - `05 Plantillas/` — plantillas de nota semanal, entrada de bitácora y revisión de
   material.
+- `06 Código R/` — código de R propio de Carlos (scripts de cada sesión de clase);
+  `Entregas/` contiene las guías/entregas ya resueltas y evaluadas.
 - `assets/banners/` — SVGs de banner para Obsidian (no relevantes fuera de Obsidian).
 - `docs/` — sitio estático publicado en GitHub Pages una vez configurado (índice +
   una carpeta por semana disponible). Repo: `github.com/carcamval2025-cyber/Vault-FPEN`
