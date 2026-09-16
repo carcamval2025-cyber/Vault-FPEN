@@ -13,7 +13,9 @@ Tabla de seguimiento de cada archivo `.html` generado para el curso (`FPEN_Seman
 
 | Semana | Archivo | Fecha | Estado | Bitácora | Feedback |
 |---|---|---|---|---|---|
-| 01 | `FPEN_Semana01_R_Como_Herramienta_Para_Pensar.html` | 2026-08-26 | `borrador` | [[2026-08-26 - Primer material HTML (Semana 01)]] | [[2026-08-26 - Aprobación de identidad visual FPEN]] *(aprobación visual; revisión completa pendiente)* |
+| 01 | `FPEN_Semana01_R_Como_Herramienta_Para_Pensar.html` | 2026-08-26 | `aprobado` | [[2026-08-26 - Primer material HTML (Semana 01)]] | [[2026-08-26 - Aprobación de identidad visual FPEN]] |
+| 01-02 (C1) | `FPEN_Control01_Guia_de_Lectura_y_Analisis.html` | 2026-09-16 | `aprobado` | [[2026-09-16 - Control 01 y Suite de SVGs]] | Aprobado con suite de diagramas SVG independientes |
+| 01-02 (C1) | `FPEN_Control01_Repaso_y_Simulacro.html` | 2026-09-16 | `aprobado` | [[2026-09-16 - Control 01 y Suite de SVGs]] | Aprobado con webR en vivo y dataset CSV descargable |
 
 **Estado** usa siempre uno de: `borrador` · `revisado` · `aprobado` · `en uso en clase`.
 

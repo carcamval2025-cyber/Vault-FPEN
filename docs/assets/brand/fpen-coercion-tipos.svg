@@ -1,0 +1,203 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 640" width="100%" height="100%" role="img" aria-labelledby="ctTitle ctDesc">
+  <title id="ctTitle">Jerarquía de Coerción Implícita de Tipos de Datos en R</title>
+  <desc id="ctDesc">Escalera de conversión automática de tipos en vectores atómicos: logical a integer, a double, a character; y ejemplos prácticos de coerción aritmética.</desc>
+
+  <defs>
+    <!-- Background subtle grid pattern -->
+    <pattern id="grid-pattern-ct" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#4c9aff" stroke-width="1" stroke-opacity="0.035" />
+    </pattern>
+
+    <!-- Gradients -->
+    <linearGradient id="panel-ct-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#182645" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#111a30" stop-opacity="0.95" />
+    </linearGradient>
+
+    <!-- Type Card Gradients -->
+    <linearGradient id="card-lgl" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#2a1f44" />
+      <stop offset="100%" stop-color="#181329" />
+    </linearGradient>
+
+    <linearGradient id="card-int" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#163836" />
+      <stop offset="100%" stop-color="#0e2120" />
+    </linearGradient>
+
+    <linearGradient id="card-dbl" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#3d2d14" />
+      <stop offset="100%" stop-color="#241a0b" />
+    </linearGradient>
+
+    <linearGradient id="card-chr" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#153b27" />
+      <stop offset="100%" stop-color="#0c2418" />
+    </linearGradient>
+  </defs>
+
+  <!-- Base background -->
+  <rect width="960" height="640" fill="#0a0f1c" />
+  <rect width="960" height="640" fill="url(#grid-pattern-ct)" />
+
+  <!-- Top Title & Badge -->
+  <g transform="translate(60, 36)">
+    <rect width="230" height="26" rx="13" fill="#111a30" stroke="#a78bfa" stroke-opacity="0.4" stroke-width="1.2" />
+    <circle cx="16" cy="13" r="4" fill="#a78bfa" />
+    <text x="32" y="17" fill="#a78bfa" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" letter-spacing="0.5">REGLA DE HOMOGENEIDAD</text>
+    <text x="0" y="56" fill="#edf1fa" font-family="'Fraunces', Georgia, serif" font-size="24" font-weight="700">Jerarquía de Coerción Implícita en R</text>
+    <text x="0" y="80" fill="#8792ae" font-family="'JetBrains Mono', monospace" font-size="13">Si mezclas tipos en un vector, R promueve silenciosamente al tipo más flexible sin arrojar error</text>
+  </g>
+
+  <!-- ============================================================== -->
+  <!-- 1. LA ESCALERA DE COERCIÓN (4 TARJETAS CONECTADAS)              -->
+  <!-- ============================================================== -->
+  <!-- Total width: 4 * 180 + 3 * 40 = 720 + 120 = 840. Offset x = 60 -->
+  <g transform="translate(60, 135)">
+    <!-- Hierarchy Flow Label -->
+    <text x="0" y="-10" fill="#8792ae" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="600">
+      ← MÁS ESTRICTO (MENOR INFORMACIÓN)  •  MÁS FLEXIBLE (MAYOR CAPACIDAD) →
+    </text>
+
+    <!-- CARD 1: LOGICAL -->
+    <g transform="translate(0, 10)">
+      <rect width="180" height="150" rx="12" fill="url(#card-lgl)" stroke="#a78bfa" stroke-opacity="0.5" stroke-width="1.5" />
+      <rect x="14" y="14" width="70" height="20" rx="10" fill="rgba(167,139,250,0.15)" />
+      <text x="49" y="28" fill="#a78bfa" font-family="'JetBrains Mono', monospace" font-size="9.5" font-weight="700" text-anchor="middle">&lt;logical&gt;</text>
+      <text x="14" y="60" fill="#edf1fa" font-family="'JetBrains Mono', monospace" font-size="16" font-weight="700">logical</text>
+      <text x="14" y="84" fill="#a78bfa" font-family="'JetBrains Mono', monospace" font-size="13">TRUE, FALSE</text>
+      <text x="14" y="112" fill="#8792ae" font-family="'JetBrains Mono', monospace" font-size="11">Solo 2 estados</text>
+      <text x="14" y="130" fill="#8792ae" font-family="'JetBrains Mono', monospace" font-size="10.5">Coerción: 1 / 0</text>
+    </g>
+
+    <!-- Connector 1 -> 2 -->
+    <g transform="translate(180, 75)">
+      <line x1="8" y1="10" x2="32" y2="10" stroke="#4c9aff" stroke-width="2" stroke-linecap="round" />
+      <polygon points="36,10 28,6 28,14" fill="#4c9aff" />
+    </g>
+
+    <!-- CARD 2: INTEGER -->
+    <g transform="translate(220, 10)">
+      <rect width="180" height="150" rx="12" fill="url(#card-int)" stroke="#2dd4bf" stroke-opacity="0.5" stroke-width="1.5" />
+      <rect x="14" y="14" width="68" height="20" rx="10" fill="rgba(45,212,191,0.15)" />
+      <text x="48" y="28" fill="#2dd4bf" font-family="'JetBrains Mono', monospace" font-size="9.5" font-weight="700" text-anchor="middle">&lt;integer&gt;</text>
+      <text x="14" y="60" fill="#edf1fa" font-family="'JetBrains Mono', monospace" font-size="16" font-weight="700">integer</text>
+      <text x="14" y="84" fill="#2dd4bf" font-family="'JetBrains Mono', monospace" font-size="13">1L, 2L, 100L</text>
+      <text x="14" y="112" fill="#8792ae" font-family="'JetBrains Mono', monospace" font-size="11">Números enteros</text>
+      <text x="14" y="130" fill="#8792ae" font-family="'JetBrains Mono', monospace" font-size="10.5">Sufijo 'L' explícito</text>
+    </g>
+
+    <!-- Connector 2 -> 3 -->
+    <g transform="translate(400, 75)">
+      <line x1="8" y1="10" x2="32" y2="10" stroke="#4c9aff" stroke-width="2" stroke-linecap="round" />
+      <polygon points="36,10 28,6 28,14" fill="#4c9aff" />
+    </g>
+
+    <!-- CARD 3: DOUBLE -->
+    <g transform="translate(440, 10)">
+      <rect width="180" height="150" rx="12" fill="url(#card-dbl)" stroke="#f5a623" stroke-opacity="0.5" stroke-width="1.5" />
+      <rect x="14" y="14" width="65" height="20" rx="10" fill="rgba(245,166,35,0.15)" />
+      <text x="46" y="28" fill="#f5a623" font-family="'JetBrains Mono', monospace" font-size="9.5" font-weight="700" text-anchor="middle">&lt;double&gt;</text>
+      <text x="14" y="60" fill="#edf1fa" font-family="'JetBrains Mono', monospace" font-size="16" font-weight="700">double</text>
+      <text x="14" y="84" fill="#f5a623" font-family="'JetBrains Mono', monospace" font-size="13">3.14, 2500, 0.5</text>
+      <text x="14" y="112" fill="#8792ae" font-family="'JetBrains Mono', monospace" font-size="11">Continuo / decimal</text>
+      <text x="14" y="130" fill="#8792ae" font-family="'JetBrains Mono', monospace" font-size="10.5">Por defecto en R</text>
+    </g>
+
+    <!-- Connector 3 -> 4 -->
+    <g transform="translate(620, 75)">
+      <line x1="8" y1="10" x2="32" y2="10" stroke="#4c9aff" stroke-width="2" stroke-linecap="round" />
+      <polygon points="36,10 28,6 28,14" fill="#4c9aff" />
+    </g>
+
+    <!-- CARD 4: CHARACTER (ABSORBENTE) -->
+    <g transform="translate(660, 10)">
+      <rect width="180" height="150" rx="12" fill="url(#card-chr)" stroke="#34d399" stroke-opacity="0.8" stroke-width="2" />
+      <rect x="14" y="14" width="80" height="20" rx="10" fill="rgba(52,211,153,0.15)" />
+      <text x="54" y="28" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="9.5" font-weight="700" text-anchor="middle">&lt;character&gt;</text>
+      <text x="14" y="60" fill="#edf1fa" font-family="'JetBrains Mono', monospace" font-size="16" font-weight="700">character</text>
+      <text x="14" y="84" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="13">"PIB", "25", "TRUE"</text>
+      <text x="14" y="112" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="600">Tipo universal</text>
+      <text x="14" y="130" fill="#8792ae" font-family="'JetBrains Mono', monospace" font-size="10.5">Absorbe a todos</text>
+    </g>
+  </g>
+
+  <!-- ============================================================== -->
+  <!-- 2. EJEMPLOS PRÁCTICOS EN PARALELO                              -->
+  <!-- ============================================================== -->
+  <g transform="translate(60, 325)">
+    <!-- LEFT BOX: CASO DE CONTAMINACIÓN SILENCIOSA -->
+    <g transform="translate(0, 0)">
+      <rect width="405" height="255" rx="14" fill="url(#panel-ct-grad)" stroke="#ff6b6b" stroke-opacity="0.3" stroke-width="1.5" />
+      <rect x="18" y="18" width="170" height="22" rx="11" fill="rgba(255,107,107,0.12)" />
+      <text x="103" y="33" fill="#ff6b6b" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="700" text-anchor="middle">CONTAMINACIÓN DE TIPO</text>
+
+      <text x="18" y="66" fill="#edf1fa" font-family="'JetBrains Mono', monospace" font-size="13" font-weight="700">
+        <tspan fill="#4c9aff">v</tspan> <tspan fill="#2dd4bf">&lt;-</tspan> <tspan fill="#4c9aff">c</tspan>(<tspan fill="#a78bfa">TRUE</tspan>, <tspan fill="#f5a623">45.5</tspan>, <tspan fill="#34d399">"Alto"</tspan>)
+      </text>
+
+      <!-- Conversion stages -->
+      <g transform="translate(18, 86)">
+        <rect width="369" height="78" rx="8" fill="#0d1424" stroke="rgba(237,241,250,0.08)" stroke-width="1" />
+        <text x="16" y="24" fill="#8792ae" font-family="'JetBrains Mono', monospace" font-size="11.5">
+          1. <tspan fill="#a78bfa">TRUE</tspan> → coerción a <tspan fill="#f5a623">1.0</tspan> (por el 45.5)
+        </text>
+        <text x="16" y="46" fill="#8792ae" font-family="'JetBrains Mono', monospace" font-size="11.5">
+          2. <tspan fill="#f5a623">1.0</tspan> y <tspan fill="#f5a623">45.5</tspan> → coerción a <tspan fill="#34d399">"1"</tspan> y <tspan fill="#34d399">"45.5"</tspan>
+        </text>
+        <text x="16" y="68" fill="#ff6b6b" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="600">
+          → El string "Alto" colapsa todo a character
+        </text>
+      </g>
+
+      <!-- Result line -->
+      <g transform="translate(18, 178)">
+        <text x="0" y="20" fill="#8792ae" font-family="'JetBrains Mono', monospace" font-size="11.5">Resultado final en R:</text>
+        <rect x="0" y="28" width="369" height="34" rx="6" fill="#1a1420" stroke="#34d399" stroke-opacity="0.4" stroke-width="1" />
+        <text x="184" y="50" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700" text-anchor="middle">
+          c("TRUE", "45.5", "Alto")
+        </text>
+      </g>
+    </g>
+
+    <!-- RIGHT BOX: COERCIÓN ARITMÉTICA ÚTIL (ECONOMÍA) -->
+    <g transform="translate(435, 0)">
+      <rect width="405" height="255" rx="14" fill="url(#panel-ct-grad)" stroke="#34d399" stroke-opacity="0.3" stroke-width="1.5" />
+      <rect x="18" y="18" width="165" height="22" rx="11" fill="rgba(52,211,153,0.12)" />
+      <text x="100" y="33" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="700" text-anchor="middle">COERCIÓN ARITMÉTICA</text>
+
+      <text x="18" y="66" fill="#edf1fa" font-family="'JetBrains Mono', monospace" font-size="13" font-weight="700">
+        <tspan fill="#a78bfa">cumple</tspan> <tspan fill="#4c9aff">&lt;-</tspan> <tspan fill="#4c9aff">c</tspan>(<tspan fill="#a78bfa">TRUE, FALSE, TRUE, TRUE</tspan>)
+      </text>
+
+      <!-- Two trick boxes: sum() and mean() -->
+      <g transform="translate(18, 86)">
+        <!-- sum() -->
+        <rect width="369" height="66" rx="8" fill="#0d1424" stroke="rgba(237,241,250,0.08)" stroke-width="1" />
+        <text x="14" y="24" fill="#4c9aff" font-family="'JetBrains Mono', monospace" font-size="12.5" font-weight="700">
+          sum(cumple) → 3
+        </text>
+        <text x="14" y="44" fill="#8792ae" font-family="'JetBrains Mono', monospace" font-size="11">
+          TRUE = 1, FALSE = 0 → <tspan fill="#edf1fa">1 + 0 + 1 + 1 = 3</tspan>
+        </text>
+        <text x="14" y="58" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="10.5">
+          • Cuenta cuántas observaciones cumplen la meta
+        </text>
+      </g>
+
+      <g transform="translate(18, 162)">
+        <!-- mean() -->
+        <rect width="369" height="66" rx="8" fill="#0d1424" stroke="rgba(237,241,250,0.08)" stroke-width="1" />
+        <text x="14" y="24" fill="#2dd4bf" font-family="'JetBrains Mono', monospace" font-size="12.5" font-weight="700">
+          mean(cumple) → 0.75 (75%)
+        </text>
+        <text x="14" y="44" fill="#8792ae" font-family="'JetBrains Mono', monospace" font-size="11">
+          Promedio de 1s y 0s → <tspan fill="#edf1fa">3 / 4 = 0.75</tspan>
+        </text>
+        <text x="14" y="58" fill="#2dd4bf" font-family="'JetBrains Mono', monospace" font-size="10.5">
+          • Proporción o porcentaje exacto de cumplimiento
+        </text>
+      </g>
+    </g>
+  </g>
+</svg>

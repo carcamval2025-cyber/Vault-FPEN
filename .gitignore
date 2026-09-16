@@ -15,3 +15,8 @@
 
 # Basura del sistema operativo
 .DS_Store
+
+# Archivos de sesion de R
+.Rhistory
+*.Rhistory
+.RData

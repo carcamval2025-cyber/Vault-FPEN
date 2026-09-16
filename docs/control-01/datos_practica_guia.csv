@@ -1,0 +1,25 @@
+dia,punto,visitantes,compras,ingreso_usd,costo_usd
+1,Biblioteca,80,20,120,72
+2,Biblioteca,84,22,132,78
+3,Biblioteca,75,18,108,70
+4,Biblioteca,88,25,150,92
+5,Biblioteca,82,21,126,77
+6,Biblioteca,91,26,156,98
+1,Edificio A,55,22,154,85
+2,Edificio A,60,24,168,92
+3,Edificio A,57,23,161,89
+4,Edificio A,62,25,175,98
+5,Edificio A,59,23,161,91
+6,Edificio A,65,27,189,108
+1,Polideportivo,100,18,126,103
+2,Polideportivo,105,19,133,109
+3,Polideportivo,98,17,119,101
+4,Polideportivo,112,20,140,116
+5,Polideportivo,108,19,133,111
+6,Polideportivo,115,22,154,124
+1,Residencias,45,18,126,63
+2,Residencias,48,20,140,70
+3,Residencias,43,17,119,61
+4,Residencias,50,21,147,75
+5,Residencias,47,19,133,68
+6,Residencias,52,22,154,81
