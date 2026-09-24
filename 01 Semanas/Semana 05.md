@@ -3,7 +3,7 @@ tags: [semana, semana-05]
 numero: 5
 r4ds_cap: "Continuación Cap. 3 + inicio Cap. 10 (EDA)"
 fase_proyecto: "Resúmenes descriptivos aplicados a las preguntas del proyecto"
-estado: "material no creado"
+estado: "Sesión 01 publicada (repaso pipe y verbos de transformación)"
 ---
 
 # Semana 05 — ¿Cómo convierto miles de observaciones en información útil?
@@ -39,16 +39,17 @@ Esta es la última semana antes del **Primer Parcial (Semana 6)**, integrador de
 
 ## Estado del material
 
-- [ ] Guía de Estudio
-- [ ] Laboratorio
-- [ ] R Playground
-- [ ] Cheat Sheet
+- [x] Guía de Estudio (Sesión 01 — El operador pipe y verbos de transformación)
+- [x] Laboratorio (Sesión 01 — 5 ejercicios con validación y XP)
+- [x] R Playground (Sesión 01 — fragmentos progresivos)
+- [x] Cheat Sheet (Sesión 01 — sintaxis y flujo)
+- [ ] Sesión 02 (`group_by()`, `summarise()`, `slice_*()`)
 
 Registro completo → [[Registro de Materiales]]
 
 ## Notas de esta sesión
 
-*(vacío — se llena después de crear el material)*
+Sesión 01 publicada (`FPEN_Semana05_Sesion01_Pipe_y_Verbos_de_Transformacion.html` y script de clase `FPEN_Semana05_Sesion01_Codigo_Clase.R`). Cubre el operador pipe nativo `|>`, operadores relacionales y booleanos en `filter()`, y reordenamiento/selección con `nycflights13`. Publicada en GitHub Pages en `/docs/semana-05/`.
 
 ## Notas relacionadas
 

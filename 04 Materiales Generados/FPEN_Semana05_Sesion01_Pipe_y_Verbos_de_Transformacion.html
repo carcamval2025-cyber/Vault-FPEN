@@ -1,0 +1,917 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FPEN · Semana 5 (Sesión 1) — El operador pipe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@700;800&family=Literata:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg0:#0a0f1c; --bg1:#111a30; --bg2:#182645;
+  --blue:#4c9aff; --teal:#2dd4bf; --amber:#f5a623; --coral:#ff6b6b; --violet:#a78bfa; --green:#34d399;
+  --tp:#edf1fa; --ts:#8792ae;
+  --border: rgba(140,160,210,0.16);
+  --radius: 14px;
+}
+*{
+  box-sizing:border-box;
+  /* JetBrains Mono trae ligaduras activadas por defecto (>= vuelve ≥, <- vuelve ←, |> vuelve ▷).
+     En un curso donde se enseña sintaxis carácter por carácter a principiantes eso confunde:
+     se desactiva globalmente para que siempre se vea exactamente lo que hay que escribir. */
+  font-variant-ligatures: none;
+  -webkit-font-feature-settings: "liga" 0, "calt" 0, "dlig" 0;
+  font-feature-settings: "liga" 0, "calt" 0, "dlig" 0;
+}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--bg0); color:var(--tp);
+  font-family:'Literata',serif; font-size:16.5px; line-height:1.65;
+  position:relative; min-height:100vh; overflow-x:hidden;
+}
+::selection{ background:var(--blue); color:#04101f; }
+h1,h2,h3,h4{ font-family:'Fraunces',serif; font-weight:800; letter-spacing:-0.01em; color:var(--tp); margin:0 0 .5em; }
+h1{font-size:clamp(1.9rem,4vw,3rem); font-weight:800;}
+h2{font-size:clamp(1.4rem,2.6vw,1.9rem); font-weight:700;}
+h3{font-size:1.15rem; font-weight:700;}
+p{margin:0 0 1em;}
+a{color:var(--teal);}
+code, pre, .mono{ font-family:'JetBrains Mono',monospace; }
+/* JetBrains Mono trae ligaduras tipográficas activadas por defecto (>= vuelve ≥, <- vuelve ←,
+   |> vuelve ▷). Para un curso donde se enseña la sintaxis carácter por carácter a principiantes,
+   eso es confuso: el estudiante debe ver exactamente lo que va a escribir. Se desactivan aquí. */
+code, pre, .mono, .chip, .tab-pill, .ia-badge, .xp-wrap, .brand{
+  font-variant-ligatures: none;
+  -webkit-font-feature-settings: "liga" 0, "calt" 0;
+  font-feature-settings: "liga" 0, "calt" 0;
+}
+.container{max-width:1080px; margin:0 auto; padding:0 24px;}
+
+/* grain */
+.grain{ position:fixed; inset:0; pointer-events:none; opacity:0.05; z-index:2; mix-blend-mode:overlay; }
+
+/* Hero */
+.hero{
+  position:relative; padding:64px 0 40px; overflow:hidden;
+  background:
+    radial-gradient(ellipse 900px 500px at 15% -10%, rgba(76,154,255,0.18), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 100% 0%, rgba(167,139,250,0.14), transparent 60%),
+    var(--bg0);
+  border-bottom:1px solid var(--border);
+}
+.hero-grid{ position:absolute; inset:0; z-index:0;
+  background-image:
+    linear-gradient(rgba(76,154,255,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(76,154,255,0.06) 1px, transparent 1px);
+  background-size:42px 42px;
+  animation:driftGrid 40s linear infinite;
+  mask-image: radial-gradient(ellipse 900px 500px at 20% 0%, black, transparent 75%);
+}
+@keyframes driftGrid{ from{background-position:0 0;} to{background-position:420px 420px;} }
+.hero-inner{ position:relative; z-index:1; }
+.chips{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:22px; }
+.chip{
+  display:inline-flex; align-items:center; gap:6px;
+  font-family:'JetBrains Mono',monospace; font-size:12.5px; font-weight:500;
+  padding:5px 12px; border-radius:100px; border:1px solid var(--border);
+  color:var(--ts); background:rgba(255,255,255,0.02);
+}
+.chip svg{width:13px;height:13px;flex-shrink:0;}
+.chip.blue{color:var(--blue); border-color:rgba(76,154,255,0.35); background:rgba(76,154,255,0.08);}
+.chip.amber{color:var(--amber); border-color:rgba(245,166,35,0.35); background:rgba(245,166,35,0.08);}
+.chip.violet{color:var(--violet); border-color:rgba(167,139,250,0.35); background:rgba(167,139,250,0.08);}
+.hero .kicker{ font-family:'JetBrains Mono',monospace; color:var(--teal); font-size:13px; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:14px; display:block;}
+.hero .lede{ max-width:640px; color:var(--ts); font-size:1.08rem; }
+.hero .callout-note{
+  margin-top:26px; max-width:720px; display:flex; gap:12px; align-items:flex-start;
+  padding:14px 16px; border-radius:var(--radius); background:rgba(245,166,35,0.07); border:1px solid rgba(245,166,35,0.28);
+}
+.hero .callout-note svg{ width:20px; height:20px; flex-shrink:0; color:var(--amber); margin-top:2px;}
+.hero .callout-note p{ margin:0; color:var(--tp); font-size:0.96rem;}
+.hero .callout-note b{color:var(--amber);}
+
+/* topbar / xp */
+.topbar{
+  position:sticky; top:0; z-index:40; backdrop-filter:blur(10px);
+  background:rgba(10,15,28,0.86); border-bottom:1px solid var(--border);
+}
+.topbar-inner{ display:flex; align-items:center; justify-content:space-between; padding:10px 24px; max-width:1080px; margin:0 auto; gap:16px;}
+.brand{ display:flex; align-items:center; gap:10px; font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--ts); }
+.brand svg{width:18px;height:18px;color:var(--blue);}
+.xp-wrap{ display:flex; align-items:center; gap:10px; font-family:'JetBrains Mono',monospace; font-size:12.5px; color:var(--ts); }
+.xp-badge{ display:flex; align-items:center; gap:6px; padding:5px 11px; border-radius:100px; background:rgba(52,211,153,0.1); border:1px solid rgba(52,211,153,0.3); color:var(--green); font-weight:700;}
+.xp-badge svg{width:14px;height:14px;}
+.tabs{ display:flex; gap:6px; overflow-x:auto; padding:10px 24px 12px; max-width:1080px; margin:0 auto; }
+.tab-pill{
+  font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:500; white-space:nowrap;
+  padding:8px 16px; border-radius:100px; border:1px solid var(--border); background:transparent; color:var(--ts);
+  cursor:pointer; transition:all .15s ease; display:flex; align-items:center; gap:7px;
+}
+.tab-pill svg{width:14px;height:14px;}
+.tab-pill:hover{ color:var(--tp); border-color:rgba(140,160,210,0.35); }
+.tab-pill.active{ background:var(--blue); border-color:var(--blue); color:#04101f; font-weight:700;}
+
+main{ padding:44px 0 100px; }
+.tab-panel{ display:none; }
+.tab-panel.active{ display:block; animation:fadeUp .35s ease; }
+@keyframes fadeUp{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:none;} }
+
+.section{ margin-bottom:52px; opacity:0; transform:translateY(14px); transition:opacity .5s ease, transform .5s ease; }
+.section.in-view{ opacity:1; transform:none; }
+.section-label{ font-family:'JetBrains Mono',monospace; font-size:12px; text-transform:uppercase; letter-spacing:.1em; color:var(--teal); margin-bottom:8px; display:block;}
+
+/* concept cards */
+.card-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px; margin-top:20px;}
+.card{
+  position:relative; padding:20px 20px 18px; border-radius:var(--radius); background:var(--bg1);
+  border:1px solid var(--border); overflow:hidden; transition:transform .2s ease, border-color .2s ease;
+}
+.card::before{ content:""; position:absolute; left:0; right:0; bottom:0; height:3px;
+  background:linear-gradient(90deg,var(--blue),var(--teal)); opacity:.6;}
+.card:hover{ transform:translateY(-3px); border-color:rgba(76,154,255,0.4); box-shadow:0 0 0 1px rgba(76,154,255,0.08), 0 12px 28px -12px rgba(76,154,255,0.25);}
+.card.asym{ grid-column:span 2; }
+@media(max-width:640px){ .card.asym{grid-column:span 1;} }
+.card h4{ font-family:'Fraunces',serif; font-size:1.05rem; margin-bottom:8px; color:var(--tp); display:flex; align-items:center; gap:8px;}
+.card h4 svg{width:18px;height:18px;color:var(--blue);flex-shrink:0;}
+.card p{ color:var(--ts); font-size:0.95rem; margin-bottom:0;}
+.card code{ color:var(--teal); background:rgba(45,212,191,0.08); padding:1px 6px; border-radius:5px; font-size:0.86em;}
+
+/* error callout */
+.callout{ display:flex; gap:12px; padding:16px 18px; border-radius:var(--radius); margin:20px 0; }
+.callout svg{width:20px;height:20px;flex-shrink:0;margin-top:2px;}
+.callout-title{ font-weight:700; font-family:'JetBrains Mono',monospace; font-size:13px; text-transform:uppercase; letter-spacing:.04em; margin-bottom:4px;}
+.callout.error{ background:rgba(255,107,107,0.08); border:1px solid rgba(255,107,107,0.3);}
+.callout.error svg{color:var(--coral);} .callout.error .callout-title{color:var(--coral);}
+.callout.success{ background:rgba(52,211,153,0.08); border:1px solid rgba(52,211,153,0.3);}
+.callout.success svg{color:var(--green);} .callout.success .callout-title{color:var(--green);}
+.callout.info{ background:rgba(76,154,255,0.08); border:1px solid rgba(76,154,255,0.3);}
+.callout.info svg{color:var(--blue);} .callout.info .callout-title{color:var(--blue);}
+
+/* code blocks */
+.codeblock{ background:#070b15; border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; margin:16px 0;}
+.codeblock .cb-head{ display:flex; align-items:center; justify-content:space-between; padding:8px 14px; background:rgba(255,255,255,0.02); border-bottom:1px solid var(--border);}
+.codeblock .cb-head span{ font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--ts); text-transform:uppercase; letter-spacing:.06em;}
+.codeblock .cb-dots{display:flex; gap:5px;}
+.codeblock .cb-dots i{width:8px;height:8px;border-radius:50%; display:inline-block;}
+.codeblock pre{ margin:0; padding:16px 18px; overflow-x:auto; font-size:13.5px; line-height:1.7; color:var(--tp);}
+.tk-comment{color:var(--ts); font-style:italic;}
+.tk-string{color:var(--green);}
+.tk-pipe{color:var(--blue); font-weight:700;}
+.tk-assign{color:var(--teal); font-weight:700;}
+.tk-op{color:var(--amber);}
+.tk-num{color:var(--violet);}
+.tk-kw{color:var(--blue); font-weight:600;}
+.tk-fn{color:var(--teal);}
+.console-out{ background:#050810; border-top:1px dashed var(--border); padding:14px 18px; font-family:'JetBrains Mono',monospace; font-size:12.8px; color:#a9c4ff; white-space:pre; overflow-x:auto;}
+.console-out .n{color:var(--ts);}
+.console-out .flag{color:var(--amber);}
+
+/* table */
+.ref-table{ width:100%; border-collapse:collapse; margin:18px 0; font-size:0.94rem;}
+.ref-table th{ text-align:left; font-family:'JetBrains Mono',monospace; font-size:11.5px; text-transform:uppercase; letter-spacing:.05em; color:var(--ts); padding:10px 14px; border-bottom:1px solid var(--border);}
+.ref-table td{ padding:11px 14px; border-bottom:1px solid var(--border); color:var(--tp); vertical-align:top;}
+.ref-table tr:hover td{background:rgba(255,255,255,0.015);}
+.ref-table code{ color:var(--teal); font-family:'JetBrains Mono',monospace; font-size:0.88em;}
+
+/* AI badges */
+.ia-badge{ display:inline-flex; align-items:center; gap:6px; font-family:'JetBrains Mono',monospace; font-size:11.5px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; padding:5px 12px; border-radius:100px; border:1px solid; }
+.ia-sin{ color:var(--coral); border-color:rgba(255,107,107,0.4); background:rgba(255,107,107,0.08);}
+.ia-permitida{ color:var(--green); border-color:rgba(52,211,153,0.4); background:rgba(52,211,153,0.08);}
+.ia-requerida{ color:var(--violet); border-color:rgba(167,139,250,0.4); background:rgba(167,139,250,0.08);}
+
+/* exercises */
+.exercise{ border:1px solid var(--border); border-radius:var(--radius); background:var(--bg1); margin-bottom:24px; overflow:hidden;}
+.ex-head{ display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; padding:16px 20px; border-bottom:1px solid var(--border);}
+.ex-head .ex-title{ display:flex; align-items:center; gap:10px; font-family:'Fraunces',serif; font-weight:700; font-size:1.05rem;}
+.ex-num{ font-family:'JetBrains Mono',monospace; color:var(--blue); font-size:0.85em;}
+.ex-body{ padding:20px; }
+.ex-body textarea{
+  width:100%; min-height:96px; background:#070b15; border:1px solid var(--border); border-radius:10px;
+  color:var(--tp); font-family:'Literata',serif; font-size:0.96rem; padding:12px 14px; resize:vertical;
+}
+.ex-body textarea:focus{ outline:none; border-color:var(--blue);}
+.ex-meta{ display:flex; justify-content:space-between; align-items:center; margin-top:8px;}
+.char-count{ font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--ts);}
+.char-count.ok{color:var(--green);}
+.btn-reveal{
+  font-family:'JetBrains Mono',monospace; font-size:12.5px; font-weight:700; text-transform:uppercase; letter-spacing:.04em;
+  padding:9px 18px; border-radius:9px; border:1px solid var(--blue); background:transparent; color:var(--blue); cursor:pointer;
+  transition:all .15s ease;
+}
+.btn-reveal:disabled{ border-color:var(--border); color:var(--ts); cursor:not-allowed; opacity:.6;}
+.btn-reveal:not(:disabled):hover{ background:var(--blue); color:#04101f;}
+.feedback-panel{ display:none; margin-top:16px; padding:16px 18px; border-radius:10px; background:rgba(76,154,255,0.06); border:1px solid rgba(76,154,255,0.25);}
+.feedback-panel.shown{display:block; animation:fadeUp .3s ease;}
+.feedback-panel h5{ font-family:'JetBrains Mono',monospace; font-size:12px; text-transform:uppercase; letter-spacing:.05em; color:var(--blue); margin:0 0 10px;}
+.feedback-panel ul{ margin:0; padding-left:20px; color:var(--ts); font-size:0.92rem;}
+.feedback-panel li{ margin-bottom:6px;}
+.feedback-panel li b{color:var(--tp);}
+
+/* checkboxes verification */
+.check-list{ list-style:none; margin:14px 0; padding:0; display:grid; gap:8px;}
+.check-item{ display:flex; align-items:flex-start; gap:10px; padding:10px 14px; border-radius:9px; background:rgba(255,255,255,0.02); border:1px solid var(--border); cursor:pointer; font-size:0.93rem;}
+.check-item input{ margin-top:3px; accent-color:var(--blue);}
+.check-item.correct{ border-color:rgba(52,211,153,0.4); background:rgba(52,211,153,0.06); color:var(--green);}
+.check-item.incorrect{ border-color:rgba(255,107,107,0.4); background:rgba(255,107,107,0.06); color:var(--coral);}
+
+/* progress bar */
+.progress-wrap{ position:sticky; top:97px; z-index:30; padding:10px 0 6px; background:linear-gradient(var(--bg0),var(--bg0) 80%, transparent);}
+.progress-track{ height:6px; border-radius:100px; background:var(--bg2); overflow:hidden;}
+.progress-fill{ height:100%; width:0%; background:linear-gradient(90deg,var(--blue),var(--teal)); transition:width .4s ease; border-radius:100px;}
+.progress-label{ font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--ts); margin-top:6px; display:flex; justify-content:space-between;}
+
+/* verification closing */
+.verify-box{ margin-top:20px; padding:24px; border-radius:var(--radius); background:linear-gradient(135deg, rgba(167,139,250,0.08), rgba(76,154,255,0.06)); border:1px solid rgba(167,139,250,0.3);}
+.verify-box .vq{ font-family:'Fraunces',serif; font-size:1.2rem; font-weight:700; color:var(--tp); margin-bottom:10px; display:flex; gap:10px; align-items:flex-start;}
+.verify-box .vq svg{width:22px;height:22px;color:var(--violet); flex-shrink:0; margin-top:3px;}
+.verify-box p.hint{ color:var(--ts); font-size:0.92rem; margin-bottom:14px;}
+
+/* playground */
+.dataset-box{ overflow-x:auto; border:1px solid var(--border); border-radius:var(--radius); margin:16px 0;}
+.dataset-box table{ width:100%; border-collapse:collapse; font-family:'JetBrains Mono',monospace; font-size:12.5px;}
+.dataset-box th{ background:var(--bg2); color:var(--teal); text-align:left; padding:9px 12px; white-space:nowrap;}
+.dataset-box td{ padding:8px 12px; border-top:1px solid var(--border); color:var(--tp); white-space:nowrap;}
+
+/* cheat sheet */
+.cheat-grid{ display:grid; grid-template-columns:1.1fr 1fr; gap:20px; }
+@media(max-width:800px){ .cheat-grid{grid-template-columns:1fr;} }
+.cheat-panel{ background:var(--bg1); border:1px solid var(--border); border-radius:var(--radius); padding:18px 20px;}
+.cheat-panel h4{ font-family:'JetBrains Mono',monospace; font-size:12.5px; text-transform:uppercase; letter-spacing:.05em; color:var(--amber); margin-bottom:12px;}
+.vocab-row{ display:flex; justify-content:space-between; gap:10px; padding:7px 0; border-bottom:1px dashed var(--border); font-size:0.88rem;}
+.vocab-row:last-child{border-bottom:none;}
+.vocab-row code{color:var(--teal);}
+.pipe-diagram{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; font-family:'JetBrains Mono',monospace; font-size:12.5px; margin:14px 0;}
+.pipe-diagram .pd-box{ padding:8px 12px; border-radius:8px; background:var(--bg2); border:1px solid var(--border);}
+.pipe-diagram .pd-arrow{ color:var(--blue); font-weight:700;}
+.cycle-footer{ display:flex; align-items:center; gap:6px; flex-wrap:wrap; font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--ts); margin-top:10px;}
+.cycle-footer .step{ padding:4px 9px; border-radius:100px; background:rgba(255,255,255,0.03); border:1px solid var(--border);}
+.cycle-footer .step.now{ color:var(--blue); border-color:var(--blue);}
+
+footer.foot{ border-top:1px solid var(--border); padding:28px 0; margin-top:20px;}
+footer.foot p{ color:var(--ts); font-size:0.85rem; margin:0 0 6px;}
+
+.small-note{ font-size:0.85rem; color:var(--ts); }
+</style>
+<noscript><style>.section{opacity:1!important; transform:none!important;} .tab-panel{display:block!important;}</style></noscript>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+  <filter id="grainFilter">
+    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch" result="noise"/>
+    <feColorMatrix in="noise" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.05 0"/>
+  </filter>
+</svg>
+<svg class="grain"><rect width="100%" height="100%" filter="url(#grainFilter)"/></svg>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 17l6-6-6-6M12 19h8"/></svg>
+      FPEN · R Notebook
+    </div>
+    <div class="xp-wrap">
+      <span class="small-note" style="font-family:'JetBrains Mono',monospace;">Semana 05 · Sesión 01</span>
+      <div class="xp-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.9 6.26L22 9.27l-5 4.87L18.2 21 12 17.5 5.8 21 7 14.14 2 9.27l7.1-1.01z"/></svg><span id="xpCount">0</span> XP</div>
+    </div>
+  </div>
+  <nav class="tabs" id="tabNav">
+    <button class="tab-pill active" data-tab="guia"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20M4 19.5A2.5 2.5 0 006.5 22H20V2H6.5A2.5 2.5 0 004 4.5v15z"/></svg>Guía de Estudio</button>
+    <button class="tab-pill" data-tab="lab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 2v6L4 20a1 1 0 001 2h14a1 1 0 001-2L15 8V2M9 2h6M8.5 14h7"/></svg>Laboratorio</button>
+    <button class="tab-pill" data-tab="playground"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3M9 9h6v6H9z"/></svg>R Playground</button>
+    <button class="tab-pill" data-tab="cheatsheet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h7"/></svg>Cheat Sheet</button>
+  </nav>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-grid"></div>
+  <div class="container hero-inner">
+    <span class="kicker">Fundamentos de Programación para Economía y Negocios · ESEN</span>
+    <div class="chips">
+      <span class="chip blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3M12 2a10 10 0 100 20 10 10 0 000-20z"/></svg>21 de septiembre · Sesión 1</span>
+      <span class="chip amber"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20M4 19.5A2.5 2.5 0 006.5 22H20V2H6.5A2.5 2.5 0 004 4.5v15z"/></svg>R4DS: Cap. 3, secciones 3.2–3.4 (repaso)</span>
+      <span class="chip violet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 12h8M12 8v8M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Catedrático: Alvin Portillo</span>
+    </div>
+    <h1>El operador pipe en acción:<br>repasando los verbos antes de agrupar</h1>
+    <p class="lede">Esta sesión retoma <b>filter()</b>, <b>arrange()</b>, <b>select()</b> y <b>rename()</b> —ya vistos en la Semana 4— pero ahora con la mecánica completa del operador de tubería <code>|&gt;</code>, la diferencia entre operadores lógicos <b>Y</b>/<b>O</b>, y el uso de <code>%in%</code>. Es el puente necesario antes de <code>group_by()</code> y <code>summarize()</code>, que llegan en la Sesión 2.</p>
+    <div class="callout-note">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg>
+      <p><b>Sobre esta guía:</b> resume la Sesión 1 tal como se impartió en clase (repaso de verbos + mecánica del pipe). <code>summarise()</code> y <code>group_by()</code> —el resto de la Semana 5— se cubren en la Sesión 2 del miércoles; no se adelantan aquí para no confundir el orden en que tu profesor los presentará.</p>
+    </div>
+  </div>
+</div>
+
+<main class="container">
+
+<!-- =========================================================
+     TAB 1: GUÍA DE ESTUDIO
+========================================================= -->
+<section class="tab-panel active" id="panel-guia">
+
+  <div class="section">
+    <span class="section-label">Por qué esta sesión</span>
+    <h2>Los datos casi nunca llegan listos</h2>
+    <p>Hasta ahora hemos trabajado con datos que ya estaban ordenados. En la práctica —y en tu proyecto grupal— vas a recibir información que necesita transformación: separar una fecha de nacimiento en año/mes/día, crear una clasificación de clientes que se mantenga en el tiempo, o quedarte solo con las filas y columnas relevantes para una pregunta concreta. Esa es exactamente la lógica detrás de <code>filter()</code>, <code>arrange()</code>, <code>select()</code> y <code>rename()</code>: cada uno resuelve un tipo distinto de transformación, y encadenarlos con el pipe es lo que te permite construir un flujo de trabajo legible.</p>
+  </div>
+
+  <div class="section">
+    <span class="section-label">Concepto 1</span>
+    <h2>Funciones y argumentos: un repaso necesario</h2>
+    <p>Toda función en R recibe <b>argumentos</b> entre paréntesis, y una función puede requerir cero, uno o varios. <code>round()</code> es un buen ejemplo: su primer argumento (<code>x</code>) es el número a redondear, y el segundo (<code>digits</code>) es la cantidad de decimales — si no lo especificas, R usa <code>0</code> por defecto.</p>
+    <div class="codeblock">
+      <div class="cb-head"><span>Consola R</span><div class="cb-dots"><i style="background:var(--coral)"></i><i style="background:var(--amber)"></i><i style="background:var(--green)"></i></div></div>
+      <pre data-code="r">valor &lt;- 123.4567899
+round(valor)      # sin segundo argumento: 0 decimales por defecto
+round(valor, 2)   # dos decimales</pre>
+      <div class="console-out">&gt; round(valor)
+[1] 123
+&gt; round(valor, 2)
+[1] 123.46</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <span class="section-label">Concepto 2 · La pieza central de la sesión</span>
+    <h2>El operador pipe nativo <code style="color:var(--blue)">|&gt;</code></h2>
+    <p>El pipe toma lo que está a su <b>izquierda</b> y lo convierte en el <b>primer argumento</b> de la función que está a su derecha. No cambia lo que R puede hacer, pero sí cambia radicalmente qué tan legible es tu código cuando encadenas varias transformaciones.</p>
+    <div class="card-grid">
+      <div class="card asym">
+        <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>Cómo activarlo en RStudio</h4>
+        <p>Tools → Global Options → Code → Display → marca <b>"Use native pipe operator"</b>. Con esto, el atajo <code>Ctrl/Cmd + Shift + M</code> inserta <code>|&gt;</code> en vez de <code>%&gt;%</code> (el pipe de magrittr). El curso usa <code>|&gt;</code> porque es parte de R base, no depende de cargar tidyverse.</p>
+      </div>
+      <div class="card">
+        <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg>La regla en una frase</h4>
+        <p><code>x |&gt; f()</code> equivale a <code>f(x)</code>. Lo de la izquierda entra como primer argumento.</p>
+      </div>
+      <div class="card">
+        <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>No es solo estilo</h4>
+        <p>Cuando encadenas 3 o 4 transformaciones, anidar funciones (<code>select(arrange(filter(...)))</code>) se vuelve difícil de leer. El pipe convierte eso en una secuencia de pasos, de arriba hacia abajo.</p>
+      </div>
+    </div>
+    <div class="codeblock">
+      <div class="cb-head"><span>Sin pipe → con pipe</span><div class="cb-dots"><i style="background:var(--coral)"></i><i style="background:var(--amber)"></i><i style="background:var(--green)"></i></div></div>
+      <pre data-code="r"># Sin pipe: valor entra directo como primer argumento de round()
+round(valor, 2)
+
+# Con pipe: "toma valor y pásalo como primer argumento de round()"
+valor |&gt; round(2)
+
+# Con ggplot: penguins se convierte en el primer argumento de ggplot()
+penguins |&gt;
+  ggplot(aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point()</pre>
+    </div>
+  </div>
+
+  <div class="section">
+    <span class="section-label">Concepto 3</span>
+    <h2>Verbos de fila: <code>filter()</code></h2>
+    <p><code>filter()</code> conserva las filas que cumplen una condición. Su primer argumento es el data frame; el resto son las condiciones que deben ser verdaderas.</p>
+    <table class="ref-table">
+      <thead><tr><th>Operador</th><th>Significado</th><th>Ejemplo</th></tr></thead>
+      <tbody>
+        <tr><td><code>==</code></td><td>igual a</td><td><code>carrier == "UA"</code></td></tr>
+        <tr><td><code>!=</code></td><td>distinto de</td><td><code>month != 12</code></td></tr>
+        <tr><td><code>&gt; &lt; &gt;= &lt;=</code></td><td>comparación numérica</td><td><code>dep_delay &gt; 30</code></td></tr>
+        <tr><td><code>&amp;</code></td><td>Y — ambas condiciones a la vez</td><td><code>carrier == "UA" &amp; day == 1</code></td></tr>
+        <tr><td><code>|</code></td><td>O — al menos una condición</td><td><code>month == 1 | month == 2</code></td></tr>
+        <tr><td><code>%in%</code></td><td>coincide con algún valor de una lista</td><td><code>month %in% c(1,4,8,11,12)</code></td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout error">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg>
+      <div>
+        <div class="callout-title">El error que casi todos cometen: Y vs. O</div>
+        <p style="margin:0; color:var(--tp);">Un vuelo no puede tener <code>month == 1</code> y <code>month == 2</code> al mismo tiempo: cada fila tiene un único valor de mes. Por eso <code>filter(flights, month == 1 &amp; month == 2)</code> devuelve <b>0 filas</b>. Lo correcto cuando quieres "esta condición o esta otra, sobre la misma columna" es <code>|</code>: <code>filter(flights, month == 1 | month == 2)</code> sí devuelve los ~51,000 vuelos de enero o febrero. Usa <code>&amp;</code> cuando las condiciones vienen de <b>columnas distintas</b> que deben cumplirse ambas (por ejemplo, <code>carrier == "UA" &amp; day == 1</code>).</p>
+      </div>
+    </div>
+
+    <div class="codeblock">
+      <div class="cb-head"><span>filter() — encadenado vs. en un solo llamado</span><div class="cb-dots"><i style="background:var(--coral)"></i><i style="background:var(--amber)"></i><i style="background:var(--green)"></i></div></div>
+      <pre data-code="r"># Forma 1: encadenando varios filter() con pipe (útil para explicar el proceso)
+flights |&gt;
+  filter(carrier == "UA") |&gt;
+  filter(dep_delay == 2) |&gt;
+  filter(day == 1)
+
+# Forma 2: un solo filter() con varios argumentos (más eficiente)
+flights |&gt;
+  filter(carrier == "UA", dep_delay == 2, day == 1)
+
+# %in% para una lista de valores en una misma columna
+flights |&gt;
+  filter(month %in% c(1, 4, 8, 11, 12))</pre>
+      <div class="console-out">&gt; flights |&gt; filter(carrier == "UA")
+# A tibble: 58,665 × 19
+&gt; flights |&gt; filter(carrier == "UA", dep_delay == 2, day == 1)
+# A tibble: 58 × 19
+&gt; flights |&gt; filter(month == 1 &amp; month == 2)
+# A tibble: 0 × 19          <span class="flag"># ← el error clásico</span>
+&gt; flights |&gt; filter(month == 1 | month == 2)
+# A tibble: 51,955 × 19</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <span class="section-label">Concepto 4</span>
+    <h2>Verbos de fila: <code>arrange()</code></h2>
+    <p><code>arrange()</code> ordena las filas según una o más columnas. Por defecto es <b>ascendente</b>; para descendente hay que envolver la columna en <code>desc()</code> — no existe un "asc()" porque ascendente ya es el comportamiento implícito.</p>
+    <div class="codeblock">
+      <div class="cb-head"><span>arrange() con múltiples criterios</span><div class="cb-dots"><i style="background:var(--coral)"></i><i style="background:var(--amber)"></i><i style="background:var(--green)"></i></div></div>
+      <pre data-code="r">flights |&gt;
+  filter(month %in% c(1, 4, 8, 11, 12)) |&gt;
+  arrange(desc(dep_delay))              # descendente por retraso de salida
+
+flights |&gt;
+  arrange(desc(month), desc(dep_time), day)  # varios criterios: si empatan, pasa al siguiente</pre>
+    </div>
+  </div>
+
+  <div class="section">
+    <span class="section-label">Concepto 5</span>
+    <h2>Verbos de columna: <code>select()</code> y <code>rename()</code></h2>
+    <div class="card-grid">
+      <div class="card">
+        <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg><code>select()</code></h4>
+        <p>Se queda solo con las columnas que indiques, en el orden que las escribas. De 19 columnas de <code>flights</code> puedes pasar a solo 6.</p>
+      </div>
+      <div class="card">
+        <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3a2.85 2.85 0 114 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg><code>rename()</code></h4>
+        <p>Cambia nombres de columnas <b>sin eliminar</b> las demás — a diferencia de <code>select()</code>, que solo conserva lo que listas explícitamente.</p>
+      </div>
+    </div>
+    <p>Un detalle práctico que se vio en clase: <code>select()</code> también puede renombrar al mismo tiempo que selecciona, con la sintaxis <code>nuevo_nombre = columna_original</code>.</p>
+    <div class="codeblock">
+      <div class="cb-head"><span>select() + renombrado + guardar resultado</span><div class="cb-dots"><i style="background:var(--coral)"></i><i style="background:var(--amber)"></i><i style="background:var(--green)"></i></div></div>
+      <pre data-code="r">flights2 &lt;- flights |&gt;
+  filter(month %in% c(1, 4, 8, 11, 12)) |&gt;
+  arrange(desc(dep_delay)) |&gt;
+  select(
+    año = year, mes = month, dia = day,
+    vuelo = flight, operador = carrier,
+    retraso_despegue = dep_delay
+  )
+
+flights2</pre>
+      <div class="console-out">&gt; flights2
+# A tibble: 140,064 × 6
+    año   mes   dia vuelo operador retraso_despegue
+  &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt;               &lt;dbl&gt;
+1  2013     1     9    51 HA                   1301
+2  2013     1    10  3695 MQ                   1126
+3  2013     4    10  2391 DL                    960</div>
+    </div>
+    <p class="small-note">Guardar el resultado en <code>flights2 &lt;- ...</code> evita repetir todo el cálculo cada vez que lo necesites para un paso posterior — algo que vas a agradecer en la Sesión 2, cuando ese resultado filtrado y renombrado sea el punto de partida para <code>group_by()</code> y <code>summarize()</code>.</p>
+  </div>
+
+  <div class="section">
+    <span class="section-label">Aplicación económica</span>
+    <h2>Lo mismo, con datos de tu carrera</h2>
+    <p><code>flights</code> es el dataset del libro (sin relación económica directa), pero la misma secuencia <code>filter → arrange → select</code> es exactamente lo que harías con datos de negocios:</p>
+    <div class="card-grid">
+      <div class="card"><h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>Salario real</h4><p><code>filter(sector == "Comercio")</code> antes de comparar salarios.</p></div>
+      <div class="card"><h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18M7 14l4-4 3 3 5-6"/></svg>Ventas por región</h4><p><code>arrange(desc(ingreso_total))</code> para ver qué región vende más.</p></div>
+      <div class="card"><h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h10M4 18h7"/></svg>Clasificaciones</h4><p><code>select()</code> para quedarte solo con las columnas relevantes de una encuesta de 40 preguntas.</p></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <span class="section-label">Repaso activo</span>
+    <h2>Antes de seguir, respóndete esto</h2>
+    <div class="exercise">
+      <div class="ex-head"><div class="ex-title"><span class="ex-num">R1</span> ¿Qué hace <code>x |&gt; f(y)</code>?</div></div>
+      <div class="ex-body">
+        <textarea data-min="40" placeholder="Escribe tu respuesta en tus propias palabras (mínimo 40 caracteres)..."></textarea>
+        <div class="ex-meta"><span class="char-count">0 / 40</span><button class="btn-reveal" disabled>Revelar respuesta</button></div>
+        <div class="feedback-panel">
+          <h5>Respuesta de referencia</h5>
+          <p style="color:var(--ts)">Equivale a <code>f(x, y)</code>: <code>x</code> se convierte en el <b>primer argumento</b> de <code>f()</code>, y <code>y</code> pasa a ser el segundo argumento. El pipe no ejecuta nada distinto de lo que harías sin él — solo cambia el orden en que lo escribes.</p>
+        </div>
+      </div>
+    </div>
+    <div class="exercise">
+      <div class="ex-head"><div class="ex-title"><span class="ex-num">R2</span> ¿Por qué <code>filter(flights, month == 1 &amp; month == 2)</code> da 0 filas?</div></div>
+      <div class="ex-body">
+        <textarea data-min="40" placeholder="Escribe tu respuesta (mínimo 40 caracteres)..."></textarea>
+        <div class="ex-meta"><span class="char-count">0 / 40</span><button class="btn-reveal" disabled>Revelar respuesta</button></div>
+        <div class="feedback-panel">
+          <h5>Respuesta de referencia</h5>
+          <p style="color:var(--ts)">Porque le estás pidiendo a R filas donde <code>month</code> sea simultáneamente 1 y 2, y cada fila solo tiene un valor de mes. La condición correcta para "enero o febrero" usa <code>|</code> (o <code>%in% c(1,2)</code>), no <code>&amp;</code>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- =========================================================
+     TAB 2: LABORATORIO
+========================================================= -->
+<section class="tab-panel" id="panel-lab">
+
+  <div class="section">
+    <h2>Laboratorio — Sesión 1</h2>
+    <p>5 ejercicios progresivos sobre <code>filter()</code>, <code>arrange()</code>, <code>select()</code>, <code>rename()</code> y el pipe <code>|&gt;</code>. Contexto: una base de ventas mensuales de una cadena de tiendas salvadoreña (mismo tipo de transformación que hiciste con <code>flights</code> en clase, aplicado a un caso de negocio).</p>
+    <div class="progress-wrap">
+      <div class="progress-track"><div class="progress-fill" id="labProgress"></div></div>
+      <div class="progress-label"><span id="labProgressText">0 de 5 ejercicios completados</span><span>Sesión 1 · Verbos + pipe</span></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="exercise" data-exercise>
+      <div class="ex-head">
+        <div class="ex-title"><span class="ex-num">Ej. 01</span> Predice el resultado</div>
+        <span class="ia-badge ia-sin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M18.36 6.64a9 9 0 11-12.73 0M12 2v10"/></svg>Sin IA</span>
+      </div>
+      <div class="ex-body">
+        <p>La base <code>ventas</code> tiene una fila por transacción. Sin ejecutar nada, predice cuántas filas devuelve cada línea:</p>
+        <div class="codeblock">
+          <div class="cb-head"><span>Predicción</span><div class="cb-dots"><i style="background:var(--coral)"></i><i style="background:var(--amber)"></i><i style="background:var(--green)"></i></div></div>
+          <pre data-code="r">ventas |&gt; filter(region == "Oriente" &amp; region == "Occidente")
+ventas |&gt; filter(region == "Oriente" | region == "Occidente")</pre>
+        </div>
+        <textarea data-min="50" placeholder="¿Cuántas filas esperas en cada caso, y por qué? (mínimo 50 caracteres)"></textarea>
+        <div class="ex-meta"><span class="char-count">0 / 50</span><button class="btn-reveal" disabled>Revelar y verificar</button></div>
+        <div class="feedback-panel">
+          <h5>Criterios de evaluación</h5>
+          <ul>
+            <li><b>La primera línea devuelve 0 filas</b> — ninguna transacción puede pertenecer a dos regiones a la vez.</li>
+            <li><b>La segunda línea devuelve todas las transacciones de Oriente y Occidente juntas</b> — el <code>|</code> las combina.</li>
+            <li>Justificaste tu respuesta en términos de "una fila, un valor de región" y no solo con "porque sí" o memorizando el resultado.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="exercise" data-exercise>
+      <div class="ex-head">
+        <div class="ex-title"><span class="ex-num">Ej. 02</span> Encuentra el error</div>
+        <span class="ia-badge ia-sin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M18.36 6.64a9 9 0 11-12.73 0M12 2v10"/></svg>Sin IA</span>
+      </div>
+      <div class="ex-body">
+        <p>Un compañero escribió esto para quedarse con las tiendas de San Salvador o Santa Ana, ordenadas por mayor ingreso, pero el código tiene un error de lógica (no de sintaxis):</p>
+        <div class="codeblock">
+          <div class="cb-head"><span>Código con error</span><div class="cb-dots"><i style="background:var(--coral)"></i><i style="background:var(--amber)"></i><i style="background:var(--green)"></i></div></div>
+          <pre data-code="r">ventas |&gt;
+  filter(tienda == "San Salvador" &amp; tienda == "Santa Ana") |&gt;
+  arrange(ingreso_total)</pre>
+        </div>
+        <textarea data-min="50" placeholder="¿Cuáles son los dos errores de lógica y cómo los corregirías? (mínimo 50 caracteres)"></textarea>
+        <div class="ex-meta"><span class="char-count">0 / 50</span><button class="btn-reveal" disabled>Revelar y verificar</button></div>
+        <div class="feedback-panel">
+          <h5>Criterios de evaluación</h5>
+          <ul>
+            <li>Identificaste que <code>&amp;</code> debería ser <code>|</code> (o <code>%in% c("San Salvador","Santa Ana")</code>).</li>
+            <li>Identificaste que <code>arrange(ingreso_total)</code> ordena ascendente, y para "mayor ingreso" primero se necesita <code>arrange(desc(ingreso_total))</code>.</li>
+            <li>Propusiste la línea corregida completa, no solo señalaste el problema.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="exercise" data-exercise>
+      <div class="ex-head">
+        <div class="ex-title"><span class="ex-num">Ej. 03</span> Construye el pipeline</div>
+        <span class="ia-badge ia-permitida"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M9 12l2 2 4-4M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>IA permitida</span>
+      </div>
+      <div class="ex-body">
+        <p>Escribe un pipeline con <code>|&gt;</code> que, a partir de <code>ventas</code>: (1) se quede solo con las transacciones de los meses de <code>"julio"</code>, <code>"agosto"</code> y <code>"diciembre"</code> usando <code>%in%</code>, (2) las ordene de mayor a menor <code>ingreso_total</code>, y (3) seleccione solo <code>tienda</code>, <code>mes</code> e <code>ingreso_total</code>. Explica por qué usaste <code>%in%</code> en vez de encadenar tres <code>|</code>.</p>
+        <textarea data-min="60" placeholder="Pega tu código y tu justificación (mínimo 60 caracteres)"></textarea>
+        <div class="ex-meta"><span class="char-count">0 / 60</span><button class="btn-reveal" disabled>Revelar y verificar</button></div>
+        <div class="feedback-panel">
+          <h5>Criterios de evaluación</h5>
+          <ul>
+            <li>El pipeline usa <code>|&gt;</code> entre los tres pasos, en el orden filter → arrange → select.</li>
+            <li><code>filter(mes %in% c("julio","agosto","diciembre"))</code> — no tres condiciones con <code>==</code> y <code>|</code> (ambas funcionan, pero <code>%in%</code> escala mejor con más valores).</li>
+            <li><code>arrange(desc(ingreso_total))</code> con <code>desc()</code> explícito.</li>
+            <li>Justificación: <code>%in%</code> es más corto y más fácil de modificar si se agrega un cuarto mes.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="exercise" data-exercise>
+      <div class="ex-head">
+        <div class="ex-title"><span class="ex-num">Ej. 04</span> select() vs. rename()</div>
+        <span class="ia-badge ia-permitida"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M9 12l2 2 4-4M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>IA permitida</span>
+      </div>
+      <div class="ex-body">
+        <p><code>ventas</code> tiene 8 columnas. Necesitas un data frame llamado <code>ventas_reporte</code> con <b>todas</b> las columnas originales, pero con <code>ingreso_total</code> renombrada a <code>ingreso_usd</code>. Escribe el código y explica por qué <code>select()</code> no es la herramienta correcta para este caso.</p>
+        <textarea data-min="50" placeholder="Código + justificación (mínimo 50 caracteres)"></textarea>
+        <div class="ex-meta"><span class="char-count">0 / 50</span><button class="btn-reveal" disabled>Revelar y verificar</button></div>
+        <div class="feedback-panel">
+          <h5>Criterios de evaluación</h5>
+          <ul>
+            <li>Código: <code>ventas_reporte &lt;- ventas |&gt; rename(ingreso_usd = ingreso_total)</code>.</li>
+            <li>Explicación: <code>select()</code> solo conserva las columnas que listas explícitamente — tendrías que escribir las 8 solo para renombrar una. <code>rename()</code> cambia el nombre sin tocar las demás.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="exercise" data-exercise>
+      <div class="ex-head">
+        <div class="ex-title"><span class="ex-num">Ej. 05</span> · Proyecto <span class="ia-badge ia-permitida" style="margin-left:6px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M9 12l2 2 4-4M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>IA permitida</span></div>
+      </div>
+      <div class="ex-body">
+        <div class="callout info" style="margin-top:0;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          <div><div class="callout-title">Conexión con tu proyecto grupal</div><p style="margin:0;color:var(--tp)">Fase sugerida de la Semana 5: preparar el data frame filtrado y con nombres claros que usarán en la Sesión 2 para construir los resúmenes descriptivos.</p></div>
+        </div>
+        <p>Sobre la base de datos de tu proyecto grupal: escribe (en papel o en RStudio) un pipeline de <b>filter → arrange → select/rename</b> que deje tu base lista para responder una de tus preguntas secundarias. No necesitas <code>group_by()</code> ni <code>summarize()</code> todavía — el objetivo es dejar la base "lista para agrupar" en la próxima sesión. Explica qué pregunta de tu proyecto estás preparando.</p>
+        <textarea data-min="70" placeholder="Tu pipeline y la pregunta que estás preparando (mínimo 70 caracteres)"></textarea>
+        <div class="ex-meta"><span class="char-count">0 / 70</span><button class="btn-reveal" disabled>Revelar criterios</button></div>
+        <div class="feedback-panel">
+          <h5>Criterios de evaluación</h5>
+          <ul>
+            <li>El pipeline usa exclusivamente verbos ya vistos (<code>filter</code>, <code>arrange</code>, <code>select</code>, <code>rename</code>, <code>|&gt;</code>) — nada de <code>group_by()</code>/<code>summarize()</code> todavía.</li>
+            <li>La pregunta secundaria que se prepara está formulada de forma clara y es respondible con los datos del equipo.</li>
+            <li>Los nombres de columna finales están en <code>snake_case</code> y son entendibles para cualquier miembro del equipo, no solo para quien escribió el código.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="verify-box">
+      <div class="vq"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>¿Cómo sabemos que este resultado es correcto?</div>
+      <p class="hint">Esta pregunta cierra cada laboratorio del curso — no se entrega, es para ti.</p>
+      <ul class="check-list" id="verifyChecklist">
+        <li class="check-item"><input type="checkbox"><span>Comparé el número de filas antes y después de cada <code>filter()</code> — ¿tiene sentido que haya bajado esa cantidad?</span></li>
+        <li class="check-item"><input type="checkbox"><span>Revisé si usé <code>&amp;</code> o <code>|</code> pensando en si las condiciones son de la misma columna o de columnas distintas.</span></li>
+        <li class="check-item"><input type="checkbox"><span>Verifiqué que <code>arrange(desc(...))</code> realmente ordenó de mayor a menor mirando las primeras filas.</span></li>
+        <li class="check-item"><input type="checkbox"><span>Confirmé con <code>names()</code> o <code>glimpse()</code> que <code>select()</code>/<code>rename()</code> dejaron las columnas con los nombres que esperaba.</span></li>
+      </ul>
+    </div>
+  </div>
+
+</section>
+
+<!-- =========================================================
+     TAB 3: R PLAYGROUND
+========================================================= -->
+<section class="tab-panel" id="panel-playground">
+  <div class="section">
+    <h2>R Playground</h2>
+    <p>4 fragmentos progresivos usando <b>solo</b> lo visto hasta esta sesión: <code>filter()</code>, <code>arrange()</code>, <code>select()</code>, <code>rename()</code>, <code>%in%</code> y el pipe <code>|&gt;</code>. Salida precomputada — no es ejecución en vivo (ver nota al final).</p>
+
+    <div class="callout info">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20M4 19.5A2.5 2.5 0 006.5 22H20V2H6.5A2.5 2.5 0 004 4.5v15z"/></svg>
+      <div><div class="callout-title">Dataset de referencia: ventas</div><p style="margin:0;color:var(--tp)">Una tabla simulada de ventas mensuales de una cadena de tiendas en El Salvador.</p></div>
+    </div>
+
+    <div class="dataset-box">
+      <table>
+        <thead><tr><th>tienda</th><th>region</th><th>mes</th><th>unidades_vendidas</th><th>precio_unitario</th><th>ingreso_total</th></tr></thead>
+        <tbody>
+          <tr><td>San Salvador</td><td>Central</td><td>julio</td><td>420</td><td>8.50</td><td>3570.00</td></tr>
+          <tr><td>Santa Ana</td><td>Occidente</td><td>julio</td><td>310</td><td>8.50</td><td>2635.00</td></tr>
+          <tr><td>San Miguel</td><td>Oriente</td><td>julio</td><td>275</td><td>8.20</td><td>2255.00</td></tr>
+          <tr><td>Santa Tecla</td><td>Central</td><td>agosto</td><td>390</td><td>8.60</td><td>3354.00</td></tr>
+          <tr><td>Sonsonate</td><td>Occidente</td><td>agosto</td><td>260</td><td>8.30</td><td>2158.00</td></tr>
+          <tr><td>San Miguel</td><td>Oriente</td><td>diciembre</td><td>510</td><td>9.10</td><td>4641.00</td></tr>
+          <tr><td>San Salvador</td><td>Central</td><td>diciembre</td><td>605</td><td>9.10</td><td>5505.50</td></tr>
+          <tr><td>Santa Ana</td><td>Occidente</td><td>diciembre</td><td>340</td><td>9.00</td><td>3060.00</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="margin-top:32px;">Fragmento 1 · filtrar con un operador relacional</h3>
+    <div class="codeblock">
+      <div class="cb-head"><span>filter() básico</span><div class="cb-dots"><i style="background:var(--coral)"></i><i style="background:var(--amber)"></i><i style="background:var(--green)"></i></div></div>
+      <pre data-code="r">ventas |&gt; filter(region == "Oriente")</pre>
+      <div class="console-out"># A tibble: 2 × 6
+  tienda     region  mes       unidades_vendidas precio_unitario ingreso_total
+  &lt;chr&gt;      &lt;chr&gt;   &lt;chr&gt;                 &lt;dbl&gt;           &lt;dbl&gt;         &lt;dbl&gt;
+1 San Miguel Oriente julio                   275             8.2          2255
+2 San Miguel Oriente diciembre               510             9.1          4641</div>
+    </div>
+
+    <h3>Fragmento 2 · %in% con varios valores</h3>
+    <div class="codeblock">
+      <div class="cb-head"><span>filter() + %in%</span><div class="cb-dots"><i style="background:var(--coral)"></i><i style="background:var(--amber)"></i><i style="background:var(--green)"></i></div></div>
+      <pre data-code="r">ventas |&gt; filter(mes %in% c("julio", "diciembre"))</pre>
+      <div class="console-out"># A tibble: 6 × 6
+  tienda       region    mes       unidades_vendidas precio_unitario ingreso_total
+  &lt;chr&gt;        &lt;chr&gt;     &lt;chr&gt;                 &lt;dbl&gt;           &lt;dbl&gt;         &lt;dbl&gt;
+1 San Salvador Central   julio                   420             8.5        3570
+2 Santa Ana    Occidente julio                   310             8.5        2635
+3 San Miguel   Oriente   julio                   275             8.2        2255
+4 San Miguel   Oriente   diciembre               510             9.1        4641
+5 San Salvador Central   diciembre               605             9.1        5505.5
+6 Santa Ana    Occidente diciembre               340             9          3060</div>
+    </div>
+
+    <h3>Fragmento 3 · encadenar filter() + arrange(desc())</h3>
+    <div class="codeblock">
+      <div class="cb-head"><span>pipeline de dos pasos</span><div class="cb-dots"><i style="background:var(--coral)"></i><i style="background:var(--amber)"></i><i style="background:var(--green)"></i></div></div>
+      <pre data-code="r">ventas |&gt;
+  filter(mes %in% c("julio", "diciembre")) |&gt;
+  arrange(desc(ingreso_total))</pre>
+      <div class="console-out"># A tibble: 6 × 6
+  tienda       region    mes       unidades_vendidas precio_unitario ingreso_total
+1 San Salvador Central   diciembre               605             9.1        5505.5
+2 San Miguel   Oriente   diciembre               510             9.1        4641
+3 San Salvador Central   julio                   420             8.5        3570
+4 Santa Ana    Occidente diciembre               340             9          3060
+5 Santa Ana    Occidente julio                   310             8.5        2635
+6 San Miguel   Oriente   julio                   275             8.2        2255</div>
+    </div>
+
+    <h3>Fragmento 4 · select() con renombrado, guardando el resultado</h3>
+    <div class="codeblock">
+      <div class="cb-head"><span>pipeline completo</span><div class="cb-dots"><i style="background:var(--coral)"></i><i style="background:var(--amber)"></i><i style="background:var(--green)"></i></div></div>
+      <pre data-code="r">ventas_resumen &lt;- ventas |&gt;
+  filter(mes %in% c("julio", "diciembre")) |&gt;
+  arrange(desc(ingreso_total)) |&gt;
+  select(tienda, region, mes, ingreso_usd = ingreso_total)
+
+ventas_resumen</pre>
+      <div class="console-out"># A tibble: 6 × 4
+  tienda       region    mes       ingreso_usd
+1 San Salvador Central   diciembre      5505.5
+2 San Miguel   Oriente   diciembre      4641
+3 San Salvador Central   julio          3570
+4 Santa Ana    Occidente diciembre      3060
+5 Santa Ana    Occidente julio          2635
+6 San Miguel   Oriente   julio          2255</div>
+    </div>
+
+    <div class="callout info" style="margin-top:28px;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v8M8 12h8M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      <div><div class="callout-title">Nota sobre esta salida</div><p style="margin:0;color:var(--tp)">El código de arriba es real y ejecutable en tu RStudio, pero la salida que ves aquí está <b>precalculada</b> (no es una ejecución en vivo dentro de este archivo). Ábrelo en tu propia sesión de R para comprobarlo tú mismo — esa comprobación es, de hecho, la mejor forma de verificar que el resultado es correcto.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     TAB 4: CHEAT SHEET
+========================================================= -->
+<section class="tab-panel" id="panel-cheatsheet">
+  <div class="section">
+    <h2>Cheat Sheet — Sesión 1</h2>
+    <div class="cheat-grid">
+      <div class="cheat-panel">
+        <h4>El pipe, en una imagen</h4>
+        <div class="pipe-diagram">
+          <span class="pd-box">x</span><span class="pd-arrow">|&gt;</span><span class="pd-box">f()</span><span class="pd-arrow">=</span><span class="pd-box">f(x)</span>
+        </div>
+        <p class="small-note" style="margin:0;">Atajo: <code>Ctrl/Cmd + Shift + M</code> — requiere activar "Use native pipe operator" en Tools → Global Options → Code → Display.</p>
+      </div>
+      <div class="cheat-panel">
+        <h4>Y (&amp;) vs. O (|)</h4>
+        <div class="vocab-row"><span><code>&amp;</code> — ambas a la vez</span><span style="color:var(--ts)">columnas distintas</span></div>
+        <div class="vocab-row"><span><code>|</code> — al menos una</span><span style="color:var(--ts)">misma columna, varios valores</span></div>
+        <div class="vocab-row"><span><code>%in%</code></span><span style="color:var(--ts)">atajo para varios <code>|</code></span></div>
+      </div>
+    </div>
+
+    <div class="cheat-grid" style="margin-top:20px;">
+      <div class="cheat-panel">
+        <h4>Verbos de fila</h4>
+        <div class="vocab-row"><code>filter(df, cond)</code><span style="color:var(--ts)">conserva filas</span></div>
+        <div class="vocab-row"><code>arrange(df, col)</code><span style="color:var(--ts)">ascendente</span></div>
+        <div class="vocab-row"><code>arrange(df, desc(col))</code><span style="color:var(--ts)">descendente</span></div>
+      </div>
+      <div class="cheat-panel">
+        <h4>Verbos de columna</h4>
+        <div class="vocab-row"><code>select(df, a, b)</code><span style="color:var(--ts)">conserva solo a, b</span></div>
+        <div class="vocab-row"><code>select(df, x = a)</code><span style="color:var(--ts)">selecciona y renombra</span></div>
+        <div class="vocab-row"><code>rename(df, x = a)</code><span style="color:var(--ts)">renombra sin eliminar</span></div>
+      </div>
+    </div>
+
+    <div class="cheat-panel" style="margin-top:20px;">
+      <h4>Operadores relacionales</h4>
+      <table class="ref-table" style="margin:0;">
+        <tbody>
+          <tr><td><code>==</code></td><td>igual</td><td><code>!=</code></td><td>distinto</td></tr>
+          <tr><td><code>&gt;</code> / <code>&lt;</code></td><td>mayor / menor</td><td><code>&gt;=</code> / <code>&lt;=</code></td><td>mayor o igual / menor o igual</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="cheat-panel" style="margin-top:20px;">
+      <h4>Regla central de la sesión</h4>
+      <p style="margin:0 0 10px;">Encadena verbos con <code>|&gt;</code>: lo de la izquierda es el primer argumento de lo de la derecha. Guarda resultados intermedios con <code>&lt;-</code> cuando los vayas a reutilizar (ej. <code>flights2</code>).</p>
+      <div class="cycle-footer">
+        <span class="step">pregunta</span><span class="pd-arrow">→</span>
+        <span class="step now">exploración</span><span class="pd-arrow">→</span>
+        <span class="step">implementación</span><span class="pd-arrow">→</span>
+        <span class="step">resultado</span><span class="pd-arrow">→</span>
+        <span class="step">interpretación</span><span class="pd-arrow">→</span>
+        <span class="step">verificación</span>
+      </div>
+    </div>
+
+    <footer class="foot">
+      <p><b style="color:var(--tp)">Bibliografía:</b> R for Data Science (2ª ed.) — Wickham, Çetinkaya-Rundel &amp; Grolemund. Cap. 3 "Transformación de datos", secciones 3.2–3.4 (repasadas en esta sesión).</p>
+      <p><b style="color:var(--tp)">Próxima lectura (Sesión 2, miércoles):</b> Cap. 3, sección 3.5 "Grupos" (<code>group_by()</code>, <code>summarize()</code>, familia <code>slice_*()</code>) + inicio del Cap. 10 "Análisis exploratorio de datos".</p>
+    </footer>
+  </div>
+</section>
+
+</main>
+
+<script>
+// ---------- Tabs ----------
+const pills = document.querySelectorAll('.tab-pill');
+const panels = document.querySelectorAll('.tab-panel');
+pills.forEach(p => p.addEventListener('click', () => {
+  pills.forEach(x => x.classList.remove('active'));
+  panels.forEach(x => x.classList.remove('active'));
+  p.classList.add('active');
+  document.getElementById('panel-' + p.dataset.tab).classList.add('active');
+  window.scrollTo({top:0, behavior:'instant'});
+}));
+
+// ---------- XP system (in-memory only, no localStorage) ----------
+let xp = 0;
+function addXP(n){ xp += n; document.getElementById('xpCount').textContent = xp; }
+
+// ---------- Fade-in on scroll (con red de seguridad si IntersectionObserver falla) ----------
+if ('IntersectionObserver' in window) {
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in-view'); });
+  }, {threshold:0.12});
+  document.querySelectorAll('.section').forEach(s => io.observe(s));
+  // red de seguridad: si algo impide que el observer dispare, mostrar todo tras 2.5s
+  setTimeout(() => document.querySelectorAll('.section').forEach(s => s.classList.add('in-view')), 2500);
+} else {
+  document.querySelectorAll('.section').forEach(s => s.classList.add('in-view'));
+}
+
+// ---------- Textarea gate + reveal ----------
+document.querySelectorAll('.ex-body, .exercise .ex-body').forEach(body => {
+  const ta = body.querySelector('textarea');
+  if (!ta) return;
+  const min = parseInt(ta.dataset.min || '40', 10);
+  const counter = body.querySelector('.char-count');
+  const btn = body.querySelector('.btn-reveal');
+  const panel = body.querySelector('.feedback-panel');
+  let revealedOnce = false;
+  ta.addEventListener('input', () => {
+    const len = ta.value.trim().length;
+    counter.textContent = len + ' / ' + min;
+    if (len >= min) { counter.classList.add('ok'); btn.disabled = false; }
+    else { counter.classList.remove('ok'); btn.disabled = true; }
+  });
+  btn.addEventListener('click', () => {
+    panel.classList.add('shown');
+    if (!revealedOnce) { addXP(10); revealedOnce = true; updateLabProgress(); }
+  });
+});
+
+// ---------- Lab progress bar ----------
+function updateLabProgress(){
+  const exs = document.querySelectorAll('[data-exercise]');
+  if (!exs.length) return;
+  let done = 0;
+  exs.forEach(ex => { if (ex.querySelector('.feedback-panel.shown')) done++; });
+  const pct = Math.round((done/exs.length)*100);
+  const fill = document.getElementById('labProgress');
+  const label = document.getElementById('labProgressText');
+  if (fill) fill.style.width = pct + '%';
+  if (label) label.textContent = done + ' de ' + exs.length + ' ejercicios completados';
+}
+
+// ---------- Verification checklist ----------
+document.querySelectorAll('.check-item').forEach(item => {
+  const box = item.querySelector('input');
+  box.addEventListener('change', () => {
+    if (box.checked) { item.classList.add('correct'); addXP(5); }
+    else { item.classList.remove('correct'); }
+  });
+});
+
+// ---------- Manual R syntax highlighting (vanilla, no external libs) ----------
+function escapeHTML(s){
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function highlightR(raw){
+  const esc = escapeHTML(raw);
+  const rx = /(#.*$)|("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')|(\|&gt;)|(&lt;-)|(%in%|==|!=|&lt;=|&gt;=|&amp;|\||&lt;|&gt;|\+|\*|\/)|(\b\d+\.?\d*\b)|(\b(?:library|function|if|else|for|while|TRUE|FALSE|NA|NULL)\b)|(\b[a-zA-Z_.][a-zA-Z0-9_.]*(?=\())/gm;
+  return esc.replace(rx, (m, comment, str, pipe, assign, op, num, kw, fn) => {
+    if (comment) return '<span class="tk-comment">' + comment + '</span>';
+    if (str) return '<span class="tk-string">' + str + '</span>';
+    if (pipe) return '<span class="tk-pipe">' + pipe + '</span>';
+    if (assign) return '<span class="tk-assign">' + assign + '</span>';
+    if (op) return '<span class="tk-op">' + op + '</span>';
+    if (num) return '<span class="tk-num">' + num + '</span>';
+    if (kw) return '<span class="tk-kw">' + kw + '</span>';
+    if (fn) return '<span class="tk-fn">' + fn + '</span>';
+    return m;
+  });
+}
+document.querySelectorAll('pre[data-code="r"]').forEach(pre => {
+  pre.innerHTML = highlightR(pre.textContent);
+});
+</script>
+</body>
+</html>
