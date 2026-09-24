@@ -1,0 +1,69 @@
+{
+  "settings": {
+    "migrated": 6,
+    "iconPacksPath": ".obsidian/icons",
+    "fontSize": 16,
+    "emojiStyle": "native",
+    "iconColor": null,
+    "recentlyUsedIcons": [
+      "LiHome",
+      "LiCog",
+      "LiLayoutTemplate",
+      "LiFolderCode",
+      "LiBrainCircuit"
+    ],
+    "recentlyUsedIconsSize": 5,
+    "rules": [],
+    "extraMargin": {
+      "top": 0,
+      "right": 4,
+      "bottom": 0,
+      "left": 0
+    },
+    "iconInTabsEnabled": false,
+    "iconInTitleEnabled": false,
+    "iconInTitlePosition": "above",
+    "iconInFrontmatterEnabled": false,
+    "iconInFrontmatterFieldName": "icon",
+    "iconColorInFrontmatterFieldName": "iconColor",
+    "iconsBackgroundCheckEnabled": false,
+    "iconsInNotesEnabled": true,
+    "iconsInLinksEnabled": true,
+    "iconIdentifier": ":",
+    "lucideIconPackType": "native",
+    "debugMode": false,
+    "useInternalPlugins": false
+  },
+  "00 Programa": {
+    "iconName": "LiFolderPen",
+    "iconColor": "#0a9997"
+  },
+  "01 Semanas": {
+    "iconName": "LiCalendarDays",
+    "iconColor": "#a80000"
+  },
+  "02 Referencias": {
+    "iconName": "LiRefreshCcwDot",
+    "iconColor": "#6632b3"
+  },
+  "03 Aprendizaje del Agente": {
+    "iconName": "LiBrainCircuit",
+    "iconColor": "#d15400"
+  },
+  "04 Materiales Generados": {
+    "iconName": "LiFolderCode",
+    "iconColor": "#3a9269"
+  },
+  "05 Plantillas": {
+    "iconName": "LiLayoutTemplate",
+    "iconColor": "#a88c00"
+  },
+  "assets": {
+    "iconName": "LiCog",
+    "iconColor": "#042bf1"
+  },
+  "Home.md": {
+    "iconName": "LiHome",
+    "iconColor": "#99ff00"
+  }
+}

@@ -1,0 +1,1371 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FPEN &middot; Control 01: Repaso y simulacro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,800&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;1,7..72,400&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='2' y='2' width='60' height='60' rx='15' fill='%23111a30'/%3E%3Cpath d='M11 39C14 52 29 57 42 52C55 48 60 35 56 22' fill='none' stroke='%234c9aff' stroke-width='5' stroke-linecap='round'/%3E%3Cpath d='M56 22C53 14 48 10 41 8' fill='none' stroke='%232dd4bf' stroke-width='5' stroke-linecap='round'/%3E%3Ccircle cx='41' cy='8' r='3' fill='%232dd4bf'/%3E%3Cpath d='M14 20L23 29L14 38' fill='none' stroke='%23edf1fa' stroke-width='4.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M20 41H28' fill='none' stroke='%23edf1fa' stroke-width='4' stroke-linecap='round'/%3E%3Crect x='31' y='33' width='5' height='11' rx='1.5' fill='%234c9aff'/%3E%3Crect x='39' y='27' width='5' height='17' rx='1.5' fill='%232dd4bf'/%3E%3Crect x='47' y='19' width='5' height='25' rx='1.5' fill='%23edf1fa'/%3E%3C/svg%3E" type="image/svg+xml" />
+<style>
+/* ===================================================================
+   FPEN. Semana 01. Tema "R Notebook"
+   Un solo archivo, offline, sin librerías externas.
+   =================================================================== */
+:root{
+  --bg0:#0a0f1c; --bg1:#111a30; --bg2:#182645;
+  --blue:#4c9aff; --teal:#2dd4bf; --amber:#f5a623; --coral:#ff6b6b; --violet:#a78bfa; --green:#34d399;
+  --tp:#edf1fa; --ts:#8792ae;
+  --border: rgba(237,241,250,0.09);
+  --border-strong: rgba(237,241,250,0.16);
+  /* escala de radios: 3 niveles + pill, sin valores sueltos */
+  --r-sm: 8px; --r-md: 12px; --r-lg: 16px; --r-pill: 999px;
+  --radius: var(--r-lg);
+  --font-display:'Fraunces', 'Iowan Old Style', Georgia, serif;
+  --font-body:'Literata', Georgia, 'Times New Roman', serif;
+  --font-mono:'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace;
+  --maxw: 1180px;
+  --z-base: 1; --z-grain: 2; --z-subnav: 20; --z-nav: 100; --z-modal: 1000;
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+body{
+  margin:0; background:var(--bg0); color:var(--tp);
+  font-family:var(--font-body); font-size:17px; line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  min-height:100dvh;
+  position:relative;
+  overflow-x:hidden;
+}
+
+/* grain texture */
+#grain{
+  position:fixed; inset:0; width:100%; height:100%;
+  pointer-events:none; z-index:var(--z-grain); opacity:0.045; mix-blend-mode:overlay;
+}
+
+::selection{ background:var(--blue); color:var(--bg0); }
+
+a{ color:var(--teal); }
+a:focus-visible, button:focus-visible, [tabindex]:focus-visible, textarea:focus-visible, .pill:focus-visible{
+  outline:2px solid var(--blue); outline-offset:3px; border-radius:4px;
+}
+
+h1,h2,h3,h4{ font-family:var(--font-display); font-weight:700; letter-spacing:-0.01em; line-height:1.15; margin:0 0 .5em; color:var(--tp); text-wrap:balance; }
+h1{ font-weight:800; }
+p{ margin:0 0 1em; color:var(--tp); max-width:72ch; text-wrap:pretty; }
+code, pre, .mono{ font-family:var(--font-mono); }
+
+.container{ max-width:var(--maxw); margin:0 auto; padding:0 clamp(16px,4vw,40px); }
+
+/* ---------- top nav ---------- */
+.topnav{
+  position:sticky; top:0; z-index:var(--z-nav);
+  background:rgba(10,15,28,0.86); backdrop-filter:blur(14px) saturate(140%);
+  border-bottom:1px solid var(--border);
+}
+.topnav-inner{ display:flex; align-items:center; gap:18px; padding:12px clamp(16px,4vw,40px); max-width:var(--maxw); margin:0 auto; }
+.brand{ display:flex; align-items:center; gap:10px; color:var(--tp); text-decoration:none; flex-shrink:0; }
+.brand img, .brand svg.brand-logo{ display:block; width:clamp(140px, 16vw, 185px); height:auto; flex-shrink:0; }
+.brand .sem{ color:var(--ts); font-family:var(--font-mono); font-size:.76rem; font-weight:600; padding:3px 8px; border-radius:var(--r-pill); border:1px solid var(--border-strong); background:rgba(255,255,255,0.02); white-space:nowrap; }
+@media (max-width:560px){
+  .brand img, .brand svg.brand-logo{ width:120px; }
+  .brand .sem{ display:none; }
+}
+
+.tabs{ display:flex; gap:6px; flex:1; overflow-x:auto; scrollbar-width:none; }
+.tabs::-webkit-scrollbar{ display:none; }
+.pill{
+  appearance:none; border:1px solid transparent; background:transparent; color:var(--ts);
+  font-family:var(--font-body); font-size:.92rem; font-weight:500; letter-spacing:.01em;
+  padding:8px 16px; border-radius:999px; cursor:pointer; white-space:nowrap;
+  transition:background .18s cubic-bezier(0.16,1,0.3,1), color .18s cubic-bezier(0.16,1,0.3,1), border-color .18s cubic-bezier(0.16,1,0.3,1);
+}
+.pill:hover{ color:var(--tp); border-color:var(--border-strong); }
+.pill[aria-selected="true"]{ background:var(--bg2); color:var(--tp); border-color:var(--border-strong); }
+.pill .dot{ display:inline-block; width:6px; height:6px; border-radius:50%; margin-right:8px; vertical-align:middle; }
+
+.xp-wrap{ display:flex; align-items:center; gap:10px; flex:none; }
+.xp-badge{
+  display:flex; align-items:center; gap:7px; background:var(--bg1); border:1px solid var(--border-strong);
+  border-radius:999px; padding:6px 12px 6px 8px; font-family:var(--font-mono); font-size:.8rem; color:var(--tp);
+}
+.xp-badge .xp-icon{ width:16px; height:16px; color:var(--amber); flex:none; }
+.xp-badge b{ color:var(--amber); font-weight:700; }
+
+/* ---------- layout / panels ---------- */
+main{ position:relative; z-index:var(--z-base); }
+.tab-panel{ display:none; }
+.tab-panel.active{ display:block; animation:panelIn .5s cubic-bezier(0.16,1,0.3,1) both; }
+@keyframes panelIn{ from{ opacity:0; transform:translateY(8px); } to{ opacity:1; transform:translateY(0); } }
+
+/* ---------- hero ---------- */
+.hero{
+  position:relative; padding:clamp(48px,7vw,88px) 0 clamp(32px,5vw,56px);
+  overflow:hidden; border-bottom:1px solid var(--border);
+}
+.hero::before{
+  content:''; position:absolute; inset:-20% -10% auto -10%; height:520px;
+  background:radial-gradient(60% 60% at 20% 20%, rgba(76,154,255,0.20), transparent 60%),
+             radial-gradient(50% 50% at 85% 10%, rgba(45,212,191,0.16), transparent 60%);
+  filter:blur(10px); pointer-events:none;
+}
+.hero-grid{
+  position:absolute; inset:0; opacity:.35;
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size:44px 44px;
+  mask-image:radial-gradient(70% 60% at 60% 10%, black, transparent 75%);
+  pointer-events:none;
+}
+.hero-inner{ position:relative; z-index:var(--z-base); }
+.chips{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:20px; }
+.chip{
+  display:inline-flex; align-items:center; gap:6px; font-family:var(--font-mono); font-size:.74rem; font-weight:500;
+  padding:5px 11px; border-radius:999px; border:1px solid var(--border-strong); color:var(--ts); background:rgba(255,255,255,0.02);
+}
+.chip b{ color:var(--tp); font-weight:600; }
+.chip.c-blue{ border-color:rgba(76,154,255,.4); color:var(--blue); }
+.chip.c-amber{ border-color:rgba(245,166,35,.4); color:var(--amber); }
+.chip.c-violet{ border-color:rgba(167,139,250,.4); color:var(--violet); }
+
+.hero h1{ font-size:clamp(2rem,4.4vw,3.3rem); max-width:16ch; margin-bottom:.35em; }
+.hero .lede{ font-size:1.18rem; max-width:62ch; color:var(--ts); }
+
+/* data-cycle diagram, recurring brand element */
+.cycle{ display:flex; flex-wrap:wrap; gap:0; margin-top:34px; align-items:center; }
+.cycle-step{
+  display:flex; align-items:center; gap:8px; font-family:var(--font-mono); font-size:.78rem; color:var(--ts);
+  padding:8px 12px; border:1px solid var(--border); border-radius:var(--r-md); background:var(--bg1);
+}
+.cycle-step.now{ color:var(--bg0); background:var(--blue); border-color:var(--blue); font-weight:600; }
+.cycle-arrow{ color:var(--ts); padding:0 6px; opacity:.6; }
+
+/* diagrama orbital del ciclo, versión gráfica del hero principal (decorativo, ecos la marca del curso) */
+.hero-diagram{
+  position:absolute; right:clamp(8px,3vw,48px); top:50%; transform:translateY(-50%);
+  width:clamp(240px,24vw,340px); height:clamp(240px,24vw,340px); pointer-events:none;
+}
+@media (max-width:1080px){ .hero-diagram{ display:none; } }
+.hero-diagram .node-ring{ fill:none; stroke:var(--border-strong); stroke-width:1; stroke-dasharray:2 6; stroke-linecap:round; }
+.hero-diagram .node-arc{ fill:none; stroke:var(--teal); stroke-width:1.5; opacity:.55; stroke-linecap:round; }
+.hero-diagram .node{ fill:var(--bg1); stroke:var(--border-strong); stroke-width:1.5; }
+.hero-diagram .node.now{ fill:var(--blue); stroke:var(--blue); }
+.hero-diagram text{ font-family:var(--font-mono); font-size:10px; fill:var(--ts); }
+.hero-diagram .node.now ~ text, .hero-diagram text.now-label{ fill:var(--bg0); font-weight:700; }
+
+/* ---------- sub nav within a tab ---------- */
+.subnav{
+  position:sticky; top:57px; z-index:var(--z-subnav); display:flex; gap:4px; flex-wrap:wrap;
+  padding:12px clamp(16px,4vw,40px); background:rgba(10,15,28,0.92); backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--border); max-width:100%; margin-bottom:8px;
+}
+.subnav a{
+  font-family:var(--font-mono); font-size:.76rem; color:var(--ts); text-decoration:none; padding:5px 10px;
+  border-radius:var(--r-sm); border:1px solid transparent;
+}
+.subnav a:hover{ color:var(--tp); border-color:var(--border); }
+
+section.block{
+  padding:clamp(40px,6vw,64px) 0; border-bottom:1px solid var(--border);
+  position:relative; isolation:isolate; counter-increment:blocknum;
+}
+section.block:last-of-type{ border-bottom:none; }
+/* numeral editorial de fondo por sección, ritmo visual recurrente en vez de bloques idénticos */
+section.block::before{
+  content:counter(blocknum, decimal-leading-zero);
+  position:absolute; left:clamp(-16px,-3.2vw,-38px); top:-.06em; z-index:-1;
+  font-family:var(--font-display); font-weight:800; font-size:clamp(4rem,9vw,7.2rem); line-height:1;
+  color:var(--tp); opacity:.035; pointer-events:none; user-select:none;
+}
+@media (max-width:900px){ section.block::before{ display:none; } }
+.block-head{ display:flex; align-items:baseline; gap:14px; margin-bottom:28px; position:relative; }
+.block-num{ font-family:var(--font-mono); color:var(--ts); font-size:.85rem; }
+.fade-in{ opacity:0; transform:translateY(14px); transition:opacity .6s cubic-bezier(0.16,1,0.3,1), transform .6s cubic-bezier(0.16,1,0.3,1); }
+.fade-in.in{ opacity:1; transform:translateY(0); }
+
+/* ---------- concept cards ---------- */
+.grid-cards{ display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:16px; }
+.card{
+  position:relative; background:linear-gradient(165deg, var(--bg2) 0%, var(--bg1) 60%); border:1px solid var(--border); border-radius:var(--radius);
+  padding:22px 22px 20px; overflow:hidden; transition:transform .22s cubic-bezier(0.16,1,0.3,1), border-color .22s cubic-bezier(0.16,1,0.3,1), box-shadow .22s cubic-bezier(0.16,1,0.3,1);
+}
+.card::before{
+  content:''; position:absolute; left:0; right:0; bottom:0; height:3px;
+  background:linear-gradient(90deg, var(--accent,var(--blue)), transparent);
+}
+.card:hover{ transform:translateY(-3px); border-color:var(--border-strong); box-shadow:0 4px 8px -2px rgba(0,0,0,.5); }
+.card:hover .card-glow{ opacity:.5; }
+.card-glow{
+  position:absolute; width:180px; height:180px; border-radius:50%; right:-60px; top:-60px;
+  background:var(--accent,var(--blue)); filter:blur(60px); opacity:0; transition:opacity .3s cubic-bezier(0.16,1,0.3,1); pointer-events:none;
+}
+.card h3{ font-size:1.08rem; display:flex; align-items:center; gap:9px; }
+.card h3 svg{ flex:none; color:var(--accent,var(--blue)); }
+.card p{ color:var(--ts); font-size:.95rem; margin-bottom:.6em; }
+.card .exemplo{
+  margin-top:12px; background:var(--bg0); border:1px solid var(--border); border-radius:var(--r-sm); padding:12px 14px;
+  font-family:var(--font-mono); font-size:.82rem; overflow-x:auto;
+}
+.card.asym{ grid-column:span 2; }
+@media (max-width:640px){ .card.asym{ grid-column:span 1; } }
+
+/* ---------- diagrama de ambiente + evaluador de juguete (Objetos y asignación) ---------- */
+.env-diagram{ display:flex; align-items:stretch; gap:18px; margin:22px 0 18px; flex-wrap:wrap; }
+.env-panel{ flex:1 1 220px; min-width:220px; }
+.env-panel-label{ display:block; font-family:var(--font-mono); font-size:.78rem; color:var(--ts); margin-bottom:8px; }
+.env-panel-label code{ color:var(--tp); }
+.env-box{
+  background:linear-gradient(165deg, var(--bg2) 0%, var(--bg1) 60%); border:1px solid var(--border); border-radius:var(--r-lg);
+  padding:16px 18px; min-height:92px; display:flex; flex-direction:column; gap:10px; justify-content:center;
+}
+.env-box-filled{ border-color:rgba(76,154,255,.35); justify-content:flex-start; }
+.env-box-title{ font-family:var(--font-mono); font-size:.72rem; text-transform:uppercase; letter-spacing:.04em; color:var(--ts); }
+.env-box-hint{ text-transform:none; letter-spacing:0; }
+.env-empty{ font-family:var(--font-mono); font-size:.85rem; color:var(--ts); font-style:italic; opacity:.7; }
+.env-entry{
+  display:flex; align-items:center; gap:8px; font-family:var(--font-mono); font-size:.9rem;
+  background:var(--bg0); border:1px solid var(--border-strong); border-radius:var(--r-sm); padding:8px 12px; width:fit-content;
+  transition:background-color .5s cubic-bezier(0.16,1,0.3,1);
+}
+.env-entry.flash{ background-color:rgba(76,154,255,.22); transition-duration:.05s; }
+.env-entry-name{ color:var(--blue); }
+.env-entry-arrow{ color:var(--ts); }
+.env-entry-value{ color:var(--tp); font-weight:600; }
+.env-arrow{ display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; flex:0 0 auto; color:var(--teal); padding:4px; }
+.env-arrow-label{ font-family:var(--font-mono); font-size:.68rem; color:var(--ts); text-align:center; max-width:110px; }
+@media (max-width:760px){ .env-arrow{ transform:rotate(90deg); } .env-arrow-label{ transform:rotate(-90deg); max-width:140px; } }
+
+.toy-eval{
+  background:linear-gradient(165deg, var(--bg2) 0%, var(--bg1) 55%); border:1px dashed var(--border-strong); border-radius:var(--r-lg);
+  padding:20px 22px; margin:20px 0;
+}
+.toy-eval-head{ display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin-bottom:12px; }
+.toy-eval-flag{
+  font-family:var(--font-mono); font-size:.66rem; text-transform:uppercase; letter-spacing:.05em; color:var(--amber);
+  border:1px solid rgba(245,166,35,.4); padding:3px 9px; border-radius:999px; flex:none;
+}
+.toy-eval-head p{ margin:0; color:var(--ts); font-size:.9rem; }
+.toy-eval-controls{ display:flex; flex-wrap:wrap; align-items:flex-end; gap:12px; margin-bottom:14px; }
+.toy-eval-controls label{ display:block; font-family:var(--font-mono); font-size:.78rem; color:var(--ts); margin-bottom:6px; }
+.toy-eval-row{ display:flex; gap:8px; }
+#toyValue{
+  background:var(--bg0); color:var(--tp); border:1px solid var(--border-strong); border-radius:var(--r-sm);
+  padding:9px 12px; font-family:var(--font-mono); font-size:.92rem; width:140px;
+}
+#toyValue:focus{ border-color:var(--blue); }
+.toy-eval-btn{
+  appearance:none; border:1px solid var(--blue); background:var(--blue); color:var(--bg0); font-family:var(--font-body);
+  font-weight:600; font-size:.9rem; padding:9px 18px; border-radius:var(--r-sm); cursor:pointer; transition:all .18s cubic-bezier(0.16,1,0.3,1);
+}
+.toy-eval-btn:hover{ background:var(--teal); border-color:var(--teal); }
+.toy-eval-console{
+  background:#060a13; border:1px solid var(--border); border-radius:var(--r-md); padding:14px 16px;
+  font-family:var(--font-mono); font-size:.85rem; line-height:1.7; overflow-x:auto;
+}
+.toy-eval-console .te-line{ white-space:pre; }
+
+/* ---------- diagramas conceptuales reutilizables (Tipos de datos, Operadores, Vectores) ---------- */
+.cpanel{
+  background:linear-gradient(165deg, var(--bg2) 0%, var(--bg1) 60%); border:1px solid var(--border); border-radius:var(--r-lg);
+  padding:18px 20px; margin:18px 0;
+}
+.cpanel-cap{ font-family:var(--font-mono); font-size:.76rem; color:var(--ts); margin-bottom:12px; }
+.cpanel-cap b{ color:var(--tp); }
+.cflow{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+.cflow + .cflow{ margin-top:14px; }
+.cbox{
+  background:var(--bg0); border:1px solid var(--border-strong); border-radius:var(--r-sm);
+  padding:9px 13px; font-family:var(--font-mono); font-size:.85rem; text-align:center; color:var(--tp); flex:none;
+}
+.cbox.accent{ border-color:rgba(76,154,255,.45); color:var(--blue); font-weight:600; }
+.cop{ font-family:var(--font-mono); font-weight:700; color:var(--amber); font-size:.95rem; flex:none; }
+.carrow{ color:var(--teal); flex:none; display:flex; align-items:center; }
+.cbool{ font-family:var(--font-mono); font-weight:700; font-size:.8rem; padding:6px 12px; border-radius:999px; border:1px solid; flex:none; }
+.cbool.t{ color:var(--green); border-color:rgba(52,211,153,.45); background:rgba(52,211,153,.08); }
+.vec-op-row{ display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
+.vec-op-row .cbox{ width:100%; box-sizing:border-box; }
+.vec-op-mid{ text-align:center; font-family:var(--font-mono); font-size:.78rem; color:var(--ts); padding:10px 0; }
+.vec-op-mid .cop{ margin:0 4px; }
+.type-tag-row{ display:flex; flex-wrap:wrap; gap:22px; }
+.type-tag{ display:flex; flex-direction:column; align-items:center; gap:6px; }
+.type-tag-pin{
+  font-family:var(--font-mono); font-size:.68rem; text-transform:uppercase; letter-spacing:.04em;
+  padding:3px 10px; border-radius:999px; border:1px solid;
+}
+
+/* ---------- figuras conceptuales (ilustraciones SVG, complementarias a .cpanel) ---------- */
+.concept-figure{
+  margin:18px 0; border:1px solid var(--border); border-radius:var(--r-lg); overflow:hidden;
+  background:linear-gradient(165deg, var(--bg2) 0%, var(--bg1) 60%);
+}
+.concept-figure svg{ display:block; width:100%; height:auto; }
+.concept-figure figcaption{
+  font-family:var(--font-mono); font-size:.76rem; color:var(--ts); line-height:1.5;
+  padding:12px 20px; border-top:1px solid var(--border);
+}
+
+/* ---------- code blocks (manual highlighting) ---------- */
+.code{
+  background:var(--bg1); border:1px solid var(--border); border-radius:var(--r-md); padding:16px 18px;
+  font-family:var(--font-mono); font-size:.86rem; line-height:1.7; overflow-x:auto; white-space:pre;
+}
+.code .c-kw{ color:var(--violet); }         /* palabras clave: function, if, else, for */
+.code .c-fn{ color:var(--blue); }           /* nombres de función */
+.code .c-str{ color:var(--green); }         /* strings */
+.code .c-num{ color:var(--amber); }         /* números */
+.code .c-cm{ color:var(--ts); font-style:italic; } /* comentarios */
+.code .c-op{ color:var(--teal); }           /* operadores <- |> etc */
+.code .c-out{ color:var(--ts); }            /* salida de consola #> */
+.code .c-err{ color:var(--coral); }
+
+/* ---------- badges nivel de IA ---------- */
+.ai-badge{
+  display:inline-flex; align-items:center; gap:7px; font-family:var(--font-mono); font-size:.72rem; font-weight:700;
+  letter-spacing:.03em; text-transform:uppercase; padding:6px 12px; border-radius:999px; border:1px solid;
+}
+.ai-badge svg{ width:13px; height:13px; }
+.ai-none{ color:var(--coral); border-color:rgba(255,107,107,.45); background:rgba(255,107,107,.08); }
+.ai-ok{ color:var(--green); border-color:rgba(52,211,153,.45); background:rgba(52,211,153,.08); }
+.ai-req{ color:var(--violet); border-color:rgba(167,139,250,.45); background:rgba(167,139,250,.08); }
+
+/* ---------- lab exercise ---------- */
+.progress-wrap{ margin:26px 0 6px; }
+.progress-label{ display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:.75rem; color:var(--ts); margin-bottom:7px; }
+.progress-track{ position:relative; height:12px; border-radius:999px; background:var(--bg1); border:1px solid var(--border); overflow:hidden; }
+.progress-fill{
+  height:100%; width:100%; transform:scaleX(0); transform-origin:left;
+  background:linear-gradient(90deg, var(--blue), var(--teal));
+  transition:transform .5s cubic-bezier(0.16,1,0.3,1); border-radius:var(--r-pill);
+}
+/* marcas de los 5 ejercicios sobre la barra, capa aparte para no interferir con el fill */
+.progress-track::after{
+  content:''; position:absolute; inset:0; pointer-events:none; z-index:1;
+  background-image:repeating-linear-gradient(90deg, var(--bg0) 0, var(--bg0) 2px, transparent 2px, transparent 20%);
+  background-size:100% 100%;
+  opacity:.9;
+}
+
+.exercise{
+  background:linear-gradient(165deg, var(--bg2) 0%, var(--bg1) 45%); border:1px solid var(--border); border-radius:var(--r-lg); padding:28px clamp(20px,3vw,32px);
+  margin-bottom:22px; position:relative; overflow:hidden;
+}
+.exercise::before{
+  content:''; position:absolute; top:0; left:0; right:0; height:3px;
+  background:linear-gradient(90deg, var(--accent,var(--blue)), transparent);
+}
+.exercise-head{ display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:10px; margin-bottom:14px; }
+.exercise-title{ display:flex; align-items:center; gap:12px; }
+.exercise-num{ font-family:var(--font-mono); color:var(--ts); font-size:.85rem; }
+.exercise h3{ font-size:1.1rem; margin:0; }
+.exercise .desc{ color:var(--ts); font-size:.95rem; }
+
+textarea.answer{
+  width:100%; min-height:110px; margin-top:14px; background:var(--bg0); color:var(--tp); border:1px solid var(--border-strong);
+  border-radius:var(--r-md); padding:14px; font-family:var(--font-body); font-size:.98rem; line-height:1.55; resize:vertical;
+}
+textarea.answer:focus{ border-color:var(--blue); }
+textarea.answer::placeholder{ color:var(--ts); opacity:1; }
+.answer-meta{ display:flex; justify-content:space-between; align-items:center; margin-top:9px; gap:10px; flex-wrap:wrap; }
+.char-count{ font-family:var(--font-mono); font-size:.74rem; color:var(--ts); }
+.reveal-btn{
+  appearance:none; border:1px solid var(--border-strong); background:var(--bg2); color:var(--tp); font-family:var(--font-body);
+  font-weight:600; font-size:.9rem; padding:9px 18px; border-radius:var(--r-sm); cursor:pointer; transition:all .18s cubic-bezier(0.16,1,0.3,1);
+}
+.reveal-btn:disabled{ opacity:.4; cursor:not-allowed; }
+.reveal-btn:not(:disabled):hover{ background:var(--blue); border-color:var(--blue); color:var(--bg0); }
+
+.feedback{
+  margin-top:16px; padding:18px 20px; border-radius:var(--r-md); background:var(--bg0); border:1px solid var(--border-strong);
+  display:none;
+}
+.feedback.show{ display:block; animation:panelIn .35s cubic-bezier(0.16,1,0.3,1) both; }
+.feedback h4{ font-size:.85rem; text-transform:uppercase; letter-spacing:.05em; color:var(--teal); margin-bottom:10px; font-family:var(--font-mono); font-weight:600; }
+.feedback ul{ margin:0; padding-left:1.15em; color:var(--ts); font-size:.93rem; }
+.feedback li{ margin-bottom:6px; }
+.feedback li b{ color:var(--tp); }
+
+.check-list{ list-style:none; margin:14px 0 0; padding:0; display:grid; gap:9px; }
+.check-item{ display:flex; align-items:flex-start; gap:10px; font-size:.92rem; cursor:pointer; user-select:none; }
+.check-item input{ position:absolute; opacity:0; width:1px; height:1px; }
+.check-box{
+  flex:none; width:19px; height:19px; border-radius:5px; border:1.5px solid var(--border-strong); margin-top:2px;
+  display:flex; align-items:center; justify-content:center; transition:all .15s cubic-bezier(0.16,1,0.3,1);
+}
+.check-item input:checked + .check-box{ background:var(--green); border-color:var(--green); }
+.check-item input:checked + .check-box svg{ opacity:1; }
+.check-item.wrong input:checked + .check-box{ background:var(--coral); border-color:var(--coral); }
+.check-box svg{ width:12px; height:12px; color:var(--bg0); opacity:0; }
+.check-item span.txt{ color:var(--ts); }
+.check-item input:checked ~ span.txt{ color:var(--tp); }
+
+.verify-box{
+  margin-top:20px; padding:22px 24px; border-radius:var(--r-lg); border:1px dashed var(--border-strong);
+  background:linear-gradient(180deg, rgba(76,154,255,.05), transparent);
+}
+.verify-box h4{ font-family:var(--font-display); font-size:1.05rem; margin-bottom:8px; }
+.verify-box p{ color:var(--ts); font-size:.92rem; margin-bottom:0; }
+
+/* ---------- playground ---------- */
+.pg-dataset{
+  background:linear-gradient(165deg, var(--bg2) 0%, var(--bg1) 55%); border:1px solid var(--border); border-radius:var(--r-lg); padding:20px 22px; margin:24px 0 32px;
+}
+.pg-dataset h3{ font-size:.95rem; font-family:var(--font-mono); text-transform:uppercase; letter-spacing:.04em; color:var(--teal); margin-bottom:12px; }
+table.dataset{ width:100%; border-collapse:collapse; font-family:var(--font-mono); font-size:.86rem; display:block; overflow-x:auto; }
+table.dataset th, table.dataset td{ text-align:left; padding:7px 12px; border-bottom:1px solid var(--border); }
+table.dataset th{ color:var(--ts); font-weight:500; }
+
+.pg-item{ display:grid; grid-template-columns:1fr; gap:14px; margin-bottom:26px; }
+.pg-item > div{ min-width:0; } /* evita que el contenido pre/monoespaciado desborde la celda del grid */
+@media(min-width:880px){ .pg-item{ grid-template-columns:1.1fr 1fr; } }
+.pg-num{ font-family:var(--font-mono); color:var(--ts); font-size:.8rem; margin-bottom:8px; display:block; }
+.pg-out{
+  background:#060a13; border:1px solid var(--border); border-radius:var(--r-md); padding:16px 18px;
+  font-family:var(--font-mono); font-size:.85rem; color:var(--ts); line-height:1.7;
+}
+.pg-out .flag{
+  display:inline-block; font-family:var(--font-mono); font-size:.66rem; text-transform:uppercase; letter-spacing:.05em;
+  color:var(--amber); border:1px solid rgba(245,166,35,.4); padding:2px 8px; border-radius:999px; margin-bottom:10px;
+}
+
+/* ---------- cheat sheet ---------- */
+.cheat-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:16px; }
+.cheat-card{ background:linear-gradient(165deg, var(--bg2) 0%, var(--bg1) 55%); border:1px solid var(--border); border-radius:var(--r-lg); padding:20px 22px; }
+.cheat-card h3{ font-size:.92rem; font-family:var(--font-mono); text-transform:uppercase; letter-spacing:.04em; color:var(--ts); margin-bottom:14px; }
+table.cheat{ width:100%; border-collapse:collapse; font-size:.86rem; }
+table.cheat td{ padding:6px 4px; border-bottom:1px solid var(--border); vertical-align:top; }
+table.cheat td.f{ font-family:var(--font-mono); color:var(--teal); white-space:nowrap; padding-right:10px; }
+.vocab-badges{ display:flex; flex-wrap:wrap; gap:8px; }
+.vocab-badge{ font-family:var(--font-mono); font-size:.78rem; padding:5px 10px; border-radius:var(--r-sm); background:var(--bg2); color:var(--tp); border:1px solid var(--border); }
+
+/* ---------- footer ---------- */
+footer{ padding:40px 0 60px; color:var(--ts); font-size:.85rem; }
+footer a{ color:var(--ts); }
+footer .foot-inner{ border-top:1px solid var(--border); padding-top:24px; display:flex; flex-wrap:wrap; justify-content:space-between; gap:14px; }
+
+/* utility */
+.sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+::-webkit-scrollbar{ width:10px; height:10px; }
+::-webkit-scrollbar-thumb{ background:var(--bg2); border-radius:99px; }
+
+/* reducción de movimiento: al final de la hoja de estilos a propósito,
+   así gana sobre cualquier regla anterior con la misma especificidad */
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after{
+    animation-duration:0.01ms !important; animation-iteration-count:1 !important;
+    transition-duration:0.01ms !important; scroll-behavior:auto !important;
+  }
+  .fade-in{ opacity:1; transform:none; }
+}
+
+/* ================= EXTENSIONES — Control 01 ================= */
+
+/* chip de estado para "control" en vez de "semana" */
+.chip.c-coral{ border-color:rgba(255,107,107,.4); color:var(--coral); }
+.chip.c-teal{ border-color:rgba(45,212,191,.4); color:var(--teal); }
+.chip.c-green{ border-color:rgba(52,211,153,.4); color:var(--green); }
+
+/* bloques temáticos con subtítulo de sección dentro de Teoría */
+.theme-head{ margin-bottom:22px; }
+.theme-head .theme-eyebrow{ font-family:var(--font-mono); font-size:.76rem; color:var(--ts); text-transform:uppercase; letter-spacing:.05em; margin-bottom:6px; display:block; }
+
+/* ---------- entorno webR: estado global ---------- */
+.webr-status{
+  display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+  background:linear-gradient(165deg, var(--bg2) 0%, var(--bg1) 55%); border:1px solid var(--border-strong);
+  border-radius:var(--r-lg); padding:16px 20px; margin:22px 0;
+}
+.webr-status .dotpulse{ width:10px; height:10px; border-radius:50%; background:var(--ts); flex:none; position:relative; }
+.webr-status.loading .dotpulse{ background:var(--amber); animation:pulseDot 1.1s ease-in-out infinite; }
+.webr-status.ready .dotpulse{ background:var(--green); }
+.webr-status.error .dotpulse{ background:var(--coral); }
+@keyframes pulseDot{ 0%,100%{ opacity:1; transform:scale(1);} 50%{ opacity:.4; transform:scale(1.5);} }
+.webr-status .wtxt{ font-family:var(--font-mono); font-size:.84rem; color:var(--ts); flex:1 1 260px; }
+.webr-status .wtxt b{ color:var(--tp); }
+.webr-btn{
+  appearance:none; border:1px solid var(--blue); background:var(--blue); color:var(--bg0); font-family:var(--font-body);
+  font-weight:600; font-size:.88rem; padding:9px 16px; border-radius:var(--r-sm); cursor:pointer; transition:all .18s cubic-bezier(0.16,1,0.3,1); flex:none;
+}
+.webr-btn:hover:not(:disabled){ background:var(--teal); border-color:var(--teal); }
+.webr-btn:disabled{ opacity:.5; cursor:wait; }
+.webr-btn.ghost{ background:transparent; color:var(--tp); }
+.webr-btn.ghost:hover:not(:disabled){ background:var(--bg2); border-color:var(--border-strong); color:var(--tp); }
+
+/* ---------- editor de código en vivo ---------- */
+.r-cell{ margin:16px 0; }
+.r-cell-bar{ display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:0; }
+.r-cell-label{ font-family:var(--font-mono); font-size:.72rem; color:var(--ts); text-transform:uppercase; letter-spacing:.05em; }
+textarea.r-editor{
+  width:100%; min-height:96px; background:var(--bg1); color:var(--tp); border:1px solid var(--border-strong);
+  border-radius:var(--r-md) var(--r-md) 0 0; border-bottom:none; padding:14px 16px; font-family:var(--font-mono); font-size:.86rem;
+  line-height:1.6; resize:vertical; tab-size:2;
+}
+textarea.r-editor:focus{ border-color:var(--blue); }
+.r-cell-actions{
+  display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;
+  background:var(--bg1); border:1px solid var(--border-strong); border-top:1px dashed var(--border);
+  border-radius:0 0 var(--r-md) var(--r-md); padding:9px 14px;
+}
+.run-btn{
+  appearance:none; border:1px solid rgba(52,211,153,.5); background:rgba(52,211,153,.12); color:var(--green);
+  font-family:var(--font-mono); font-weight:700; font-size:.8rem; padding:7px 14px; border-radius:var(--r-sm); cursor:pointer;
+  display:inline-flex; align-items:center; gap:7px; transition:all .18s cubic-bezier(0.16,1,0.3,1);
+}
+.run-btn:hover:not(:disabled){ background:var(--green); color:var(--bg0); }
+.run-btn:disabled{ opacity:.45; cursor:not-allowed; }
+.run-btn svg{ width:12px; height:12px; }
+.r-cell-hint{ font-family:var(--font-mono); font-size:.72rem; color:var(--ts); }
+.r-console{
+  background:#060a13; border:1px solid var(--border); border-radius:var(--r-md); padding:14px 16px; margin-top:8px;
+  font-family:var(--font-mono); font-size:.83rem; line-height:1.65; overflow-x:auto; min-height:20px; display:none; white-space:pre-wrap;
+}
+.r-console.show{ display:block; }
+.r-console .rc-out{ color:var(--tp); }
+.r-console .rc-err{ color:var(--coral); }
+.r-console .rc-msg{ color:var(--ts); font-style:italic; }
+.r-console img{ max-width:100%; border-radius:var(--r-sm); margin-top:6px; display:block; background:#fff; }
+
+/* ---------- panel de bloqueo (simulacro) ---------- */
+.locked-note{
+  display:flex; align-items:center; gap:10px; font-family:var(--font-mono); font-size:.78rem; color:var(--amber);
+  border:1px dashed rgba(245,166,35,.4); background:rgba(245,166,35,.06); border-radius:var(--r-sm); padding:9px 14px; margin-top:10px;
+}
+.locked-note svg{ width:15px; height:15px; flex:none; }
+.reveal-btn.locked, .run-btn.locked{ display:none !important; }
+
+/* ---------- temporizador de simulacro ---------- */
+.timer-bar{
+  position:sticky; top:57px; z-index:var(--z-subnav); display:flex; align-items:center; gap:16px; flex-wrap:wrap;
+  padding:14px clamp(16px,4vw,40px); background:rgba(10,15,28,0.94); backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--border); margin-bottom:8px;
+}
+.timer-clock{
+  font-family:var(--font-mono); font-size:1.4rem; font-weight:700; color:var(--tp);
+  background:var(--bg1); border:1px solid var(--border-strong); border-radius:var(--r-sm); padding:6px 16px; letter-spacing:.03em;
+}
+.timer-clock.warn{ color:var(--amber); border-color:rgba(245,166,35,.5); }
+.timer-clock.critical{ color:var(--coral); border-color:rgba(255,107,107,.5); animation:pulseDot 1s ease-in-out infinite; }
+.timer-state{ font-family:var(--font-mono); font-size:.78rem; color:var(--ts); }
+.timer-actions{ margin-left:auto; display:flex; gap:10px; flex-wrap:wrap; }
+.score-summary{
+  margin:26px 0; padding:24px 26px; border-radius:var(--r-lg); border:1px solid var(--border-strong);
+  background:linear-gradient(165deg, var(--bg2) 0%, var(--bg1) 60%); display:none;
+}
+.score-summary.show{ display:block; animation:panelIn .4s cubic-bezier(0.16,1,0.3,1) both; }
+.score-summary .score-big{ font-family:var(--font-display); font-weight:800; font-size:2.6rem; color:var(--tp); }
+.score-summary .score-big span{ font-size:1.2rem; color:var(--ts); font-family:var(--font-mono); font-weight:500; }
+
+/* ---------- tabla dataset scrollable compacta ---------- */
+.data-scroll{ max-height:320px; overflow-y:auto; border-radius:var(--r-sm); }
+.data-scroll table.dataset thead th{ position:sticky; top:0; background:var(--bg1); }
+
+/* ---------- indicador de tier de paquetes ---------- */
+.tier-tag{
+  font-family:var(--font-mono); font-size:.68rem; padding:2px 9px; border-radius:999px; border:1px solid var(--border-strong);
+  color:var(--ts); white-space:nowrap;
+}
+
+</style>
+</head>
+<body>
+
+<svg id="grain" aria-hidden="true">
+  <filter id="grainFilter">
+    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch" result="noise"/>
+    <feColorMatrix in="noise" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.6 0"/>
+  </filter>
+  <rect width="100%" height="100%" filter="url(#grainFilter)"/>
+</svg>
+
+<nav class="topnav">
+  <div class="topnav-inner">
+    <div class="brand">
+      <svg class="brand-logo" viewBox="0 0 420 96" role="img" aria-label="FPEN, Programación, Economía y Negocios">
+  <g transform="translate(4 4)">
+    <rect x="0" y="0" width="88" height="88" rx="22" fill="#111a30"/>
+    <path d="M15 55C19 73 40 80 59 73C77 67 85 48 79 30" fill="none" stroke="#4c9aff" stroke-width="7" stroke-linecap="round"/>
+    <path d="M79 30C75 19 67 12 57 9" fill="none" stroke="#2dd4bf" stroke-width="7" stroke-linecap="round"/>
+    <circle cx="56.5" cy="9" r="4.5" fill="#2dd4bf"/>
+    <path d="M19 29L31 41L19 53" fill="none" stroke="#edf1fa" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M28 57H39" fill="none" stroke="#edf1fa" stroke-width="5" stroke-linecap="round"/>
+    <rect x="43" y="45" width="7" height="17" rx="2" fill="#4c9aff"/>
+    <rect x="54" y="37" width="7" height="25" rx="2" fill="#2dd4bf"/>
+    <rect x="65" y="27" width="7" height="35" rx="2" fill="#edf1fa"/>
+  </g>
+  <text x="116" y="53" fill="#edf1fa" font-family="Fraunces, Georgia, serif" font-size="42" font-weight="800" letter-spacing="1">FPEN</text>
+  <text x="118" y="75" fill="#8792ae" font-family="'JetBrains Mono', Consolas, monospace" font-size="12" font-weight="600" letter-spacing="1.3">PROGRAMACIÓN &#183; ECONOMÍA &#183; NEGOCIOS</text>
+</svg>
+      <span class="sem">&middot; Control 01</span>
+    </div>
+    <div class="tabs" role="tablist" aria-label="Secciones del Control 01">
+      <button class="pill" id="tab-teoria" role="tab" aria-selected="true" aria-controls="panel-teoria" data-tab="teoria"><span class="dot" style="background:var(--blue)"></span>Teoria Profunda</button>
+      <button class="pill" id="tab-practica" role="tab" aria-selected="false" aria-controls="panel-practica" data-tab="practica"><span class="dot" style="background:var(--green)"></span>Práctica con R</button>
+      <button class="pill" id="tab-simulacro" role="tab" aria-selected="false" aria-controls="panel-simulacro" data-tab="simulacro"><span class="dot" style="background:var(--coral)"></span>Simulacro</button>
+      <button class="pill" id="tab-cheat" role="tab" aria-selected="false" aria-controls="panel-cheat" data-tab="cheat"><span class="dot" style="background:var(--amber)"></span>Cheat Sheet</button>
+    </div>
+    <div class="xp-wrap">
+      <div class="xp-badge" title="Puntos de experiencia de esta sesión">
+        <svg class="xp-icon" viewBox="0 0 24 24" fill="none"><path d="M12 2l2.6 6.6L21 10l-5 4.4L17.4 21 12 17.3 6.6 21 8 14.4 3 10l6.4-1.4L12 2z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+        <span><b id="xpCount">0</b> XP</span>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<main>
+<section id="panel-teoria" class="tab-panel active" role="tabpanel" aria-labelledby="tab-teoria">
+
+<div class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <svg class="hero-diagram" viewBox="0 0 300 300" aria-hidden="true" focusable="false">
+    <circle class="node-ring" cx="150" cy="150" r="105"/>
+    <path class="node-arc" d="M150,45 A105,105 0 0,1 240.9,202.5"/>
+    <g><circle class="node now" cx="150" cy="45" r="15"/><text x="150" y="45" text-anchor="middle" dy=".35em" class="now-label">1</text></g>
+    <g><circle class="node now" cx="240.9" cy="97.5" r="13"/><text x="240.9" y="97.5" text-anchor="middle" dy=".35em" class="now-label">2</text></g>
+    <g><circle class="node now" cx="240.9" cy="202.5" r="13"/><text x="240.9" y="202.5" text-anchor="middle" dy=".35em" class="now-label">3</text></g>
+    <g><circle class="node" cx="150" cy="255" r="13"/><text x="150" y="255" text-anchor="middle" dy=".35em">4</text></g>
+    <g><circle class="node" cx="59.1" cy="202.5" r="13"/><text x="59.1" y="202.5" text-anchor="middle" dy=".35em">5</text></g>
+    <g><circle class="node" cx="59.1" cy="97.5" r="13"/><text x="59.1" y="97.5" text-anchor="middle" dy=".35em">6</text></g>
+  </svg>
+  <div class="container hero-inner">
+    <div class="chips">
+      <span class="chip c-coral"><b>Control 01</b></span>
+      <span class="chip">Temario: R y RStudio &middot; algoritmos &middot; objetos y vectores &middot; matrices y data frames &middot; paquetes &middot; importación con read_csv() &middot; visualizaciones iniciales</span>
+      <span class="chip c-amber">R4DS &middot; Cap. 2, Cap. 7 (&sect;7.2), Cap. 1</span>
+      <span class="chip c-violet">36 preguntas &middot; 5 bloques</span>
+    </div>
+    <h1>Guía teórica de repaso -- Control 01</h1>
+    <p class="lede">Basada en la guía de repaso que ya preparaste para el curso. Cada pregunta pide que <b>escribas tu respuesta antes de revelar</b> la solución: la revelación cuenta como haber estudiado esa pregunta, no un atajo para saltártela. Varias preguntas incluyen un bloque de R en vivo (WebAssembly) para comprobar tu predicción ejecutando código real, además de la respuesta escrita.</p>
+    <div class="cycle" aria-label="Alcance de este control dentro del ciclo del curso">
+      <div class="cycle-step now">1 &middot; importar</div><span class="cycle-arrow">&rarr;</span>
+      <div class="cycle-step now">2 &middot; ordenar</div><span class="cycle-arrow">&rarr;</span>
+      <div class="cycle-step now">3 &middot; transformar</div><span class="cycle-arrow">&rarr;</span>
+      <div class="cycle-step now">4 &middot; visualizar</div><span class="cycle-arrow">&rarr;</span>
+      <div class="cycle-step">5 &middot; modelar</div><span class="cycle-arrow">&rarr;</span>
+      <div class="cycle-step">6 &middot; comunicar</div>
+    </div>
+    <p style="margin-top:14px;font-size:.85rem;color:var(--ts)">El Control 01 cubre las primeras cuatro etapas del ciclo del curso. Modelar y comunicar en profundidad llegan en semanas posteriores.</p>
+  </div>
+</div>
+
+<nav class="subnav" aria-label="Navegación dentro de la guía teórica">
+  <a href="#t-pensar">01 &middot; Pensar antes de programar</a>
+  <a href="#t-instrucciones">02 &middot; R y las instrucciones</a>
+  <a href="#t-vectores">03 &middot; Vectores y condiciones</a>
+  <a href="#t-estructura">04 &middot; Estructura y verificación</a>
+  <a href="#t-visualizar">05 &middot; Visualizar e interpretar</a>
+</nav>
+
+<div class="container">
+<section class="block fade-in" id="t-pensar"><div class="block-head"><span class="block-num">01</span><h2>Pensar antes de programar</h2></div><p>Antes de que R entre en escena: qué es un algoritmo, en qué orden se resuelve un problema de datos, y por qué "el código corrió sin errores" nunca es suficiente evidencia. Estas cinco preguntas son puramente conceptuales -- no necesitas RStudio abierto para responderlas.</p><div style="display:grid;gap:20px;margin-top:22px"><div class="exercise" style="--accent:var(--blue)"><div class="exercise-head"><div class="exercise-title"><span class="exercise-num">Preg. 01</span><h3>R contra RStudio</h3></div><span class="ai-badge ai-ok"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>IA permitida</span></div><p class="desc">Una persona dice: <i>&ldquo;R es lo mismo que RStudio&rdquo;</i>. Explica qué hace cada uno y qué componente es el que realmente interpreta tus instrucciones.</p><textarea class="answer" data-min="40" placeholder="Escribe tu respuesta antes de revelar..."></textarea><div class="answer-meta"><span class="char-count">0 / 40</span><button class="reveal-btn" disabled data-xp="10">Revelar respuesta y criterios</button></div><div class="feedback"><h4>Respuesta y criterios</h4><ul><li><b>R</b> es el lenguaje y el motor que interpreta y ejecuta tus instrucciones: es el que realmente "entiende" el código.</li><li><b>RStudio</b> es el entorno (IDE) que facilita editar scripts, usar la consola, ver objetos y gráficos: no interpreta nada por sí mismo.</li><li>Instalar solo RStudio sin R no sirve de nada: RStudio necesita a R para ejecutar cualquier instrucción.</li></ul></div></div><div class="exercise" style="--accent:var(--coral)"><div class="exercise-head"><div class="exercise-title"><span class="exercise-num">Preg. 02</span><h3>Qué es un algoritmo</h3></div><span class="ai-badge ai-ok"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>IA permitida</span></div><p class="desc">Define <b>algoritmo</b> usando una tarea cotidiana (no de programación) con entradas, pasos y resultado. ¿Cómo comprobarías si tus instrucciones son suficientemente precisas?</p><textarea class="answer" data-min="50" placeholder="Escribe tu respuesta antes de revelar..."></textarea><div class="answer-meta"><span class="char-count">0 / 50</span><button class="reveal-btn" disabled data-xp="10">Revelar respuesta y criterios</button></div><div class="feedback"><h4>Respuesta y criterios</h4><ul><li>Un algoritmo es una <b>secuencia finita de instrucciones precisas</b> que produce un resultado a partir de unas entradas.</li><li>Ejemplo: recibir un <code>precio</code> y un <code>efectivo</code>, comprobar que el efectivo alcanza, y devolver <code>efectivo - precio</code> como vuelto.</li><li>Se comprueba dándoselo a otra persona (o a R) sin explicar nada más: si puede seguirlo sin adivinar un paso, es suficientemente preciso.</li></ul></div></div><div class="exercise" style="--accent:var(--green)"><div class="exercise-head"><div class="exercise-title"><span class="exercise-num">Preg. 03</span><h3>El orden importa</h3></div><span class="ai-badge ai-ok"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>IA permitida</span></div><p class="desc">Ordena y explica estos cinco pasos: <i>plantear pregunta, identificar datos, escribir instrucciones, verificar resultado, comunicar decisión</i>. ¿Qué riesgo hay si empiezas directamente por el código?</p><textarea class="answer" data-min="50" placeholder="Escribe tu respuesta antes de revelar..."></textarea><div class="answer-meta"><span class="char-count">0 / 50</span><button class="reveal-btn" disabled data-xp="10">Revelar respuesta y criterios</button></div><div class="feedback"><h4>Respuesta y criterios</h4><ul><li>Orden correcto: <b>pregunta → datos → instrucciones → verificación → comunicación</b>. Esta es la regla central de todo el curso.</li><li>Empezar por el código puede producir un cálculo perfectamente correcto para una pregunta que nadie necesitaba responder.</li><li>Sin una pregunta clara primero, no hay forma de saber qué datos hacen falta ni cómo verificar si el resultado "tiene sentido".</li></ul></div></div><div class="exercise" style="--accent:var(--violet)"><div class="exercise-head"><div class="exercise-title"><span class="exercise-num">Preg. 04</span><h3>Describir contra predecir</h3></div><span class="ai-badge ai-ok"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>IA permitida</span></div><p class="desc">Contrasta una <b>descripción</b> de datos ya observados con una <b>predicción</b> de ventas futuras. ¿Qué pregunta responde cada una y cuál exige supuestos adicionales?</p><textarea class="answer" data-min="45" placeholder="Escribe tu respuesta antes de revelar..."></textarea><div class="answer-meta"><span class="char-count">0 / 45</span><button class="reveal-btn" disabled data-xp="10">Revelar respuesta y criterios</button></div><div class="feedback"><h4>Respuesta y criterios</h4><ul><li>La <b>descripción</b> responde "¿qué ocurrió en los datos que ya tengo?": es un resumen de hechos observados.</li><li>La <b>predicción</b> responde "¿qué podría ocurrir fuera de esos datos?": requiere supuestos, un método y una forma de comprobar el desempeño de ese método.</li><li>Confundir ambas es común: un promedio histórico describe el pasado, no predice el futuro por sí solo.</li></ul></div></div><div class="exercise" style="--accent:var(--blue)"><div class="exercise-head"><div class="exercise-title"><span class="exercise-num">Preg. 05</span><h3>El salto a la causalidad</h3></div><span class="ai-badge ai-ok"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>IA permitida</span></div><p class="desc">Un script que corre sin errores concluye: <i>&ldquo;más publicidad causa más ventas&rdquo;</i>, solo porque un gráfico muestra una tendencia ascendente. Señala el salto lógico y propone una formulación más defendible.</p><textarea class="answer" data-min="50" placeholder="Escribe tu respuesta antes de revelar..."></textarea><div class="answer-meta"><span class="char-count">0 / 50</span><button class="reveal-btn" disabled data-xp="10">Revelar respuesta y criterios</button></div><div class="feedback"><h4>Respuesta y criterios</h4><ul><li>Que el código <b>ejecute sin errores no demuestra que el análisis sea correcto</b>: es una regla que va a repetirse todo el curso.</li><li>Una relación ascendente en un gráfico es <b>asociación</b>, no evidencia de causalidad: pueden existir otros factores no observados.</li><li>Formulación más defendible: <i>&ldquo;En estos registros, más publicidad se asocia con más ventas&rdquo;</i>, sin afirmar causa.</li></ul></div></div></div></section><section class="block fade-in" id="t-instrucciones"><div class="block-head"><span class="block-num">02</span><h2>R y las instrucciones</h2></div><p>Consola contra Script, objetos y asignación, nombres válidos, anatomía de una función, paquetes. La base absoluta de "hablarle a R" -- y el error más común de quien empieza: creer que algo se actualiza solo.</p><div style="display:grid;gap:20px;margin-top:22px"><div class="exercise" style="--accent:var(--coral)"><div class="exercise-head"><div class="exercise-title"><span class="exercise-num">Preg. 06</span><h3>Consola contra Script</h3></div><span class="ai-badge ai-ok"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>IA permitida</span></div><p class="desc">La Consola y un Script ejecutan ambos <code>20 + 5</code>. ¿Cuál de los dos te permite repetir mejor el análisis una semana después? ¿Por qué?</p><textarea class="answer" data-min="35" placeholder="Escribe tu respuesta antes de revelar..."></textarea><div class="answer-meta"><span class="char-count">0 / 35</span><button class="reveal-btn" disabled data-xp="10">Revelar respuesta y criterios</button></div><div class="feedback"><h4>Respuesta y criterios</h4><ul><li>El <b>Script</b> conserva las instrucciones escritas y permite repetir el análisis completo más tarde, con quien sea.</li><li>La <b>Consola</b> es útil para pruebas rápidas e inmediatas, pero no organiza por sí sola un procedimiento reproducible: lo que escribes ahí se pierde.</li><li>Regla práctica: si el resultado importa, va en el Script; si es solo para probar algo al vuelo, la Consola basta.</li></ul></div></div><div class="exercise" style="--accent:var(--green)"><div class="exercise-head"><div class="exercise-title"><span class="exercise-num">Preg. 07</span><h3>Reasignar no recalcula solo</h3></div><span class="ai-badge ai-none"><svg viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>Sin IA</span></div><p class="desc">Interpreta este código sin ejecutarlo. Si después <b>solo</b> reasignas <code>presupuesto &lt;- 3000</code> (sin volver a ejecutar la línea de <code>gasto</code>), ¿qué valor tiene <code>presupuesto - gasto</code> en ese momento?</p><div class="code" style="margin:14px 0"><span class="c-fn">presupuesto</span> <span class="c-op">&lt;-</span> <span class="c-num">2000</span>
+<span class="c-fn">gasto</span> <span class="c-op">&lt;-</span> <span class="c-fn">presupuesto</span> <span class="c-op">*</span> <span class="c-num">0.15</span>
+<span class="c-fn">presupuesto</span> <span class="c-op">-</span> <span class="c-fn">gasto</span></div><textarea class="answer" data-min="50" placeholder="Escribe tu respuesta antes de revelar..."></textarea><div class="answer-meta"><span class="char-count">0 / 50</span><button class="reveal-btn" disabled data-xp="15">Revelar respuesta y criterios</button></div><div class="feedback"><h4>Respuesta y criterios</h4><ul><li>Al inicio: <code>gasto = 2000 * 0.15 = 300</code>, y <code>presupuesto - gasto = 1700</code>.</li><li>Si solo reasignas <code>presupuesto &lt;- 3000</code>, el objeto <code>gasto</code> <b>no se recalcula automáticamente</b>: R no vincula objetos como una hoja de cálculo.</li><li><code>gasto</code> sigue valiendo 300 (calculado con el presupuesto viejo), así que <code>presupuesto - gasto</code> ahora da <b>2700</b>, no 2550.</li></ul><div class="r-cell"><textarea class="r-editor" spellcheck="false">presupuesto &lt;- 2000
+gasto &lt;- presupuesto * 0.15
+presupuesto - gasto
+
+# reasignamos SOLO presupuesto, sin volver a calcular gasto
+presupuesto &lt;- 3000
+presupuesto - gasto</textarea><div class="r-cell-actions"><button class="run-btn" data-needs-pkg="0" data-xp="5"><svg viewBox="0 0 24 24" fill="none"><path d="M6 4l14 8-14 8V4z" fill="currentColor"/></svg> Ejecutar en R</button><span class="r-cell-hint">Puedes editar el código antes de ejecutarlo.</span></div><div class="r-console" aria-live="polite"></div></div><p style="margin-top:14px;font-size:.85rem;color:var(--ts)">Puedes comprobarlo tu mismo/a: edita el código abajo si quieres y ejecútalo en R de verdad (WebAssembly, en tu navegador).</p></div></div><div class="exercise" style="--accent:var(--violet)"><div class="exercise-head"><div class="exercise-title"><span class="exercise-num">Preg. 08</span><h3>Nombres válidos e inválidos</h3></div><span class="ai-badge ai-ok"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>IA permitida</span></div><p class="desc">Para <code>nombre</code>, <code>Nombre</code>, <code>2nombre</code> y <code>venta-total</code>: indica cuáles pueden ser objetos <b>distintos</b> y cuáles son nombres <b>inválidos</b> en R.</p><textarea class="answer" data-min="40" placeholder="Escribe tu respuesta antes de revelar..."></textarea><div class="answer-meta"><span class="char-count">0 / 40</span><button class="reveal-btn" disabled data-xp="10">Revelar respuesta y criterios</button></div><div class="feedback"><h4>Respuesta y criterios</h4><ul><li><code>nombre</code> y <code>Nombre</code> pueden ser <b>dos objetos distintos</b>: R distingue mayúsculas de minúsculas.</li><li><code>2nombre</code> es <b>inválido</b>: un nombre de objeto no puede empezar con un dígito.</li><li><code>venta-total</code> no es un identificador: R lo interpreta como una <b>resta</b> entre dos objetos (<code>venta</code> menos <code>total</code>), no como un solo nombre. Por eso el curso usa <code>snake_case</code>: <code>venta_total</code>.</li></ul></div></div><div class="exercise" style="--accent:var(--blue)"><div class="exercise-head"><div class="exercise-title"><span class="exercise-num">Preg. 09</span><h3>Anatomía de una función</h3></div><span class="ai-badge ai-none"><svg viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>Sin IA</span></div><p class="desc">En <code>round(14.678, digits = 1)</code>, identifica la función, el argumento posicional y el argumento nombrado. ¿Qué cambia si usas <code>digits = 2</code>?</p><div class="code" style="margin:14px 0"><span class="c-fn">round</span>(<span class="c-num">14.678</span>, <span class="c-fn">digits</span> <span class="c-op">=</span> <span class="c-num">1</span>)</div><textarea class="answer" data-min="40" placeholder="Escribe tu respuesta antes de revelar..."></textarea><div class="answer-meta"><span class="char-count">0 / 40</span><button class="reveal-btn" disabled data-xp="10">Revelar respuesta y criterios</button></div><div class="feedback"><h4>Respuesta y criterios</h4><ul><li><code>round()</code> es la <b>función</b>; <code>14.678</code> es el valor a redondear (argumento posicional); <code>digits = 1</code> es el <b>argumento nombrado</b> que indica cuántos decimales conservar.</li><li>Con <code>digits = 1</code> el resultado es <b>14.7</b>.</li><li>Con <code>digits = 2</code> el resultado es <b>14.68</b>: más decimales, redondeo distinto.</li></ul><div class="r-cell"><textarea class="r-editor" spellcheck="false">round(14.678, digits = 1)
+round(14.678, digits = 2)</textarea><div class="r-cell-actions"><button class="run-btn" data-needs-pkg="0" data-xp="5"><svg viewBox="0 0 24 24" fill="none"><path d="M6 4l14 8-14 8V4z" fill="currentColor"/></svg> Ejecutar en R</button><span class="r-cell-hint">Puedes editar el código antes de ejecutarlo.</span></div><div class="r-console" aria-live="polite"></div></div><p style="margin-top:14px;font-size:.85rem;color:var(--ts)">Puedes comprobarlo tu mismo/a: edita el código abajo si quieres y ejecútalo en R de verdad (WebAssembly, en tu navegador).</p></div></div><div class="exercise" style="--accent:var(--coral)"><div class="exercise-head"><div class="exercise-title"><span class="exercise-num">Preg. 10</span><h3>Instalar, cargar y usar</h3></div><span class="ai-badge ai-ok"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>IA permitida</span></div><p class="desc">Distingue <b>instalar</b>, <b>cargar</b> y <b>usar</b> un paquete. ¿Qué instrucción pondrías en un Script reutilizable, y cuál NO conviene ejecutar cada vez que corres el script?</p><textarea class="answer" data-min="45" placeholder="Escribe tu respuesta antes de revelar..."></textarea><div class="answer-meta"><span class="char-count">0 / 45</span><button class="reveal-btn" disabled data-xp="10">Revelar respuesta y criterios</button></div><div class="feedback"><h4>Respuesta y criterios</h4><ul><li><code>install.packages("readr")</code> <b>instala</b> el paquete en tu computadora: se hace una sola vez, no en cada corrida.</li><li><code>library(readr)</code> <b>carga</b> el paquete en la sesión actual de R: esta línea sí va en un Script reutilizable, al inicio.</li><li><code>read_csv()</code> es una función del paquete que ya cargaste: <b>usarla</b> es el paso final.</li><li>Poner <code>install.packages()</code> dentro de un Script que se comparte o se corre varias veces es un error común: reinstala innecesariamente cada vez.</li></ul></div></div><div class="exercise" style="--accent:var(--green)"><div class="exercise-head"><div class="exercise-title"><span class="exercise-num">Preg. 11</span><h3>mean() no modifica nada</h3></div><span class="ai-badge ai-none"><svg viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>Sin IA</span></div><p class="desc">Ejecuta mentalmente <code>mean(c(4, 8, 12))</code>. ¿Por qué el resultado no modifica por sí solo el vector original? ¿Cómo guardarías ese resultado?</p><div class="code" style="margin:14px 0"><span class="c-fn">mean</span>(<span class="c-fn">c</span>(<span class="c-num">4</span>, <span class="c-num">8</span>, <span class="c-num">12</span>))</div><textarea class="answer" data-min="35" placeholder="Escribe tu respuesta antes de revelar..."></textarea><div class="answer-meta"><span class="char-count">0 / 35</span><button class="reveal-btn" disabled data-xp="10">Revelar respuesta y criterios</button></div><div class="feedback"><h4>Respuesta y criterios</h4><ul><li><code>mean(c(4, 8, 12))</code> devuelve <b>8</b>, pero no cambia el vector <code>c(4, 8, 12)</code>: en R, una función que no usa <code>&lt;-</code> solo <i>muestra</i> un resultado, no lo guarda.</li><li>Para conservar el resultado hay que asignarlo explícitamente: <code>promedio &lt;- mean(c(4, 8, 12))</code>.</li><li>Este es el mismo principio de la Pregunta 07: nada se actualiza "solo" en R sin una asignación explícita.</li></ul><div class="r-cell"><textarea class="r-editor" spellcheck="false">mean(c(4, 8, 12))
+promedio &lt;- mean(c(4, 8, 12))
+promedio</textarea><div class="r-cell-actions"><button class="run-btn" data-needs-pkg="0" data-xp="5"><svg viewBox="0 0 24 24" fill="none"><path d="M6 4l14 8-14 8V4z" fill="currentColor"/></svg> Ejecutar en R</button><span class="r-cell-hint">Puedes editar el código antes de ejecutarlo.</span></div><div class="r-console" aria-live="polite"></div></div><p style="margin-top:14px;font-size:.85rem;color:var(--ts)">Puedes comprobarlo tu mismo/a: edita el código abajo si quieres y ejecútalo en R de verdad (WebAssembly, en tu navegador).</p></div></div><div class="exercise" style="--accent:var(--violet)"><div class="exercise-head"><div class="exercise-title"><span class="exercise-num">Preg. 12</span><h3>R distingue mayúsculas</h3></div><span class="ai-badge ai-none"><svg viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>Sin IA</span></div><p class="desc">Diagnostica este código: <code>precio &lt;- 12; Precio * 3</code>. ¿Por qué R no encuentra el objeto, si "acabas de asignar uno"?</p><div class="code" style="margin:14px 0"><span class="c-fn">precio</span> <span class="c-op">&lt;-</span> <span class="c-num">12</span>
+<span class="c-fn">Precio</span> <span class="c-op">*</span> <span class="c-num">3</span></div><textarea class="answer" data-min="35" placeholder="Escribe tu respuesta antes de revelar..."></textarea><div class="answer-meta"><span class="char-count">0 / 35</span><button class="reveal-btn" disabled data-xp="10">Revelar respuesta y criterios</button></div><div class="feedback"><h4>Respuesta y criterios</h4><ul><li>El objeto creado fue <code>precio</code> (minúscula), no <code>Precio</code>: para R son <b>dos nombres distintos</b>.</li><li>El error esperado es <code>Error: object 'Precio' not found</code>.</li><li>Se corrige escribiendo <code>precio * 3</code> tal como se creó, o creando explícitamente un objeto <code>Precio</code> si de verdad se necesitan ambos.</li></ul><div class="r-cell"><textarea class="r-editor" spellcheck="false">precio &lt;- 12
+Precio * 3</textarea><div class="r-cell-actions"><button class="run-btn" data-needs-pkg="0" data-xp="5"><svg viewBox="0 0 24 24" fill="none"><path d="M6 4l14 8-14 8V4z" fill="currentColor"/></svg> Ejecutar en R</button><span class="r-cell-hint">Puedes editar el código antes de ejecutarlo.</span></div><div class="r-console" aria-live="polite"></div></div><p style="margin-top:14px;font-size:.85rem;color:var(--ts)">Puedes comprobarlo tu mismo/a: edita el código abajo si quieres y ejecútalo en R de verdad (WebAssembly, en tu navegador).</p></div></div></div></section><section class="block fade-in" id="t-vectores"><div class="block-head"><span class="block-num">03</span><h2>Vectores y condiciones</h2></div><p>Vectores, indexación de tres formas distintas, reciclaje, tipos, y las funciones lógicas <code>sum()</code>/<code>any()</code>/<code>all()</code>. Aquí es donde más se confunde "un promedio de tasas" con "una tasa global" -- presta especial atención a las Preguntas 19 y 20.</p><div style="display:grid;gap:20px;margin-top:22px"><div class="exercise" style="--accent:var(--blue)"><div class="exercise-head"><div class="exercise-title"><span class="exercise-num">Preg. 13</span><h3>c() contra el operador :</h3></div><span class="ai-badge ai-none"><svg viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>Sin IA</span></div><p class="desc">Compara <code>c(5, 8, 11)</code> con <code>5:8</code>. ¿Cuántos elementos produce cada expresión y cuál es el último valor de cada una?</p><div class="code" style="margin:14px 0"><span class="c-fn">c</span>(<span class="c-num">5</span>, <span class="c-num">8</span>, <span class="c-num">11</span>)
+<span class="c-num">5</span><span class="c-op">:</span><span class="c-num">8</span></div><textarea class="answer" data-min="35" placeholder="Escribe tu respuesta antes de revelar..."></textarea><div class="answer-meta"><span class="char-count">0 / 35</span><button class="reveal-btn" disabled data-xp="10">Revelar respuesta y criterios</button></div><div class="feedback"><h4>Respuesta y criterios</h4><ul><li><code>c(5, 8, 11)</code> crea un vector de <b>3 elementos</b> (justo los que escribiste), y termina en <b>11</b>.</li><li><code>5:8</code> crea una <b>secuencia consecutiva</b> de <b>4 elementos</b>: 5, 6, 7 y 8, y termina en <b>8</b>.</li><li><code>c()</code> combina los valores exactos que le des; <code>:</code> genera todos los enteros entre el inicio y el final.</li></ul><div class="r-cell"><textarea class="r-editor" spellcheck="false">c(5, 8, 11)
+5:8
+length(c(5, 8, 11))
+length(5:8)</textarea><div class="r-cell-actions"><button class="run-btn" data-needs-pkg="0" data-xp="5"><svg viewBox="0 0 24 24" fill="none"><path d="M6 4l14 8-14 8V4z" fill="currentColor"/></svg> Ejecutar en R</button><span class="r-cell-hint">Puedes editar el código antes de ejecutarlo.</span></div><div class="r-console" aria-live="polite"></div></div><p style="margin-top:14px;font-size:.85rem;color:var(--ts)">Puedes comprobarlo tu mismo/a: edita el código abajo si quieres y ejecútalo en R de verdad (WebAssembly, en tu navegador).</p></div></div><div class="exercise" style="--accent:var(--coral)"><div class="exercise-head"><div class="exercise-title"><span class="exercise-num">Preg. 14</span><h3>Tres formas de indexar</h3></div><span class="ai-badge ai-none"><svg viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>Sin IA</span></div><p class="desc">Si <code>x &lt;- c(8, 14, 11, 7)</code>, anticipa el resultado de <code>x[c(1, 3)]</code>, <code>x[-2]</code> y <code>x[x &gt; 10]</code>. Explica el criterio de selección de cada una.</p><div class="code" style="margin:14px 0"><span class="c-fn">x</span> <span class="c-op">&lt;-</span> <span class="c-fn">c</span>(<span class="c-num">8</span>, <span class="c-num">14</span>, <span class="c-num">11</span>, <span class="c-num">7</span>)
+<span class="c-fn">x</span>[<span class="c-fn">c</span>(<span class="c-num">1</span>, <span class="c-num">3</span>)]
+<span class="c-fn">x</span>[<span class="c-op">-</span><span class="c-num">2</span>]
+<span class="c-fn">x</span>[<span class="c-fn">x</span> <span class="c-op">&gt;</span> <span class="c-num">10</span>]</div><textarea class="answer" data-min="50" placeholder="Escribe tu respuesta antes de revelar..."></textarea><div class="answer-meta"><span class="char-count">0 / 50</span><button class="reveal-btn" disabled data-xp="15">Revelar respuesta y criterios</button></div><div class="feedback"><h4>Respuesta y criterios</h4><ul><li><code>x[c(1, 3)]</code> selecciona por <b>posición</b>: devuelve el 1° y 3° elemento → <code>8, 11</code>.</li><li><code>x[-2]</code> selecciona <b>por exclusión</b>: todo menos la posición 2 → <code>8, 11, 7</code>.</li><li><code>x[x &gt; 10]</code> selecciona por <b>condición lógica</b>: solo los valores mayores que 10 → <code>14, 11</code>.</li><li>Son tres mecanismos distintos: índices específicos, exclusión de índice, y filtro lógico.</li></ul><div class="r-cell"><textarea class="r-editor" spellcheck="false">x &lt;- c(8, 14, 11, 7)
+x[c(1, 3)]
+x[-2]
+x[x &gt; 10]</textarea><div class="r-cell-actions"><button class="run-btn" data-needs-pkg="0" data-xp="5"><svg viewBox="0 0 24 24" fill="none"><path d="M6 4l14 8-14 8V4z" fill="currentColor"/></svg> Ejecutar en R</button><span class="r-cell-hint">Puedes editar el código antes de ejecutarlo.</span></div><div class="r-console" aria-live="polite"></div></div><p style="margin-top:14px;font-size:.85rem;color:var(--ts)">Puedes comprobarlo tu mismo/a: edita el código abajo si quieres y ejecútalo en R de verdad (WebAssembly, en tu navegador).</p></div></div><div class="exercise" style="--accent:var(--green)"><div class="exercise-head"><div class="exercise-title"><span class="exercise-num">Preg. 15</span><h3>Multiplicar dos vectores</h3></div><span class="ai-badge ai-none"><svg viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>Sin IA</span></div><p class="desc">Para <code>precios &lt;- c(10, 15, 20)</code>, predice <code>precios * c(2, 3, 4)</code>. ¿Por qué el resultado NO es un solo número?</p><div class="code" style="margin:14px 0"><span class="c-fn">precios</span> <span class="c-op">&lt;-</span> <span class="c-fn">c</span>(<span class="c-num">10</span>, <span class="c-num">15</span>, <span class="c-num">20</span>)
+<span class="c-fn">precios</span> <span class="c-op">*</span> <span class="c-fn">c</span>(<span class="c-num">2</span>, <span class="c-num">3</span>, <span class="c-num">4</span>)</div><textarea class="answer" data-min="40" placeholder="Escribe tu respuesta antes de revelar..."></textarea><div class="answer-meta"><span class="char-count">0 / 40</span><button class="reveal-btn" disabled data-xp="10">Revelar respuesta y criterios</button></div><div class="feedback"><h4>Respuesta y criterios</h4><ul><li>R opera <b>posición a posición</b> (elemento por elemento): <code>10*2, 15*3, 20*4</code>.</li><li>Resultado: <code>c(20, 45, 80)</code>, un vector de 3 valores, no un total.</li><li>Para obtener un único número habría que aplicar <code>sum()</code> al resultado: <code>sum(precios * c(2, 3, 4))</code> da 145.</li></ul><div class="r-cell"><textarea class="r-editor" spellcheck="false">precios &lt;- c(10, 15, 20)
+precios * c(2, 3, 4)
+sum(precios * c(2, 3, 4))</textarea><div class="r-cell-actions"><button class="run-btn" data-needs-pkg="0" data-xp="5"><svg viewBox="0 0 24 24" fill="none"><path d="M6 4l14 8-14 8V4z" fill="currentColor"/></svg> Ejecutar en R</button><span class="r-cell-hint">Puedes editar el código antes de ejecutarlo.</span></div><div class="r-console" aria-live="polite"></div></div><p style="margin-top:14px;font-size:.85rem;color:var(--ts)">Puedes comprobarlo tu mismo/a: edita el código abajo si quieres y ejecútalo en R de verdad (WebAssembly, en tu navegador).</p></div></div><div class="exercise" style="--accent:var(--violet)"><div class="exercise-head"><div class="exercise-title"><span class="exercise-num">Preg. 16</span><h3>El riesgo del reciclaje</h3></div><span class="ai-badge ai-none"><svg viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>Sin IA</span></div><p class="desc">¿Qué riesgo hay al operar <code>c(1, 2, 3, 4, 5) + c(10, 20)</code> (longitudes distintas: 5 y 2)? ¿Qué convendría comprobar antes de confiar en el resultado?</p><textarea class="answer" data-min="45" placeholder="Escribe tu respuesta antes de revelar..."></textarea><div class="answer-meta"><span class="char-count">0 / 45</span><button class="reveal-btn" disabled data-xp="15">Revelar respuesta y criterios</button></div><div class="feedback"><h4>Respuesta y criterios</h4><ul><li>R <b>recicla</b> el vector más corto para completar la operación: repite <code>c(10, 20)</code> hasta emparejar la longitud de 5.</li><li>Como 5 no es múltiplo de 2, R además emite una <b>advertencia</b> ("longer object length is not a multiple of shorter object length"): es una señal de que probablemente hay un error de diseño, no una función intencional.</li><li>Antes de confiar en un resultado así conviene comprobar <code>length()</code> de ambos vectores y confirmar que el emparejamiento elemento-a-elemento es realmente el que se pretendía.</li></ul><div class="r-cell"><textarea class="r-editor" spellcheck="false">c(1, 2, 3, 4, 5) + c(10, 20)</textarea><div class="r-cell-actions"><button class="run-btn" data-needs-pkg="0" data-xp="5"><svg viewBox="0 0 24 24" fill="none"><path d="M6 4l14 8-14 8V4z" fill="currentColor"/></svg> Ejecutar en R</button><span class="r-cell-hint">Puedes editar el código antes de ejecutarlo.</span></div><div class="r-console" aria-live="polite"></div></div><p style="margin-top:14px;font-size:.85rem;color:var(--ts)">Puedes comprobarlo tu mismo/a: edita el código abajo si quieres y ejecútalo en R de verdad (WebAssembly, en tu navegador).</p></div></div><div class="exercise" style="--accent:var(--teal)"><div class="exercise-head"><div class="exercise-title"><span class="exercise-num">Preg. 17</span><h3>Un tipo por vector</h3></div><span class="ai-badge ai-none"><svg viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>Sin IA</span></div><p class="desc">Predice <code>typeof(c(1, "dos", 3))</code>. ¿Qué propiedad de un vector explica el resultado? ¿Qué estructura usarías si necesitas conservar números y texto en columnas separadas?</p><div class="code" style="margin:14px 0"><span class="c-fn">typeof</span>(<span class="c-fn">c</span>(<span class="c-num">1</span>, <span class="c-str">"dos"</span>, <span class="c-num">3</span>))</div><textarea class="answer" data-min="45" placeholder="Escribe tu respuesta antes de revelar..."></textarea><div class="answer-meta"><span class="char-count">0 / 45</span><button class="reveal-btn" disabled data-xp="10">Revelar respuesta y criterios</button></div><div class="feedback"><h4>Respuesta y criterios</h4><ul><li><code>typeof(c(1, "dos", 3))</code> da <b>"character"</b>: todo el vector se convierte a texto.</li><li>Un <b>vector atómico</b> solo puede tener un tipo: si mezclas números y texto, R fuerza (coacciona) todo al tipo más general, que es texto.</li><li>Para conservar columnas numéricas y de texto por separado se usa un <b>data frame / tibble</b>, no un vector: cada columna mantiene su propio tipo.</li></ul><div class="r-cell"><textarea class="r-editor" spellcheck="false">typeof(c(1, "dos", 3))</textarea><div class="r-cell-actions"><button class="run-btn" data-needs-pkg="0" data-xp="5"><svg viewBox="0 0 24 24" fill="none"><path d="M6 4l14 8-14 8V4z" fill="currentColor"/></svg> Ejecutar en R</button><span class="r-cell-hint">Puedes editar el código antes de ejecutarlo.</span></div><div class="r-console" aria-live="polite"></div></div><p style="margin-top:14px;font-size:.85rem;color:var(--ts)">Puedes comprobarlo tu mismo/a: edita el código abajo si quieres y ejecútalo en R de verdad (WebAssembly, en tu navegador).</p></div></div><div class="exercise" style="--accent:var(--amber)"><div class="exercise-head"><div class="exercise-title"><span class="exercise-num">Preg. 18</span><h3>sum(), any() y all() sobre lógicos</h3></div><span class="ai-badge ai-none"><svg viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>Sin IA</span></div><p class="desc">Si <code>aprobados &lt;- c(TRUE, FALSE, TRUE, TRUE)</code>, interpreta <code>sum(aprobados)</code>, <code>any(aprobados)</code> y <code>all(aprobados)</code>. ¿Qué pregunta responde cada una?</p><div class="code" style="margin:14px 0"><span class="c-fn">aprobados</span> <span class="c-op">&lt;-</span> <span class="c-fn">c</span>(<span class="c-kw">TRUE</span>, <span class="c-kw">FALSE</span>, <span class="c-kw">TRUE</span>, <span class="c-kw">TRUE</span>)
+<span class="c-fn">sum</span>(<span class="c-fn">aprobados</span>)
+<span class="c-fn">any</span>(<span class="c-fn">aprobados</span>)
+<span class="c-fn">all</span>(<span class="c-fn">aprobados</span>)</div><textarea class="answer" data-min="45" placeholder="Escribe tu respuesta antes de revelar..."></textarea><div class="answer-meta"><span class="char-count">0 / 45</span><button class="reveal-btn" disabled data-xp="10">Revelar respuesta y criterios</button></div><div class="feedback"><h4>Respuesta y criterios</h4><ul><li><code>sum(aprobados)</code> = <b>3</b>: suma los <code>TRUE</code> (cada <code>TRUE</code> vale 1), responde "¿cuántos cumplen?".</li><li><code>any(aprobados)</code> = <b>TRUE</b>: responde "¿existe al menos uno que cumple?".</li><li><code>all(aprobados)</code> = <b>FALSE</b>: responde "¿cumplen todos?" — no, porque hay un <code>FALSE</code>.</li></ul><div class="r-cell"><textarea class="r-editor" spellcheck="false">aprobados &lt;- c(TRUE, FALSE, TRUE, TRUE)
+sum(aprobados)
+any(aprobados)
+all(aprobados)</textarea><div class="r-cell-actions"><button class="run-btn" data-needs-pkg="0" data-xp="5"><svg viewBox="0 0 24 24" fill="none"><path d="M6 4l14 8-14 8V4z" fill="currentColor"/></svg> Ejecutar en R</button><span class="r-cell-hint">Puedes editar el código antes de ejecutarlo.</span></div><div class="r-console" aria-live="polite"></div></div><p style="margin-top:14px;font-size:.85rem;color:var(--ts)">Puedes comprobarlo tu mismo/a: edita el código abajo si quieres y ejecútalo en R de verdad (WebAssembly, en tu navegador).</p></div></div><div class="exercise" style="--accent:var(--blue)"><div class="exercise-head"><div class="exercise-title"><span class="exercise-num">Preg. 19</span><h3>Combinar condiciones con &amp;</h3></div><span class="ai-badge ai-ok"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>IA permitida</span></div><p class="desc">Un conjunto de jornadas tiene <code>inscritos</code> y <code>asistentes</code>. Escribe una condición que seleccione las jornadas con <b>inscritos &gt;= 50 Y asistentes &lt; 25</b>. ¿Qué exige combinar condiciones con <code>&amp;</code>?</p><div class="code" style="margin:14px 0"><span class="c-fn">inscritos</span> <span class="c-op">&gt;=</span> <span class="c-num">50</span> <span class="c-op">&amp;</span> <span class="c-fn">asistentes</span> <span class="c-op">&lt;</span> <span class="c-num">25</span></div><textarea class="answer" data-min="50" placeholder="Escribe tu respuesta antes de revelar..."></textarea><div class="answer-meta"><span class="char-count">0 / 50</span><button class="reveal-btn" disabled data-xp="15">Revelar respuesta y criterios</button></div><div class="feedback"><h4>Respuesta y criterios</h4><ul><li>La condición es <code>inscritos &gt;= 50 &amp; asistentes &lt; 25</code>.</li><li>El operador <code>&amp;</code> exige que <b>ambas comparaciones sean TRUE en la misma posición</b> (misma fila) para que el resultado combinado sea TRUE.</li><li>Si solo una de las dos condiciones se cumple, esa posición da FALSE: no basta con que se cumpla "alguna".</li></ul><div class="r-cell"><textarea class="r-editor" spellcheck="false">inscritos &lt;- c(60, 45, 80, 30, 55)
+asistentes &lt;- c(20, 40, 22, 28, 50)
+inscritos &gt;= 50 &amp; asistentes &lt; 25</textarea><div class="r-cell-actions"><button class="run-btn" data-needs-pkg="0" data-xp="5"><svg viewBox="0 0 24 24" fill="none"><path d="M6 4l14 8-14 8V4z" fill="currentColor"/></svg> Ejecutar en R</button><span class="r-cell-hint">Puedes editar el código antes de ejecutarlo.</span></div><div class="r-console" aria-live="polite"></div></div><p style="margin-top:14px;font-size:.85rem;color:var(--ts)">Puedes comprobarlo tu mismo/a: edita el código abajo si quieres y ejecútalo en R de verdad (WebAssembly, en tu navegador).</p></div></div><div class="exercise" style="--accent:var(--coral)"><div class="exercise-head"><div class="exercise-title"><span class="exercise-num">Preg. 20</span><h3>Tasa global contra promedio de tasas</h3></div><span class="ai-badge ai-ok"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>IA permitida</span></div><p class="desc">Explica por qué una proporción global <code>sum(asistentes) / sum(inscritos)</code> puede diferir de <code>mean(asistentes / inscritos)</code>. ¿Cuál usarías para "la proporción de todas las personas que asistieron"?</p><textarea class="answer" data-min="55" placeholder="Escribe tu respuesta antes de revelar..."></textarea><div class="answer-meta"><span class="char-count">0 / 55</span><button class="reveal-btn" disabled data-xp="15">Revelar respuesta y criterios</button></div><div class="feedback"><h4>Respuesta y criterios</h4><ul><li>La <b>tasa global</b> (<code>sum(asistentes)/sum(inscritos)</code>) suma primero los totales: pondera cada jornada según su tamaño real.</li><li><code>mean(asistentes/inscritos)</code> calcula una tasa <b>por jornada</b> y luego promedia esas tasas: le da el <b>mismo peso</b> a una jornada pequeña que a una grande, aunque tengan tamaños muy distintos.</li><li>Para "la proporción de todas las personas", la correcta es la <b>tasa global</b>: <code>sum(asistentes)/sum(inscritos)</code>.</li></ul><div class="r-cell"><textarea class="r-editor" spellcheck="false">inscritos &lt;- c(60, 45, 80, 30, 55)
+asistentes &lt;- c(20, 40, 22, 28, 50)
+sum(asistentes) / sum(inscritos)
+mean(asistentes / inscritos)</textarea><div class="r-cell-actions"><button class="run-btn" data-needs-pkg="0" data-xp="5"><svg viewBox="0 0 24 24" fill="none"><path d="M6 4l14 8-14 8V4z" fill="currentColor"/></svg> Ejecutar en R</button><span class="r-cell-hint">Puedes editar el código antes de ejecutarlo.</span></div><div class="r-console" aria-live="polite"></div></div><p style="margin-top:14px;font-size:.85rem;color:var(--ts)">Puedes comprobarlo tu mismo/a: edita el código abajo si quieres y ejecútalo en R de verdad (WebAssembly, en tu navegador).</p></div></div></div></section><section class="block fade-in" id="t-estructura"><div class="block-head"><span class="block-num">04</span><h2>Estructura y verificación</h2></div><p>Matrices contra data frames, qué informa cada función de auditoría (<code>head()</code>, <code>dim()</code>, <code>names()</code>, <code>str()</code>), y cómo diagnosticar una importación que salió mal. Esta sección es, literalmente, la pregunta de cierre del curso aplicada a la importación de datos.</p><div style="display:grid;gap:20px;margin-top:22px"><div class="exercise" style="--accent:var(--green)"><div class="exercise-head"><div class="exercise-title"><span class="exercise-num">Preg. 21</span><h3>Filas y columnas de una matriz</h3></div><span class="ai-badge ai-none"><svg viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>Sin IA</span></div><p class="desc">Una matriz de 12 valores se construye con <code>nrow = 3</code>. ¿Cuántas columnas requiere? ¿Qué cambia al agregar <code>byrow = TRUE</code>?</p><div class="code" style="margin:14px 0"><span class="c-fn">matrix</span>(<span class="c-num">1</span><span class="c-op">:</span><span class="c-num">12</span>, <span class="c-fn">nrow</span> <span class="c-op">=</span> <span class="c-num">3</span>)
+<span class="c-fn">matrix</span>(<span class="c-num">1</span><span class="c-op">:</span><span class="c-num">12</span>, <span class="c-fn">nrow</span> <span class="c-op">=</span> <span class="c-num">3</span>, <span class="c-fn">byrow</span> <span class="c-op">=</span> <span class="c-kw">TRUE</span>)</div><textarea class="answer" data-min="40" placeholder="Escribe tu respuesta antes de revelar..."></textarea><div class="answer-meta"><span class="char-count">0 / 40</span><button class="reveal-btn" disabled data-xp="15">Revelar respuesta y criterios</button></div><div class="feedback"><h4>Respuesta y criterios</h4><ul><li>Se necesitan <b>4 columnas</b>, porque <code>12 / 3 = 4</code>: R reparte los 12 valores en una cuadrícula de 3×4.</li><li>Por defecto, <code>matrix()</code> llena la cuadrícula <b>por columnas</b> (columna por columna).</li><li><code>byrow = TRUE</code> cambia el orden de llenado a <b>por filas</b>: mismos 12 valores, pero acomodados distinto en la cuadrícula.</li></ul><div class="r-cell"><textarea class="r-editor" spellcheck="false">m &lt;- matrix(1:12, nrow = 3)
+dim(m)
+m
+matrix(1:12, nrow = 3, byrow = TRUE)</textarea><div class="r-cell-actions"><button class="run-btn" data-needs-pkg="0" data-xp="5"><svg viewBox="0 0 24 24" fill="none"><path d="M6 4l14 8-14 8V4z" fill="currentColor"/></svg> Ejecutar en R</button><span class="r-cell-hint">Puedes editar el código antes de ejecutarlo.</span></div><div class="r-console" aria-live="polite"></div></div><p style="margin-top:14px;font-size:.85rem;color:var(--ts)">Puedes comprobarlo tu mismo/a: edita el código abajo si quieres y ejecútalo en R de verdad (WebAssembly, en tu navegador).</p></div></div><div class="exercise" style="--accent:var(--violet)"><div class="exercise-head"><div class="exercise-title"><span class="exercise-num">Preg. 22</span><h3>Matriz contra data frame</h3></div><span class="ai-badge ai-ok"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>IA permitida</span></div><p class="desc">¿Por qué una matriz construida con números y nombres puede convertir los números en texto, mientras un data frame puede preservar ambos tipos por separado?</p><textarea class="answer" data-min="50" placeholder="Escribe tu respuesta antes de revelar..."></textarea><div class="answer-meta"><span class="char-count">0 / 50</span><button class="reveal-btn" disabled data-xp="15">Revelar respuesta y criterios</button></div><div class="feedback"><h4>Respuesta y criterios</h4><ul><li>Una <b>matriz</b> es un vector atómico con forma rectangular: solo admite <b>un tipo de dato para toda la matriz</b>. Si mezclas números y texto, todo se convierte a texto.</li><li>Un <b>data frame</b> (o tibble) es una colección de columnas, y cada columna conserva su propio tipo: una puede ser numérica y otra de texto, al mismo tiempo.</li><li>Por eso el curso usa data frames/tibbles para datos económicos reales (columnas mixtas), y reserva las matrices para datos puramente numéricos.</li></ul><div class="r-cell"><textarea class="r-editor" spellcheck="false">m1 &lt;- matrix(c(1, 2, 3, 4), nrow = 2)
+typeof(m1)
+
+m2 &lt;- matrix(c(1, 2, "tres", 4), nrow = 2)
+typeof(m2)
+
+df &lt;- data.frame(numero = c(1, 2), texto = c("uno", "dos"))
+str(df)</textarea><div class="r-cell-actions"><button class="run-btn" data-needs-pkg="0" data-xp="5"><svg viewBox="0 0 24 24" fill="none"><path d="M6 4l14 8-14 8V4z" fill="currentColor"/></svg> Ejecutar en R</button><span class="r-cell-hint">Puedes editar el código antes de ejecutarlo.</span></div><div class="r-console" aria-live="polite"></div></div><p style="margin-top:14px;font-size:.85rem;color:var(--ts)">Puedes comprobarlo tu mismo/a: edita el código abajo si quieres y ejecútalo en R de verdad (WebAssembly, en tu navegador).</p></div></div><div class="exercise" style="--accent:var(--teal)"><div class="exercise-head"><div class="exercise-title"><span class="exercise-num">Preg. 23</span><h3>Interpretar dim()</h3></div><span class="ai-badge ai-ok"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>IA permitida</span></div><p class="desc">Un objeto tiene <code>dim(datos)</code> igual a <code>c(24, 6)</code>, y cada fila representa una jornada registrada. Interpreta qué son las filas y qué son las columnas. ¿Cuántas variables hay?</p><textarea class="answer" data-min="35" placeholder="Escribe tu respuesta antes de revelar..."></textarea><div class="answer-meta"><span class="char-count">0 / 35</span><button class="reveal-btn" disabled data-xp="10">Revelar respuesta y criterios</button></div><div class="feedback"><h4>Respuesta y criterios</h4><ul><li><code>dim(datos)</code> devuelve <code>c(filas, columnas)</code>: aquí son <b>24 filas</b> (observaciones, una por jornada) y <b>6 columnas</b> (variables).</li><li>Hay <b>6 variables</b> registradas por cada jornada.</li><li>Confundir filas con columnas es un error común al leer <code>dim()</code>: siempre es "filas primero".</li></ul></div></div><div class="exercise" style="--accent:var(--amber)"><div class="exercise-head"><div class="exercise-title"><span class="exercise-num">Preg. 24</span><h3>El CSV contra el objeto en R</h3></div><span class="ai-badge ai-ok"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>IA permitida</span></div><p class="desc">Diferencia el archivo CSV en disco del objeto que resulta de <code>read_csv()</code>. ¿Qué hace exactamente la asignación en <code>datos &lt;- read_csv("datos/archivo.csv")</code>?</p><div class="code" style="margin:14px 0"><span class="c-fn">datos</span> <span class="c-op">&lt;-</span> <span class="c-fn">read_csv</span>(<span class="c-str">"datos/archivo.csv"</span>)</div><textarea class="answer" data-min="45" placeholder="Escribe tu respuesta antes de revelar..."></textarea><div class="answer-meta"><span class="char-count">0 / 45</span><button class="reveal-btn" disabled data-xp="10">Revelar respuesta y criterios</button></div><div class="feedback"><h4>Respuesta y criterios</h4><ul><li>El <b>CSV</b> es un archivo de texto plano en el disco: existe independientemente de R.</li><li><code>read_csv()</code> <b>lee e interpreta</b> ese archivo como una tabla (tibble) dentro de la sesión de R.</li><li>El operador <code>&lt;-</code> <b>guarda esa tabla</b> en el objeto <code>datos</code> de la sesión: el archivo original en disco no cambia por esta asignación, es una copia en memoria.</li></ul></div></div><div class="exercise" style="--accent:var(--blue)"><div class="exercise-head"><div class="exercise-title"><span class="exercise-num">Preg. 25</span><h3>Rutas relativas contra absolutas</h3></div><span class="ai-badge ai-ok"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>IA permitida</span></div><p class="desc">Propón una ruta <b>relativa</b> desde un proyecto de RStudio para leer un archivo dentro de una carpeta <code>datos/</code>, y explica una ventaja frente a una ruta <b>absoluta</b> que incluye tu nombre de usuario.</p><textarea class="answer" data-min="45" placeholder="Escribe tu respuesta antes de revelar..."></textarea><div class="answer-meta"><span class="char-count">0 / 45</span><button class="reveal-btn" disabled data-xp="10">Revelar respuesta y criterios</button></div><div class="feedback"><h4>Respuesta y criterios</h4><ul><li>Ruta relativa: <code>"datos/archivo.csv"</code>, interpretada desde la raíz del proyecto de RStudio.</li><li>Una ruta absoluta como <code>"/Users/tu_nombre/Documents/proyecto/datos/archivo.csv"</code> solo funciona en <b>esa computadora</b>, con <b>ese usuario</b>.</li><li>La ruta relativa <b>viaja con el proyecto</b>: funciona igual si otra persona (o tú en otra computadora) abre la misma carpeta de proyecto.</li></ul></div></div><div class="exercise" style="--accent:var(--coral)"><div class="exercise-head"><div class="exercise-title"><span class="exercise-num">Preg. 26</span><h3>Diagnosticar una importación fallida</h3></div><span class="ai-badge ai-ok"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>IA permitida</span></div><p class="desc">Después de importar un CSV aparecen 24 filas pero <b>1 sola columna</b>, en vez de las 6 esperadas. Da dos comprobaciones razonables antes de seguir trabajando.</p><textarea class="answer" data-min="45" placeholder="Escribe tu respuesta antes de revelar..."></textarea><div class="answer-meta"><span class="char-count">0 / 45</span><button class="reveal-btn" disabled data-xp="10">Revelar respuesta y criterios</button></div><div class="feedback"><h4>Respuesta y criterios</h4><ul><li>Primero, verificar que se abrió el <b>archivo correcto</b> (nombre, carpeta, versión).</li><li>Segundo, inspeccionar el <b>separador</b> del CSV: una sola columna casi siempre significa que <code>read_csv()</code> no reconoció el delimitador esperado (por ejemplo, el archivo usa punto y coma en vez de coma).</li><li>También conviene revisar si el archivo tiene líneas de metadatos antes del encabezado real (para eso existe el argumento <code>skip</code>).</li></ul></div></div><div class="exercise" style="--accent:var(--green)"><div class="exercise-head"><div class="exercise-title"><span class="exercise-num">Preg. 27</span><h3>head(), dim(), names(), str()/glimpse()</h3></div><span class="ai-badge ai-none"><svg viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>Sin IA</span></div><p class="desc">Indica qué problema <b>distinto</b> ayuda a detectar cada una de estas cuatro funciones: <code>head()</code>, <code>dim()</code>, <code>names()</code> y <code>str()</code>/<code>glimpse()</code>. ¿Basta con ver una tabla en el panel Environment?</p><textarea class="answer" data-min="50" placeholder="Escribe tu respuesta antes de revelar..."></textarea><div class="answer-meta"><span class="char-count">0 / 50</span><button class="reveal-btn" disabled data-xp="15">Revelar respuesta y criterios</button></div><div class="feedback"><h4>Respuesta y criterios</h4><ul><li><code>head()</code> muestra las primeras filas: detecta <b>valores extraños o encabezados desplazados</b> a simple vista.</li><li><code>dim()</code> controla el <b>tamaño</b> (filas y columnas): detecta si la importación trajo menos/más de lo esperado.</li><li><code>names()</code> muestra los <b>nombres de columna</b>: detecta columnas mal nombradas o en el orden equivocado.</li><li><code>str()</code>/<code>glimpse()</code> revela los <b>tipos de cada columna</b> y valores de ejemplo: detecta si una columna numérica llegó como texto.</li><li>Ver el objeto solo en el panel Environment <b>no valida nada</b>: no muestra tipos ni valores reales.</li></ul><div class="r-cell"><textarea class="r-editor" spellcheck="false">mini &lt;- data.frame(
+  region = c("Norte", "Sur", "Centro"),
+  ventas = c(120, 95, 150)
+)
+head(mini)
+dim(mini)
+names(mini)
+str(mini)</textarea><div class="r-cell-actions"><button class="run-btn" data-needs-pkg="0" data-xp="5"><svg viewBox="0 0 24 24" fill="none"><path d="M6 4l14 8-14 8V4z" fill="currentColor"/></svg> Ejecutar en R</button><span class="r-cell-hint">Puedes editar el código antes de ejecutarlo.</span></div><div class="r-console" aria-live="polite"></div></div><p style="margin-top:14px;font-size:.85rem;color:var(--ts)">Puedes comprobarlo tu mismo/a: edita el código abajo si quieres y ejecútalo en R de verdad (WebAssembly, en tu navegador).</p></div></div><div class="exercise" style="--accent:var(--violet)"><div class="exercise-head"><div class="exercise-title"><span class="exercise-num">Preg. 28</span><h3>Una columna numérica que llegó como texto</h3></div><span class="ai-badge ai-ok"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>IA permitida</span></div><p class="desc">R infiere la columna <code>ingreso_usd</code> como <code>character</code> en vez de numérica. ¿Qué conclusiones numéricas deberías suspender, y qué revisarías en el CSV original?</p><textarea class="answer" data-min="45" placeholder="Escribe tu respuesta antes de revelar..."></textarea><div class="answer-meta"><span class="char-count">0 / 45</span><button class="reveal-btn" disabled data-xp="10">Revelar respuesta y criterios</button></div><div class="feedback"><h4>Respuesta y criterios</h4><ul><li>Deberías <b>suspender de inmediato</b> cualquier suma, promedio o gráfico que trate <code>ingreso_usd</code> como número: mientras sea texto, esas operaciones fallarán o darán resultados sin sentido.</li><li>Revisar en el CSV: símbolos de moneda (<code>$</code>), separadores de miles, comas usadas como decimal, o caracteres no numéricos mezclados en la columna.</li><li>También revisar el <b>delimitador</b> de importación: a veces el problema no está en la columna sino en cómo se separaron las columnas.</li></ul></div></div></div></section><section class="block fade-in" id="t-visualizar"><div class="block-head"><span class="block-num">05</span><h2>Visualizar e interpretar</h2></div><p>Gramática de gráficos: <code>data</code>, <code>aes()</code>, geoms. Cuándo usar barras, dispersión, histograma o polígono de frecuencias, qué controla <code>binwidth</code>, y por qué una asociación visual nunca es, por sí sola, una recomendación.</p><div style="display:grid;gap:20px;margin-top:22px"><div class="exercise" style="--accent:var(--blue)"><div class="exercise-head"><div class="exercise-title"><span class="exercise-num">Preg. 29</span><h3>Elegir el geom correcto</h3></div><span class="ai-badge ai-ok"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>IA permitida</span></div><p class="desc">Elige entre <code>geom_bar()</code>, <code>geom_point()</code>, <code>geom_histogram()</code> y <code>geom_freqpoly()</code> para: (a) contar registros por punto de venta, (b) relacionar dos medidas numéricas, (c) representar la distribución de un monto. Justifica ejes y qué representa la altura.</p><textarea class="answer" data-min="55" placeholder="Escribe tu respuesta antes de revelar..."></textarea><div class="answer-meta"><span class="char-count">0 / 55</span><button class="reveal-btn" disabled data-xp="15">Revelar respuesta y criterios</button></div><div class="feedback"><h4>Respuesta y criterios</h4><ul><li><code>geom_bar()</code>: cuenta registros por <b>categoría</b> — eje x = categoría, altura = frecuencia (conteo).</li><li><code>geom_point()</code>: muestra <b>una pareja numérica por observación</b> — eje x e y son ambos numéricos, cada punto es una fila.</li><li><code>geom_histogram()</code> y <code>geom_freqpoly()</code>: muestran la <b>distribución de un monto</b> — eje x = intervalos del monto, altura = cuántas observaciones caen en cada intervalo.</li></ul></div></div><div class="exercise" style="--accent:var(--coral)"><div class="exercise-head"><div class="exercise-title"><span class="exercise-num">Preg. 30</span><h3>Las tres piezas de un ggplot</h3></div><span class="ai-badge ai-ok"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>IA permitida</span></div><p class="desc">Explica el papel de <code>ggplot(datos, aes(x = visitantes, y = ingreso))</code>, de <code>geom_point()</code> y de <code>labs()</code>. ¿Por qué el primer componente <b>solo</b> no dibuja ninguna observación?</p><div class="code" style="margin:14px 0"><span class="c-fn">ggplot</span>(<span class="c-fn">mini</span>, <span class="c-fn">aes</span>(<span class="c-fn">x</span> <span class="c-op">=</span> <span class="c-fn">visitantes</span>, <span class="c-fn">y</span> <span class="c-op">=</span> <span class="c-fn">ingreso</span>)) <span class="c-op">+</span>
+  <span class="c-fn">geom_point</span>() <span class="c-op">+</span>
+  <span class="c-fn">labs</span>(<span class="c-fn">title</span> <span class="c-op">=</span> <span class="c-str">"Visitantes e ingreso diario"</span>, <span class="c-fn">x</span> <span class="c-op">=</span> <span class="c-str">"Visitantes"</span>, <span class="c-fn">y</span> <span class="c-op">=</span> <span class="c-str">"Ingreso (USD)"</span>)</div><textarea class="answer" data-min="50" placeholder="Escribe tu respuesta antes de revelar..."></textarea><div class="answer-meta"><span class="char-count">0 / 50</span><button class="reveal-btn" disabled data-xp="15">Revelar respuesta y criterios</button></div><div class="feedback"><h4>Respuesta y criterios</h4><ul><li><code>ggplot(datos, aes(...))</code> define el <b>dataset</b> y el <b>mapeo</b> de variables a ejes: prepara el lienzo, pero no dibuja ninguna marca todavía.</li><li><code>geom_point()</code> agrega la <b>capa geométrica</b> que realmente dibuja algo observable (en este caso, puntos).</li><li><code>labs()</code> agrega <b>títulos y etiquetas</b> legibles, no cambia los datos ni el dibujo.</li><li>Sin una geom, <code>ggplot()</code> solo produce ejes vacíos: define "dónde" pero no "qué forma" mostrar.</li></ul><div class="r-cell"><textarea class="r-editor" spellcheck="false">mini &lt;- data.frame(
+  visitantes = c(80, 84, 75, 88, 82, 91),
+  ingreso   = c(120, 132, 108, 150, 126, 156)
+)
+ggplot(mini, aes(x = visitantes, y = ingreso)) +
+  geom_point() +
+  labs(title = "Visitantes e ingreso diario", x = "Visitantes", y = "Ingreso (USD)")</textarea><div class="r-cell-actions"><button class="run-btn" data-needs-pkg="1" data-xp="5"><svg viewBox="0 0 24 24" fill="none"><path d="M6 4l14 8-14 8V4z" fill="currentColor"/></svg> Ejecutar en R</button><span class="r-cell-hint">Necesita ggplot2: la primera vez instala el paquete (puede tardar).</span></div><div class="r-console" aria-live="polite"></div></div><p style="margin-top:14px;font-size:.85rem;color:var(--ts)">Puedes comprobarlo tu mismo/a: edita el código abajo si quieres y ejecútalo en R de verdad (WebAssembly, en tu navegador).</p></div></div><div class="exercise" style="--accent:var(--green)"><div class="exercise-head"><div class="exercise-title"><span class="exercise-num">Preg. 31</span><h3>color dentro y fuera de aes()</h3></div><span class="ai-badge ai-none"><svg viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>Sin IA</span></div><p class="desc">En <code>geom_point(aes(color = punto))</code>, ¿qué significa <code>color</code> dentro de <code>aes()</code>? Contrasta con <code>geom_point(color = "red")</code>.</p><textarea class="answer" data-min="45" placeholder="Escribe tu respuesta antes de revelar..."></textarea><div class="answer-meta"><span class="char-count">0 / 45</span><button class="reveal-btn" disabled data-xp="10">Revelar respuesta y criterios</button></div><div class="feedback"><h4>Respuesta y criterios</h4><ul><li><code>aes(color = punto)</code> <b>asigna</b> el color según los valores de la variable <code>punto</code>: cada categoría recibe un color distinto y aparece una leyenda automáticamente.</li><li><code>geom_point(color = "red")</code>, fuera de <code>aes()</code>, <b>fija</b> un color constante para todos los puntos: no depende de ningún dato, no genera leyenda.</li><li>Regla general: dentro de <code>aes()</code> = "varía según los datos"; fuera de <code>aes()</code> = "valor fijo para todo el gráfico".</li></ul></div></div><div class="exercise" style="--accent:var(--violet)"><div class="exercise-head"><div class="exercise-title"><span class="exercise-num">Preg. 32</span><h3>Mapeo global contra local</h3></div><span class="ai-badge ai-ok"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>IA permitida</span></div><p class="desc">¿Cómo obtienes puntos coloreados por categoría y, al mismo tiempo, una única recta de tendencia negra (no una por categoría)? Explica la diferencia entre un mapeo global y uno local.</p><div class="code" style="margin:14px 0"><span class="c-fn">ggplot</span>(<span class="c-fn">datos</span>, <span class="c-fn">aes</span>(<span class="c-fn">x</span> <span class="c-op">=</span> <span class="c-fn">visitantes</span>, <span class="c-fn">y</span> <span class="c-op">=</span> <span class="c-fn">ingreso_usd</span>)) <span class="c-op">+</span>
+  <span class="c-fn">geom_point</span>(<span class="c-fn">aes</span>(<span class="c-fn">color</span> <span class="c-op">=</span> <span class="c-fn">punto</span>)) <span class="c-op">+</span>
+  <span class="c-fn">geom_smooth</span>(<span class="c-fn">method</span> <span class="c-op">=</span> <span class="c-str">"lm"</span>, <span class="c-fn">se</span> <span class="c-op">=</span> <span class="c-kw">FALSE</span>, <span class="c-fn">color</span> <span class="c-op">=</span> <span class="c-str">"black"</span>)</div><textarea class="answer" data-min="50" placeholder="Escribe tu respuesta antes de revelar..."></textarea><div class="answer-meta"><span class="char-count">0 / 50</span><button class="reveal-btn" disabled data-xp="15">Revelar respuesta y criterios</button></div><div class="feedback"><h4>Respuesta y criterios</h4><ul><li>Un mapeo puesto en <code>ggplot(aes(...))</code> es <b>global</b>: se hereda por todas las capas (todas las geoms lo "ven").</li><li>Un mapeo puesto directamente en una geom, como <code>geom_point(aes(color = punto))</code>, es <b>local</b>: solo afecta a esa capa.</li><li>Solución: definir <code>x</code> e <code>y</code> globalmente, poner <code>aes(color = punto)</code> <b>solo</b> en <code>geom_point()</code>, y usar <code>geom_smooth(method = "lm", se = FALSE, color = "black")</code> sin mapeo de color: esa capa no se agrupa por categoría y dibuja una sola recta general.</li></ul></div></div><div class="exercise" style="--accent:var(--teal)"><div class="exercise-head"><div class="exercise-title"><span class="exercise-num">Preg. 33</span><h3>Qué controla binwidth</h3></div><span class="ai-badge ai-none"><svg viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>Sin IA</span></div><p class="desc">Un histograma y un polígono de frecuencias usan <code>binwidth = 25</code>. ¿Qué significa exactamente ese número? ¿Por qué cambiarlo puede alterar la lectura, aunque los datos no cambien?</p><div class="code" style="margin:14px 0"><span class="c-fn">ggplot</span>(<span class="c-fn">df</span>, <span class="c-fn">aes</span>(<span class="c-fn">x</span> <span class="c-op">=</span> <span class="c-fn">ingreso_usd</span>)) <span class="c-op">+</span>
+  <span class="c-fn">geom_histogram</span>(<span class="c-fn">binwidth</span> <span class="c-op">=</span> <span class="c-num">25</span>)</div><textarea class="answer" data-min="50" placeholder="Escribe tu respuesta antes de revelar..."></textarea><div class="answer-meta"><span class="char-count">0 / 50</span><button class="reveal-btn" disabled data-xp="15">Revelar respuesta y criterios</button></div><div class="feedback"><h4>Respuesta y criterios</h4><ul><li><code>binwidth</code> fija el <b>ancho de cada intervalo</b> del eje x, en las mismas unidades que la variable (aquí, dólares).</li><li>Cambiar <code>binwidth</code> reagrupa las mismas observaciones en intervalos distintos: <b>altera la forma visual</b> (más o menos "ruido"), pero <b>no cambia ni un solo dato original</b>.</li><li>Un binwidth muy pequeño genera demasiadas barras diminutas (ruido); uno muy grande oculta la forma real de la distribución. Por eso el curso pide probar varios anchos antes de interpretar.</li></ul><div class="r-cell"><textarea class="r-editor" spellcheck="false">valores &lt;- c(120,132,108,150,126,156,154,168,161,175,161,189,
+             126,133,119,140,133,154,126,140,119,147,133,154)
+df33 &lt;- data.frame(ingreso = valores)
+ggplot(df33, aes(x = ingreso)) +
+  geom_histogram(binwidth = 25)
+
+# prueba tu mismo: cambia el binwidth de 25 a 50 y ejecuta de nuevo</textarea><div class="r-cell-actions"><button class="run-btn" data-needs-pkg="1" data-xp="5"><svg viewBox="0 0 24 24" fill="none"><path d="M6 4l14 8-14 8V4z" fill="currentColor"/></svg> Ejecutar en R</button><span class="r-cell-hint">Necesita ggplot2. Prueba a cambiar binwidth = 25 por 50 y vuelve a ejecutar.</span></div><div class="r-console" aria-live="polite"></div></div><p style="margin-top:14px;font-size:.85rem;color:var(--ts)">Puedes comprobarlo tu mismo/a: edita el código abajo si quieres y ejecútalo en R de verdad (WebAssembly, en tu navegador).</p></div></div><div class="exercise" style="--accent:var(--amber)"><div class="exercise-head"><div class="exercise-title"><span class="exercise-num">Preg. 34</span><h3>Un polígono de frecuencias no es una serie de tiempo</h3></div><span class="ai-badge ai-ok"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>IA permitida</span></div><p class="desc">El eje horizontal de un polígono de frecuencias es <code>ingreso</code>. ¿Por qué unir los puntos con una línea NO convierte el gráfico en una serie de tiempo?</p><textarea class="answer" data-min="40" placeholder="Escribe tu respuesta antes de revelar..."></textarea><div class="answer-meta"><span class="char-count">0 / 40</span><button class="reveal-btn" disabled data-xp="10">Revelar respuesta y criterios</button></div><div class="feedback"><h4>Respuesta y criterios</h4><ul><li>En un polígono de frecuencias, el eje x son <b>intervalos de la variable</b> (montos de ingreso), no momentos en el tiempo.</li><li>La línea conecta las <b>frecuencias de intervalos adyacentes</b> de una misma variable, no una evolución cronológica de un valor.</li><li>Una serie de tiempo real necesita una variable de <b>tiempo</b> explícita en el eje x (fecha, día, mes): aquí no la hay.</li></ul></div></div><div class="exercise" style="--accent:var(--blue)"><div class="exercise-head"><div class="exercise-title"><span class="exercise-num">Preg. 35</span><h3>Igual conteo no es igual valor</h3></div><span class="ai-badge ai-ok"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>IA permitida</span></div><p class="desc">Un gráfico de barras muestra que cuatro puntos de venta tienen exactamente el mismo número de jornadas registradas. ¿Se puede concluir que los cuatro tuvieron el mismo ingreso o la misma tasa de compras? Justifica.</p><textarea class="answer" data-min="40" placeholder="Escribe tu respuesta antes de revelar..."></textarea><div class="answer-meta"><span class="char-count">0 / 40</span><button class="reveal-btn" disabled data-xp="10">Revelar respuesta y criterios</button></div><div class="feedback"><h4>Respuesta y criterios</h4><ul><li><b>No.</b> Un gráfico de barras de conteo solo dice "cuántas jornadas se registraron por punto", no dice nada sobre los <b>valores</b> de esas jornadas.</li><li>Cuatro puntos con el mismo número de jornadas pueden tener ingresos, visitantes o tasas de conversión completamente distintos.</li><li>Confundir "igual cantidad de registros" con "igual desempeño" es un error de interpretación común: hay que mirar la variable correcta, no solo el conteo.</li></ul></div></div><div class="exercise" style="--accent:var(--coral)"><div class="exercise-head"><div class="exercise-title"><span class="exercise-num">Preg. 36</span><h3>Asociación no es toda la historia</h3></div><span class="ai-badge ai-ok"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>IA permitida</span></div><p class="desc">Un gráfico de dispersión entre visitantes e ingresos muestra una relación positiva. ¿Qué información <b>adicional</b> necesitarías antes de recomendar dónde invertir para mejorar la conversión?</p><textarea class="answer" data-min="50" placeholder="Escribe tu respuesta antes de revelar..."></textarea><div class="answer-meta"><span class="char-count">0 / 50</span><button class="reveal-btn" disabled data-xp="15">Revelar respuesta y criterios</button></div><div class="feedback"><h4>Respuesta y criterios</h4><ul><li>La relación visitantes-ingreso <b>no mide conversión</b>: hacen falta <code>compras</code> y <code>visitantes</code> por separado para calcular <code>compras/visitantes</code> con un denominador explícito.</li><li>También conviene conocer el <b>período</b> cubierto, los <b>costos</b> asociados a cada punto, y la <b>composición</b> de esas visitas (¿son comparables entre puntos?).</li><li>Una asociación positiva en un gráfico es un punto de partida para investigar, no una recomendación lista para ejecutar.</li></ul></div></div></div></section>
+  <div class="verify-box fade-in">
+    <h4>&iquest;Como sabemos que este resultado es correcto?</h4>
+    <p>En esta guía, la verificación tomó formas muy distintas según la pregunta: contrastar un cálculo con uno hecho a mano (Preg. 07, 09, 11), leer un mensaje de error completo en vez de adivinar (Preg. 12), probar una afirmación universal con <code>all()</code> en vez de mirar unos pocos casos (Preg. 18, 19), o comparar una tasa global contra un promedio de tasas (Preg. 20). El Control 01 no evalúa solo si "sabes la función correcta": evalúa si puedes justificar por qué confías en un resultado.</p>
+  </div>
+</div>
+
+</section>
+
+<section id="panel-practica" class="tab-panel" role="tabpanel" aria-labelledby="tab-practica">
+
+<div class="hero" style="padding-top:clamp(36px,5vw,56px)">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container hero-inner">
+    <div class="chips">
+      <span class="chip c-coral"><b>Control 01</b></span>
+      <span class="chip c-green">R real en tu navegador &middot; webR (WebAssembly)</span>
+      <span class="chip">Excepción online-only, documentada</span>
+    </div>
+    <h1 style="font-size:clamp(1.8rem,3.6vw,2.6rem)">Práctica con R en vivo</h1>
+    <p class="lede">Los seis ejercicios de esta pestaña usan el mismo caso de la guía de repaso: seis jornadas en cada uno de cuatro puntos de venta de un campus (datos ficticios). El código se ejecuta con <b>R real</b>, compilado a WebAssembly (webR), directamente en tu navegador -- nadie más ve tu sesión y no se sube nada a ningún servidor.</p>
+  </div>
+</div>
+
+<div class="container" style="padding-top:8px">
+
+  <div class="webr-status" id="webrInfoBanner">
+    <span class="dotpulse"></span>
+    <span class="wtxt"><b>A diferencia del resto del material del curso</b>, esta pestaña necesita internet la primera vez que ejecutes un bloque de código: descarga el motor de R (WebAssembly) y, si el ejercicio lo requiere, los paquetes <code>readr</code> y <code>ggplot2</code>. Puede tardar entre 10 segundos y un par de minutos según tu conexión. Una vez cargado, se queda listo para el resto de esta pestaña y para el Simulacro.</span>
+    <span class="tier-tag">R base: rápido &middot; readr + ggplot2: más lento</span>
+  </div>
+
+  <div class="pg-dataset fade-in">
+    <h3>Vista previa -- datos_practica_guia.csv (ya cargado, 24 filas &times; 6 columnas)</h3>
+    <div class="data-scroll"><table class="dataset"><thead><tr><th>dia</th><th>punto</th><th>visitantes</th><th>compras</th><th>ingreso_usd</th><th>costo_usd</th></tr></thead><tbody><tr><td>1</td><td>Biblioteca</td><td>80</td><td>20</td><td>120</td><td>72</td></tr><tr><td>2</td><td>Biblioteca</td><td>84</td><td>22</td><td>132</td><td>78</td></tr><tr><td>3</td><td>Biblioteca</td><td>75</td><td>18</td><td>108</td><td>70</td></tr><tr><td>4</td><td>Biblioteca</td><td>88</td><td>25</td><td>150</td><td>92</td></tr><tr><td>5</td><td>Biblioteca</td><td>82</td><td>21</td><td>126</td><td>77</td></tr><tr><td>6</td><td>Biblioteca</td><td>91</td><td>26</td><td>156</td><td>98</td></tr><tr><td>1</td><td>Edificio A</td><td>55</td><td>22</td><td>154</td><td>85</td></tr><tr><td>2</td><td>Edificio A</td><td>60</td><td>24</td><td>168</td><td>92</td></tr></tbody></table></div>
+    <p style="margin:12px 0 0;color:var(--ts);font-size:.82rem">Se muestran las primeras 8 de 24 filas. En tu propio RStudio, este mismo archivo va dentro de una carpeta <code>datos/</code> dentro de tu proyecto; aquí en el navegador ya está disponible directamente como <code>"datos_practica_guia.csv"</code>.</p>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-label"><span>Progreso de la práctica</span><span id="progressPctPractica">0%</span></div>
+    <div class="progress-track"><div class="progress-fill" id="progressFillPractica"></div></div>
+  </div>
+
+<div class="exercise" style="--accent:var(--blue)"><div class="exercise-head"><div class="exercise-title"><span class="exercise-num">Ej. 01</span><h3>Importar y auditar antes de confiar</h3></div><span class="ai-badge ai-ok"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>IA permitida</span></div><p class="desc">El archivo describe seis jornadas en cada uno de cuatro puntos de venta de un campus (<code>datos_practica_guia.csv</code>, ya cargado abajo). <b>Antes</b> de correr nada, escribe qué dimensiones (filas × columnas) y qué tipos de columna esperas. Luego ejecuta el código y contrasta tu predicción contra <code>dim()</code>, <code>names()</code>, <code>head()</code> y <code>str()</code>. Interpreta una fila completa.</p><textarea class="answer" data-min="70" placeholder="Escribe tu respuesta antes de revelar..."></textarea><div class="answer-meta"><span class="char-count">0 / 70</span><button class="reveal-btn" disabled data-xp="20">Revelar respuesta y criterios</button></div><div class="feedback"><h4>Respuesta y criterios</h4><ul><li><b>Predicción esperada:</b> 24 filas (4 puntos × 6 jornadas) y 6 columnas.</li><li><code>names()</code>: <code>dia, punto, visitantes, compras, ingreso_usd, costo_usd</code>. Todas numéricas excepto <code>punto</code>, que es texto.</li><li><b>Primera fila:</b> día 1, Biblioteca, 80 visitantes, 20 compras, USD 120 de ingreso y USD 72 de costo.</li><li>Si el archivo apareciera con una sola columna, el diagnóstico sería un delimitador mal reconocido, no "el CSV está mal" en general (Pregunta 26 de la Guía teórica).</li></ul><div class="r-cell"><textarea class="r-editor" spellcheck="false">library(readr)
+actividad &lt;- read_csv("datos_practica_guia.csv")
+
+dim(actividad)
+names(actividad)
+head(actividad)
+str(actividad)</textarea><div class="r-cell-actions"><button class="run-btn" data-needs-pkg="1" data-xp="5"><svg viewBox="0 0 24 24" fill="none"><path d="M6 4l14 8-14 8V4z" fill="currentColor"/></svg> Ejecutar en R</button><span class="r-cell-hint">Necesita readr. La primera vez instala el paquete: puede tardar.</span></div><div class="r-console" aria-live="polite"></div></div></div></div><div class="exercise" style="--accent:var(--coral)"><div class="exercise-head"><div class="exercise-title"><span class="exercise-num">Ej. 02</span><h3>Auditar la consistencia</h3></div><span class="ai-badge ai-ok"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>IA permitida</span></div><p class="desc">Comprueba con código -- no a simple vista -- que hay exactamente <b>seis jornadas por cada punto</b>, y que <b>ninguna jornada tiene más compras que visitantes</b> (lo cual sería imposible). Escribe qué aportan <code>any()</code> y <code>all()</code> en esta comprobación.</p><div class="r-cell"><textarea class="r-editor" spellcheck="false">sum(actividad$punto == "Biblioteca")
+sum(actividad$punto == "Edificio A")
+sum(actividad$punto == "Polideportivo")
+sum(actividad$punto == "Residencias")
+
+all(actividad$compras &lt;= actividad$visitantes)
+any(actividad$compras &gt; actividad$visitantes)</textarea><div class="r-cell-actions"><button class="run-btn" data-needs-pkg="1" data-xp="5"><svg viewBox="0 0 24 24" fill="none"><path d="M6 4l14 8-14 8V4z" fill="currentColor"/></svg> Ejecutar en R</button><span class="r-cell-hint">Usa el objeto "actividad" del Ej. 01: ejecuta ese primero en esta misma sesión de la pestaña.</span></div><div class="r-console" aria-live="polite"></div></div><textarea class="answer" data-min="60" placeholder="Escribe tu respuesta antes de revelar..."></textarea><div class="answer-meta"><span class="char-count">0 / 60</span><button class="reveal-btn" disabled data-xp="20">Revelar respuesta y criterios</button></div><div class="feedback"><h4>Respuesta y criterios</h4><ul><li>Contar por punto con <code>sum(actividad$punto == "Biblioteca")</code> (y análogo para los otros tres): cada uno debe dar <b>6</b>.</li><li><code>all(actividad$compras &lt;= actividad$visitantes)</code> pregunta "¿se cumple <b>siempre</b>?" → debería dar <b>TRUE</b>.</li><li><code>any(actividad$compras &gt; actividad$visitantes)</code> pregunta "¿existe <b>algún</b> caso imposible?" → debería dar <b>FALSE</b>.</li><li>Esta es exactamente la pregunta de cierre del curso aplicada: "¿cómo sabemos que este resultado es correcto?" -- comprobar antes de seguir, no asumir.</li></ul></div></div><div class="exercise" style="--accent:var(--green)"><div class="exercise-head"><div class="exercise-title"><span class="exercise-num">Ej. 03</span><h3>Tres criterios que compiten</h3></div><span class="ai-badge ai-ok"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>IA permitida</span></div><p class="desc">Para <b>Biblioteca</b>, calcula el total de visitantes, compras, ingreso y costo; luego la <b>conversión global</b> (compras/visitantes × 100) y el <b>excedente observado</b> (ingreso − costo). Después edita el código para repetir el cálculo con los otros tres puntos (cambia el nombre en <code>== "..."</code>). ¿Cuál punto tiene más visitantes sin compra? ¿Cuál deja más excedente? ¿Coinciden?</p><div class="r-cell"><textarea class="r-editor" spellcheck="false">b &lt;- actividad$punto == "Biblioteca"
+sum(actividad$visitantes[b])
+sum(actividad$compras[b])
+sum(actividad$ingreso_usd[b])
+sum(actividad$costo_usd[b])
+100 * sum(actividad$compras[b]) / sum(actividad$visitantes[b])
+sum(actividad$ingreso_usd[b]) - sum(actividad$costo_usd[b])
+
+# ahora repite cambiando "Biblioteca" por "Edificio A", "Polideportivo" y "Residencias"</textarea><div class="r-cell-actions"><button class="run-btn" data-needs-pkg="1" data-xp="5"><svg viewBox="0 0 24 24" fill="none"><path d="M6 4l14 8-14 8V4z" fill="currentColor"/></svg> Ejecutar en R</button><span class="r-cell-hint">Edita "Biblioteca" por cada uno de los otros tres puntos y ejecuta de nuevo.</span></div><div class="r-console" aria-live="polite"></div></div><textarea class="answer" data-min="80" placeholder="Escribe tu respuesta antes de revelar..."></textarea><div class="answer-meta"><span class="char-count">0 / 80</span><button class="reveal-btn" disabled data-xp="25">Revelar respuesta y criterios</button></div><div class="feedback"><h4>Respuesta y criterios</h4><ul><li>Biblioteca: 500 visitantes, 132 compras, USD 792 de ingreso, USD 487 de costo → <b>26.4%</b> de conversión, <b>USD 305</b> de excedente.</li><li>Repitiendo para los otros tres puntos: Polideportivo tiene la <b>mayor cantidad absoluta</b> de visitantes sin compra (523), mientras que Edificio A deja el <b>mayor excedente</b> (USD 445).</li><li>Los dos criterios <b>no coinciden</b>: la decisión depende de qué se priorice (alcance de la mejora vs. rentabilidad ya observada), y de datos que estos seis días no dan (costo de una intervención, comparabilidad de los visitantes).</li><li>No confundir el <b>promedio simple</b> de las tasas diarias con la <b>tasa global</b> (ver Pregunta 20 de la Guía teórica): aquí se pide la global.</li></ul></div></div><div class="exercise" style="--accent:var(--violet)"><div class="exercise-head"><div class="exercise-title"><span class="exercise-num">Ej. 04</span><h3>Investigar una afirmación precisa</h3></div><span class="ai-badge ai-ok"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>IA permitida</span></div><p class="desc">Alguien afirma: <i>&ldquo;Siempre que Polideportivo recibe más de 105 visitantes, realiza al menos 20 compras&rdquo;</i>. Selecciona solo las jornadas relevantes de Polideportivo, predice qué esperas ver, y comprueba si la afirmación universal es cierta. Si es falsa, identifica el día y los valores exactos que la refutan.</p><div class="r-cell"><textarea class="r-editor" spellcheck="false">p &lt;- actividad$punto == "Polideportivo" &amp; actividad$visitantes &gt; 105
+actividad$dia[p]
+actividad$compras[p]
+all(actividad$compras[p] &gt;= 20)</textarea><div class="r-cell-actions"><button class="run-btn" data-needs-pkg="1" data-xp="5"><svg viewBox="0 0 24 24" fill="none"><path d="M6 4l14 8-14 8V4z" fill="currentColor"/></svg> Ejecutar en R</button><span class="r-cell-hint">Usa el objeto "actividad" cargado en el Ej. 01.</span></div><div class="r-console" aria-live="polite"></div></div><textarea class="answer" data-min="70" placeholder="Escribe tu respuesta antes de revelar..."></textarea><div class="answer-meta"><span class="char-count">0 / 70</span><button class="reveal-btn" disabled data-xp="20">Revelar respuesta y criterios</button></div><div class="feedback"><h4>Respuesta y criterios</h4><ul><li>Filtrando <code>punto == "Polideportivo" &amp; visitantes &gt; 105</code> se obtienen los días 4, 5 y 6, con compras 20, 19 y 22.</li><li><code>all(compras &gt;= 20)</code> da <b>FALSE</b>: el día 5 tiene 108 visitantes pero solo <b>19</b> compras, lo que <b>refuta</b> la afirmación universal.</li><li>Una sola excepción es suficiente para tumbar un "siempre": por eso <code>all()</code> es la herramienta correcta para poner a prueba afirmaciones absolutas, no mirar el promedio.</li></ul></div></div><div class="exercise" style="--accent:var(--teal)"><div class="exercise-head"><div class="exercise-title"><span class="exercise-num">Ej. 05</span><h3>Graficar y comunicar</h3></div><span class="ai-badge ai-ok"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>IA permitida</span></div><p class="desc">Construye tres visualizaciones distintas del mismo conjunto de datos, una por celda. Cada una usa una geom distinta de las que viste en el Bloque 5 de la Guía teórica. Edita libremente <code>binwidth</code> o los colores para explorar.</p><p class="r-cell-label" style="margin-top:18px">a) Jornadas por punto -- geom_bar()</p><div class="r-cell"><textarea class="r-editor" spellcheck="false">ggplot(actividad, aes(x = punto)) +
+  geom_bar() +
+  labs(title = "Jornadas por punto", x = "Punto", y = "Jornadas")</textarea><div class="r-cell-actions"><button class="run-btn" data-needs-pkg="1" data-xp="5"><svg viewBox="0 0 24 24" fill="none"><path d="M6 4l14 8-14 8V4z" fill="currentColor"/></svg> Ejecutar en R</button><span class="r-cell-hint">Necesita ggplot2.</span></div><div class="r-console" aria-live="polite"></div></div><p class="r-cell-label" style="margin-top:18px">b) Visitantes e ingreso, coloreado por punto, con una sola tendencia -- geom_point() + geom_smooth()</p><div class="r-cell"><textarea class="r-editor" spellcheck="false">ggplot(actividad, aes(x = visitantes, y = ingreso_usd)) +
+  geom_point(aes(color = punto)) +
+  geom_smooth(method = "lm", se = FALSE, color = "black") +
+  labs(title = "Visitantes e ingreso diario", x = "Visitantes",
+       y = "Ingreso diario (USD)", color = "Punto")</textarea><div class="r-cell-actions"><button class="run-btn" data-needs-pkg="1" data-xp="5"><svg viewBox="0 0 24 24" fill="none"><path d="M6 4l14 8-14 8V4z" fill="currentColor"/></svg> Ejecutar en R</button><span class="r-cell-hint">El color va SOLO en geom_point(): así la recta no se divide por punto.</span></div><div class="r-console" aria-live="polite"></div></div><p class="r-cell-label" style="margin-top:18px">c) Distribución del ingreso diario -- geom_histogram()</p><div class="r-cell"><textarea class="r-editor" spellcheck="false">ggplot(actividad, aes(x = ingreso_usd)) +
+  geom_histogram(binwidth = 25)
+
+# prueba tambien geom_freqpoly(binwidth = 25) y binwidth = 50</textarea><div class="r-cell-actions"><button class="run-btn" data-needs-pkg="1" data-xp="5"><svg viewBox="0 0 24 24" fill="none"><path d="M6 4l14 8-14 8V4z" fill="currentColor"/></svg> Ejecutar en R</button><span class="r-cell-hint">Prueba a cambiar geom_histogram por geom_freqpoly, o el binwidth.</span></div><div class="r-console" aria-live="polite"></div></div><button class="reveal-btn" data-xp="20" data-done-label="Criterios revelados">Revelar criterios de interpretación</button><div class="feedback"><h4>Criterios de interpretación</h4><ul><li>El color por punto va <b>dentro</b> de <code>geom_point(aes(color = punto))</code>, no en <code>ggplot(aes(...))</code>: así la recta de <code>geom_smooth()</code> no se divide en cuatro.</li><li>Cambiar <code>binwidth</code> de 25 a 50 reagrupa las mismas 24 observaciones en menos barras, más anchas: la <b>altura</b> representa cuántas jornadas caen en el intervalo, nunca una suma de dinero.</li><li>Ninguno de estos tres gráficos calcula la conversión (compras/visitantes): eso requiere las dos columnas juntas con una división explícita, como en el Ej. 03.</li></ul></div></div><div class="exercise" style="--accent:var(--amber)"><div class="exercise-head"><div class="exercise-title"><span class="exercise-num">Ej. 06 · Memo</span><h3>Comunicar la decisión</h3></div><span class="ai-badge ai-ok"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>IA permitida</span></div><p class="desc">Redacta un memo de <b>100 a 140 palabras</b> para la administración del campus, a partir de lo que calculaste en los ejercicios anteriores. Debe citar al menos <b>dos cifras verificadas</b>, recomendar una prioridad según un criterio explícito, y distinguir lo que los registros permiten observar de lo que todavía no permiten atribuir a una causa.</p><textarea class="answer" data-min="100" placeholder="Escribe tu respuesta antes de revelar..."></textarea><div class="answer-meta"><span class="char-count">0 / 100</span><button class="reveal-btn" disabled data-xp="25">Revelar respuesta y criterios</button></div><div class="feedback"><h4>Respuesta y criterios</h4><ul><li><b>Cifras citadas:</b> por ejemplo, "Polideportivo registró 638 visitantes y solo 115 compras (18.03% de conversión), la más baja de los cuatro puntos".</li><li><b>Prioridad con criterio explícito:</b> declarar si se prioriza "mayor cantidad de visitantes sin compra" (Polideportivo) o "mayor excedente ya observado" (Edificio A) -- y decir por qué.</li><li><b>Límite honesto:</b> mencionar que son solo seis días de registros, y que faltan datos de costo de intervención, horarios o características de los visitantes antes de gastar dinero con confianza.</li><li>Esto conecta directamente con la Pregunta 05 de la Guía teórica: asociación no es lo mismo que causa, y un memo defendible lo reconoce explícitamente.</li></ul></div></div>
+
+  <div class="verify-box fade-in">
+    <h4>&iquest;Como sabemos que este resultado es correcto?</h4>
+    <p>En esta práctica lo aplicaste con datos reales: contando jornadas por punto antes de calcular nada (Ej. 02), separando "promedio simple de tasas" de "tasa global" (Ej. 03, igual que la Pregunta 20 de la Guía teórica), y refutando una afirmación universal con un solo contraejemplo real en vez de conformarte con "parece cierto" (Ej. 04). El memo final (Ej. 06) es la prueba definitiva: si no puedes citar una cifra verificada, no está listo para comunicarse.</p>
+  </div>
+
+</div>
+
+</section>
+
+<section id="panel-simulacro" class="tab-panel" role="tabpanel" aria-labelledby="tab-simulacro">
+
+<div class="hero" style="padding-top:clamp(36px,5vw,56px)">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container hero-inner">
+    <div class="chips">
+      <span class="chip c-coral"><b>Control 01</b></span>
+      <span class="chip">45 minutos &middot; 8 preguntas &middot; 6 teoría + 2 práctica con R</span>
+    </div>
+    <h1 style="font-size:clamp(1.8rem,3.6vw,2.6rem)">Simulacro cronometrado</h1>
+    <p class="lede">Condiciones parecidas a las del control real: <b>Sin IA</b> (nada de asistentes generativos), 45 minutos, y sin ver la respuesta ni los criterios de ningún item hasta que termines. Ejecutar R <b>sí está permitido</b> durante el simulacro -- no es IA, es la herramienta que estas evaluando que sepas usar. Los números de estas preguntas son distintos a los de la Guía teórica: están pensados para que transfieras el razonamiento, no para que repitas una respuesta memorizada.</p>
+  </div>
+</div>
+
+<div class="timer-bar">
+  <span class="timer-clock" id="simClock">45:00</span>
+  <span class="timer-state" id="simState">Sin iniciar</span>
+  <div class="timer-actions">
+    <button class="webr-btn" id="simStartBtn"><svg viewBox="0 0 24 24" fill="none"><path d="M6 4l14 8-14 8V4z" fill="currentColor"/></svg> Iniciar simulacro</button>
+    <button class="webr-btn ghost" id="simFinishBtn" style="display:none">Finalizar y revisar</button>
+  </div>
+</div>
+
+<div class="container" style="padding-top:8px">
+
+  <div class="progress-wrap">
+    <div class="progress-label"><span>Progreso del simulacro</span><span id="progressPctSim">0 / 8 con respuesta</span></div>
+    <div class="progress-track"><div class="progress-fill" id="progressFillSim"></div></div>
+  </div>
+
+  <div class="score-summary" id="simScore"></div>
+
+<div class="exercise" style="--accent:var(--blue)"><div class="exercise-head"><div class="exercise-title"><span class="exercise-num">S1</span><h3>R contra el instrumento que lo toca</h3></div><span class="ai-badge ai-none"><svg viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>Sin IA</span></div><p class="desc">Explica, con tus propias palabras, la diferencia entre R y RStudio usando la analogía de un instrumento musical y quien lo toca. ¿Cuál de los dos "sabe" ejecutar tus instrucciones?</p><textarea class="answer" data-min="40" placeholder="Escribe tu respuesta antes de revelar..."></textarea><div class="answer-meta"><span class="char-count">0 / 40</span><button class="reveal-btn locked" disabled data-xp="10">Revelar respuesta y criterios</button></div><div class="locked-note" style="display:none"><svg viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="9" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 11V7a4 4 0 018 0v4" stroke="currentColor" stroke-width="2"/></svg><span>Disponible al finalizar el simulacro (revision abierta).</span></div><div class="feedback"><h4>Respuesta y criterios</h4><ul><li>R es el <b>instrumento</b> (el lenguaje/motor que interpreta y ejecuta); RStudio es <b>quien lo toca</b> (el entorno que facilita escribir, ver y organizar).</li><li>El componente que realmente "sabe" ejecutar instrucciones es <b>R</b>: RStudio por sí solo, sin R instalado, no puede correr una sola línea.</li></ul></div></div><div class="exercise" style="--accent:var(--coral)"><div class="exercise-head"><div class="exercise-title"><span class="exercise-num">S2</span><h3>Reasignar sin recalcular</h3></div><span class="ai-badge ai-none"><svg viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>Sin IA</span></div><p class="desc">Sin ejecutar nada todavia: interpreta el código y anticipa el valor de la última línea, tanto la primera vez como después de reasignar <code>capital</code>.</p><div class="code" style="margin:14px 0"><span class="c-fn">capital</span> <span class="c-op">&lt;-</span> <span class="c-num">5000</span>
+<span class="c-fn">interes</span> <span class="c-op">&lt;-</span> <span class="c-fn">capital</span> <span class="c-op">*</span> <span class="c-num">0.06</span>
+<span class="c-fn">capital</span> <span class="c-op">-</span> <span class="c-fn">interes</span>
+<span class="c-fn">capital</span> <span class="c-op">&lt;-</span> <span class="c-num">8000</span>
+<span class="c-fn">capital</span> <span class="c-op">-</span> <span class="c-fn">interes</span></div><div class="r-cell"><textarea class="r-editor" spellcheck="false">capital &lt;- 5000
+interes &lt;- capital * 0.06
+capital - interes
+capital &lt;- 8000
+capital - interes</textarea><div class="r-cell-actions"><button class="run-btn" data-needs-pkg="0" data-xp="5"><svg viewBox="0 0 24 24" fill="none"><path d="M6 4l14 8-14 8V4z" fill="currentColor"/></svg> Ejecutar en R</button><span class="r-cell-hint">Puedes editar el código antes de ejecutarlo.</span></div><div class="r-console" aria-live="polite"></div></div><textarea class="answer" data-min="45" placeholder="Escribe tu respuesta antes de revelar..."></textarea><div class="answer-meta"><span class="char-count">0 / 45</span><button class="reveal-btn locked" disabled data-xp="15">Revelar respuesta y criterios</button></div><div class="locked-note" style="display:none"><svg viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="9" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 11V7a4 4 0 018 0v4" stroke="currentColor" stroke-width="2"/></svg><span>Disponible al finalizar el simulacro (revision abierta).</span></div><div class="feedback"><h4>Respuesta y criterios</h4><ul><li><code>interes = 5000 * 0.06 = 300</code>. La primera resta: <code>capital - interes = 5000 - 300 = 4700</code>.</li><li>Al reasignar <code>capital &lt;- 8000</code> sin recalcular <code>interes</code>, este sigue en 300 (calculado con el capital viejo): la segunda resta da <code>8000 - 300 = 7700</code>, no 7520.</li></ul></div></div><div class="exercise" style="--accent:var(--green)"><div class="exercise-head"><div class="exercise-title"><span class="exercise-num">S3</span><h3>Filtrar e indexar ventas</h3></div><span class="ai-badge ai-none"><svg viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>Sin IA</span></div><p class="desc">Con <code>ventas &lt;- c(1800, 2100, 1950, 2400)</code>: predice <code>ventas[ventas &gt; 2000]</code>, <code>ventas[-1]</code> y <code>sum(ventas &gt; 2000)</code>.</p><div class="code" style="margin:14px 0"><span class="c-fn">ventas</span> <span class="c-op">&lt;-</span> <span class="c-fn">c</span>(<span class="c-num">1800</span>, <span class="c-num">2100</span>, <span class="c-num">1950</span>, <span class="c-num">2400</span>)
+<span class="c-fn">ventas</span>[<span class="c-fn">ventas</span> <span class="c-op">&gt;</span> <span class="c-num">2000</span>]
+<span class="c-fn">ventas</span>[<span class="c-op">-</span><span class="c-num">1</span>]
+<span class="c-fn">sum</span>(<span class="c-fn">ventas</span> <span class="c-op">&gt;</span> <span class="c-num">2000</span>)</div><div class="r-cell"><textarea class="r-editor" spellcheck="false">ventas &lt;- c(1800, 2100, 1950, 2400)
+ventas[ventas &gt; 2000]
+ventas[-1]
+sum(ventas &gt; 2000)</textarea><div class="r-cell-actions"><button class="run-btn" data-needs-pkg="0" data-xp="5"><svg viewBox="0 0 24 24" fill="none"><path d="M6 4l14 8-14 8V4z" fill="currentColor"/></svg> Ejecutar en R</button><span class="r-cell-hint">Puedes editar el código antes de ejecutarlo.</span></div><div class="r-console" aria-live="polite"></div></div><textarea class="answer" data-min="45" placeholder="Escribe tu respuesta antes de revelar..."></textarea><div class="answer-meta"><span class="char-count">0 / 45</span><button class="reveal-btn locked" disabled data-xp="15">Revelar respuesta y criterios</button></div><div class="locked-note" style="display:none"><svg viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="9" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 11V7a4 4 0 018 0v4" stroke="currentColor" stroke-width="2"/></svg><span>Disponible al finalizar el simulacro (revision abierta).</span></div><div class="feedback"><h4>Respuesta y criterios</h4><ul><li><code>ventas[ventas &gt; 2000]</code>: solo los valores mayores a 2000 → <code>2100, 2400</code> (1950 queda fuera).</li><li><code>ventas[-1]</code>: todo excepto la primera posición → <code>2100, 1950, 2400</code>.</li><li><code>sum(ventas &gt; 2000)</code>: cuenta cuántos <code>TRUE</code> hay → <b>2</b>.</li></ul></div></div><div class="exercise" style="--accent:var(--violet)"><div class="exercise-head"><div class="exercise-title"><span class="exercise-num">S4</span><h3>Auditar un data frame nuevo</h3></div><span class="ai-badge ai-none"><svg viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>Sin IA</span></div><p class="desc">Construye mentalmente qué mostrarían <code>str()</code> y <code>dim()</code> para este data frame de tres sucursales. Luego ejecútalo para comprobar.</p><div class="code" style="margin:14px 0"><span class="c-fn">reporte</span> <span class="c-op">&lt;-</span> <span class="c-fn">data.frame</span>(
+  <span class="c-fn">sucursal</span> <span class="c-op">=</span> <span class="c-fn">c</span>(<span class="c-str">"Centro"</span>, <span class="c-str">"Norte"</span>, <span class="c-str">"Sur"</span>),
+  <span class="c-fn">ingresos</span> <span class="c-op">=</span> <span class="c-fn">c</span>(<span class="c-num">4200</span>, <span class="c-num">3100</span>, <span class="c-num">5600</span>)
+)
+<span class="c-fn">str</span>(<span class="c-fn">reporte</span>)
+<span class="c-fn">dim</span>(<span class="c-fn">reporte</span>)</div><div class="r-cell"><textarea class="r-editor" spellcheck="false">reporte &lt;- data.frame(
+  sucursal = c("Centro", "Norte", "Sur"),
+  ingresos = c(4200, 3100, 5600)
+)
+str(reporte)
+dim(reporte)</textarea><div class="r-cell-actions"><button class="run-btn" data-needs-pkg="0" data-xp="5"><svg viewBox="0 0 24 24" fill="none"><path d="M6 4l14 8-14 8V4z" fill="currentColor"/></svg> Ejecutar en R</button><span class="r-cell-hint">Puedes editar el código antes de ejecutarlo.</span></div><div class="r-console" aria-live="polite"></div></div><textarea class="answer" data-min="40" placeholder="Escribe tu respuesta antes de revelar..."></textarea><div class="answer-meta"><span class="char-count">0 / 40</span><button class="reveal-btn locked" disabled data-xp="15">Revelar respuesta y criterios</button></div><div class="locked-note" style="display:none"><svg viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="9" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 11V7a4 4 0 018 0v4" stroke="currentColor" stroke-width="2"/></svg><span>Disponible al finalizar el simulacro (revision abierta).</span></div><div class="feedback"><h4>Respuesta y criterios</h4><ul><li><code>dim(reporte)</code> → <code>3 2</code>: 3 filas (sucursales), 2 columnas (sucursal, ingresos).</li><li><code>str(reporte)</code> muestra <code>sucursal</code> como <code>chr</code> (texto) e <code>ingresos</code> como <code>num</code> (numérica): tipos distintos conservados en columnas separadas, a diferencia de una matriz.</li></ul></div></div><div class="exercise" style="--accent:var(--teal)"><div class="exercise-head"><div class="exercise-title"><span class="exercise-num">S5</span><h3>Elegir un binwidth razonable</h3></div><span class="ai-badge ai-none"><svg viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>Sin IA</span></div><p class="desc">Un histograma de ingreso diario con <code>binwidth = 10</code> se ve muy irregular ("con ruido"); con <code>binwidth = 200</code> se ve una sola barra enorme. ¿Qué está pasando en cada extremo, y cómo elegirías un punto intermedio razonable?</p><textarea class="answer" data-min="50" placeholder="Escribe tu respuesta antes de revelar..."></textarea><div class="answer-meta"><span class="char-count">0 / 50</span><button class="reveal-btn locked" disabled data-xp="15">Revelar respuesta y criterios</button></div><div class="locked-note" style="display:none"><svg viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="9" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 11V7a4 4 0 018 0v4" stroke="currentColor" stroke-width="2"/></svg><span>Disponible al finalizar el simulacro (revision abierta).</span></div><div class="feedback"><h4>Respuesta y criterios</h4><ul><li>Con <code>binwidth</code> muy pequeño, cada intervalo casi no contiene observaciones: el gráfico muestra variación aleatoria (ruido) en vez de un patrón real.</li><li>Con <code>binwidth</code> muy grande, casi todas las observaciones caen en un único intervalo: se pierde toda la forma de la distribución.</li><li>Un punto intermedio razonable se elige <b>probando varios anchos</b> y quedándose con el que revela una forma clara (por ejemplo, dónde se concentran los valores) sin ser ni ruidoso ni plano -- no hay una fórmula única, es exploración guiada por la pregunta.</li></ul></div></div><div class="exercise" style="--accent:var(--amber)"><div class="exercise-head"><div class="exercise-title"><span class="exercise-num">S6</span><h3>Verificar una regla con &gt;= y all()</h3></div><span class="ai-badge ai-ok"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>IA permitida</span></div><p class="desc">Un conjunto de jornadas tiene una <code>meta</code> y un <code>logro</code>. Verifica con R si, para estos datos, <b>siempre</b> que se cumple la meta (<code>logro &gt;= meta</code>) el excedente (<code>logro - meta</code>) es positivo o cero. Explica por qué esta verificación con código es más confiable que "mirar el gráfico".</p><div class="r-cell"><textarea class="r-editor" spellcheck="false">meta  &lt;- c(100, 120, 90, 150)
+logro &lt;- c(105, 118, 95, 150)
+logro &gt;= meta
+all((logro - meta) &gt;= 0)</textarea><div class="r-cell-actions"><button class="run-btn" data-needs-pkg="0" data-xp="5"><svg viewBox="0 0 24 24" fill="none"><path d="M6 4l14 8-14 8V4z" fill="currentColor"/></svg> Ejecutar en R</button><span class="r-cell-hint">Puedes editar el código antes de ejecutarlo.</span></div><div class="r-console" aria-live="polite"></div></div><textarea class="answer" data-min="55" placeholder="Escribe tu respuesta antes de revelar..."></textarea><div class="answer-meta"><span class="char-count">0 / 55</span><button class="reveal-btn locked" disabled data-xp="20">Revelar respuesta y criterios</button></div><div class="locked-note" style="display:none"><svg viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="9" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 11V7a4 4 0 018 0v4" stroke="currentColor" stroke-width="2"/></svg><span>Disponible al finalizar el simulacro (revision abierta).</span></div><div class="feedback"><h4>Respuesta y criterios</h4><ul><li><code>logro &gt;= meta</code> da un vector lógico jornada por jornada: aquí, <code>TRUE, TRUE, TRUE, TRUE</code> (los cuatro casos cumplen).</li><li><code>all((logro - meta) &gt;= 0)</code> da <b>TRUE</b>: confirma numéricamente, para <b>todos</b> los casos, que el excedente nunca es negativo cuando se cumple la meta.</li><li>Un gráfico puede "verse bien" por casualidad de escala o por pocos puntos visibles; una comprobación lógica con <code>all()</code> revisa <b>cada observación</b>, sin depender de qué tan claro se vea el dibujo.</li></ul></div></div><div class="exercise" style="--accent:var(--blue)"><div class="exercise-head"><div class="exercise-title"><span class="exercise-num">P1 · Práctica con R</span><h3>Edificio A: totales y conversión</h3></div><span class="ai-badge ai-none"><svg viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>Sin IA</span></div><p class="desc">Usando el mismo objeto <code>actividad</code> que cargaste en la pestaña Práctica (si no lo cargaste ahí, ejecuta primero el bloque de importación), calcula para <b>Edificio A</b>: visitantes totales, compras totales, conversión (%) y excedente observado (ingreso − costo). Escribe los cuatro resultados antes de revelar.</p><div class="r-cell"><textarea class="r-editor" spellcheck="false"># si "actividad" no existe en esta pestaña todavia, ejecuta primero:
+# library(readr); actividad &lt;- read_csv("datos_practica_guia.csv")
+
+e &lt;- actividad$punto == "Edificio A"
+sum(actividad$visitantes[e])
+sum(actividad$compras[e])
+100 * sum(actividad$compras[e]) / sum(actividad$visitantes[e])
+sum(actividad$ingreso_usd[e]) - sum(actividad$costo_usd[e])</textarea><div class="r-cell-actions"><button class="run-btn" data-needs-pkg="1" data-xp="5"><svg viewBox="0 0 24 24" fill="none"><path d="M6 4l14 8-14 8V4z" fill="currentColor"/></svg> Ejecutar en R</button><span class="r-cell-hint">Necesita el objeto "actividad" (readr).</span></div><div class="r-console" aria-live="polite"></div></div><textarea class="answer" data-min="60" placeholder="Escribe tu respuesta antes de revelar..."></textarea><div class="answer-meta"><span class="char-count">0 / 60</span><button class="reveal-btn locked" disabled data-xp="25">Revelar respuesta y criterios</button></div><div class="locked-note" style="display:none"><svg viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="9" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 11V7a4 4 0 018 0v4" stroke="currentColor" stroke-width="2"/></svg><span>Disponible al finalizar el simulacro (revision abierta).</span></div><div class="feedback"><h4>Respuesta y criterios</h4><ul><li>Edificio A: <b>358</b> visitantes, <b>144</b> compras, ingreso <b>USD 1008</b>, costo <b>USD 563</b>.</li><li>Conversión: <code>100 * 144/358 ≈ 40.22%</code> -- la más alta de los cuatro puntos.</li><li>Excedente: <code>1008 − 563 = USD 445</code> -- también el más alto de los cuatro puntos.</li></ul></div></div><div class="exercise" style="--accent:var(--coral)"><div class="exercise-head"><div class="exercise-title"><span class="exercise-num">P2 · Práctica con R</span><h3>Comparar la distribución del ingreso entre puntos</h3></div><span class="ai-badge ai-none"><svg viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>Sin IA</span></div><p class="desc">Construye un <b>boxplot</b> del ingreso diario (<code>ingreso_usd</code>) separado por <code>punto</code>. Antes de ejecutar, predice: ¿cuál punto esperas que tenga la mediana más alta? Después de ver el gráfico, explica qué representan la caja, la línea central y los "bigotes".</p><div class="r-cell"><textarea class="r-editor" spellcheck="false"># si "actividad" no existe en esta pestaña todavia, ejecuta primero:
+# library(readr); actividad &lt;- read_csv("datos_practica_guia.csv")
+
+ggplot(actividad, aes(x = punto, y = ingreso_usd)) +
+  geom_boxplot() +
+  labs(title = "Distribución del ingreso diario por punto",
+       x = "Punto", y = "Ingreso (USD)")</textarea><div class="r-cell-actions"><button class="run-btn" data-needs-pkg="1" data-xp="5"><svg viewBox="0 0 24 24" fill="none"><path d="M6 4l14 8-14 8V4z" fill="currentColor"/></svg> Ejecutar en R</button><span class="r-cell-hint">Necesita ggplot2 y el objeto "actividad".</span></div><div class="r-console" aria-live="polite"></div></div><textarea class="answer" data-min="60" placeholder="Escribe tu respuesta antes de revelar..."></textarea><div class="answer-meta"><span class="char-count">0 / 60</span><button class="reveal-btn locked" disabled data-xp="25">Revelar respuesta y criterios</button></div><div class="locked-note" style="display:none"><svg viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="9" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 11V7a4 4 0 018 0v4" stroke="currentColor" stroke-width="2"/></svg><span>Disponible al finalizar el simulacro (revision abierta).</span></div><div class="feedback"><h4>Respuesta y criterios</h4><ul><li><code>geom_boxplot()</code> con <code>x = punto, y = ingreso_usd</code> dibuja una caja por punto de venta.</li><li>La <b>caja</b> es el rango intercuartílico (percentil 25 a 75); la <b>línea dentro de la caja</b> es la mediana; los <b>bigotes</b> llegan hasta el valor no atípico más alejado.</li><li>Con solo 6 observaciones por punto, las cajas serán muy angostas: es una limitación real a mencionar, no un error del código.</li></ul></div></div>
+
+  <div class="verify-box fade-in">
+    <h4>&iquest;Como sabemos que este resultado es correcto?</h4>
+    <p>Al finalizar, no te quedes solo con el número de preguntas respondidas: compara honestamente cada respuesta contra los criterios revelados y marca solo lo que de verdad cumpliste. Ese ejercicio de autoevaluación honesta es, en si mismo, la habilidad de verificación que el curso quiere que desarrolles -- y es exactamente lo que se te pedirá defender oralmente en el proyecto grupal más adelante.</p>
+  </div>
+
+</div>
+
+</section>
+
+<section id="panel-cheat" class="tab-panel" role="tabpanel" aria-labelledby="tab-cheat">
+
+<div class="hero" style="padding-top:clamp(36px,5vw,56px)">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container hero-inner">
+    <div class="chips">
+      <span class="chip c-coral"><b>Control 01</b></span>
+      <span class="chip">Referencia compacta -- R base, importación y primeras visualizaciones</span>
+    </div>
+    <h1 style="font-size:clamp(1.8rem,3.6vw,2.6rem)">Cheat Sheet</h1>
+    <p class="lede">Todo lo que entra en el temario del Control 01, en una sola pantalla. Para repasar minutos antes, no para aprender por primera vez.</p>
+  </div>
+</div>
+<div class="container" style="padding:32px clamp(16px,4vw,40px) 20px">
+
+  <div class="cpanel fade-in" style="margin-bottom:28px">
+    <div class="cpanel-cap"><b>Regla central del curso</b> -- repítela antes de escribir una sola línea de código</div>
+    <div class="cflow">
+      <div class="cbox accent">pregunta</div><span class="carrow"><svg viewBox="0 0 24 24" fill="none"><path d="M6 4l14 8-14 8V4z" fill="currentColor"/></svg></span>
+      <div class="cbox">datos</div><span class="carrow"><svg viewBox="0 0 24 24" fill="none"><path d="M6 4l14 8-14 8V4z" fill="currentColor"/></svg></span>
+      <div class="cbox">instrucciones</div><span class="carrow"><svg viewBox="0 0 24 24" fill="none"><path d="M6 4l14 8-14 8V4z" fill="currentColor"/></svg></span>
+      <div class="cbox">verificación</div><span class="carrow"><svg viewBox="0 0 24 24" fill="none"><path d="M6 4l14 8-14 8V4z" fill="currentColor"/></svg></span>
+      <div class="cbox">comunicación</div>
+    </div>
+    <p style="margin-top:14px;color:var(--ts);font-size:.9rem">Empezar por el código sin una pregunta clara puede producir un cálculo perfecto para una pregunta que nadie necesitaba responder. Que el código corra sin errores <b>no</b> demuestra que el análisis sea correcto.</p>
+  </div>
+
+  <div class="cheat-grid">
+    <div class="cheat-card fade-in">
+      <h3>Vocabulario clave</h3>
+      <div class="vocab-badges"><span class="vocab-badge">objeto</span><span class="vocab-badge">asignación (&lt;-)</span><span class="vocab-badge">vector</span><span class="vocab-badge">índice</span><span class="vocab-badge">vector lógico</span><span class="vocab-badge">reciclaje</span><span class="vocab-badge">matriz</span><span class="vocab-badge">data frame / tibble</span><span class="vocab-badge">paquete</span><span class="vocab-badge">CSV</span><span class="vocab-badge">delimitador</span><span class="vocab-badge">aesthetic (aes)</span><span class="vocab-badge">geom</span><span class="vocab-badge">binwidth</span><span class="vocab-badge">mapeo global</span><span class="vocab-badge">mapeo local</span></div>
+    </div>
+    <div class="cheat-card fade-in">
+      <h3>Funciones -- R base y vectores</h3>
+      <table class="cheat"><tr><td class="f">&lt;-</td><td>crea/asigna un objeto</td></tr><tr><td class="f">c(...)</td><td>combina valores en un vector</td></tr><tr><td class="f">a:b</td><td>secuencia consecutiva de enteros</td></tr><tr><td class="f">x[i]</td><td>indexar por posición</td></tr><tr><td class="f">x[-i]</td><td>indexar por exclusión</td></tr><tr><td class="f">x[cond]</td><td>indexar por condición lógica</td></tr><tr><td class="f">length()</td><td>cuántos elementos tiene</td></tr><tr><td class="f">typeof()</td><td>tipo de dato del vector</td></tr><tr><td class="f">sum()</td><td>suma (o cuenta TRUE en lógicos)</td></tr><tr><td class="f">any() / all()</td><td>¿alguno? / ¿todos?</td></tr><tr><td class="f">mean()</td><td>promedio</td></tr><tr><td class="f">round(x, digits=)</td><td>redondear a n decimales</td></tr><tr><td class="f">matrix(nrow=, byrow=)</td><td>construir una matriz</td></tr><tr><td class="f">dim()</td><td>filas y columnas</td></tr><tr><td class="f">names()</td><td>nombres de columnas</td></tr><tr><td class="f">head()</td><td>primeras filas</td></tr><tr><td class="f">str() / glimpse()</td><td>tipos y muestra de valores</td></tr></table>
+    </div>
+    <div class="cheat-card fade-in">
+      <h3>Funciones -- importar y graficar</h3>
+      <table class="cheat"><tr><td class="f">library(pkg)</td><td>carga un paquete ya instalado</td></tr><tr><td class="f">read_csv("archivo.csv")</td><td>importa un CSV como tibble</td></tr><tr><td class="f">ggplot(datos, aes(...))</td><td>define dataset y mapeo de ejes</td></tr><tr><td class="f">aes(x=, y=, color=)</td><td>mapea variables a propiedades visuales</td></tr><tr><td class="f">geom_bar()</td><td>barras: conteo por categoría</td></tr><tr><td class="f">geom_point()</td><td>dispersión: dos variables numéricas</td></tr><tr><td class="f">geom_histogram(binwidth=)</td><td>distribución de un monto</td></tr><tr><td class="f">geom_freqpoly(binwidth=)</td><td>distribución, como línea</td></tr><tr><td class="f">geom_boxplot()</td><td>distribución por categoría (caja y bigotes)</td></tr><tr><td class="f">geom_smooth(method=, se=)</td><td>línea de tendencia</td></tr><tr><td class="f">labs(title=, x=, y=)</td><td>títulos y etiquetas</td></tr></table>
+    </div>
+    <div class="cheat-card fade-in">
+      <h3>Banco de verificación</h3>
+      <ul style="margin:0;padding-left:1.1em;color:var(--ts);font-size:.9rem;line-height:1.7">
+        <li>Comprobar manualmente algunos resultados (cálculo a mano o mental).</li><li>Comparar conteos antes y después de una transformación.</li><li>Verificar que un filtro seleccionó las observaciones esperadas.</li><li>Revisar qué ocurrió con los valores NA.</li><li>Inspeccionar valores mínimos y máximos.</li><li>Contrastar un resultado usando dos procedimientos distintos.</li><li>Probar una función con valores cuyo resultado ya conoces.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="cheat-card fade-in" style="margin-top:16px">
+    <h3>Tres columnas &lt;-&gt; tres niveles de IA</h3>
+    <div class="type-tag-row">
+      <div class="type-tag"><span class="ai-badge ai-none"><svg viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>Sin IA</span><span style="font-size:.78rem;color:var(--ts);text-align:center;max-width:150px">Controles, partes de examen, diagnósticos -- sin apoyo generativo.</span></div>
+      <div class="type-tag"><span class="ai-badge ai-ok"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>IA permitida</span><span style="font-size:.78rem;color:var(--ts);text-align:center;max-width:150px">La mayoría de laboratorios y el proyecto -- puedes usar IA, pero debes comprender y verificar.</span></div>
+      <div class="type-tag"><span class="ai-badge ai-req"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 8v5m0 3h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>IA requerida</span><span style="font-size:.78rem;color:var(--ts);text-align:center;max-width:150px">Semana 11 y auditoría de código -- se evalúa tu capacidad de revisar lo que la IA produce.</span></div>
+    </div>
+  </div>
+
+</div>
+
+</section>
+</main>
+
+<footer>
+  <div class="container foot-inner">
+    <div>
+      <div style="font-family:var(--font-mono);font-size:.8rem;color:var(--ts)">FPEN &middot; Fundamentos de Programacion para Economia y Negocios &middot; ESEN &middot; Ciclo III 2026</div>
+      <div style="font-family:var(--font-mono);font-size:.76rem;color:var(--ts);margin-top:6px">Bibliografía: R for Data Science (2a ed.), Cap. 1, 2 y 7 &middot; Programa oficial del curso (2026) &middot; Guía de repaso FPEN -- Control 01</div>
+    </div>
+    <div style="font-family:var(--font-mono);font-size:.76rem;color:var(--ts);max-width:420px">La pestaña Práctica y los bloques de R en vivo del Simulacro usan webR (R compilado a WebAssembly, cargado desde webr.r-wasm.org): es la única parte de este archivo que necesita conexión a internet.</div>
+  </div>
+</footer>
+
+<script type="module">
+
+import { WebR } from 'https://webr.r-wasm.org/latest/webr.mjs';
+
+const FPENWebR = {
+  webR: null,
+  baseReady: null,
+  pkgReady: null,
+  csvWritten: false,
+};
+window.FPENWebR = FPENWebR;
+
+const CSV_TEXT = 'dia,punto,visitantes,compras,ingreso_usd,costo_usd\n1,Biblioteca,80,20,120,72\n2,Biblioteca,84,22,132,78\n3,Biblioteca,75,18,108,70\n4,Biblioteca,88,25,150,92\n5,Biblioteca,82,21,126,77\n6,Biblioteca,91,26,156,98\n1,Edificio A,55,22,154,85\n2,Edificio A,60,24,168,92\n3,Edificio A,57,23,161,89\n4,Edificio A,62,25,175,98\n5,Edificio A,59,23,161,91\n6,Edificio A,65,27,189,108\n1,Polideportivo,100,18,126,103\n2,Polideportivo,105,19,133,109\n3,Polideportivo,98,17,119,101\n4,Polideportivo,112,20,140,116\n5,Polideportivo,108,19,133,111\n6,Polideportivo,115,22,154,124\n1,Residencias,45,18,126,63\n2,Residencias,48,20,140,70\n3,Residencias,43,17,119,61\n4,Residencias,50,21,147,75\n5,Residencias,47,19,133,68\n6,Residencias,52,22,154,81';
+
+function ensureBase(onStatus){
+  if(FPENWebR.baseReady) return FPENWebR.baseReady;
+  FPENWebR.baseReady = (async () => {
+    onStatus && onStatus('Cargando R (WebAssembly) desde webr.r-wasm.org... esto puede tardar 10-30 segundos la primera vez.');
+    const webR = new WebR({ interactive: false });
+    await webR.init();
+    FPENWebR.webR = webR;
+    if(!FPENWebR.csvWritten){
+      try{
+        await webR.FS.writeFile('/home/web_user/datos_practica_guia.csv', new TextEncoder().encode(CSV_TEXT));
+        FPENWebR.csvWritten = true;
+      }catch(e){ /* el CSV solo hace falta en Practica/Simulacro; si falla, esos ejercicios lo reportarán */ }
+    }
+    onStatus && onStatus('R esta listo.');
+    return webR;
+  })();
+  return FPENWebR.baseReady;
+}
+
+function ensurePackages(onStatus){
+  if(FPENWebR.pkgReady) return FPENWebR.pkgReady;
+  FPENWebR.pkgReady = (async () => {
+    const webR = await ensureBase(onStatus);
+    onStatus && onStatus('Instalando readr y ggplot2 (y sus dependencias) en el entorno WebAssembly... puede tardar bastante la primera vez según tu conexión.');
+    await webR.installPackages(['readr', 'ggplot2']);
+    onStatus && onStatus('Paquetes listos.');
+    return webR;
+  })();
+  return FPENWebR.pkgReady;
+}
+
+FPENWebR.ensureBase = ensureBase;
+FPENWebR.ensurePackages = ensurePackages;
+
+/* Ejecuta código R y devuelve { lines:[{type,text}], imageDataUrl } */
+FPENWebR.runCode = async function(code, needsPackages, onStatus){
+  const webR = needsPackages ? await ensurePackages(onStatus) : await ensureBase(onStatus);
+  const shelter = await new webR.Shelter();
+  const result = { lines: [], imageDataUrl: null };
+  const plotPath = '/tmp/fpen_plot_out.png';
+  try{
+    try{ await webR.FS.unlink(plotPath); }catch(e){}
+    const wrapped = "png('" + plotPath + "', width=640, height=420, res=110)\ntryCatch({\n" + code + "\n}, finally = dev.off())\n";
+    const capture = await shelter.captureR(wrapped, {
+      withAutoprint: true,
+      captureStreams: true,
+      captureConditions: true,
+    });
+    for(const out of capture.output){
+      if(out.type === 'stdout'){ result.lines.push({type:'out', text: out.data}); }
+      else if(out.type === 'stderr'){ result.lines.push({type:'err', text: out.data}); }
+      else if(out.type === 'message'){ result.lines.push({type:'msg', text: (out.data && out.data.message) ? out.data.message : String(out.data)}); }
+      else if(out.type === 'warning'){ result.lines.push({type:'msg', text: 'Warning: ' + ((out.data && out.data.message) ? out.data.message : String(out.data))}); }
+      else if(out.type === 'error'){ result.lines.push({type:'err', text: 'Error: ' + ((out.data && out.data.message) ? out.data.message : String(out.data))}); }
+    }
+    try{
+      const bytes = await webR.FS.readFile(plotPath);
+      if(bytes && bytes.length > 0){
+        const blob = new Blob([bytes], { type: 'image/png' });
+        result.imageDataUrl = await new Promise((resolve) => {
+          const reader = new FileReader();
+          reader.onloadend = () => resolve(reader.result);
+          reader.readAsDataURL(blob);
+        });
+      }
+    }catch(e){ /* no se genero un grafico en este bloque, es normal */ }
+  }catch(e){
+    result.lines.push({type:'err', text: 'Error al ejecutar: ' + (e && e.message ? e.message : String(e))});
+  }finally{
+    try{ shelter.purge(); }catch(e){}
+  }
+  return result;
+};
+
+</script>
+<script>
+
+(function(){
+  "use strict";
+
+  var state = { xp: 0 };
+  var xpEl = document.getElementById('xpCount');
+  var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function addXP(n){
+    if(!n) return;
+    state.xp += n;
+    xpEl.textContent = state.xp;
+    if(!prefersReducedMotion){
+      xpEl.parentElement.animate(
+        [{ transform:'scale(1)' },{ transform:'scale(1.18)' },{ transform:'scale(1)' }],
+        { duration:380, easing:'cubic-bezier(0.16,1,0.3,1)' }
+      );
+    }
+  }
+
+  /* ---------------- pestañas principales ---------------- */
+  var pills = Array.prototype.slice.call(document.querySelectorAll('.pill[data-tab]'));
+  var panels = {
+    teoria: document.getElementById('panel-teoria'),
+    practica: document.getElementById('panel-practica'),
+    simulacro: document.getElementById('panel-simulacro'),
+    cheat: document.getElementById('panel-cheat')
+  };
+  function activateTab(name){
+    pills.forEach(function(p){ p.setAttribute('aria-selected', String(p.dataset.tab === name)); });
+    Object.keys(panels).forEach(function(k){ if(panels[k]) panels[k].classList.toggle('active', k === name); });
+    window.scrollTo({ top:0, behavior:'auto' });
+    observeFadeIns();
+  }
+  pills.forEach(function(p){ p.addEventListener('click', function(){ activateTab(p.dataset.tab); }); });
+
+  /* ---------------- textareas con revelar-tras-minimo ---------------- */
+  document.querySelectorAll('textarea.answer').forEach(function(ta){
+    var min = parseInt(ta.dataset.min || '0', 10);
+    var wrap = ta.closest('.exercise') || ta.parentElement;
+    var counter = wrap.querySelector('.char-count');
+    var btn = wrap.querySelector('.reveal-btn');
+    function update(){
+      var len = ta.value.trim().length;
+      if(counter) counter.textContent = len + ' / ' + min;
+      if(btn && !btn.classList.contains('locked')) btn.disabled = len < min;
+      updateAllProgress();
+    }
+    ta.addEventListener('input', update);
+    update();
+  });
+
+  document.querySelectorAll('.reveal-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      if(btn.disabled || btn.classList.contains('locked')) return;
+      var wrap = btn.closest('.exercise') || btn.parentElement.parentElement;
+      var fb = wrap.querySelector('.feedback');
+      btn.textContent = btn.dataset.doneLabel || 'Criterios revelados';
+      btn.disabled = true;
+      if(fb && !fb.classList.contains('show')){
+        fb.classList.add('show');
+        addXP(parseInt(btn.dataset.xp || '0', 10));
+        updateAllProgress();
+      }
+    });
+  });
+
+  /* ---------------- checkboxes de autoevaluacion ---------------- */
+  document.querySelectorAll('.check-item input[type="checkbox"]').forEach(function(cb){
+    cb.addEventListener('change', function(){
+      if(cb.checked && !cb.dataset.counted){
+        cb.dataset.counted = '1';
+        addXP(parseInt(cb.dataset.xp || '0', 10));
+      }
+      updateAllProgress();
+    });
+  });
+
+  /* ---------------- barras de progreso por pestaña (Práctica) ---------------- */
+  function updateProgressIn(panel, fillId, pctId){
+    if(!panel) return;
+    var fill = document.getElementById(fillId), pct = document.getElementById(pctId);
+    if(!fill || !pct) return;
+    var buttons = panel.querySelectorAll('.reveal-btn');
+    var boxes = panel.querySelectorAll('.check-item input[type="checkbox"]');
+    var total = buttons.length + boxes.length;
+    if(total === 0) return;
+    var done = 0;
+    buttons.forEach(function(b){ if(b.disabled && !b.classList.contains('locked') && b.textContent.match(/revelad|solución|criterios/i)) done++; });
+    boxes.forEach(function(b){ if(b.checked) done++; });
+    var p = Math.round((done/total)*100);
+    fill.style.transform = 'scaleX(' + (p/100) + ')';
+    pct.textContent = p + '%';
+  }
+  function updateSimProgress(){
+    var panel = panels.simulacro;
+    if(!panel) return;
+    var fill = document.getElementById('progressFillSim'), pct = document.getElementById('progressPctSim');
+    if(!fill || !pct) return;
+    var tas = panel.querySelectorAll('textarea.answer');
+    if(tas.length === 0) return;
+    var done = 0;
+    tas.forEach(function(ta){
+      var min = parseInt(ta.dataset.min || '0', 10);
+      if(ta.value.trim().length >= Math.min(min, 20)) done++;
+    });
+    var p = Math.round((done/tas.length)*100);
+    fill.style.transform = 'scaleX(' + (p/100) + ')';
+    pct.textContent = done + ' / ' + tas.length + ' con respuesta';
+  }
+  function updateAllProgress(){
+    updateProgressIn(panels.practica, 'progressFillPractica', 'progressPctPractica');
+    updateSimProgress();
+  }
+
+  /* ---------------- fade-in al hacer scroll ---------------- */
+  var io = ('IntersectionObserver' in window) ? new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold:0.05, rootMargin:'0px 0px -8% 0px' }) : null;
+  function observeFadeIns(){
+    document.querySelectorAll('.fade-in:not(.in)').forEach(function(el){
+      if(io) io.observe(el); else el.classList.add('in');
+    });
+  }
+  observeFadeIns();
+  window.addEventListener('load', function(){
+    setTimeout(function(){
+      document.querySelectorAll('.fade-in:not(.in)').forEach(function(el){ el.classList.add('in'); });
+    }, 1500);
+  });
+
+  document.querySelectorAll('.subnav a').forEach(function(a){
+    a.addEventListener('click', function(){
+      var tab = a.closest('.tab-panel');
+      if(tab === panels.teoria) activateTab('teoria');
+      else if(tab === panels.practica) activateTab('practica');
+    });
+  });
+
+  /* ---------------- espera a que el modulo webR este listo ---------------- */
+  function withFPENWebR(cb){
+    if(window.FPENWebR){ cb(window.FPENWebR); return; }
+    var tries = 0;
+    var iv = setInterval(function(){
+      tries++;
+      if(window.FPENWebR){ clearInterval(iv); cb(window.FPENWebR); }
+      else if(tries > 400){ clearInterval(iv); cb(null); }
+    }, 50);
+  }
+
+  function renderConsole(el, result){
+    el.innerHTML = '';
+    el.classList.add('show');
+    if(result.lines.length === 0 && !result.imageDataUrl){
+      var d = document.createElement('div');
+      d.className = 'rc-msg';
+      d.textContent = '(sin salida de consola)';
+      el.appendChild(d);
+    }
+    result.lines.forEach(function(ln){
+      var d = document.createElement('div');
+      d.className = ln.type === 'err' ? 'rc-err' : (ln.type === 'msg' ? 'rc-msg' : 'rc-out');
+      d.textContent = ln.text;
+      el.appendChild(d);
+    });
+    if(result.imageDataUrl){
+      var img = document.createElement('img');
+      img.src = result.imageDataUrl;
+      img.alt = 'Gráfico generado por el código de R';
+      el.appendChild(img);
+    }
+  }
+
+  /* ---------------- celdas de código en vivo (.run-btn) ---------------- */
+  document.querySelectorAll('.run-btn').forEach(function(btn){
+    var originalLabel = btn.innerHTML;
+    btn.addEventListener('click', function(){
+      if(btn.disabled || btn.classList.contains('locked')) return;
+      var cell = btn.closest('.r-cell');
+      if(!cell) return;
+      var editor = cell.querySelector('.r-editor');
+      var consoleEl = cell.querySelector('.r-console');
+      var hint = cell.querySelector('.r-cell-hint');
+      if(!editor || !consoleEl) return;
+      var needsPkg = btn.dataset.needsPkg === '1';
+      btn.disabled = true;
+      btn.textContent = 'Ejecutando...';
+      if(hint) hint.textContent = '';
+      withFPENWebR(function(mod){
+        if(!mod){
+          if(hint) hint.textContent = 'No se pudo cargar el motor de R (revisa tu conexión a internet y recarga la página).';
+          btn.disabled = false; btn.innerHTML = originalLabel;
+          return;
+        }
+        mod.runCode(editor.value, needsPkg, function(status){ if(hint) hint.textContent = status; })
+          .then(function(result){
+            renderConsole(consoleEl, result);
+            if(!btn.dataset.xpGiven){ btn.dataset.xpGiven = '1'; addXP(parseInt(btn.dataset.xp || '5', 10)); }
+            if(hint) hint.textContent = 'Listo.';
+          })
+          .catch(function(err){
+            if(hint) hint.textContent = 'Error inesperado: ' + (err && err.message ? err.message : String(err));
+          })
+          .finally(function(){ btn.disabled = false; btn.innerHTML = originalLabel; });
+      });
+    });
+  });
+
+  /* ---------------- temporizador y bloqueo del Simulacro ---------------- */
+  (function(){
+    var panel = panels.simulacro;
+    if(!panel) return;
+    var TOTAL_SECONDS = 45 * 60;
+    var remaining = TOTAL_SECONDS;
+    var timerId = null;
+    var active = false;
+    var finished = false;
+
+    var clockEl = document.getElementById('simClock');
+    var stateEl = document.getElementById('simState');
+    var startBtn = document.getElementById('simStartBtn');
+    var finishBtn = document.getElementById('simFinishBtn');
+    var scoreBox = document.getElementById('simScore');
+
+    var lockables = panel.querySelectorAll('.reveal-btn');
+    var lockNotes = panel.querySelectorAll('.locked-note');
+    var textareas = panel.querySelectorAll('textarea.answer');
+    var runBtns = panel.querySelectorAll('.run-btn');
+
+    function fmt(s){
+      var m = Math.floor(s/60), sec = s%60;
+      return (m<10?'0':'')+m+':'+(sec<10?'0':'')+sec;
+    }
+    function setPreStart(){
+      lockables.forEach(function(b){ b.classList.add('locked'); });
+      lockNotes.forEach(function(n){ n.style.display = 'flex'; });
+      textareas.forEach(function(t){ t.disabled = true; });
+      runBtns.forEach(function(b){ b.disabled = true; });
+      if(clockEl) clockEl.textContent = fmt(TOTAL_SECONDS);
+      if(stateEl) stateEl.textContent = 'Sin iniciar';
+    }
+    function tick(){
+      remaining--;
+      if(clockEl) clockEl.textContent = fmt(Math.max(remaining,0));
+      if(clockEl){
+        clockEl.classList.toggle('warn', remaining <= 300 && remaining > 60);
+        clockEl.classList.toggle('critical', remaining <= 60);
+      }
+      if(remaining <= 0){ finalize('tiempo'); }
+    }
+    function start(){
+      if(active || finished) return;
+      active = true;
+      textareas.forEach(function(t){ t.disabled = false; });
+      runBtns.forEach(function(b){ b.disabled = false; });
+      if(startBtn) startBtn.style.display = 'none';
+      if(finishBtn) finishBtn.style.display = 'inline-flex';
+      if(stateEl) stateEl.textContent = 'En curso -- Sin IA';
+      timerId = setInterval(tick, 1000);
+      updateSimProgress();
+    }
+    function finalize(reason){
+      if(finished) return;
+      finished = true; active = false;
+      if(timerId) clearInterval(timerId);
+      textareas.forEach(function(t){ t.disabled = true; });
+      runBtns.forEach(function(b){ b.disabled = true; });
+      lockNotes.forEach(function(n){ n.style.display = 'none'; });
+      var totalBoxes = 0, checkedBoxes = 0, totalTa = 0, doneTa = 0;
+      lockables.forEach(function(b){
+        b.classList.remove('locked');
+        var wrap = b.closest('.exercise') || b.parentElement.parentElement;
+        var fb = wrap.querySelector('.feedback');
+        if(fb) fb.classList.add('show');
+        b.disabled = true;
+        b.textContent = 'Simulacro finalizado';
+      });
+      panel.querySelectorAll('.check-item input[type="checkbox"]').forEach(function(cb){ totalBoxes++; if(cb.checked) checkedBoxes++; });
+      textareas.forEach(function(ta){
+        totalTa++;
+        var min = parseInt(ta.dataset.min || '0', 10);
+        if(ta.value.trim().length >= Math.min(min,20)) doneTa++;
+      });
+      if(startBtn) startBtn.style.display = 'none';
+      if(finishBtn) finishBtn.style.display = 'none';
+      if(stateEl) stateEl.textContent = reason === 'tiempo' ? 'Tiempo agotado -- revision abierta' : 'Finalizado manualmente -- revision abierta';
+      if(clockEl) clockEl.textContent = reason === 'tiempo' ? '00:00' : fmt(Math.max(remaining,0));
+      if(scoreBox){
+        scoreBox.classList.add('show');
+        scoreBox.innerHTML =
+          '<div class="score-big">' + doneTa + '<span>/ ' + totalTa + ' preguntas respondidas</span></div>' +
+          '<p style="margin-top:10px">Autoevaluacion marcada: <b style="color:var(--tp)">' + checkedBoxes + ' / ' + totalBoxes + '</b> criterios. Revisa ahora cada retroalimentacion revelada y compara honestamente tu respuesta antes de marcar los criterios que faltan.</p>';
+      }
+      addXP(30);
+      updateAllProgress();
+    }
+    if(startBtn) startBtn.addEventListener('click', start);
+    if(finishBtn) finishBtn.addEventListener('click', function(){ finalize('manual'); });
+    setPreStart();
+  })();
+
+})();
+
+</script>
+
+</body>
+</html>

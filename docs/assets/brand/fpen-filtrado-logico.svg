@@ -1,0 +1,235 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 640" width="100%" height="100%" role="img" aria-labelledby="flTitle flDesc">
+  <title id="flTitle">Indexación y Filtrado Lógico por Máscara Booleana en R</title>
+  <desc id="flDesc">Ilustración en 3 fases de cómo una condición lógica genera un vector booleano y extrae exclusivamente las posiciones TRUE de un vector económico.</desc>
+
+  <defs>
+    <!-- Background subtle grid pattern -->
+    <pattern id="grid-pattern-fl" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#4c9aff" stroke-width="1" stroke-opacity="0.035" />
+    </pattern>
+
+    <!-- Gradients -->
+    <linearGradient id="box-base-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#182645" />
+      <stop offset="100%" stop-color="#111a30" />
+    </linearGradient>
+
+    <linearGradient id="true-box-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1b3d36" />
+      <stop offset="100%" stop-color="#122421" />
+    </linearGradient>
+
+    <linearGradient id="false-box-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#381b24" />
+      <stop offset="100%" stop-color="#221118" />
+    </linearGradient>
+
+    <linearGradient id="result-box-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#243f6d" />
+      <stop offset="100%" stop-color="#152745" />
+    </linearGradient>
+  </defs>
+
+  <!-- Base background -->
+  <rect width="960" height="640" fill="#0a0f1c" />
+  <rect width="960" height="640" fill="url(#grid-pattern-fl)" />
+
+  <!-- Top Title & Badge -->
+  <g transform="translate(60, 38)">
+    <rect width="210" height="26" rx="13" fill="#111a30" stroke="#2dd4bf" stroke-opacity="0.4" stroke-width="1.2" />
+    <circle cx="16" cy="13" r="4" fill="#2dd4bf" />
+    <text x="32" y="17" fill="#2dd4bf" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" letter-spacing="0.5">SUBSETTING EN R</text>
+    <text x="0" y="56" fill="#edf1fa" font-family="'Fraunces', Georgia, serif" font-size="24" font-weight="700">Indexación Lógica y Máscaras Booleanas</text>
+    <text x="0" y="80" fill="#8792ae" font-family="'JetBrains Mono', monospace" font-size="13">Una comparación vectorial genera un vector lógico: solo las posiciones TRUE cruzan al nuevo objeto</text>
+  </g>
+
+  <!-- ============================================================== -->
+  <!-- STEP 1: VECTOR ORIGINAL                                        -->
+  <!-- ============================================================== -->
+  <g transform="translate(60, 140)">
+    <!-- Label -->
+    <g transform="translate(0, 0)">
+      <rect width="26" height="26" rx="6" fill="#4c9aff" fill-opacity="0.15" stroke="#4c9aff" stroke-width="1" />
+      <text x="13" y="17" fill="#4c9aff" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700" text-anchor="middle">1</text>
+      <text x="36" y="18" fill="#edf1fa" font-family="'JetBrains Mono', monospace" font-size="14" font-weight="700">
+        <tspan fill="#4c9aff">ventas</tspan> <tspan fill="#2dd4bf">&lt;-</tspan> <tspan fill="#4c9aff">c</tspan>(<tspan fill="#edf1fa">150, 480, 210, 890, 120</tspan>)
+      </text>
+    </g>
+
+    <!-- 5 Horizontal Boxes -->
+    <!-- Total width: 5 * 140 + 4 * 16 = 700 + 64 = 764. Offset x = 38 -->
+    <g transform="translate(38, 38)">
+      <!-- Item 1: 150 -->
+      <g transform="translate(0, 0)">
+        <rect width="138" height="64" rx="10" fill="url(#box-base-grad)" stroke="#4c9aff" stroke-opacity="0.5" stroke-width="1.5" />
+        <text x="12" y="20" fill="#8792ae" font-family="'JetBrains Mono', monospace" font-size="10.5">[1]</text>
+        <text x="69" y="44" fill="#edf1fa" font-family="'JetBrains Mono', monospace" font-size="20" font-weight="700" text-anchor="middle">150</text>
+      </g>
+
+      <!-- Item 2: 480 -->
+      <g transform="translate(154, 0)">
+        <rect width="138" height="64" rx="10" fill="url(#box-base-grad)" stroke="#4c9aff" stroke-opacity="0.9" stroke-width="2" />
+        <rect x="4" y="3" width="130" height="3" rx="1.5" fill="#34d399" />
+        <text x="12" y="20" fill="#8792ae" font-family="'JetBrains Mono', monospace" font-size="10.5">[2]</text>
+        <text x="69" y="44" fill="#edf1fa" font-family="'JetBrains Mono', monospace" font-size="20" font-weight="700" text-anchor="middle">480</text>
+      </g>
+
+      <!-- Item 3: 210 -->
+      <g transform="translate(308, 0)">
+        <rect width="138" height="64" rx="10" fill="url(#box-base-grad)" stroke="#4c9aff" stroke-opacity="0.5" stroke-width="1.5" />
+        <text x="12" y="20" fill="#8792ae" font-family="'JetBrains Mono', monospace" font-size="10.5">[3]</text>
+        <text x="69" y="44" fill="#edf1fa" font-family="'JetBrains Mono', monospace" font-size="20" font-weight="700" text-anchor="middle">210</text>
+      </g>
+
+      <!-- Item 4: 890 -->
+      <g transform="translate(462, 0)">
+        <rect width="138" height="64" rx="10" fill="url(#box-base-grad)" stroke="#4c9aff" stroke-opacity="0.9" stroke-width="2" />
+        <rect x="4" y="3" width="130" height="3" rx="1.5" fill="#34d399" />
+        <text x="12" y="20" fill="#8792ae" font-family="'JetBrains Mono', monospace" font-size="10.5">[4]</text>
+        <text x="69" y="44" fill="#edf1fa" font-family="'JetBrains Mono', monospace" font-size="20" font-weight="700" text-anchor="middle">890</text>
+      </g>
+
+      <!-- Item 5: 120 -->
+      <g transform="translate(616, 0)">
+        <rect width="138" height="64" rx="10" fill="url(#box-base-grad)" stroke="#4c9aff" stroke-opacity="0.5" stroke-width="1.5" />
+        <text x="12" y="20" fill="#8792ae" font-family="'JetBrains Mono', monospace" font-size="10.5">[5]</text>
+        <text x="69" y="44" fill="#edf1fa" font-family="'JetBrains Mono', monospace" font-size="20" font-weight="700" text-anchor="middle">120</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- ============================================================== -->
+  <!-- STEP 2: CONDICIÓN Y MÁSCARA LÓGICA                            -->
+  <!-- ============================================================== -->
+  <g transform="translate(60, 275)">
+    <!-- Label -->
+    <g transform="translate(0, 0)">
+      <rect width="26" height="26" rx="6" fill="#2dd4bf" fill-opacity="0.15" stroke="#2dd4bf" stroke-width="1" />
+      <text x="13" y="17" fill="#2dd4bf" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700" text-anchor="middle">2</text>
+      <text x="36" y="18" fill="#edf1fa" font-family="'JetBrains Mono', monospace" font-size="14" font-weight="700">
+        <tspan fill="#2dd4bf">filtro</tspan> <tspan fill="#4c9aff">&lt;-</tspan> <tspan fill="#edf1fa">ventas</tspan> <tspan fill="#f5a623">&gt;=</tspan> <tspan fill="#f5a623">300</tspan>
+        <tspan fill="#8792ae" font-weight="400" font-size="12"> (evaluación elemento a elemento)</tspan>
+      </text>
+    </g>
+
+    <g transform="translate(38, 38)">
+      <!-- Filter 1: FALSE -->
+      <g transform="translate(0, 0)">
+        <line x1="69" y1="-26" x2="69" y2="-4" stroke="#ff6b6b" stroke-opacity="0.4" stroke-width="1.5" stroke-dasharray="3 3" />
+        <rect width="138" height="54" rx="8" fill="url(#false-box-grad)" stroke="#ff6b6b" stroke-opacity="0.45" stroke-width="1.2" />
+        <text x="69" y="27" fill="#ff6b6b" font-family="'JetBrains Mono', monospace" font-size="15" font-weight="700" text-anchor="middle">FALSE</text>
+        <text x="69" y="44" fill="#8792ae" font-family="'JetBrains Mono', monospace" font-size="9.5" text-anchor="middle">150 &gt;= 300</text>
+      </g>
+
+      <!-- Filter 2: TRUE -->
+      <g transform="translate(154, 0)">
+        <line x1="69" y1="-26" x2="69" y2="-4" stroke="#34d399" stroke-width="2" />
+        <polygon points="69,-2 65,-8 73,-8" fill="#34d399" />
+        <rect width="138" height="54" rx="8" fill="url(#true-box-grad)" stroke="#34d399" stroke-width="2" />
+        <text x="69" y="27" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="15" font-weight="800" text-anchor="middle">TRUE</text>
+        <text x="69" y="44" fill="#2dd4bf" font-family="'JetBrains Mono', monospace" font-size="9.5" text-anchor="middle">480 &gt;= 300</text>
+      </g>
+
+      <!-- Filter 3: FALSE -->
+      <g transform="translate(308, 0)">
+        <line x1="69" y1="-26" x2="69" y2="-4" stroke="#ff6b6b" stroke-opacity="0.4" stroke-width="1.5" stroke-dasharray="3 3" />
+        <rect width="138" height="54" rx="8" fill="url(#false-box-grad)" stroke="#ff6b6b" stroke-opacity="0.45" stroke-width="1.2" />
+        <text x="69" y="27" fill="#ff6b6b" font-family="'JetBrains Mono', monospace" font-size="15" font-weight="700" text-anchor="middle">FALSE</text>
+        <text x="69" y="44" fill="#8792ae" font-family="'JetBrains Mono', monospace" font-size="9.5" text-anchor="middle">210 &gt;= 300</text>
+      </g>
+
+      <!-- Filter 4: TRUE -->
+      <g transform="translate(462, 0)">
+        <line x1="69" y1="-26" x2="69" y2="-4" stroke="#34d399" stroke-width="2" />
+        <polygon points="69,-2 65,-8 73,-8" fill="#34d399" />
+        <rect width="138" height="54" rx="8" fill="url(#true-box-grad)" stroke="#34d399" stroke-width="2" />
+        <text x="69" y="27" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="15" font-weight="800" text-anchor="middle">TRUE</text>
+        <text x="69" y="44" fill="#2dd4bf" font-family="'JetBrains Mono', monospace" font-size="9.5" text-anchor="middle">890 &gt;= 300</text>
+      </g>
+
+      <!-- Filter 5: FALSE -->
+      <g transform="translate(616, 0)">
+        <line x1="69" y1="-26" x2="69" y2="-4" stroke="#ff6b6b" stroke-opacity="0.4" stroke-width="1.5" stroke-dasharray="3 3" />
+        <rect width="138" height="54" rx="8" fill="url(#false-box-grad)" stroke="#ff6b6b" stroke-opacity="0.45" stroke-width="1.2" />
+        <text x="69" y="27" fill="#ff6b6b" font-family="'JetBrains Mono', monospace" font-size="15" font-weight="700" text-anchor="middle">FALSE</text>
+        <text x="69" y="44" fill="#8792ae" font-family="'JetBrains Mono', monospace" font-size="9.5" text-anchor="middle">120 &gt;= 300</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- ============================================================== -->
+  <!-- STEP 3: EXTRACCIÓN Y RESULTADO                                -->
+  <!-- ============================================================== -->
+  <g transform="translate(60, 420)">
+    <!-- Label -->
+    <g transform="translate(0, 0)">
+      <rect width="26" height="26" rx="6" fill="#34d399" fill-opacity="0.15" stroke="#34d399" stroke-width="1" />
+      <text x="13" y="17" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700" text-anchor="middle">3</text>
+      <text x="36" y="18" fill="#edf1fa" font-family="'JetBrains Mono', monospace" font-size="14" font-weight="700">
+        <tspan fill="#edf1fa">ventas_altas</tspan> <tspan fill="#4c9aff">&lt;-</tspan> <tspan fill="#4c9aff">ventas</tspan>[<tspan fill="#34d399">filtro</tspan>]
+        <tspan fill="#8792ae" font-weight="400" font-size="12"> → solo pasan los índices [2] y [4]</tspan>
+      </text>
+    </g>
+
+    <!-- Visual Conduit / Arrows to Final Vector -->
+    <g transform="translate(38, 38)">
+      <!-- Discard cross 1 -->
+      <g transform="translate(69, 10)">
+        <circle cx="0" cy="0" r="10" fill="#221118" stroke="#ff6b6b" stroke-width="1" />
+        <line x1="-5" y1="-5" x2="5" y2="5" stroke="#ff6b6b" stroke-width="1.5" />
+        <line x1="5" y1="-5" x2="-5" y2="5" stroke="#ff6b6b" stroke-width="1.5" />
+      </g>
+
+      <!-- Conduit Path for Box 2 -->
+      <path d="M 223 10 C 223 50, 240 60, 270 70" fill="none" stroke="#34d399" stroke-width="2.5" />
+      <polygon points="274,72 264,68 268,76" fill="#34d399" />
+
+      <!-- Discard cross 3 -->
+      <g transform="translate(377, 10)">
+        <circle cx="0" cy="0" r="10" fill="#221118" stroke="#ff6b6b" stroke-width="1" />
+        <line x1="-5" y1="-5" x2="5" y2="5" stroke="#ff6b6b" stroke-width="1.5" />
+        <line x1="5" y1="-5" x2="-5" y2="5" stroke="#ff6b6b" stroke-width="1.5" />
+      </g>
+
+      <!-- Conduit Path for Box 4 -->
+      <path d="M 531 10 C 531 50, 480 60, 440 70" fill="none" stroke="#34d399" stroke-width="2.5" />
+      <polygon points="436,72 442,76 446,68" fill="#34d399" />
+
+      <!-- Discard cross 5 -->
+      <g transform="translate(685, 10)">
+        <circle cx="0" cy="0" r="10" fill="#221118" stroke="#ff6b6b" stroke-width="1" />
+        <line x1="-5" y1="-5" x2="5" y2="5" stroke="#ff6b6b" stroke-width="1.5" />
+        <line x1="5" y1="-5" x2="-5" y2="5" stroke="#ff6b6b" stroke-width="1.5" />
+      </g>
+
+      <!-- Final Vector Box (Centered: 2 items) -->
+      <!-- Center: around x = 382. Item 1: x = 200, Item 2: x = 360 -->
+      <g transform="translate(190, 75)">
+        <rect width="374" height="85" rx="14" fill="#111a30" stroke="#34d399" stroke-width="2" />
+        
+        <!-- Result 1 -->
+        <g transform="translate(20, 12)">
+          <rect width="150" height="60" rx="8" fill="url(#result-box-grad)" stroke="#4c9aff" stroke-width="1.5" />
+          <text x="12" y="20" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="700">[1]</text>
+          <text x="75" y="42" fill="#edf1fa" font-family="'JetBrains Mono', monospace" font-size="22" font-weight="800" text-anchor="middle">480</text>
+          <text x="140" y="20" fill="#8792ae" font-family="'JetBrains Mono', monospace" font-size="9" text-anchor="end">← [2]</text>
+        </g>
+
+        <!-- Result 2 -->
+        <g transform="translate(204, 12)">
+          <rect width="150" height="60" rx="8" fill="url(#result-box-grad)" stroke="#4c9aff" stroke-width="1.5" />
+          <text x="12" y="20" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="700">[2]</text>
+          <text x="75" y="42" fill="#edf1fa" font-family="'JetBrains Mono', monospace" font-size="22" font-weight="800" text-anchor="middle">890</text>
+          <text x="140" y="20" fill="#8792ae" font-family="'JetBrains Mono', monospace" font-size="9" text-anchor="end">← [4]</text>
+        </g>
+      </g>
+    </g>
+  </g>
+
+  <!-- Bottom Key Insight Strip -->
+  <g transform="translate(60, 595)">
+    <text x="0" y="15" fill="#8792ae" font-family="'JetBrains Mono', monospace" font-size="12">
+      <tspan fill="#34d399" font-weight="700">Regla clave:</tspan> length(ventas_altas) es exactamente igual a <tspan fill="#edf1fa">sum(filtro)</tspan> = 2 elementos.
+    </text>
+  </g>
+</svg>

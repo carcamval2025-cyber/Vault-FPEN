@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 400" width="1500" height="400">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a0f1c"/>
+      <stop offset="100%" stop-color="#111a30"/>
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4c9aff"/>
+      <stop offset="100%" stop-color="#4c9aff"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="82%" cy="30%" r="55%">
+      <stop offset="0%" stop-color="#4c9aff" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#4c9aff" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch" result="noise"/>
+      <feColorMatrix in="noise" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.03 0"/>
+      <feComposite operator="over" in2="SourceGraphic"/>
+    </filter>
+  </defs>
+  <rect width="1500" height="400" fill="url(#bg)"/>
+  <rect width="1500" height="400" fill="url(#glow)"/>
+  <g><line x1="0" y1="0" x2="0" y2="400" stroke="#182645" stroke-width="1" opacity="0.5"/>
+<line x1="60" y1="0" x2="60" y2="400" stroke="#182645" stroke-width="1" opacity="0.5"/>
+<line x1="120" y1="0" x2="120" y2="400" stroke="#182645" stroke-width="1" opacity="0.5"/>
+<line x1="180" y1="0" x2="180" y2="400" stroke="#182645" stroke-width="1" opacity="0.5"/>
+<line x1="240" y1="0" x2="240" y2="400" stroke="#182645" stroke-width="1" opacity="0.5"/>
+<line x1="300" y1="0" x2="300" y2="400" stroke="#182645" stroke-width="1" opacity="0.5"/>
+<line x1="360" y1="0" x2="360" y2="400" stroke="#182645" stroke-width="1" opacity="0.5"/>
+<line x1="420" y1="0" x2="420" y2="400" stroke="#182645" stroke-width="1" opacity="0.5"/>
+<line x1="480" y1="0" x2="480" y2="400" stroke="#182645" stroke-width="1" opacity="0.5"/>
+<line x1="540" y1="0" x2="540" y2="400" stroke="#182645" stroke-width="1" opacity="0.5"/>
+<line x1="600" y1="0" x2="600" y2="400" stroke="#182645" stroke-width="1" opacity="0.5"/>
+<line x1="660" y1="0" x2="660" y2="400" stroke="#182645" stroke-width="1" opacity="0.5"/>
+<line x1="720" y1="0" x2="720" y2="400" stroke="#182645" stroke-width="1" opacity="0.5"/>
+<line x1="780" y1="0" x2="780" y2="400" stroke="#182645" stroke-width="1" opacity="0.5"/>
+<line x1="840" y1="0" x2="840" y2="400" stroke="#182645" stroke-width="1" opacity="0.5"/>
+<line x1="900" y1="0" x2="900" y2="400" stroke="#182645" stroke-width="1" opacity="0.5"/>
+<line x1="960" y1="0" x2="960" y2="400" stroke="#182645" stroke-width="1" opacity="0.5"/>
+<line x1="1020" y1="0" x2="1020" y2="400" stroke="#182645" stroke-width="1" opacity="0.5"/>
+<line x1="1080" y1="0" x2="1080" y2="400" stroke="#182645" stroke-width="1" opacity="0.5"/>
+<line x1="1140" y1="0" x2="1140" y2="400" stroke="#182645" stroke-width="1" opacity="0.5"/>
+<line x1="1200" y1="0" x2="1200" y2="400" stroke="#182645" stroke-width="1" opacity="0.5"/>
+<line x1="1260" y1="0" x2="1260" y2="400" stroke="#182645" stroke-width="1" opacity="0.5"/>
+<line x1="1320" y1="0" x2="1320" y2="400" stroke="#182645" stroke-width="1" opacity="0.5"/>
+<line x1="1380" y1="0" x2="1380" y2="400" stroke="#182645" stroke-width="1" opacity="0.5"/>
+<line x1="1440" y1="0" x2="1440" y2="400" stroke="#182645" stroke-width="1" opacity="0.5"/>
+<line x1="1500" y1="0" x2="1500" y2="400" stroke="#182645" stroke-width="1" opacity="0.5"/>
+<line x1="0" y1="0" x2="1500" y2="0" stroke="#182645" stroke-width="1" opacity="0.5"/>
+<line x1="0" y1="60" x2="1500" y2="60" stroke="#182645" stroke-width="1" opacity="0.5"/>
+<line x1="0" y1="120" x2="1500" y2="120" stroke="#182645" stroke-width="1" opacity="0.5"/>
+<line x1="0" y1="180" x2="1500" y2="180" stroke="#182645" stroke-width="1" opacity="0.5"/>
+<line x1="0" y1="240" x2="1500" y2="240" stroke="#182645" stroke-width="1" opacity="0.5"/>
+<line x1="0" y1="300" x2="1500" y2="300" stroke="#182645" stroke-width="1" opacity="0.5"/>
+<line x1="0" y1="360" x2="1500" y2="360" stroke="#182645" stroke-width="1" opacity="0.5"/>
+<line x1="0" y1="420" x2="1500" y2="420" stroke="#182645" stroke-width="1" opacity="0.5"/></g>
+  <rect x="0" y="392" width="1500" height="8" fill="url(#accentGrad)"/>
+  <circle cx="1320" cy="90" r="130" fill="none" stroke="#4c9aff" stroke-width="1.5" opacity="0.35"/>
+  <circle cx="1320" cy="90" r="90" fill="none" stroke="#4c9aff" stroke-width="1.5" opacity="0.25"/>
+  <text x="90" y="205" font-family="Georgia, 'Times New Roman', serif" font-size="74" font-weight="700" fill="#edf1fa" letter-spacing="0.5">Programa</text>
+  <text x="92" y="252" font-family="Consolas, 'JetBrains Mono', monospace" font-size="26" fill="#8792ae" letter-spacing="1">CONTEXTO · EVALUACION · PROYECTO GRUPAL · DISENO</text>
+  <rect x="90" y="270" width="64" height="4" fill="url(#accentGrad)"/>
+  <rect width="1500" height="400" filter="url(#grain)" opacity="0.5"/>
+</svg>

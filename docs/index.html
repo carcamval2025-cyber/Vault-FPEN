@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FPEN, Fundamentos de Programación para Economía y Negocios</title>
+<meta name="description" content="Materiales de estudio de Fundamentos de Programación para Economía y Negocios, ESEN, Ciclo III/2026." />
+<link rel="icon" href="assets/brand/fpen-favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,800&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;1,7..72,400&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg0:#0a0f1c; --bg1:#111a30; --bg2:#182645;
+  --blue:#4c9aff; --teal:#2dd4bf; --amber:#f5a623; --coral:#ff6b6b; --violet:#a78bfa; --green:#34d399;
+  --tp:#edf1fa; --ts:#8792ae;
+  --border: rgba(237,241,250,0.09);
+  --border-strong: rgba(237,241,250,0.16);
+  --r-sm: 8px; --r-md: 12px; --r-lg: 16px; --r-pill: 999px;
+  --font-display:'Fraunces', 'Iowan Old Style', Georgia, serif;
+  --font-body:'Literata', Georgia, 'Times New Roman', serif;
+  --font-mono:'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace;
+  --maxw: 1180px;
+  --z-base: 1; --z-grain: 2; --z-nav:100;
+}
+*,*::before,*::after{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+body{
+  margin:0; background:var(--bg0); color:var(--tp);
+  font-family:var(--font-body); font-size:17px; line-height:1.65;
+  -webkit-font-smoothing:antialiased; min-height:100dvh; position:relative; overflow-x:hidden;
+}
+#grain{ position:fixed; inset:0; width:100%; height:100%; pointer-events:none; z-index:var(--z-grain); opacity:0.045; mix-blend-mode:overlay; }
+::selection{ background:var(--blue); color:var(--bg0); }
+a{ color:var(--teal); }
+a:focus-visible, button:focus-visible, [tabindex]:focus-visible{ outline:2px solid var(--blue); outline-offset:3px; border-radius:4px; }
+h1,h2,h3,h4{ font-family:var(--font-display); font-weight:700; letter-spacing:-0.01em; line-height:1.15; margin:0 0 .5em; color:var(--tp); text-wrap:balance; }
+h1{ font-weight:800; }
+p{ margin:0 0 1em; color:var(--tp); max-width:72ch; text-wrap:pretty; }
+code, .mono{ font-family:var(--font-mono); }
+.container{ max-width:var(--maxw); margin:0 auto; padding:0 clamp(16px,4vw,40px); }
+main{ position:relative; z-index:var(--z-base); }
+
+.topnav{
+  position:sticky; top:0; z-index:var(--z-nav);
+  background:rgba(10,15,28,0.86); backdrop-filter:blur(14px) saturate(140%);
+  border-bottom:1px solid var(--border);
+}
+.topnav-inner{ display:flex; align-items:center; justify-content:space-between; gap:18px; padding:14px clamp(16px,4vw,40px); max-width:var(--maxw); margin:0 auto; }
+.brand{ display:flex; align-items:center; color:var(--tp); text-decoration:none; }
+.brand img{ display:block; width:clamp(180px,20vw,220px); height:auto; }
+.topnav-inner a.repo{ font-family:var(--font-mono); font-size:.78rem; color:var(--ts); text-decoration:none; border:1px solid var(--border-strong); padding:6px 12px; border-radius:var(--r-pill); transition:color .18s cubic-bezier(0.16,1,0.3,1), border-color .18s cubic-bezier(0.16,1,0.3,1); }
+.topnav-inner a.repo:hover{ color:var(--tp); border-color:var(--blue); }
+
+.hero{
+  position:relative; padding:clamp(48px,7vw,88px) 0 clamp(32px,5vw,56px);
+  overflow:hidden; border-bottom:1px solid var(--border);
+}
+.hero::before{
+  content:''; position:absolute; inset:-20% -10% auto -10%; height:520px;
+  background:radial-gradient(60% 60% at 20% 20%, rgba(76,154,255,0.20), transparent 60%),
+             radial-gradient(50% 50% at 85% 10%, rgba(45,212,191,0.16), transparent 60%);
+  filter:blur(10px); pointer-events:none;
+}
+.hero-grid{
+  position:absolute; inset:0; opacity:.35;
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size:44px 44px;
+  mask-image:radial-gradient(70% 60% at 60% 10%, black, transparent 75%);
+  pointer-events:none;
+}
+.hero-inner{ position:relative; z-index:var(--z-base); display:grid; grid-template-columns:minmax(0,1.08fr) minmax(320px,.92fr); align-items:center; gap:clamp(28px,5vw,72px); }
+.hero-copy{ min-width:0; }
+.hero-art{ position:relative; min-width:0; isolation:isolate; }
+.hero-art::before{ content:''; position:absolute; inset:18% 10%; z-index:-1; background:radial-gradient(circle,rgba(76,154,255,.16),rgba(45,212,191,.05) 48%,transparent 72%); filter:blur(18px); }
+.hero-art img{ display:block; width:100%; height:auto; filter:drop-shadow(0 28px 38px rgba(0,0,0,.28)); }
+.chips{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:20px; }
+.chip{
+  display:inline-flex; align-items:center; gap:6px; font-family:var(--font-mono); font-size:.74rem; font-weight:500;
+  padding:5px 11px; border-radius:var(--r-pill); border:1px solid var(--border-strong); color:var(--ts); background:rgba(255,255,255,0.02);
+}
+.chip.c-blue{ border-color:rgba(76,154,255,.4); color:var(--blue); }
+.hero h1{ font-size:clamp(2rem,4.4vw,3.1rem); max-width:20ch; margin-bottom:.35em; }
+.hero .lede{ font-size:1.14rem; max-width:62ch; color:var(--ts); }
+
+.cycle{ display:flex; flex-wrap:wrap; gap:0; margin-top:30px; align-items:center; }
+.cycle-step{
+  display:flex; align-items:center; gap:8px; font-family:var(--font-mono); font-size:.76rem; color:var(--ts);
+  padding:7px 11px; border:1px solid var(--border); border-radius:var(--r-md); background:var(--bg1);
+}
+.cycle-arrow{ color:var(--ts); padding:0 6px; opacity:.6; }
+
+.journey{ padding:clamp(42px,6vw,68px) 0; border-bottom:1px solid var(--border); }
+.journey-head{ margin-bottom:26px; }
+.journey-head p{ color:var(--ts); font-size:.96rem; }
+.journey-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px; }
+.journey-card{ overflow:hidden; border:1px solid var(--border); border-radius:var(--r-lg); background:linear-gradient(145deg,var(--bg1),rgba(24,38,69,.72)); }
+.journey-media{ aspect-ratio:3/2; overflow:hidden; background:var(--bg1); border-bottom:1px solid var(--border); }
+.journey-media img{ display:block; width:100%; height:100%; object-fit:cover; transition:transform .28s cubic-bezier(0.16,1,0.3,1); }
+.journey-card:hover .journey-media img{ transform:scale(1.025); }
+.journey-copy{ padding:20px 20px 22px; }
+.journey-kicker{ display:block; margin-bottom:8px; color:var(--blue); font-family:var(--font-mono); font-size:.7rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; }
+.journey-card:nth-child(2) .journey-kicker{ color:var(--teal); }
+.journey-card:nth-child(3) .journey-kicker{ color:var(--violet); }
+.journey-copy h3{ margin-bottom:8px; font-size:1.18rem; }
+.journey-copy p{ margin:0; color:var(--ts); font-size:.9rem; }
+
+section.block{ padding:clamp(40px,6vw,64px) 0; }
+.block-head{ display:flex; align-items:baseline; justify-content:space-between; flex-wrap:wrap; gap:14px; margin-bottom:28px; }
+.block-head p{ margin:6px 0 0; color:var(--ts); font-size:.95rem; }
+
+.weeks-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:16px; }
+.week-card{
+  position:relative; background:linear-gradient(145deg,var(--bg1),rgba(24,38,69,.72)); border:1px solid var(--border); border-radius:var(--r-lg);
+  padding:22px 22px 20px; overflow:hidden; transition:transform .22s cubic-bezier(0.16,1,0.3,1), border-color .22s cubic-bezier(0.16,1,0.3,1), box-shadow .22s cubic-bezier(0.16,1,0.3,1);
+  text-decoration:none; display:flex; flex-direction:column; gap:10px; min-height:168px;
+}
+.week-card::before{
+  content:''; position:absolute; left:0; right:0; bottom:0; height:3px;
+  background:linear-gradient(90deg, var(--accent,var(--blue)), transparent);
+}
+a.week-card:hover, a.week-card:focus-visible{ transform:translateY(-3px); border-color:var(--border-strong); box-shadow:0 4px 8px -2px rgba(0,0,0,.5); }
+.week-card.disabled{ opacity:.55; cursor:default; }
+.week-card .top-row{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
+.week-num{ font-family:var(--font-mono); color:var(--ts); font-size:.82rem; }
+.status{
+  display:inline-flex; align-items:center; gap:6px; font-family:var(--font-mono); font-size:.68rem; font-weight:700;
+  letter-spacing:.03em; text-transform:uppercase; padding:4px 10px; border-radius:var(--r-pill); border:1px solid;
+}
+.status.disponible{ color:var(--green); border-color:rgba(52,211,153,.45); background:rgba(52,211,153,.08); }
+.status.proxima{ color:var(--ts); border-color:var(--border-strong); background:rgba(255,255,255,0.02); }
+.week-card h3{ font-size:1.05rem; margin:0; color:var(--tp); }
+.week-card .q{ color:var(--ts); font-size:.9rem; margin:0; flex:1; }
+.week-card .tag{ font-family:var(--font-mono); font-size:.7rem; color:var(--violet); }
+
+footer{ padding:40px 0 60px; color:var(--ts); font-size:.85rem; border-top:1px solid var(--border); margin-top:20px; }
+footer a{ color:var(--ts); }
+footer .foot-inner{ padding-top:24px; display:flex; flex-wrap:wrap; justify-content:space-between; gap:14px; }
+.sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+
+@media (max-width:820px){
+  .topnav-inner{ align-items:center; }
+  .brand img{ width:174px; }
+  .topnav-inner a.repo{ font-size:.7rem; padding:6px 9px; }
+  .hero-inner{ grid-template-columns:1fr; }
+  .hero-art{ width:min(100%,520px); margin:4px auto 0; }
+}
+
+@media (max-width:520px){
+  .brand img{ width:164px; }
+  .topnav-inner a.repo{ width:42px; height:34px; overflow:hidden; white-space:nowrap; color:transparent; position:relative; }
+  .topnav-inner a.repo::after{ content:'Git'; color:var(--ts); position:absolute; inset:6px 9px; }
+  .hero-art{ width:112%; margin-left:-6%; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after{
+    animation-duration:0.01ms !important; animation-iteration-count:1 !important;
+    transition-duration:0.01ms !important; scroll-behavior:auto !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<svg id="grain" aria-hidden="true">
+  <filter id="grainFilter">
+    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch" result="noise"/>
+    <feColorMatrix in="noise" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.6 0"/>
+  </filter>
+  <rect width="100%" height="100%" filter="url(#grainFilter)"/>
+</svg>
+
+<nav class="topnav">
+  <div class="topnav-inner">
+    <a class="brand" href="./" aria-label="Inicio de FPEN">
+      <img src="assets/brand/fpen-logo.svg" width="420" height="96" alt="FPEN, Programación, Economía y Negocios">
+    </a>
+    <a class="repo" href="https://github.com/carcamval2025-cyber/Vault-FPEN" target="_blank" rel="noopener">Repositorio en GitHub</a>
+  </div>
+</nav>
+
+<main>
+  <div class="hero">
+    <div class="hero-grid" aria-hidden="true"></div>
+    <div class="container hero-inner">
+      <div class="hero-copy">
+        <div class="chips">
+          <span class="chip c-blue"><b>12 semanas</b></span>
+          <span class="chip">Tema "R Notebook"</span>
+          <span class="chip">R + Tidyverse</span>
+        </div>
+        <h1>Fundamentos de Programación para Economía y Negocios</h1>
+        <p class="lede">Materiales de estudio semana a semana: guía, laboratorio, R Playground y cheat sheet, en un solo archivo por sesión. ESEN, Ciclo III/2026. Catedrático: Alvin Javier Portillo Tiliano.</p>
+
+        <div class="cycle" aria-label="Ciclo de trabajo con datos en este curso">
+          <div class="cycle-step">importar</div><span class="cycle-arrow">→</span>
+          <div class="cycle-step">ordenar</div><span class="cycle-arrow">→</span>
+          <div class="cycle-step">transformar</div><span class="cycle-arrow">→</span>
+          <div class="cycle-step">visualizar</div><span class="cycle-arrow">→</span>
+          <div class="cycle-step">modelar</div><span class="cycle-arrow">→</span>
+          <div class="cycle-step">comunicar</div>
+        </div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <img src="assets/brand/fpen-hero-data-lab.svg" width="620" height="470" alt="">
+      </div>
+    </div>
+  </div>
+
+  <section class="journey" aria-labelledby="journey-title">
+    <div class="container">
+      <div class="journey-head">
+        <h2 id="journey-title">Del código a una decisión defendible</h2>
+        <p>El curso conecta tres capacidades: construir, encontrar evidencia y explicar por qué el resultado tiene sentido.</p>
+      </div>
+      <div class="journey-grid">
+        <article class="journey-card">
+          <div class="journey-media">
+            <img src="assets/brand/fpen-programar.webp" width="960" height="640" loading="lazy" decoding="async" alt="Consola, objetos y vectores conectados en un flujo de programación">
+          </div>
+          <div class="journey-copy">
+            <span class="journey-kicker">01 · Construir</span>
+            <h3>Programar</h3>
+            <p>Dar instrucciones claras a R y comprender qué hace cada parte del código.</p>
+          </div>
+        </article>
+        <article class="journey-card">
+          <div class="journey-media">
+            <img src="assets/brand/fpen-analizar.webp" width="960" height="640" loading="lazy" decoding="async" alt="Una tabla económica transformada en barras, puntos y una curva de análisis">
+          </div>
+          <div class="journey-copy">
+            <span class="journey-kicker">02 · Encontrar evidencia</span>
+            <h3>Analizar</h3>
+            <p>Preparar los datos, descubrir patrones y comprobar que la transformación es válida.</p>
+          </div>
+        </article>
+        <article class="journey-card">
+          <div class="journey-media">
+            <img src="assets/brand/fpen-comunicar.webp" width="960" height="640" loading="lazy" decoding="async" alt="Un hallazgo verificado convertido en informe y presentación">
+          </div>
+          <div class="journey-copy">
+            <span class="journey-kicker">03 · Explicar</span>
+            <h3>Comunicar</h3>
+            <p>Interpretar el resultado y defender cómo sabemos que la conclusión es razonable.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <section class="block" style="padding-bottom: 24px;">
+      <div class="block-head">
+        <div>
+          <div class="chips" style="margin-bottom:8px">
+            <span class="chip c-blue"><b>Evaluaciones</b></span>
+            <span class="chip">Semanas 01 &middot; 02</span>
+          </div>
+          <h2>Controles y Evaluaciones</h2>
+          <p>Materiales integradores de preparación, lectura analítica y simulacro de examen con R interactivo en el navegador.</p>
+        </div>
+      </div>
+
+      <div class="weeks-grid" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));">
+
+        <a class="week-card" href="control-01/guia/" style="--accent:var(--teal)">
+          <div class="top-row">
+            <span class="week-num">Control 01 &middot; Semanas 1 y 2</span>
+            <span class="status disponible">Disponible</span>
+          </div>
+          <h3>Guía de lectura profunda y análisis</h3>
+          <p class="q">Fundamentos conceptuales y metodológicos para el primer control: orden de ejecución, tipos atómicos, jerarquía de coerción, vectores y data frames.</p>
+          <div class="top-row" style="margin-top:auto">
+            <span class="tag" style="color:var(--teal)">36 preguntas &middot; R4DS &middot; Diagramas SVG</span>
+            <span class="tag" style="color:var(--ts)">Abrir guía &rarr;</span>
+          </div>
+        </a>
+
+        <a class="week-card" href="control-01/repaso/" style="--accent:var(--coral)">
+          <div class="top-row">
+            <span class="week-num">Control 01 &middot; Semanas 1 y 2</span>
+            <span class="status disponible">Disponible</span>
+          </div>
+          <h3>Repaso integrador y simulacro de examen</h3>
+          <p class="q">Guía teórica (30 preguntas), 6 ejercicios de práctica con R en vivo (webR), simulacro cronometrado (60 min) y cheat sheet de sintaxis.</p>
+          <div class="top-row" style="margin-top:auto">
+            <span class="tag" style="color:var(--coral)">R en vivo (webR) &middot; Dataset CSV</span>
+            <span class="tag" style="color:var(--ts)">Iniciar simulacro &rarr;</span>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+    <section class="block">
+      <div class="block-head">
+        <div>
+          <h2>Materiales por semana</h2>
+          <p>Cada tarjeta abre el material completo de esa semana. Las semanas sin material aún muestran "Próxima".</p>
+        </div>
+      </div>
+
+      <div class="weeks-grid">
+
+        <a class="week-card" href="semana-01/" style="--accent:var(--blue)">
+          <div class="top-row"><span class="week-num">Semana 01</span><span class="status disponible">Disponible</span></div>
+          <h3>R como herramienta para pensar</h3>
+          <p class="q">¿Qué puedo hacer con R y cómo le doy instrucciones?</p>
+          <div class="top-row" style="margin-top:auto">
+            <span class="tag" style="color:var(--blue)">Guía &middot; Lab &middot; Playground</span>
+            <span class="tag" style="color:var(--ts)">Abrir material &rarr;</span>
+          </div>
+        </a>
+
+        <div class="week-card disabled" style="--accent:var(--ts)">
+          <div class="top-row"><span class="week-num">Semana 02</span><span class="status proxima">Próxima</span></div>
+          <h3>Cómo representa R los datos</h3>
+          <p class="q">¿Cómo representa R los datos con los que trabaja un economista?</p>
+        </div>
+
+        <div class="week-card disabled" style="--accent:var(--ts)">
+          <div class="top-row"><span class="week-num">Semana 03</span><span class="status proxima">Próxima</span></div>
+          <h3>Visualización con ggplot2</h3>
+          <p class="q">¿Qué puedo descubrir de mis datos antes de calcular?</p>
+        </div>
+
+        <div class="week-card disabled" style="--accent:var(--ts)">
+          <div class="top-row"><span class="week-num">Semana 04</span><span class="status proxima">Próxima</span></div>
+          <h3>Transformación con dplyr</h3>
+          <p class="q">Tengo una base. ¿Cómo obtengo la información que necesito?</p>
+        </div>
+
+        <a class="week-card" href="semana-05/" style="--accent:var(--blue)">
+          <div class="top-row"><span class="week-num">Semana 05 · Sesión 01</span><span class="status disponible">Disponible</span></div>
+          <h3>El operador pipe y transformación</h3>
+          <p class="q">Mecánica del operador pipe nativo <code>|&gt;</code>, lógica de filtrado con operadores relacionales y selección con <code>nycflights13</code>.</p>
+          <div class="top-row" style="margin-top:auto">
+            <span class="tag" style="color:var(--teal)">Sesión 01 &middot; Verbos dplyr &middot; Tubería</span>
+            <span class="tag" style="color:var(--ts)">Abrir sesión &rarr;</span>
+          </div>
+        </a>
+
+        <div class="week-card disabled" style="--accent:var(--violet)">
+          <div class="top-row"><span class="week-num">Semana 06</span><span class="status proxima">Próxima</span></div>
+          <h3>Primer examen parcial</h3>
+          <p class="q">Integrador de las semanas 1 a 5. Sin material de laboratorio.</p>
+        </div>
+
+        <div class="week-card disabled" style="--accent:var(--ts)">
+          <div class="top-row"><span class="week-num">Semana 07</span><span class="status proxima">Próxima</span></div>
+          <h3>Tidy data</h3>
+          <p class="q">¿Qué hago cuando la estructura de una base dificulta el análisis?</p>
+        </div>
+
+        <div class="week-card disabled" style="--accent:var(--ts)">
+          <div class="top-row"><span class="week-num">Semana 08</span><span class="status proxima">Próxima</span></div>
+          <h3>Joins entre bases</h3>
+          <p class="q">¿Qué ocurre cuando la información está repartida entre bases?</p>
+        </div>
+
+        <div class="week-card disabled" style="--accent:var(--ts)">
+          <div class="top-row"><span class="week-num">Semana 09</span><span class="status proxima">Próxima</span></div>
+          <h3>Funciones e iteración</h3>
+          <p class="q">¿Cómo dejo de repetir manualmente lo mismo?</p>
+        </div>
+
+        <div class="week-card disabled" style="--accent:var(--ts)">
+          <div class="top-row"><span class="week-num">Semana 10</span><span class="status proxima">Próxima</span></div>
+          <h3>Análisis exploratorio</h3>
+          <p class="q">¿Cómo paso de tener una base a entender qué ocurre en ella?</p>
+        </div>
+
+        <div class="week-card disabled" style="--accent:var(--violet)">
+          <div class="top-row"><span class="week-num">Semana 11</span><span class="status proxima">Próxima</span></div>
+          <h3>R con IA generativa</h3>
+          <p class="q">Si una IA puede escribir código, ¿qué necesito saber yo?</p>
+          <span class="tag">IA requerida</span>
+        </div>
+
+        <div class="week-card disabled" style="--accent:var(--violet)">
+          <div class="top-row"><span class="week-num">Semana 12</span><span class="status proxima">Próxima</span></div>
+          <h3>Segundo examen parcial</h3>
+          <p class="q">Integrador de todo el curso. Sin material de laboratorio.</p>
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="container foot-inner">
+      <div>FPEN · Fundamentos de Programación para Economía y Negocios, ESEN, Ciclo III/2026<br>Catedrático: Alvin Javier Portillo Tiliano</div>
+      <div>Material de apoyo. No sustituye la lectura ni la clase presencial.</div>
+    </div>
+  </footer>
+</main>
+
+</body>
+</html>
