@@ -48,23 +48,45 @@ Cada bloque de R tiene **Ejecutar** y **Editar**. Corre con [webR](https://docs.
 
 ## Diseño
 
-Mismo sistema de componentes e interacción que la guía de estudio de IDS, con identidad propia de FPEN:
+Voz propia de **tabloide económico**: cada semana es una edición con portada, gráfico y titulares. Mismos componentes e interacción de estudio de siempre, con identidad FPEN.
 
-- **Azul noche FPEN** (`#111a30`) en portadas, barra de navegación y editor de código; **resaltador ámbar** (`#f5a623`) para la pregunta orientadora y lo esencial; acentos azul y teal de R; colores semánticos del curso para las etiquetas de IA (coral, verde, violeta). Logo y favicon FPEN.
-- **Barra flotante** con S1 a S12 y C1 (Control 01), menú a pantalla completa y botón de tema claro u oscuro (sigue al sistema la primera vez).
-- **Paneles “liquid glass”** (transparentes, con desenfoque, brillo y canto de luz) sobre campos de color con un tono propio por semana. Con “reducir transparencia” pasan a ser sólidos; con “reducir movimiento” no hay animaciones.
-- **Código como en RStudio**: pestaña de script `.R`, etiqueta del lenguaje, Editar, Ejecutar, Copiar y números de línea; las salidas son el panel **Console** con el prompt `>`.
-- Tipografías **Fraunces** (títulos), **Atkinson Hyperlegible Next** (lectura) y **JetBrains Mono** (código, sin ligaduras para que `<-`, `|>` y `==` se vean tal cual).
-- **Láminas SVG independientes** en `docs/assets/img/` (ambiente de R, paneles de RStudio, operadores, vectores, indexación, data frames, importación, capas de ggplot, elegir gráfico, `filter()`, `NA`, pipe, Y contra O y la ruta del ciclo). Se ven sobre fondo claro en ambos temas. Las ilustraciones generadas con IA del material original se conservan rotuladas como tales.
-- Gráficos de resultado generados con R en `docs/assets/img/graficos/`.
+- **Portada**:
+  - número de semana gigante, titular y un sello con la evaluación;
+  - la pregunta orientadora en una franja azul noche con subrayado ámbar;
+  - un **gráfico real de los datos de la semana** (calculado con R) que se lee con una **lupa**: se mueve con el cursor, al tocar o con las flechas ← →, y una región viva lee cada dato.
+- **Color por momento de estudio**:
+  - ámbar para *Antes de clase*, blanco frío para *Aprender*, azul noche para *Practicar* y azul R intenso para *Proyecto y evaluación*;
+  - detrás corre, tenue, la serie de datos de la semana.
+- **Barra interactiva**:
+  - **cinta de semanas** que cotiza tu avance ("S2 ▲ 42 %"): corre despacio y se pausa con el cursor, el foco o un botón;
+  - **índice de la página**, con la sección actual, su momento y el tiempo de lectura restante;
+  - **buscador Ctrl K** de semanas, secciones, ejercicios y funciones de R (cada función, en la semana que la enseña);
+  - **barra de lectura**, tema claro u oscuro y menú a pantalla completa.
+- **Papeles de imprenta** (marco de 2 px y sombra sólida desplazada) para cajas, ejercicios, quiz, tablas y código.
+- **Vidrio ahumado** azul noche con filo ámbar solo en "En palabras simples", la nota de la lupa, el índice y el buscador. Con "reducir transparencia" pasa a sólido; con "reducir movimiento" no hay animaciones y la cinta queda quieta.
+- **Código como en RStudio**: pestaña de script `.R`, etiqueta R, Editar, Ejecutar, Copiar y números de línea. Las salidas son el panel **Console**.
+- Tipografías **Schibsted Grotesk** (titulares, cifras, etiquetas y gráficos), **Source Serif 4** (lectura) y **JetBrains Mono** (código, sin ligaduras).
+- Logo y favicon FPEN. Colores semánticos del curso para las etiquetas de IA: coral, verde y violeta.
+- **Láminas SVG** en `docs/assets/img/`, numeradas en cada página; gráficos de resultado generados con R en `docs/assets/img/graficos/`.
 
-Archivos compartidos: `docs/assets/guia.css`, `docs/assets/guia.js` (progreso, quizzes, trazas, bloqueo de soluciones, simulacro, menú, tema) y `docs/assets/ejecutar-r.js` (webR).
+Archivos compartidos:
+
+- `docs/assets/guia.css`;
+- `docs/assets/guia.js`: progreso, quizzes, trazas, bloqueo de soluciones, simulacro, cinta, índice, buscador, lupa, menú y tema;
+- `docs/assets/ejecutar-r.js`: webR;
+- `docs/assets/buscar.json`: índice del buscador.
+
+El detalle completo está en `00 Programa/Sistema de Diseño - Tema R Notebook.md`.
 
 ## Verificación
 
 - Todos los bloques de R con salida mostrada se ejecutaron con R 4.3 (dplyr 1.1, ggplot2, readr) y se compararon con la página; los bloques sin salida se ejecutaron para confirmar que no dan errores (salvo los ejemplos de error intencionales).
 - Sin ids duplicados, anclas rotas ni archivos inexistentes; todos los SVG son XML válido.
-- Con Chromium (Playwright): sin scroll horizontal a 390 y 1280 px, sin errores de JavaScript, quizzes y trazas dan “correcto” con las soluciones, y Ejecutar, Editar, bucle infinito, gráficos, CSV y simulacro funcionan en el navegador.
+- Con Chromium (Playwright):
+  - sin scroll horizontal a 390 y 1280 px y sin errores de JavaScript;
+  - quizzes y trazas dan “correcto” con las soluciones;
+  - Ejecutar, Editar, bucle infinito, gráficos, CSV y simulacro funcionan en el navegador;
+  - el índice salta a cada sección, Ctrl K encuentra y navega, la lupa responde al teclado y la cinta se pausa.
 
 ## Publicar con GitHub Pages
 

@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" width="760" height="400" role="img" aria-label="Los cuatro paneles de RStudio: editor de scripts, consola, Environment con los objetos creados y el panel de archivos, gráficos y ayuda.">
 <title>Los cuatro paneles de RStudio: editor de scripts, consola, Environment con los objetos creados y el panel de archivos, gráficos y ayuda.</title>
 <style>
-  text { font-family: 'Atkinson Hyperlegible Next', 'Atkinson Hyperlegible', Arial, sans-serif; font-size: 14px; fill: #111a30; }
-  .t { font-family: Fraunces, Georgia, 'Times New Roman', serif; font-weight: 700; font-size: 16px; }
+  text { font-family: 'Schibsted Grotesk', Arial, sans-serif; font-size: 14px; fill: #111a30; }
+  .t { font-family: 'Schibsted Grotesk', 'Arial Narrow', Arial, sans-serif; font-weight: 700; font-size: 16px; }
   .m { font-family: 'JetBrains Mono', Menlo, Consolas, monospace; font-size: 13px; font-variant-ligatures: none; font-feature-settings: "liga" 0, "calt" 0; }
   .s { font-size: 12px; fill: #56607a; }
   .b { font-weight: 700; }

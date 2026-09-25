@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 300" width="760" height="300" role="img" aria-label="Arriba, las cuatro cajas 4200, 4550, 4100 y 4800 forman un solo objeto llamado ingresos. Abajo, la misma operación por 1.05 se aplica a las cuatro posiciones a la vez y da 4410, 4777.5, 4305 y 5040.">
 <title>Arriba, las cuatro cajas 4200, 4550, 4100 y 4800 forman un solo objeto llamado ingresos. Abajo, la misma operación por 1.05 se aplica a las cuatro posiciones a la vez y da 4410, 4777.5, 4305 y 5040.</title>
 <style>
-  text { font-family: 'Atkinson Hyperlegible Next', 'Atkinson Hyperlegible', Arial, sans-serif; font-size: 14px; fill: #111a30; }
-  .t { font-family: Fraunces, Georgia, 'Times New Roman', serif; font-weight: 700; font-size: 16px; }
+  text { font-family: 'Schibsted Grotesk', Arial, sans-serif; font-size: 14px; fill: #111a30; }
+  .t { font-family: 'Schibsted Grotesk', 'Arial Narrow', Arial, sans-serif; font-weight: 700; font-size: 16px; }
   .m { font-family: 'JetBrains Mono', Menlo, Consolas, monospace; font-size: 13px; font-variant-ligatures: none; font-feature-settings: "liga" 0, "calt" 0; }
   .s { font-size: 12px; fill: #56607a; }
   .b { font-weight: 700; }

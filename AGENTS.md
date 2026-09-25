@@ -41,7 +41,9 @@ es mejor preguntar al usuario que inventar contenido nuevo.
 5. Cualquier página de la guía debe usar los componentes compartidos de `docs/assets/`
    (`guia.css`, `guia.js`, `ejecutar-r.js`) y seguir
    `00 Programa/Sistema de Diseño - Tema R Notebook.md` (desde el 2026-09-25 describe el
-   sistema vigente, "Guía FPEN"; el tema "R Notebook" quedó reemplazado). No inventar una
+   sistema vigente, "Guía FPEN" con voz de tabloide económico: color por momento de estudio,
+   portada con gráfico y lupa, cinta de semanas, índice y buscador Ctrl K; el tema
+   "R Notebook" quedó reemplazado). No inventar una
    paleta ni tipografía nueva ni copiar CSS suelto en una página: los cambios de diseño
    van en `docs/assets/`.
 6. Antes de generar cualquier material, preguntar si hay ambigüedad.
@@ -83,7 +85,9 @@ cuadro de respuesta y solución desplegable; el laboratorio de 5 ejercicios va a
 playground cuando aplique, práctica intensiva (ejercicios rápidos + 3 problemas tipo
 examen con casos de prueba y solución), proyecto (fase + preguntas de defensa), lista
 "puedo…", cheat sheet y fuentes. Los bloques de R se ejecutan con webR; toda salida
-mostrada debe salir de ejecutar el código de verdad. El estándar de referencia es
+mostrada debe salir de ejecutar el código de verdad (también los números del gráfico de
+portada). Las secciones se agrupan en cuatro tramos de color según el índice de la página
+(antes de clase, aprender, practicar, proyecto y evaluación). El estándar de referencia es
 `docs/semana-01/index.html`. Los `.html` de `04 Materiales Generados/` son las versiones
 anteriores (tema R Notebook) y se conservan como archivo.
 

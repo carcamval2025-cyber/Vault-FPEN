@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 330" width="760" height="330" role="img" aria-label="El vector precios con los valores 10, 15, 20 y 35. Por posición, precios de c 1 y 3 da 10 y 20. Por exclusión, precios de menos 2 da 10, 20 y 35. Por condición, precios mayor que 15 produce la máscara FALSE, FALSE, TRUE, TRUE y solo pasan 20 y 35.">
 <title>El vector precios con los valores 10, 15, 20 y 35. Por posición, precios de c 1 y 3 da 10 y 20. Por exclusión, precios de menos 2 da 10, 20 y 35. Por condición, precios mayor que 15 produce la máscara FALSE, FALSE, TRUE, TRUE y solo pasan 20 y 35.</title>
 <style>
-  text { font-family: 'Atkinson Hyperlegible Next', 'Atkinson Hyperlegible', Arial, sans-serif; font-size: 14px; fill: #111a30; }
-  .t { font-family: Fraunces, Georgia, 'Times New Roman', serif; font-weight: 700; font-size: 16px; }
+  text { font-family: 'Schibsted Grotesk', Arial, sans-serif; font-size: 14px; fill: #111a30; }
+  .t { font-family: 'Schibsted Grotesk', 'Arial Narrow', Arial, sans-serif; font-weight: 700; font-size: 16px; }
   .m { font-family: 'JetBrains Mono', Menlo, Consolas, monospace; font-size: 13px; font-variant-ligatures: none; font-feature-settings: "liga" 0, "calt" 0; }
   .s { font-size: 12px; fill: #56607a; }
   .b { font-weight: 700; }

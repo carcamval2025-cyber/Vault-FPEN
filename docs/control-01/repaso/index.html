@@ -5,80 +5,126 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Control 01 · Repaso y simulacro</title>
 <meta name="description" content="Repaso integrador del Control 01 de FPEN: 30 preguntas de teoría, práctica con R en vivo (webR) sobre un caso de puntos de venta, simulacro cronometrado de 45 minutos y cheat sheet.">
+<meta name="theme-color" content="#111a30">
 <link rel="icon" href="../../assets/brand/fpen-favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..900,0..100,0..1&family=Atkinson+Hyperlegible+Next:ital,wght@0,200..800;1,200..800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Schibsted+Grotesk:wght@400..900&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..800;1,8..60,300..800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../assets/guia.css">
 <script>try{var t=localStorage.getItem("fpen-guia-v1-tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
 </head>
-<body data-semana="c1">
-
-<header class="isla-wrap">
-  <div class="isla">
-    <a class="brand" href="../../index.html"><img src="../../assets/brand/fpen-favicon.svg" alt="" width="25" height="25">FPEN <small>Guía de estudio</small></a>
-    <nav class="isla-semanas" aria-label="Semanas">
-      <a href="../../semana-01/index.html">S1</a>
-      <a href="../../semana-02/index.html">S2</a>
-      <a href="../../semana-03/index.html">S3</a>
-      <a href="../../semana-04/index.html">S4</a>
-      <a href="../../semana-05/index.html">S5</a>
-      <span class="futura" title="Semana 6: próximamente">S6</span>
-      <span class="futura" title="Semana 7: próximamente">S7</span>
-      <span class="futura" title="Semana 8: próximamente">S8</span>
-      <span class="futura" title="Semana 9: próximamente">S9</span>
-      <span class="futura" title="Semana 10: próximamente">S10</span>
-      <span class="futura" title="Semana 11: próximamente">S11</span>
-      <span class="futura" title="Semana 12: próximamente">S12</span>
-      <a class="control" href="../../control-01/guia/index.html" data-control="Control 01: lectura, repaso y simulacro" aria-current="page">C1</a>
+<body data-semana="c1" data-progreso="c1r" data-raiz="../../">
+<a class="saltar" href="#contenido">Saltar al contenido</a>
+<header class="barra">
+  <div class="barra-fila">
+    <a class="marca" href="../../index.html"><img src="../../assets/brand/fpen-favicon.svg" alt="" width="26" height="26">FPEN<small>Guía de estudio</small></a>
+    <nav class="cinta" aria-label="Semanas del curso y tu avance">
+      <div class="cinta-pista">
+        <a class="tk" href="../../semana-01/index.html" data-tk="s1"><b>S1</b><span class="tk-tit">R para pensar</span><span class="tk-pct" data-estado="cero">■ 0 %</span></a>
+        <a class="tk" href="../../semana-02/index.html" data-tk="s2"><b>S2</b><span class="tk-tit">Valores a datos</span><span class="tk-pct" data-estado="cero">■ 0 %</span></a>
+        <a class="tk" href="../../semana-03/index.html" data-tk="s3"><b>S3</b><span class="tk-tit">Visualizar</span><span class="tk-pct" data-estado="cero">■ 0 %</span></a>
+        <a class="tk" href="../../control-01/guia/index.html" data-tk="c1" data-control="Control 01: lectura, repaso y simulacro" aria-current="page"><b>C1</b><span class="tk-tit">Control 01</span><span class="tk-pct" data-estado="cero">■ 0 %</span></a>
+        <a class="tk" href="../../semana-04/index.html" data-tk="s4"><b>S4</b><span class="tk-tit">Transformar</span><span class="tk-pct" data-estado="cero">■ 0 %</span></a>
+        <a class="tk" href="../../semana-05/index.html" data-tk="s5"><b>S5</b><span class="tk-tit">Pipe y verbos</span><span class="tk-pct" data-estado="cero">■ 0 %</span></a>
+        <span class="tk futura" title="Semana 6: sin guía todavía"><b>S6</b><span class="tk-tit">Parcial I</span><span class="tk-pct">sin guía</span></span>
+        <span class="tk futura" title="Semana 7: sin guía todavía"><b>S7</b><span class="tk-tit">Datos tidy</span><span class="tk-pct">sin guía</span></span>
+        <span class="tk futura" title="Semana 8: sin guía todavía"><b>S8</b><span class="tk-tit">Combinar tablas</span><span class="tk-pct">sin guía</span></span>
+        <span class="tk futura" title="Semana 9: sin guía todavía"><b>S9</b><span class="tk-tit">Automatizar</span><span class="tk-pct">sin guía</span></span>
+        <span class="tk futura" title="Semana 10: sin guía todavía"><b>S10</b><span class="tk-tit">Explorar</span><span class="tk-pct">sin guía</span></span>
+        <span class="tk futura" title="Semana 11: sin guía todavía"><b>S11</b><span class="tk-tit">R con IA</span><span class="tk-pct">sin guía</span></span>
+        <span class="tk futura" title="Semana 12: sin guía todavía"><b>S12</b><span class="tk-tit">Parcial II</span><span class="tk-pct">sin guía</span></span>
+      </div>
     </nav>
-    <button class="theme-btn" type="button" aria-label="Cambiar tema claro/oscuro"><span class="ico-tema" aria-hidden="true"></span></button>
-    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu-completo"><span class="hb" aria-hidden="true"></span><span class="hb" aria-hidden="true"></span><span class="sr">Menú</span></button>
+    <button class="barra-btn cinta-pausa" type="button" aria-pressed="false" aria-label="Pausar la cinta de semanas"><span class="ico" aria-hidden="true"></span></button>
+    <button class="barra-btn buscar-btn" type="button" aria-haspopup="dialog" aria-keyshortcuts="Control+K"><span class="ico" aria-hidden="true"></span><span>Buscar</span> <kbd>Ctrl K</kbd></button>
+    <button class="barra-btn theme-btn" type="button" aria-label="Cambiar tema claro u oscuro"><span class="ico" aria-hidden="true"></span></button>
+    <button class="barra-btn menu-btn" type="button" aria-expanded="false" aria-controls="menu-completo"><span class="hb" aria-hidden="true"></span><span class="hb" aria-hidden="true"></span><span class="sr">Menú</span></button>
   </div>
+  <div class="indice-fila">
+    <button class="indice-btn" type="button" aria-expanded="false" aria-controls="indice-pop"><span class="indice-num">§ 1/10</span><span class="indice-tit">Control 01 · Repaso</span><span class="indice-mom" data-mom="1"></span><span class="flecha" aria-hidden="true"></span></button>
+    <span class="indice-tiempo" aria-live="off"></span>
+    <nav class="indice-pop" id="indice-pop" aria-label="Índice de la página" hidden>
+    <ol>
+      <li class="grupo" data-mom="1">Empezar</li>
+      <li><a href="#uso" data-mom="1"><span class="n">1</span>Cómo usar el repaso</a></li>
+      <li class="grupo" data-mom="2">Teoría</li>
+      <li><a href="#t-pensar" data-mom="2"><span class="n">2</span>01 · Pensar antes de programar</a></li>
+      <li><a href="#t-instrucciones" data-mom="2"><span class="n">3</span>02 · R y las instrucciones</a></li>
+      <li><a href="#t-vectores" data-mom="2"><span class="n">4</span>03 · Vectores y condiciones</a></li>
+      <li><a href="#t-estructura" data-mom="2"><span class="n">5</span>04 · Estructura y verificación</a></li>
+      <li><a href="#t-visualizar" data-mom="2"><span class="n">6</span>05 · Visualizar e interpretar</a></li>
+      <li class="grupo" data-mom="3">Practicar</li>
+      <li><a href="#practica-r" data-mom="3"><span class="n">7</span>Práctica con R</a></li>
+      <li><a href="#simulacro" data-mom="3"><span class="n">8</span>Simulacro (45 min)</a></li>
+      <li class="grupo" data-mom="4">Cierre</li>
+      <li><a href="#cheat" data-mom="4"><span class="n">9</span>Cheat sheet</a></li>
+      <li><a href="#fuentes" data-mom="4"><span class="n">10</span>Fuentes</a></li>
+    </ol>
+    </nav>
+  </div>
+  <div class="lectura" aria-hidden="true"><i></i></div>
 </header>
 <div class="menu-completo" id="menu-completo" hidden></div>
 
-<header class="hero-semana">
-  <div class="hero-in">
-    <p class="hero-num" aria-hidden="true">C1</p>
-    <div class="hero-txt">
-      <p class="hero-mod"><span class="sr">Control 01 · </span>Semanas 1 a 3 · Repaso integrador y simulacro</p>
+<header class="portada-semana">
+  <div class="portada-in">
+    <p class="portada-num" aria-hidden="true">C1</p>
+    <div class="portada-txt">
+      <p class="portada-mod"><span class="sr">Control 01 · </span>Semanas 1 a 3 · Repaso integrador y simulacro</p>
       <h1>Repaso integrador y simulacro del Control 01</h1>
       <p class="lead">Teoría con respuesta escrita, práctica con R real en tu navegador sobre un caso de ventas en un campus, un simulacro de 45 minutos con las respuestas cerradas hasta el final y un cheat sheet de una pantalla.</p>
-      <ul class="ciclo-fpen" aria-label="Ciclo de trabajo con datos del curso; resaltadas las etapas de esta semana"><li class="aqui">importar</li><li class="sep" aria-hidden="true">→</li><li class="aqui">ordenar</li><li class="sep" aria-hidden="true">→</li><li class="aqui">transformar</li><li class="sep" aria-hidden="true">→</li><li class="aqui">visualizar</li><li class="sep" aria-hidden="true">→</li><li>modelar</li><li class="sep" aria-hidden="true">→</li><li>comunicar</li></ul>
     </div>
+    <p class="sello" aria-label="Evaluación: Control 01 · Sin IA"><span class="sello-top">EVALÚA</span><b>Control 01</b><span>Sin IA</span></p>
     <p class="pregunta"><span class="pregunta-lbl">Pregunta orientadora</span><mark>¿Puedo resolver, sin ayuda de IA, un problema con datos de principio a fin y justificar por qué confío en el resultado?</mark></p>
-    <dl class="hero-meta"><div><dt>Lecturas</dt><dd>R4DS cap. 2, cap. 7 (§7.2) y cap. 1</dd></div><div><dt>R en vivo</dt><dd>webR en el navegador</dd></div><div class="eval"><dt>Evaluación</dt><dd>Control 01 · Sin IA</dd></div></dl>
-    <div class="progress" data-progreso-pagina>
-      <div class="progress-bar"><span></span></div>
-      <div class="progress-label"></div>
+    <div class="graf-fila">
+<figure class="graf-portada" data-lupa data-inicial="1">
+  <figcaption class="graf-cab"><b><span class="n">Gráfico C1</span> Edificio A deja la mayor utilidad; Polideportivo, la menor</b><span>Utilidad por punto de venta en 6 días (ingreso menos costo), USD</span></figcaption>
+  <div class="graf-lienzo" tabindex="0" role="group" aria-roledescription="gráfico interactivo" aria-label="Edificio A deja la mayor utilidad; Polideportivo, la menor. Utilidad por punto de venta en 6 días (ingreso menos costo), USD. Usa las flechas izquierda y derecha para recorrer los datos.">
+<svg viewBox="0 0 640 300" aria-hidden="true" focusable="false">
+<line class="rejilla" x1="58" x2="624" y1="266.0" y2="266.0"/>
+<text class="eje" x="50" y="270.5" text-anchor="end">0</text>
+<line class="rejilla" x1="58" x2="624" y1="218.0" y2="218.0"/>
+<text class="eje" x="50" y="222.5" text-anchor="end">100</text>
+<line class="rejilla" x1="58" x2="624" y1="170.0" y2="170.0"/>
+<text class="eje" x="50" y="174.5" text-anchor="end">200</text>
+<line class="rejilla" x1="58" x2="624" y1="122.0" y2="122.0"/>
+<text class="eje" x="50" y="126.5" text-anchor="end">300</text>
+<line class="rejilla" x1="58" x2="624" y1="74.0" y2="74.0"/>
+<text class="eje" x="50" y="78.5" text-anchor="end">400</text>
+<line class="rejilla" x1="58" x2="624" y1="26.0" y2="26.0"/>
+<text class="eje" x="50" y="30.5" text-anchor="end">500</text>
+<g class="dato" data-i="0" data-x="128.8" data-y="119.6" data-val="305" data-etq="Biblioteca" data-nota="Biblioteca · ingreso 792 − costo 487" style="--k:0"><rect class="barra-g crece" x="83.5" y="119.6" width="90.6" height="146.4"/><text class="valor" x="128.8" y="111.6" text-anchor="middle">305</text></g>
+<text class="eje-cat" x="128.8" y="290" text-anchor="middle">Biblioteca</text>
+<g class="dato" data-i="1" data-x="270.2" data-y="52.4" data-val="445" data-etq="Edificio A" data-nota="Edificio A · ingreso 1008 − costo 563" style="--k:1"><rect class="destacado crece" x="225.0" y="52.4" width="90.6" height="213.6"/><text class="valor" x="270.2" y="44.4" text-anchor="middle">445</text></g>
+<text class="eje-cat" x="270.2" y="290" text-anchor="middle">Edificio A</text>
+<g class="dato" data-i="2" data-x="411.8" data-y="198.3" data-val="141" data-etq="Polideportivo" data-nota="Polideportivo · ingreso 805 − costo 664" style="--k:2"><rect class="barra-g crece" x="366.5" y="198.3" width="90.6" height="67.7"/><text class="valor" x="411.8" y="190.3" text-anchor="middle">141</text></g>
+<text class="eje-cat" x="411.8" y="290" text-anchor="middle">Polideportivo</text>
+<g class="dato" data-i="3" data-x="553.2" data-y="73.5" data-val="401" data-etq="Residencias" data-nota="Residencias · ingreso 819 − costo 418" style="--k:3"><rect class="barra-g crece" x="508.0" y="73.5" width="90.6" height="192.5"/><text class="valor" x="553.2" y="65.5" text-anchor="middle">401</text></g>
+<text class="eje-cat" x="553.2" y="290" text-anchor="middle">Residencias</text>
+<line class="base" x1="58" x2="624" y1="266.0" y2="266.0"/>
+</svg>
+  </div>
+  <p class="graf-lectura sr" aria-live="polite"></p>
+  <p class="graf-fuente">Fuente: <code>datos/ventas_campus.csv</code>; sumas por punto calculadas con R.</p>
+  <p class="graf-ayuda">Pasa el cursor, toca el gráfico o usa ← → para leer cada dato con la lupa.</p>
+</figure>
+      <aside class="ficha" aria-label="Ficha de la semana">
+        <h2>Ficha de la edición</h2>
+        <dl class="hero-meta"><div><dt>Lecturas</dt><dd>R4DS cap. 2, cap. 7 (§7.2) y cap. 1</dd></div><div><dt>R en vivo</dt><dd>webR en el navegador</dd></div><div class="eval"><dt>Evaluación</dt><dd>Control 01 · Sin IA</dd></div></dl>
+        <ul class="ciclo-fpen" aria-label="Ciclo de trabajo con datos del curso; resaltadas las etapas de esta semana"><li class="aqui">importar</li><li class="sep" aria-hidden="true">→</li><li class="aqui">ordenar</li><li class="sep" aria-hidden="true">→</li><li class="aqui">transformar</li><li class="sep" aria-hidden="true">→</li><li class="aqui">visualizar</li><li class="sep" aria-hidden="true">→</li><li>modelar</li><li class="sep" aria-hidden="true">→</li><li>comunicar</li></ul>
+        <div class="progress" data-progreso-pagina>
+          <div class="progress-bar"><span></span></div>
+          <div class="progress-label"></div>
+        </div>
+      </aside>
     </div>
   </div>
 </header>
+<main id="contenido">
 
-<div class="layout with-toc">
-<aside class="toc" aria-label="Contenido de la página">
-  <p>Control 01 · Repaso</p>
-  <ol>
-    <li class="grupo" aria-hidden="true">Empezar</li>
-    <li><a href="#uso">Cómo usar el repaso</a></li>
-    <li class="grupo" aria-hidden="true">Teoría</li>
-    <li><a href="#t-pensar">01 · Pensar antes de programar</a></li>
-    <li><a href="#t-instrucciones">02 · R y las instrucciones</a></li>
-    <li><a href="#t-vectores">03 · Vectores y condiciones</a></li>
-    <li><a href="#t-estructura">04 · Estructura y verificación</a></li>
-    <li><a href="#t-visualizar">05 · Visualizar e interpretar</a></li>
-    <li class="grupo" aria-hidden="true">Practicar</li>
-    <li><a href="#practica-r">Práctica con R</a></li>
-    <li><a href="#simulacro">Simulacro (45 min)</a></li>
-    <li class="grupo" aria-hidden="true">Cierre</li>
-    <li><a href="#cheat">Cheat sheet</a></li>
-    <li><a href="#fuentes">Fuentes</a></li>
-  </ol>
-</aside>
-
-<main>
-
+<div class="tramo" data-tramo="1" data-mom="1" id="tramo-1">
+<div class="tramo-in">
+<header class="tramo-cab"><p class="tramo-n">Momento 1 de 4</p><p class="tramo-tit">Empezar</p></header>
 <section id="uso">
   <h2>Cómo usar este repaso</h2>
   <p>Este es el material para los días previos al Control 01. Tiene cuatro partes: <strong>teoría</strong> (30 preguntas con respuesta escrita y, en varias, R en vivo para comprobar tu predicción), <strong>práctica con R</strong> sobre un caso real, un <strong>simulacro cronometrado</strong> y un <strong>cheat sheet</strong>. Si todavía no leíste los temas, empieza por la <a href="../../control-01/guia/index.html">guía de lectura</a>.</p>
@@ -96,9 +142,14 @@
   </div>
 </section>
 
+</div>
+</div>
+<div class="tramo" data-tramo="2" data-mom="2" id="tramo-2">
+<div class="tramo-in">
+<header class="tramo-cab"><p class="tramo-n">Momento 2 de 4</p><p class="tramo-tit">Teoría</p></header>
 <section id="t-pensar">
   <h2>Teoría 01 · Pensar antes de programar</h2>
-<p>Antes de que R entre en escena: qué es un algoritmo, en qué orden se resuelve un problema de datos, y por qué "el código corrió sin errores" nunca es suficiente evidencia. Estas cinco preguntas son puramente conceptuales -- no necesitas RStudio abierto para responderlas.</p><article class="ejercicio">
+<p>Antes de que R entre en escena: qué es un algoritmo, en qué orden se resuelve un problema de datos, y por qué "el código corrió sin errores" nunca es suficiente evidencia. Estas cinco preguntas son puramente conceptuales -- no necesitas RStudio abierto para responderlas.</p><article id="ej-1" class="ejercicio">
   <header><h3>Preg. 01 · R contra RStudio</h3><span class="ia permitida">IA permitida</span></header>
   <div class="cuerpo">
 <p>Una persona dice: <em>“R es lo mismo que RStudio”</em>. Explica qué hace cada uno y qué componente es el que realmente interpreta tus instrucciones.</p>  </div>
@@ -107,7 +158,7 @@
 <ul><li><strong>R</strong> es el lenguaje y el motor que interpreta y ejecuta tus instrucciones: es el que realmente "entiende" el código.</li><li><strong>RStudio</strong> es el entorno (IDE) que facilita editar scripts, usar la consola, ver objetos y gráficos: no interpreta nada por sí mismo.</li><li>Instalar solo RStudio sin R no sirve de nada: RStudio necesita a R para ejecutar cualquier instrucción.</li></ul></div></details>
   <ul class="check"><li><input type="checkbox" id="c1r-c2" data-track="c1r-c2"><label for="c1r-c2">Analizada</label></li></ul>
 </article>
-<article class="ejercicio">
+<article id="ej-2" class="ejercicio">
   <header><h3>Preg. 02 · Qué es un algoritmo</h3><span class="ia permitida">IA permitida</span></header>
   <div class="cuerpo">
 <p>Define <strong>algoritmo</strong> usando una tarea cotidiana (no de programación) con entradas, pasos y resultado. ¿Cómo comprobarías si tus instrucciones son suficientemente precisas?</p>  </div>
@@ -116,7 +167,7 @@
 <ul><li>Un algoritmo es una <strong>secuencia finita de instrucciones precisas</strong> que produce un resultado a partir de unas entradas.</li><li>Ejemplo: recibir un <code>precio</code> y un <code>efectivo</code>, comprobar que el efectivo alcanza, y devolver <code>efectivo - precio</code> como vuelto.</li><li>Se comprueba dándoselo a otra persona (o a R) sin explicar nada más: si puede seguirlo sin adivinar un paso, es suficientemente preciso.</li></ul></div></details>
   <ul class="check"><li><input type="checkbox" id="c1r-c4" data-track="c1r-c4"><label for="c1r-c4">Analizada</label></li></ul>
 </article>
-<article class="ejercicio">
+<article id="ej-3" class="ejercicio">
   <header><h3>Preg. 03 · El orden importa</h3><span class="ia permitida">IA permitida</span></header>
   <div class="cuerpo">
 <p>Ordena y explica estos cinco pasos: <em>plantear pregunta, identificar datos, escribir instrucciones, verificar resultado, comunicar decisión</em>. ¿Qué riesgo hay si empiezas directamente por el código?</p>  </div>
@@ -125,7 +176,7 @@
 <ul><li>Orden correcto: <strong>pregunta → datos → instrucciones → verificación → comunicación</strong>. Esta es la regla central de todo el curso.</li><li>Empezar por el código puede producir un cálculo perfectamente correcto para una pregunta que nadie necesitaba responder.</li><li>Sin una pregunta clara primero, no hay forma de saber qué datos hacen falta ni cómo verificar si el resultado "tiene sentido".</li></ul></div></details>
   <ul class="check"><li><input type="checkbox" id="c1r-c6" data-track="c1r-c6"><label for="c1r-c6">Analizada</label></li></ul>
 </article>
-<article class="ejercicio">
+<article id="ej-4" class="ejercicio">
   <header><h3>Preg. 04 · Describir contra predecir</h3><span class="ia permitida">IA permitida</span></header>
   <div class="cuerpo">
 <p>Contrasta una <strong>descripción</strong> de datos ya observados con una <strong>predicción</strong> de ventas futuras. ¿Qué pregunta responde cada una y cuál exige supuestos adicionales?</p>  </div>
@@ -134,7 +185,7 @@
 <ul><li>La <strong>descripción</strong> responde "¿qué ocurrió en los datos que ya tengo?": es un resumen de hechos observados.</li><li>La <strong>predicción</strong> responde "¿qué podría ocurrir fuera de esos datos?": requiere supuestos, un método y una forma de comprobar el desempeño de ese método.</li><li>Confundir ambas es común: un promedio histórico describe el pasado, no predice el futuro por sí solo.</li></ul></div></details>
   <ul class="check"><li><input type="checkbox" id="c1r-c8" data-track="c1r-c8"><label for="c1r-c8">Analizada</label></li></ul>
 </article>
-<article class="ejercicio">
+<article id="ej-5" class="ejercicio">
   <header><h3>Preg. 05 · El salto a la causalidad</h3><span class="ia permitida">IA permitida</span></header>
   <div class="cuerpo">
 <p>Un script que corre sin errores concluye: <em>“más publicidad causa más ventas”</em>, solo porque un gráfico muestra una tendencia ascendente. Señala el salto lógico y propone una formulación más defendible.</p>  </div>
@@ -147,7 +198,7 @@
 
 <section id="t-instrucciones">
   <h2>Teoría 02 · R y las instrucciones</h2>
-<p>Consola contra Script, objetos y asignación, nombres válidos, anatomía de una función, paquetes. La base absoluta de "hablarle a R" -- y el error más común de quien empieza: creer que algo se actualiza solo.</p><article class="ejercicio">
+<p>Consola contra Script, objetos y asignación, nombres válidos, anatomía de una función, paquetes. La base absoluta de "hablarle a R" -- y el error más común de quien empieza: creer que algo se actualiza solo.</p><article id="ej-6" class="ejercicio">
   <header><h3>Preg. 06 · Consola contra Script</h3><span class="ia permitida">IA permitida</span></header>
   <div class="cuerpo">
 <p>La Consola y un Script ejecutan ambos <code>20 + 5</code>. ¿Cuál de los dos te permite repetir mejor el análisis una semana después? ¿Por qué?</p>  </div>
@@ -156,7 +207,7 @@
 <ul><li>El <strong>Script</strong> conserva las instrucciones escritas y permite repetir el análisis completo más tarde, con quien sea.</li><li>La <strong>Consola</strong> es útil para pruebas rápidas e inmediatas, pero no organiza por sí sola un procedimiento reproducible: lo que escribes ahí se pierde.</li><li>Regla práctica: si el resultado importa, va en el Script; si es solo para probar algo al vuelo, la Consola basta.</li></ul></div></details>
   <ul class="check"><li><input type="checkbox" id="c1r-c12" data-track="c1r-c12"><label for="c1r-c12">Analizada</label></li></ul>
 </article>
-<article class="ejercicio">
+<article id="ej-7" class="ejercicio">
   <header><h3>Preg. 07 · Reasignar no recalcula solo</h3><span class="ia sin">Sin IA</span></header>
   <div class="cuerpo">
 <p>Interpreta este código sin ejecutarlo. Si después <strong>solo</strong> reasignas <code>presupuesto &lt;- 3000</code> (sin volver a ejecutar la línea de <code>gasto</code>), ¿qué valor tiene <code>presupuesto - gasto</code> en ese momento?</p><pre data-file="c1r-b13.R"><code class="language-r">presupuesto &lt;- 2000
@@ -175,7 +226,7 @@ presupuesto - gasto</code></pre>
 <p>Puedes comprobarlo tu mismo/a: edita el código abajo si quieres y ejecútalo en R de verdad (WebAssembly, en tu navegador).</p></div></details>
   <ul class="check"><li><input type="checkbox" id="c1r-c16" data-track="c1r-c16"><label for="c1r-c16">Analizada</label></li></ul>
 </article>
-<article class="ejercicio">
+<article id="ej-8" class="ejercicio">
   <header><h3>Preg. 08 · Nombres válidos e inválidos</h3><span class="ia permitida">IA permitida</span></header>
   <div class="cuerpo">
 <p>Para <code>nombre</code>, <code>Nombre</code>, <code>2nombre</code> y <code>venta-total</code>: indica cuáles pueden ser objetos <strong>distintos</strong> y cuáles son nombres <strong>inválidos</strong> en R.</p>  </div>
@@ -184,7 +235,7 @@ presupuesto - gasto</code></pre>
 <ul><li><code>nombre</code> y <code>Nombre</code> pueden ser <strong>dos objetos distintos</strong>: R distingue mayúsculas de minúsculas.</li><li><code>2nombre</code> es <strong>inválido</strong>: un nombre de objeto no puede empezar con un dígito.</li><li><code>venta-total</code> no es un identificador: R lo interpreta como una <strong>resta</strong> entre dos objetos (<code>venta</code> menos <code>total</code>), no como un solo nombre. Por eso el curso usa <code>snake_case</code>: <code>venta_total</code>.</li></ul></div></details>
   <ul class="check"><li><input type="checkbox" id="c1r-c18" data-track="c1r-c18"><label for="c1r-c18">Analizada</label></li></ul>
 </article>
-<article class="ejercicio">
+<article id="ej-9" class="ejercicio">
   <header><h3>Preg. 09 · Anatomía de una función</h3><span class="ia sin">Sin IA</span></header>
   <div class="cuerpo">
 <p>En <code>round(14.678, digits = 1)</code>, identifica la función, el argumento posicional y el argumento nombrado. ¿Qué cambia si usas <code>digits = 2</code>?</p><pre data-file="c1r-b19.R"><code class="language-r">round(14.678, digits = 1)</code></pre>
@@ -196,7 +247,7 @@ round(14.678, digits = 2)</code></pre>
 <p>Puedes comprobarlo tu mismo/a: edita el código abajo si quieres y ejecútalo en R de verdad (WebAssembly, en tu navegador).</p></div></details>
   <ul class="check"><li><input type="checkbox" id="c1r-c22" data-track="c1r-c22"><label for="c1r-c22">Analizada</label></li></ul>
 </article>
-<article class="ejercicio">
+<article id="ej-10" class="ejercicio">
   <header><h3>Preg. 10 · Instalar, cargar y usar</h3><span class="ia permitida">IA permitida</span></header>
   <div class="cuerpo">
 <p>Distingue <strong>instalar</strong>, <strong>cargar</strong> y <strong>usar</strong> un paquete. ¿Qué instrucción pondrías en un Script reutilizable, y cuál NO conviene ejecutar cada vez que corres el script?</p>  </div>
@@ -205,7 +256,7 @@ round(14.678, digits = 2)</code></pre>
 <ul><li><code>install.packages("readr")</code> <strong>instala</strong> el paquete en tu computadora: se hace una sola vez, no en cada corrida.</li><li><code>library(readr)</code> <strong>carga</strong> el paquete en la sesión actual de R: esta línea sí va en un Script reutilizable, al inicio.</li><li><code>read_csv()</code> es una función del paquete que ya cargaste: <strong>usarla</strong> es el paso final.</li><li>Poner <code>install.packages()</code> dentro de un Script que se comparte o se corre varias veces es un error común: reinstala innecesariamente cada vez.</li></ul></div></details>
   <ul class="check"><li><input type="checkbox" id="c1r-c24" data-track="c1r-c24"><label for="c1r-c24">Analizada</label></li></ul>
 </article>
-<article class="ejercicio">
+<article id="ej-11" class="ejercicio">
   <header><h3>Preg. 11 · mean() no modifica nada</h3><span class="ia sin">Sin IA</span></header>
   <div class="cuerpo">
 <p>Ejecuta mentalmente <code>mean(c(4, 8, 12))</code>. ¿Por qué el resultado no modifica por sí solo el vector original? ¿Cómo guardarías ese resultado?</p><pre data-file="c1r-b25.R"><code class="language-r">mean(c(4, 8, 12))</code></pre>
@@ -218,7 +269,7 @@ promedio</code></pre>
 <p>Puedes comprobarlo tu mismo/a: edita el código abajo si quieres y ejecútalo en R de verdad (WebAssembly, en tu navegador).</p></div></details>
   <ul class="check"><li><input type="checkbox" id="c1r-c28" data-track="c1r-c28"><label for="c1r-c28">Analizada</label></li></ul>
 </article>
-<article class="ejercicio">
+<article id="ej-12" class="ejercicio">
   <header><h3>Preg. 12 · R distingue mayúsculas</h3><span class="ia sin">Sin IA</span></header>
   <div class="cuerpo">
 <p>Diagnostica este código: <code>precio &lt;- 12; Precio * 3</code>. ¿Por qué R no encuentra el objeto, si "acabas de asignar uno"?</p><pre data-file="c1r-b29.R"><code class="language-r">precio &lt;- 12
@@ -235,7 +286,7 @@ Precio * 3</code></pre>
 
 <section id="t-vectores">
   <h2>Teoría 03 · Vectores y condiciones</h2>
-<p>Vectores, indexación de tres formas distintas, reciclaje, tipos, y las funciones lógicas <code>sum()</code>/<code>any()</code>/<code>all()</code>. Aquí es donde más se confunde "un promedio de tasas" con "una tasa global" -- presta especial atención a las Preguntas 19 y 20.</p><article class="ejercicio">
+<p>Vectores, indexación de tres formas distintas, reciclaje, tipos, y las funciones lógicas <code>sum()</code>/<code>any()</code>/<code>all()</code>. Aquí es donde más se confunde "un promedio de tasas" con "una tasa global" -- presta especial atención a las Preguntas 19 y 20.</p><article id="ej-13" class="ejercicio">
   <header><h3>Preg. 13 · c() contra el operador :</h3><span class="ia sin">Sin IA</span></header>
   <div class="cuerpo">
 <p>Compara <code>c(5, 8, 11)</code> con <code>5:8</code>. ¿Cuántos elementos produce cada expresión y cuál es el último valor de cada una?</p><pre data-file="c1r-b33.R"><code class="language-r">c(5, 8, 11)
@@ -250,7 +301,7 @@ length(5:8)</code></pre>
 <p>Puedes comprobarlo tu mismo/a: edita el código abajo si quieres y ejecútalo en R de verdad (WebAssembly, en tu navegador).</p></div></details>
   <ul class="check"><li><input type="checkbox" id="c1r-c36" data-track="c1r-c36"><label for="c1r-c36">Analizada</label></li></ul>
 </article>
-<article class="ejercicio">
+<article id="ej-14" class="ejercicio">
   <header><h3>Preg. 14 · Tres formas de indexar</h3><span class="ia sin">Sin IA</span></header>
   <div class="cuerpo">
 <p>Si <code>x &lt;- c(8, 14, 11, 7)</code>, anticipa el resultado de <code>x[c(1, 3)]</code>, <code>x[-2]</code> y <code>x[x &gt; 10]</code>. Explica el criterio de selección de cada una.</p><pre data-file="c1r-b37.R"><code class="language-r">x &lt;- c(8, 14, 11, 7)
@@ -267,7 +318,7 @@ x[x &gt; 10]</code></pre>
 <p>Puedes comprobarlo tu mismo/a: edita el código abajo si quieres y ejecútalo en R de verdad (WebAssembly, en tu navegador).</p></div></details>
   <ul class="check"><li><input type="checkbox" id="c1r-c40" data-track="c1r-c40"><label for="c1r-c40">Analizada</label></li></ul>
 </article>
-<article class="ejercicio">
+<article id="ej-15" class="ejercicio">
   <header><h3>Preg. 15 · Multiplicar dos vectores</h3><span class="ia sin">Sin IA</span></header>
   <div class="cuerpo">
 <p>Para <code>precios &lt;- c(10, 15, 20)</code>, predice <code>precios * c(2, 3, 4)</code>. ¿Por qué el resultado NO es un solo número?</p><pre data-file="c1r-b41.R"><code class="language-r">precios &lt;- c(10, 15, 20)
@@ -281,7 +332,7 @@ sum(precios * c(2, 3, 4))</code></pre>
 <p>Puedes comprobarlo tu mismo/a: edita el código abajo si quieres y ejecútalo en R de verdad (WebAssembly, en tu navegador).</p></div></details>
   <ul class="check"><li><input type="checkbox" id="c1r-c44" data-track="c1r-c44"><label for="c1r-c44">Analizada</label></li></ul>
 </article>
-<article class="ejercicio">
+<article id="ej-16" class="ejercicio">
   <header><h3>Preg. 16 · El riesgo del reciclaje</h3><span class="ia sin">Sin IA</span></header>
   <div class="cuerpo">
 <p>¿Qué riesgo hay al operar <code>c(1, 2, 3, 4, 5) + c(10, 20)</code> (longitudes distintas: 5 y 2)? ¿Qué convendría comprobar antes de confiar en el resultado?</p>  </div>
@@ -291,7 +342,7 @@ sum(precios * c(2, 3, 4))</code></pre>
 <p>Puedes comprobarlo tu mismo/a: edita el código abajo si quieres y ejecútalo en R de verdad (WebAssembly, en tu navegador).</p></div></details>
   <ul class="check"><li><input type="checkbox" id="c1r-c47" data-track="c1r-c47"><label for="c1r-c47">Analizada</label></li></ul>
 </article>
-<article class="ejercicio">
+<article id="ej-17" class="ejercicio">
   <header><h3>Preg. 17 · Un tipo por vector</h3><span class="ia sin">Sin IA</span></header>
   <div class="cuerpo">
 <p>Predice <code>typeof(c(1, "dos", 3))</code>. ¿Qué propiedad de un vector explica el resultado? ¿Qué estructura usarías si necesitas conservar números y texto en columnas separadas?</p><pre data-file="c1r-b48.R"><code class="language-r">typeof(c(1, "dos", 3))</code></pre>
@@ -302,7 +353,7 @@ sum(precios * c(2, 3, 4))</code></pre>
 <p>Puedes comprobarlo tu mismo/a: edita el código abajo si quieres y ejecútalo en R de verdad (WebAssembly, en tu navegador).</p></div></details>
   <ul class="check"><li><input type="checkbox" id="c1r-c51" data-track="c1r-c51"><label for="c1r-c51">Analizada</label></li></ul>
 </article>
-<article class="ejercicio">
+<article id="ej-18" class="ejercicio">
   <header><h3>Preg. 18 · sum(), any() y all() sobre lógicos</h3><span class="ia sin">Sin IA</span></header>
   <div class="cuerpo">
 <p>Si <code>aprobados &lt;- c(TRUE, FALSE, TRUE, TRUE)</code>, interpreta <code>sum(aprobados)</code>, <code>any(aprobados)</code> y <code>all(aprobados)</code>. ¿Qué pregunta responde cada una?</p><pre data-file="c1r-b52.R"><code class="language-r">aprobados &lt;- c(TRUE, FALSE, TRUE, TRUE)
@@ -319,7 +370,7 @@ all(aprobados)</code></pre>
 <p>Puedes comprobarlo tu mismo/a: edita el código abajo si quieres y ejecútalo en R de verdad (WebAssembly, en tu navegador).</p></div></details>
   <ul class="check"><li><input type="checkbox" id="c1r-c55" data-track="c1r-c55"><label for="c1r-c55">Analizada</label></li></ul>
 </article>
-<article class="ejercicio">
+<article id="ej-19" class="ejercicio">
   <header><h3>Preg. 19 · Combinar condiciones con &amp;</h3><span class="ia permitida">IA permitida</span></header>
   <div class="cuerpo">
 <p>Un conjunto de jornadas tiene <code>inscritos</code> y <code>asistentes</code>. Escribe una condición que seleccione las jornadas con <strong>inscritos &gt;= 50 Y asistentes &lt; 25</strong>. ¿Qué exige combinar condiciones con <code>&amp;</code>?</p><pre data-file="c1r-b56.R" data-norun><code class="language-r">inscritos &gt;= 50 &amp; asistentes &lt; 25</code></pre>
@@ -332,7 +383,7 @@ inscritos &gt;= 50 &amp; asistentes &lt; 25</code></pre>
 <p>Puedes comprobarlo tu mismo/a: edita el código abajo si quieres y ejecútalo en R de verdad (WebAssembly, en tu navegador).</p></div></details>
   <ul class="check"><li><input type="checkbox" id="c1r-c59" data-track="c1r-c59"><label for="c1r-c59">Analizada</label></li></ul>
 </article>
-<article class="ejercicio">
+<article id="ej-20" class="ejercicio">
   <header><h3>Preg. 20 · Tasa global contra promedio de tasas</h3><span class="ia permitida">IA permitida</span></header>
   <div class="cuerpo">
 <p>Explica por qué una proporción global <code>sum(asistentes) / sum(inscritos)</code> puede diferir de <code>mean(asistentes / inscritos)</code>. ¿Cuál usarías para "la proporción de todas las personas que asistieron"?</p>  </div>
@@ -349,7 +400,7 @@ mean(asistentes / inscritos)</code></pre>
 
 <section id="t-estructura">
   <h2>Teoría 04 · Estructura y verificación</h2>
-<p>Matrices contra data frames, qué informa cada función de auditoría (<code>head()</code>, <code>dim()</code>, <code>names()</code>, <code>str()</code>), y cómo diagnosticar una importación que salió mal. Esta sección es, literalmente, la pregunta de cierre del curso aplicada a la importación de datos.</p><article class="ejercicio">
+<p>Matrices contra data frames, qué informa cada función de auditoría (<code>head()</code>, <code>dim()</code>, <code>names()</code>, <code>str()</code>), y cómo diagnosticar una importación que salió mal. Esta sección es, literalmente, la pregunta de cierre del curso aplicada a la importación de datos.</p><article id="ej-21" class="ejercicio">
   <header><h3>Preg. 21 · Filas y columnas de una matriz</h3><span class="ia sin">Sin IA</span></header>
   <div class="cuerpo">
 <p>Una matriz de 12 valores se construye con <code>nrow = 3</code>. ¿Cuántas columnas requiere? ¿Qué cambia al agregar <code>byrow = TRUE</code>?</p><pre data-file="c1r-b63.R"><code class="language-r">matrix(1:12, nrow = 3)
@@ -364,7 +415,7 @@ matrix(1:12, nrow = 3, byrow = TRUE)</code></pre>
 <p>Puedes comprobarlo tu mismo/a: edita el código abajo si quieres y ejecútalo en R de verdad (WebAssembly, en tu navegador).</p></div></details>
   <ul class="check"><li><input type="checkbox" id="c1r-c66" data-track="c1r-c66"><label for="c1r-c66">Analizada</label></li></ul>
 </article>
-<article class="ejercicio">
+<article id="ej-22" class="ejercicio">
   <header><h3>Preg. 22 · Matriz contra data frame</h3><span class="ia permitida">IA permitida</span></header>
   <div class="cuerpo">
 <p>¿Por qué una matriz construida con números y nombres puede convertir los números en texto, mientras un data frame puede preservar ambos tipos por separado?</p>  </div>
@@ -381,7 +432,7 @@ str(df)</code></pre>
 <p>Puedes comprobarlo tu mismo/a: edita el código abajo si quieres y ejecútalo en R de verdad (WebAssembly, en tu navegador).</p></div></details>
   <ul class="check"><li><input type="checkbox" id="c1r-c69" data-track="c1r-c69"><label for="c1r-c69">Analizada</label></li></ul>
 </article>
-<article class="ejercicio">
+<article id="ej-23" class="ejercicio">
   <header><h3>Preg. 23 · Interpretar dim()</h3><span class="ia permitida">IA permitida</span></header>
   <div class="cuerpo">
 <p>Un objeto tiene <code>dim(datos)</code> igual a <code>c(24, 6)</code>, y cada fila representa una jornada registrada. Interpreta qué son las filas y qué son las columnas. ¿Cuántas variables hay?</p>  </div>
@@ -390,7 +441,7 @@ str(df)</code></pre>
 <ul><li><code>dim(datos)</code> devuelve <code>c(filas, columnas)</code>: aquí son <strong>24 filas</strong> (observaciones, una por jornada) y <strong>6 columnas</strong> (variables).</li><li>Hay <strong>6 variables</strong> registradas por cada jornada.</li><li>Confundir filas con columnas es un error común al leer <code>dim()</code>: siempre es "filas primero".</li></ul></div></details>
   <ul class="check"><li><input type="checkbox" id="c1r-c71" data-track="c1r-c71"><label for="c1r-c71">Analizada</label></li></ul>
 </article>
-<article class="ejercicio">
+<article id="ej-24" class="ejercicio">
   <header><h3>Preg. 24 · El CSV contra el objeto en R</h3><span class="ia permitida">IA permitida</span></header>
   <div class="cuerpo">
 <p>Diferencia el archivo CSV en disco del objeto que resulta de <code>read_csv()</code>. ¿Qué hace exactamente la asignación en <code>datos &lt;- read_csv("datos/archivo.csv")</code>?</p><pre data-file="c1r-b72.R" data-norun><code class="language-r">datos &lt;- read_csv("datos/archivo.csv")</code></pre>
@@ -400,7 +451,7 @@ str(df)</code></pre>
 <ul><li>El <strong>CSV</strong> es un archivo de texto plano en el disco: existe independientemente de R.</li><li><code>read_csv()</code> <strong>lee e interpreta</strong> ese archivo como una tabla (tibble) dentro de la sesión de R.</li><li>El operador <code>&lt;-</code> <strong>guarda esa tabla</strong> en el objeto <code>datos</code> de la sesión: el archivo original en disco no cambia por esta asignación, es una copia en memoria.</li></ul></div></details>
   <ul class="check"><li><input type="checkbox" id="c1r-c74" data-track="c1r-c74"><label for="c1r-c74">Analizada</label></li></ul>
 </article>
-<article class="ejercicio">
+<article id="ej-25" class="ejercicio">
   <header><h3>Preg. 25 · Rutas relativas contra absolutas</h3><span class="ia permitida">IA permitida</span></header>
   <div class="cuerpo">
 <p>Propón una ruta <strong>relativa</strong> desde un proyecto de RStudio para leer un archivo dentro de una carpeta <code>datos/</code>, y explica una ventaja frente a una ruta <strong>absoluta</strong> que incluye tu nombre de usuario.</p>  </div>
@@ -409,7 +460,7 @@ str(df)</code></pre>
 <ul><li>Ruta relativa: <code>"datos/archivo.csv"</code>, interpretada desde la raíz del proyecto de RStudio.</li><li>Una ruta absoluta como <code>"/Users/tu_nombre/Documents/proyecto/datos/archivo.csv"</code> solo funciona en <strong>esa computadora</strong>, con <strong>ese usuario</strong>.</li><li>La ruta relativa <strong>viaja con el proyecto</strong>: funciona igual si otra persona (o tú en otra computadora) abre la misma carpeta de proyecto.</li></ul></div></details>
   <ul class="check"><li><input type="checkbox" id="c1r-c76" data-track="c1r-c76"><label for="c1r-c76">Analizada</label></li></ul>
 </article>
-<article class="ejercicio">
+<article id="ej-26" class="ejercicio">
   <header><h3>Preg. 26 · Diagnosticar una importación fallida</h3><span class="ia permitida">IA permitida</span></header>
   <div class="cuerpo">
 <p>Después de importar un CSV aparecen 24 filas pero <strong>1 sola columna</strong>, en vez de las 6 esperadas. Da dos comprobaciones razonables antes de seguir trabajando.</p>  </div>
@@ -418,7 +469,7 @@ str(df)</code></pre>
 <ul><li>Primero, verificar que se abrió el <strong>archivo correcto</strong> (nombre, carpeta, versión).</li><li>Segundo, inspeccionar el <strong>separador</strong> del CSV: una sola columna casi siempre significa que <code>read_csv()</code> no reconoció el delimitador esperado (por ejemplo, el archivo usa punto y coma en vez de coma).</li><li>También conviene revisar si el archivo tiene líneas de metadatos antes del encabezado real (para eso existe el argumento <code>skip</code>).</li></ul></div></details>
   <ul class="check"><li><input type="checkbox" id="c1r-c78" data-track="c1r-c78"><label for="c1r-c78">Analizada</label></li></ul>
 </article>
-<article class="ejercicio">
+<article id="ej-27" class="ejercicio">
   <header><h3>Preg. 27 · head(), dim(), names(), str()/glimpse()</h3><span class="ia sin">Sin IA</span></header>
   <div class="cuerpo">
 <p>Indica qué problema <strong>distinto</strong> ayuda a detectar cada una de estas cuatro funciones: <code>head()</code>, <code>dim()</code>, <code>names()</code> y <code>str()</code>/<code>glimpse()</code>. ¿Basta con ver una tabla en el panel Environment?</p>  </div>
@@ -435,7 +486,7 @@ str(mini)</code></pre>
 <p>Puedes comprobarlo tu mismo/a: edita el código abajo si quieres y ejecútalo en R de verdad (WebAssembly, en tu navegador).</p></div></details>
   <ul class="check"><li><input type="checkbox" id="c1r-c81" data-track="c1r-c81"><label for="c1r-c81">Analizada</label></li></ul>
 </article>
-<article class="ejercicio">
+<article id="ej-28" class="ejercicio">
   <header><h3>Preg. 28 · Una columna numérica que llegó como texto</h3><span class="ia permitida">IA permitida</span></header>
   <div class="cuerpo">
 <p>R infiere la columna <code>ingreso_usd</code> como <code>character</code> en vez de numérica. ¿Qué conclusiones numéricas deberías suspender, y qué revisarías en el CSV original?</p>  </div>
@@ -448,7 +499,7 @@ str(mini)</code></pre>
 
 <section id="t-visualizar">
   <h2>Teoría 05 · Visualizar e interpretar</h2>
-<p>Gramática de gráficos: <code>data</code>, <code>aes()</code>, geoms. Cuándo usar barras, dispersión, histograma o polígono de frecuencias, qué controla <code>binwidth</code>, y por qué una asociación visual nunca es, por sí sola, una recomendación.</p><article class="ejercicio">
+<p>Gramática de gráficos: <code>data</code>, <code>aes()</code>, geoms. Cuándo usar barras, dispersión, histograma o polígono de frecuencias, qué controla <code>binwidth</code>, y por qué una asociación visual nunca es, por sí sola, una recomendación.</p><article id="ej-29" class="ejercicio">
   <header><h3>Preg. 29 · Elegir el geom correcto</h3><span class="ia permitida">IA permitida</span></header>
   <div class="cuerpo">
 <p>Elige entre <code>geom_bar()</code>, <code>geom_point()</code>, <code>geom_histogram()</code> y <code>geom_freqpoly()</code> para: (a) contar registros por punto de venta, (b) relacionar dos medidas numéricas, (c) representar la distribución de un monto. Justifica ejes y qué representa la altura.</p>  </div>
@@ -457,7 +508,7 @@ str(mini)</code></pre>
 <ul><li><code>geom_bar()</code>: cuenta registros por <strong>categoría</strong>: eje x = categoría, altura = frecuencia (conteo).</li><li><code>geom_point()</code>: muestra <strong>una pareja numérica por observación</strong>: eje x e y son ambos numéricos, cada punto es una fila.</li><li><code>geom_histogram()</code> y <code>geom_freqpoly()</code>: muestran la <strong>distribución de un monto</strong>: eje x = intervalos del monto, altura = cuántas observaciones caen en cada intervalo.</li></ul></div></details>
   <ul class="check"><li><input type="checkbox" id="c1r-c85" data-track="c1r-c85"><label for="c1r-c85">Analizada</label></li></ul>
 </article>
-<article class="ejercicio">
+<article id="ej-30" class="ejercicio">
   <header><h3>Preg. 30 · Las tres piezas de un ggplot</h3><span class="ia permitida">IA permitida</span></header>
   <div class="cuerpo">
 <p>Explica el papel de <code>ggplot(datos, aes(x = visitantes, y = ingreso))</code>, de <code>geom_point()</code> y de <code>labs()</code>. ¿Por qué el primer componente <strong>solo</strong> no dibuja ninguna observación?</p><pre data-file="c1r-b86.R" data-norun><code class="language-r">ggplot(mini, aes(x = visitantes, y = ingreso)) +
@@ -476,7 +527,7 @@ ggplot(mini, aes(x = visitantes, y = ingreso)) +
 <p>Puedes comprobarlo tu mismo/a: edita el código abajo si quieres y ejecútalo en R de verdad (WebAssembly, en tu navegador).</p></div></details>
   <ul class="check"><li><input type="checkbox" id="c1r-c89" data-track="c1r-c89"><label for="c1r-c89">Analizada</label></li></ul>
 </article>
-<article class="ejercicio">
+<article id="ej-31" class="ejercicio">
   <header><h3>Preg. 31 · color dentro y fuera de aes()</h3><span class="ia sin">Sin IA</span></header>
   <div class="cuerpo">
 <p>En <code>geom_point(aes(color = punto))</code>, ¿qué significa <code>color</code> dentro de <code>aes()</code>? Contrasta con <code>geom_point(color = "red")</code>.</p>  </div>
@@ -485,7 +536,7 @@ ggplot(mini, aes(x = visitantes, y = ingreso)) +
 <ul><li><code>aes(color = punto)</code> <strong>asigna</strong> el color según los valores de la variable <code>punto</code>: cada categoría recibe un color distinto y aparece una leyenda automáticamente.</li><li><code>geom_point(color = "red")</code>, fuera de <code>aes()</code>, <strong>fija</strong> un color constante para todos los puntos: no depende de ningún dato, no genera leyenda.</li><li>Regla general: dentro de <code>aes()</code> = "varía según los datos"; fuera de <code>aes()</code> = "valor fijo para todo el gráfico".</li></ul></div></details>
   <ul class="check"><li><input type="checkbox" id="c1r-c91" data-track="c1r-c91"><label for="c1r-c91">Analizada</label></li></ul>
 </article>
-<article class="ejercicio">
+<article id="ej-32" class="ejercicio">
   <header><h3>Preg. 32 · Mapeo global contra local</h3><span class="ia permitida">IA permitida</span></header>
   <div class="cuerpo">
 <p>¿Cómo obtienes puntos coloreados por categoría y, al mismo tiempo, una única recta de tendencia negra (no una por categoría)? Explica la diferencia entre un mapeo global y uno local.</p><pre data-file="c1r-b92.R" data-norun><code class="language-r">ggplot(datos, aes(x = visitantes, y = ingreso_usd)) +
@@ -497,7 +548,7 @@ geom_smooth(method = "lm", se = FALSE, color = "black")</code></pre>
 <ul><li>Un mapeo puesto en <code>ggplot(aes(...))</code> es <strong>global</strong>: se hereda por todas las capas (todas las geoms lo "ven").</li><li>Un mapeo puesto directamente en una geom, como <code>geom_point(aes(color = punto))</code>, es <strong>local</strong>: solo afecta a esa capa.</li><li>Solución: definir <code>x</code> e <code>y</code> globalmente, poner <code>aes(color = punto)</code> <strong>solo</strong> en <code>geom_point()</code>, y usar <code>geom_smooth(method = "lm", se = FALSE, color = "black")</code> sin mapeo de color: esa capa no se agrupa por categoría y dibuja una sola recta general.</li></ul></div></details>
   <ul class="check"><li><input type="checkbox" id="c1r-c94" data-track="c1r-c94"><label for="c1r-c94">Analizada</label></li></ul>
 </article>
-<article class="ejercicio">
+<article id="ej-33" class="ejercicio">
   <header><h3>Preg. 33 · Qué controla binwidth</h3><span class="ia sin">Sin IA</span></header>
   <div class="cuerpo">
 <p>Un histograma y un polígono de frecuencias usan <code>binwidth = 25</code>. ¿Qué significa exactamente ese número? ¿Por qué cambiarlo puede alterar la lectura, aunque los datos no cambien?</p><pre data-file="c1r-b95.R" data-norun><code class="language-r">ggplot(df, aes(x = ingreso_usd)) +
@@ -515,7 +566,7 @@ ggplot(df33, aes(x = ingreso)) +
 <p>Puedes comprobarlo tu mismo/a: edita el código abajo si quieres y ejecútalo en R de verdad (WebAssembly, en tu navegador).</p></div></details>
   <ul class="check"><li><input type="checkbox" id="c1r-c98" data-track="c1r-c98"><label for="c1r-c98">Analizada</label></li></ul>
 </article>
-<article class="ejercicio">
+<article id="ej-34" class="ejercicio">
   <header><h3>Preg. 34 · Un polígono de frecuencias no es una serie de tiempo</h3><span class="ia permitida">IA permitida</span></header>
   <div class="cuerpo">
 <p>El eje horizontal de un polígono de frecuencias es <code>ingreso</code>. ¿Por qué unir los puntos con una línea NO convierte el gráfico en una serie de tiempo?</p>  </div>
@@ -524,7 +575,7 @@ ggplot(df33, aes(x = ingreso)) +
 <ul><li>En un polígono de frecuencias, el eje x son <strong>intervalos de la variable</strong> (montos de ingreso), no momentos en el tiempo.</li><li>La línea conecta las <strong>frecuencias de intervalos adyacentes</strong> de una misma variable, no una evolución cronológica de un valor.</li><li>Una serie de tiempo real necesita una variable de <strong>tiempo</strong> explícita en el eje x (fecha, día, mes): aquí no la hay.</li></ul></div></details>
   <ul class="check"><li><input type="checkbox" id="c1r-c100" data-track="c1r-c100"><label for="c1r-c100">Analizada</label></li></ul>
 </article>
-<article class="ejercicio">
+<article id="ej-35" class="ejercicio">
   <header><h3>Preg. 35 · Igual conteo no es igual valor</h3><span class="ia permitida">IA permitida</span></header>
   <div class="cuerpo">
 <p>Un gráfico de barras muestra que cuatro puntos de venta tienen exactamente el mismo número de jornadas registradas. ¿Se puede concluir que los cuatro tuvieron el mismo ingreso o la misma tasa de compras? Justifica.</p>  </div>
@@ -533,7 +584,7 @@ ggplot(df33, aes(x = ingreso)) +
 <ul><li><strong>No.</strong> Un gráfico de barras de conteo solo dice "cuántas jornadas se registraron por punto", no dice nada sobre los <strong>valores</strong> de esas jornadas.</li><li>Cuatro puntos con el mismo número de jornadas pueden tener ingresos, visitantes o tasas de conversión completamente distintos.</li><li>Confundir "igual cantidad de registros" con "igual desempeño" es un error de interpretación común: hay que mirar la variable correcta, no solo el conteo.</li></ul></div></details>
   <ul class="check"><li><input type="checkbox" id="c1r-c102" data-track="c1r-c102"><label for="c1r-c102">Analizada</label></li></ul>
 </article>
-<article class="ejercicio">
+<article id="ej-36" class="ejercicio">
   <header><h3>Preg. 36 · Asociación no es toda la historia</h3><span class="ia permitida">IA permitida</span></header>
   <div class="cuerpo">
 <p>Un gráfico de dispersión entre visitantes e ingresos muestra una relación positiva. ¿Qué información <strong>adicional</strong> necesitarías antes de recomendar dónde invertir para mejorar la conversión?</p>  </div>
@@ -544,10 +595,15 @@ ggplot(df33, aes(x = ingreso)) +
 </article>
 </section>
 
-<div class="box ok"><span class="box-title">¿Como sabemos que este resultado es correcto?</span>
+<div class="box ok"><span class="box-title">¿Cómo sabemos que este resultado es correcto?</span>
 
 <p>En esta guía, la verificación tomó formas muy distintas según la pregunta: contrastar un cálculo con uno hecho a mano (Preg. 07, 09, 11), leer un mensaje de error completo en vez de adivinar (Preg. 12), probar una afirmación universal con <code>all()</code> en vez de mirar unos pocos casos (Preg. 18, 19), o comparar una tasa global contra un promedio de tasas (Preg. 20). El Control 01 no evalúa solo si "sabes la función correcta": evalúa si puedes justificar por qué confías en un resultado.</p>
 </div>
+</div>
+</div>
+<div class="tramo" data-tramo="3" data-mom="3" id="tramo-3">
+<div class="tramo-in">
+<header class="tramo-cab"><p class="tramo-n">Momento 3 de 4</p><p class="tramo-tit">Practicar</p></header>
 <section id="practica-r">
   <h2>Práctica con R en vivo</h2>
 <p>Los seis ejercicios usan el mismo caso de la guía de repaso: seis jornadas en cada uno de cuatro puntos de venta de un campus (datos ficticios). El código se ejecuta con <strong>R real</strong> compilado a WebAssembly (webR), directamente en tu navegador: nadie más ve tu sesión y no se sube nada a ningún servidor.</p>
@@ -567,7 +623,7 @@ ggplot(df33, aes(x = ingreso)) +
 <tr><td class="num">2</td><td>Edificio A</td><td class="num">60</td><td class="num">24</td><td class="num">168</td><td class="num">92</td></tr>
 </tbody></table></div>
 
-<article class="ejercicio">
+<article id="ej-37" class="ejercicio">
   <header><h3>Ej. 01 · Importar y auditar antes de confiar</h3><span class="ia permitida">IA permitida</span></header>
   <div class="cuerpo">
 <p>El archivo describe seis jornadas en cada uno de cuatro puntos de venta de un campus (<code>datos_practica_guia.csv</code>, ya cargado abajo). <strong>Antes</strong> de correr nada, escribe qué dimensiones (filas × columnas) y qué tipos de columna esperas. Luego ejecuta el código y contrasta tu predicción contra <code>dim()</code>, <code>names()</code>, <code>head()</code> y <code>str()</code>. Interpreta una fila completa.</p>  </div>
@@ -583,7 +639,7 @@ str(actividad)</code></pre>
 </div></details>
   <ul class="check"><li><input type="checkbox" id="c1r-c107" data-track="c1r-c107"><label for="c1r-c107">Analizada</label></li></ul>
 </article>
-<article class="ejercicio">
+<article id="ej-38" class="ejercicio">
   <header><h3>Ej. 02 · Auditar la consistencia</h3><span class="ia permitida">IA permitida</span></header>
   <div class="cuerpo">
 <p>Comprueba con código -- no a simple vista -- que hay exactamente <strong>seis jornadas por cada punto</strong>, y que <strong>ninguna jornada tiene más compras que visitantes</strong> (lo cual sería imposible). Escribe qué aportan <code>any()</code> y <code>all()</code> en esta comprobación.</p><pre data-file="c1r-b108.R" data-previo="c1r-actividad"><code class="language-r">sum(actividad$punto == "Biblioteca")
@@ -599,7 +655,7 @@ any(actividad$compras &gt; actividad$visitantes)</code></pre>
 <ul><li>Contar por punto con <code>sum(actividad$punto == "Biblioteca")</code> (y análogo para los otros tres): cada uno debe dar <strong>6</strong>.</li><li><code>all(actividad$compras &lt;= actividad$visitantes)</code> pregunta "¿se cumple <strong>siempre</strong>?" → debería dar <strong>TRUE</strong>.</li><li><code>any(actividad$compras &gt; actividad$visitantes)</code> pregunta "¿existe <strong>algún</strong> caso imposible?" → debería dar <strong>FALSE</strong>.</li><li>Esta es exactamente la pregunta de cierre del curso aplicada: "¿cómo sabemos que este resultado es correcto?" -- comprobar antes de seguir, no asumir.</li></ul></div></details>
   <ul class="check"><li><input type="checkbox" id="c1r-c110" data-track="c1r-c110"><label for="c1r-c110">Analizada</label></li></ul>
 </article>
-<article class="ejercicio">
+<article id="ej-39" class="ejercicio">
   <header><h3>Ej. 03 · Tres criterios que compiten</h3><span class="ia permitida">IA permitida</span></header>
   <div class="cuerpo">
 <p>Para <strong>Biblioteca</strong>, calcula el total de visitantes, compras, ingreso y costo; luego la <strong>conversión global</strong> (compras/visitantes × 100) y el <strong>excedente observado</strong> (ingreso − costo). Después edita el código para repetir el cálculo con los otros tres puntos (cambia el nombre en <code>== "..."</code>). ¿Cuál punto tiene más visitantes sin compra? ¿Cuál deja más excedente? ¿Coinciden?</p><pre data-file="c1r-b111.R" data-previo="c1r-actividad"><code class="language-r">b &lt;- actividad$punto == "Biblioteca"
@@ -618,7 +674,7 @@ sum(actividad$ingreso_usd[b]) - sum(actividad$costo_usd[b])
 <ul><li>Biblioteca: 500 visitantes, 132 compras, USD 792 de ingreso, USD 487 de costo → <strong>26.4%</strong> de conversión, <strong>USD 305</strong> de excedente.</li><li>Repitiendo para los otros tres puntos: Polideportivo tiene la <strong>mayor cantidad absoluta</strong> de visitantes sin compra (523), mientras que Edificio A deja el <strong>mayor excedente</strong> (USD 445).</li><li>Los dos criterios <strong>no coinciden</strong>: la decisión depende de qué se priorice (alcance de la mejora vs. rentabilidad ya observada), y de datos que estos seis días no dan (costo de una intervención, comparabilidad de los visitantes).</li><li>No confundir el <strong>promedio simple</strong> de las tasas diarias con la <strong>tasa global</strong> (ver Pregunta 20 de la Guía teórica): aquí se pide la global.</li></ul></div></details>
   <ul class="check"><li><input type="checkbox" id="c1r-c113" data-track="c1r-c113"><label for="c1r-c113">Analizada</label></li></ul>
 </article>
-<article class="ejercicio">
+<article id="ej-40" class="ejercicio">
   <header><h3>Ej. 04 · Investigar una afirmación precisa</h3><span class="ia permitida">IA permitida</span></header>
   <div class="cuerpo">
 <p>Alguien afirma: <em>“Siempre que Polideportivo recibe más de 105 visitantes, realiza al menos 20 compras”</em>. Selecciona solo las jornadas relevantes de Polideportivo, predice qué esperas ver, y comprueba si la afirmación universal es cierta. Si es falsa, identifica el día y los valores exactos que la refutan.</p><pre data-file="c1r-b114.R" data-previo="c1r-actividad"><code class="language-r">p &lt;- actividad$punto == "Polideportivo" &amp; actividad$visitantes &gt; 105
@@ -631,7 +687,7 @@ all(actividad$compras[p] &gt;= 20)</code></pre>
 <ul><li>Filtrando <code>punto == "Polideportivo" &amp; visitantes &gt; 105</code> se obtienen los días 4, 5 y 6, con compras 20, 19 y 22.</li><li><code>all(compras &gt;= 20)</code> da <strong>FALSE</strong>: el día 5 tiene 108 visitantes pero solo <strong>19</strong> compras, lo que <strong>refuta</strong> la afirmación universal.</li><li>Una sola excepción es suficiente para tumbar un "siempre": por eso <code>all()</code> es la herramienta correcta para poner a prueba afirmaciones absolutas, no mirar el promedio.</li></ul></div></details>
   <ul class="check"><li><input type="checkbox" id="c1r-c116" data-track="c1r-c116"><label for="c1r-c116">Analizada</label></li></ul>
 </article>
-<article class="ejercicio">
+<article id="ej-41" class="ejercicio">
   <header><h3>Ej. 05 · Graficar y comunicar</h3><span class="ia permitida">IA permitida</span></header>
   <div class="cuerpo">
 <p>Construye tres visualizaciones distintas del mismo conjunto de datos, una por celda. Cada una usa una geom distinta de las que viste en el Bloque 5 de la Guía teórica. Edita libremente <code>binwidth</code> o los colores para explorar.</p><p><strong>a) Jornadas por punto -- geom_bar()</strong></p>
@@ -656,7 +712,7 @@ all(actividad$compras[p] &gt;= 20)</code></pre>
 <ul><li>El color por punto va <strong>dentro</strong> de <code>geom_point(aes(color = punto))</code>, no en <code>ggplot(aes(...))</code>: así la recta de <code>geom_smooth()</code> no se divide en cuatro.</li><li>Cambiar <code>binwidth</code> de 25 a 50 reagrupa las mismas 24 observaciones en menos barras, más anchas: la <strong>altura</strong> representa cuántas jornadas caen en el intervalo, nunca una suma de dinero.</li><li>Ninguno de estos tres gráficos calcula la conversión (compras/visitantes): eso requiere las dos columnas juntas con una división explícita, como en el Ej. 03.</li></ul></div></details>
   <ul class="check"><li><input type="checkbox" id="c1r-c120" data-track="c1r-c120"><label for="c1r-c120">Analizada</label></li></ul>
 </article>
-<article class="ejercicio">
+<article id="ej-42" class="ejercicio">
   <header><h3>Ej. 06 · Memo · Comunicar la decisión</h3><span class="ia permitida">IA permitida</span></header>
   <div class="cuerpo">
 <p>Redacta un memo de <strong>100 a 140 palabras</strong> para la administración del campus, a partir de lo que calculaste en los ejercicios anteriores. Debe citar al menos <strong>dos cifras verificadas</strong>, recomendar una prioridad según un criterio explícito, y distinguir lo que los registros permiten observar de lo que todavía no permiten atribuir a una causa.</p>  </div>
@@ -665,7 +721,7 @@ all(actividad$compras[p] &gt;= 20)</code></pre>
 <ul><li><strong>Cifras citadas:</strong> por ejemplo, "Polideportivo registró 638 visitantes y solo 115 compras (18.03% de conversión), la más baja de los cuatro puntos".</li><li><strong>Prioridad con criterio explícito:</strong> declarar si se prioriza "mayor cantidad de visitantes sin compra" (Polideportivo) o "mayor excedente ya observado" (Edificio A) -- y decir por qué.</li><li><strong>Límite honesto:</strong> mencionar que son solo seis días de registros, y que faltan datos de costo de intervención, horarios o características de los visitantes antes de gastar dinero con confianza.</li><li>Esto conecta directamente con la Pregunta 05 de la Guía teórica: asociación no es lo mismo que causa, y un memo defendible lo reconoce explícitamente.</li></ul></div></details>
   <ul class="check"><li><input type="checkbox" id="c1r-c122" data-track="c1r-c122"><label for="c1r-c122">Analizada</label></li></ul>
 </article>
-<div class="box ok"><span class="box-title">¿Como sabemos que este resultado es correcto?</span>
+<div class="box ok"><span class="box-title">¿Cómo sabemos que este resultado es correcto?</span>
 
 <p>En esta práctica lo aplicaste con datos reales: contando jornadas por punto antes de calcular nada (Ej. 02), separando "promedio simple de tasas" de "tasa global" (Ej. 03, igual que la Pregunta 20 de la Guía teórica), y refutando una afirmación universal con un solo contraejemplo real en vez de conformarte con "parece cierto" (Ej. 04). El memo final (Ej. 06) es la prueba definitiva: si no puedes citar una cifra verificada, no está listo para comunicarse.</p>
 </div>
@@ -678,7 +734,7 @@ all(actividad$compras[p] &gt;= 20)</code></pre>
 
 <div class="simulacro" data-id="c1-simulacro" data-minutos="45">
 <div class="simulacro-barra"><span class="reloj" aria-live="off">45:00</span><span class="estado-sim" aria-live="polite"></span><span class="acciones"><button class="btn" type="button" data-sim-iniciar>Iniciar simulacro</button><button class="btn sec" type="button" data-sim-finalizar hidden>Finalizar y revisar</button><button class="btn sec" type="button" data-sim-reiniciar hidden>Reiniciar</button></span></div>
-<article class="ejercicio">
+<article id="ej-43" class="ejercicio">
   <header><h3>S1 · R contra el instrumento que lo toca</h3><span class="ia sin">Sin IA</span></header>
   <div class="cuerpo">
 <p>Explica, con tus propias palabras, la diferencia entre R y RStudio usando la analogía de un instrumento musical y quien lo toca. ¿Cuál de los dos "sabe" ejecutar tus instrucciones?</p>  </div>
@@ -687,7 +743,7 @@ all(actividad$compras[p] &gt;= 20)</code></pre>
 <ul><li>R es el <strong>instrumento</strong> (el lenguaje/motor que interpreta y ejecuta); RStudio es <strong>quien lo toca</strong> (el entorno que facilita escribir, ver y organizar).</li><li>El componente que realmente "sabe" ejecutar instrucciones es <strong>R</strong>: RStudio por sí solo, sin R instalado, no puede correr una sola línea.</li></ul></div></details>
   <ul class="check"><li><input type="checkbox" id="c1r-c124" data-track="c1r-c124"><label for="c1r-c124">Analizada</label></li></ul>
 </article>
-<article class="ejercicio">
+<article id="ej-44" class="ejercicio">
   <header><h3>S2 · Reasignar sin recalcular</h3><span class="ia sin">Sin IA</span></header>
   <div class="cuerpo">
 <p>Sin ejecutar nada todavia: interpreta el código y anticipa el valor de la última línea, tanto la primera vez como después de reasignar <code>capital</code>.</p><pre data-file="c1r-b125.R"><code class="language-r">capital &lt;- 5000
@@ -706,7 +762,7 @@ capital - interes</code></pre>
 <ul><li><code>interes = 5000 * 0.06 = 300</code>. La primera resta: <code>capital - interes = 5000 - 300 = 4700</code>.</li><li>Al reasignar <code>capital &lt;- 8000</code> sin recalcular <code>interes</code>, este sigue en 300 (calculado con el capital viejo): la segunda resta da <code>8000 - 300 = 7700</code>, no 7520.</li></ul></div></details>
   <ul class="check"><li><input type="checkbox" id="c1r-c128" data-track="c1r-c128"><label for="c1r-c128">Analizada</label></li></ul>
 </article>
-<article class="ejercicio">
+<article id="ej-45" class="ejercicio">
   <header><h3>S3 · Filtrar e indexar ventas</h3><span class="ia sin">Sin IA</span></header>
   <div class="cuerpo">
 <p>Con <code>ventas &lt;- c(1800, 2100, 1950, 2400)</code>: predice <code>ventas[ventas &gt; 2000]</code>, <code>ventas[-1]</code> y <code>sum(ventas &gt; 2000)</code>.</p><pre data-file="c1r-b129.R"><code class="language-r">ventas &lt;- c(1800, 2100, 1950, 2400)
@@ -723,7 +779,7 @@ sum(ventas &gt; 2000)</code></pre>
 <ul><li><code>ventas[ventas &gt; 2000]</code>: solo los valores mayores a 2000 → <code>2100, 2400</code> (1950 queda fuera).</li><li><code>ventas[-1]</code>: todo excepto la primera posición → <code>2100, 1950, 2400</code>.</li><li><code>sum(ventas &gt; 2000)</code>: cuenta cuántos <code>TRUE</code> hay → <strong>2</strong>.</li></ul></div></details>
   <ul class="check"><li><input type="checkbox" id="c1r-c132" data-track="c1r-c132"><label for="c1r-c132">Analizada</label></li></ul>
 </article>
-<article class="ejercicio">
+<article id="ej-46" class="ejercicio">
   <header><h3>S4 · Auditar un data frame nuevo</h3><span class="ia sin">Sin IA</span></header>
   <div class="cuerpo">
 <p>Construye mentalmente qué mostrarían <code>str()</code> y <code>dim()</code> para este data frame de tres sucursales. Luego ejecútalo para comprobar.</p><pre data-file="c1r-b133.R"><code class="language-r">reporte &lt;- data.frame(
@@ -744,7 +800,7 @@ dim(reporte)</code></pre>
 <ul><li><code>dim(reporte)</code> → <code>3 2</code>: 3 filas (sucursales), 2 columnas (sucursal, ingresos).</li><li><code>str(reporte)</code> muestra <code>sucursal</code> como <code>chr</code> (texto) e <code>ingresos</code> como <code>num</code> (numérica): tipos distintos conservados en columnas separadas, a diferencia de una matriz.</li></ul></div></details>
   <ul class="check"><li><input type="checkbox" id="c1r-c136" data-track="c1r-c136"><label for="c1r-c136">Analizada</label></li></ul>
 </article>
-<article class="ejercicio">
+<article id="ej-47" class="ejercicio">
   <header><h3>S5 · Elegir un binwidth razonable</h3><span class="ia sin">Sin IA</span></header>
   <div class="cuerpo">
 <p>Un histograma de ingreso diario con <code>binwidth = 10</code> se ve muy irregular ("con ruido"); con <code>binwidth = 200</code> se ve una sola barra enorme. ¿Qué está pasando en cada extremo, y cómo elegirías un punto intermedio razonable?</p>  </div>
@@ -753,7 +809,7 @@ dim(reporte)</code></pre>
 <ul><li>Con <code>binwidth</code> muy pequeño, cada intervalo casi no contiene observaciones: el gráfico muestra variación aleatoria (ruido) en vez de un patrón real.</li><li>Con <code>binwidth</code> muy grande, casi todas las observaciones caen en un único intervalo: se pierde toda la forma de la distribución.</li><li>Un punto intermedio razonable se elige <strong>probando varios anchos</strong> y quedándose con el que revela una forma clara (por ejemplo, dónde se concentran los valores) sin ser ni ruidoso ni plano -- no hay una fórmula única, es exploración guiada por la pregunta.</li></ul></div></details>
   <ul class="check"><li><input type="checkbox" id="c1r-c138" data-track="c1r-c138"><label for="c1r-c138">Analizada</label></li></ul>
 </article>
-<article class="ejercicio">
+<article id="ej-48" class="ejercicio">
   <header><h3>S6 · Verificar una regla con &gt;= y all()</h3><span class="ia permitida">IA permitida</span></header>
   <div class="cuerpo">
 <p>Un conjunto de jornadas tiene una <code>meta</code> y un <code>logro</code>. Verifica con R si, para estos datos, <strong>siempre</strong> que se cumple la meta (<code>logro &gt;= meta</code>) el excedente (<code>logro - meta</code>) es positivo o cero. Explica por qué esta verificación con código es más confiable que "mirar el gráfico".</p><pre data-file="c1r-b139.R"><code class="language-r">meta  &lt;- c(100, 120, 90, 150)
@@ -766,7 +822,7 @@ all((logro - meta) &gt;= 0)</code></pre>
 <ul><li><code>logro &gt;= meta</code> da un vector lógico jornada por jornada: aquí, <code>TRUE, TRUE, TRUE, TRUE</code> (los cuatro casos cumplen).</li><li><code>all((logro - meta) &gt;= 0)</code> da <strong>TRUE</strong>: confirma numéricamente, para <strong>todos</strong> los casos, que el excedente nunca es negativo cuando se cumple la meta.</li><li>Un gráfico puede "verse bien" por casualidad de escala o por pocos puntos visibles; una comprobación lógica con <code>all()</code> revisa <strong>cada observación</strong>, sin depender de qué tan claro se vea el dibujo.</li></ul></div></details>
   <ul class="check"><li><input type="checkbox" id="c1r-c141" data-track="c1r-c141"><label for="c1r-c141">Analizada</label></li></ul>
 </article>
-<article class="ejercicio">
+<article id="ej-49" class="ejercicio">
   <header><h3>P1 · Práctica con R · Edificio A: totales y conversión</h3><span class="ia sin">Sin IA</span></header>
   <div class="cuerpo">
 <p>Usando el mismo objeto <code>actividad</code> que cargaste en la pestaña Práctica (si no lo cargaste ahí, ejecuta primero el bloque de importación), calcula para <strong>Edificio A</strong>: visitantes totales, compras totales, conversión (%) y excedente observado (ingreso − costo). Escribe los cuatro resultados antes de revelar.</p><pre data-file="c1r-b142.R" data-previo="c1r-actividad"><code class="language-r"># si "actividad" no existe en esta pestaña todavia, ejecuta primero:
@@ -783,7 +839,7 @@ sum(actividad$ingreso_usd[e]) - sum(actividad$costo_usd[e])</code></pre>
 <ul><li>Edificio A: <strong>358</strong> visitantes, <strong>144</strong> compras, ingreso <strong>USD 1008</strong>, costo <strong>USD 563</strong>.</li><li>Conversión: <code>100 * 144/358 ≈ 40.22%</code> -- la más alta de los cuatro puntos.</li><li>Excedente: <code>1008 − 563 = USD 445</code> -- también el más alto de los cuatro puntos.</li></ul></div></details>
   <ul class="check"><li><input type="checkbox" id="c1r-c144" data-track="c1r-c144"><label for="c1r-c144">Analizada</label></li></ul>
 </article>
-<article class="ejercicio">
+<article id="ej-50" class="ejercicio">
   <header><h3>P2 · Práctica con R · Comparar la distribución del ingreso entre puntos</h3><span class="ia sin">Sin IA</span></header>
   <div class="cuerpo">
 <p>Construye un <strong>boxplot</strong> del ingreso diario (<code>ingreso_usd</code>) separado por <code>punto</code>. Antes de ejecutar, predice: ¿cuál punto esperas que tenga la mediana más alta? Después de ver el gráfico, explica qué representan la caja, la línea central y los "bigotes".</p><pre data-file="c1r-b145.R" data-previo="c1r-actividad c1r-gg"><code class="language-r"># si "actividad" no existe en esta pestaña todavia, ejecuta primero:
@@ -799,13 +855,18 @@ ggplot(actividad, aes(x = punto, y = ingreso_usd)) +
 <ul><li><code>geom_boxplot()</code> con <code>x = punto, y = ingreso_usd</code> dibuja una caja por punto de venta.</li><li>La <strong>caja</strong> es el rango intercuartílico (percentil 25 a 75); la <strong>línea dentro de la caja</strong> es la mediana; los <strong>bigotes</strong> llegan hasta el valor no atípico más alejado.</li><li>Con solo 6 observaciones por punto, las cajas serán muy angostas: es una limitación real a mencionar, no un error del código.</li></ul></div></details>
   <ul class="check"><li><input type="checkbox" id="c1r-c147" data-track="c1r-c147"><label for="c1r-c147">Analizada</label></li></ul>
 </article>
-<div class="box ok"><span class="box-title">¿Como sabemos que este resultado es correcto?</span>
+<div class="box ok"><span class="box-title">¿Cómo sabemos que este resultado es correcto?</span>
 
 <p>Al finalizar, no te quedes solo con el número de preguntas respondidas: compara honestamente cada respuesta contra los criterios revelados y marca solo lo que de verdad cumpliste. Ese ejercicio de autoevaluación honesta es, en si mismo, la habilidad de verificación que el curso quiere que desarrolles -- y es exactamente lo que se te pedirá defender oralmente en el proyecto grupal más adelante.</p>
 </div>
 </div>
 </section>
 
+</div>
+</div>
+<div class="tramo" data-tramo="4" data-mom="4" id="tramo-4">
+<div class="tramo-in">
+<header class="tramo-cab"><p class="tramo-n">Momento 4 de 4</p><p class="tramo-tit">Cierre</p></header>
 <section id="cheat">
   <h2>Cheat Sheet del Control 01</h2>
 <p>Todo lo que entra en el temario, en una sola pantalla. Para repasar minutos antes, no para aprender por primera vez.</p>
@@ -865,10 +926,10 @@ ggplot(actividad, aes(x = punto, y = ingreso_usd)) +
     <a class="nav-next" href="../../semana-04/index.html"><span>Semana 4: transformar datos</span><span class="btn-ico" aria-hidden="true"></span></a>
   </nav>
 </section>
-
 <footer class="pie">Guía de estudio · Fundamentos de Programación para Economía y Negocios · ESEN · Ciclo III/2026 · Catedrático: Alvin Javier Portillo Tiliano. Material de apoyo no oficial: no sustituye la lectura ni la clase; ante cualquier diferencia, mandan el programa del curso y Moodle.</footer>
-</main>
 </div>
+</div>
+</main>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-r.min.js"></script>

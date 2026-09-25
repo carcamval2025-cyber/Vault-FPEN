@@ -5,86 +5,146 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Semana 4 · Transformar datos para responder preguntas</title>
 <meta name="description" content="Guía de estudio FPEN, semana 4: dplyr formal con select, filter, arrange y mutate, el pipe nativo, operadores relacionales y lógicos, y valores faltantes con is.na y na.rm.">
+<meta name="theme-color" content="#111a30">
 <link rel="icon" href="../assets/brand/fpen-favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..900,0..100,0..1&family=Atkinson+Hyperlegible+Next:ital,wght@0,200..800;1,200..800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Schibsted+Grotesk:wght@400..900&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..800;1,8..60,300..800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/guia.css">
 <script>try{var t=localStorage.getItem("fpen-guia-v1-tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
 </head>
-<body data-semana="s4">
-
-<header class="isla-wrap">
-  <div class="isla">
-    <a class="brand" href="../index.html"><img src="../assets/brand/fpen-favicon.svg" alt="" width="25" height="25">FPEN <small>Guía de estudio</small></a>
-    <nav class="isla-semanas" aria-label="Semanas">
-      <a href="../semana-01/index.html">S1</a>
-      <a href="../semana-02/index.html">S2</a>
-      <a href="../semana-03/index.html">S3</a>
-      <a href="../semana-04/index.html" aria-current="page">S4</a>
-      <a href="../semana-05/index.html">S5</a>
-      <span class="futura" title="Semana 6: próximamente">S6</span>
-      <span class="futura" title="Semana 7: próximamente">S7</span>
-      <span class="futura" title="Semana 8: próximamente">S8</span>
-      <span class="futura" title="Semana 9: próximamente">S9</span>
-      <span class="futura" title="Semana 10: próximamente">S10</span>
-      <span class="futura" title="Semana 11: próximamente">S11</span>
-      <span class="futura" title="Semana 12: próximamente">S12</span>
-      <a class="control" href="../control-01/guia/index.html" data-control="Control 01: lectura, repaso y simulacro">C1</a>
+<body data-semana="s4" data-raiz="../">
+<a class="saltar" href="#contenido">Saltar al contenido</a>
+<header class="barra">
+  <div class="barra-fila">
+    <a class="marca" href="../index.html"><img src="../assets/brand/fpen-favicon.svg" alt="" width="26" height="26">FPEN<small>Guía de estudio</small></a>
+    <nav class="cinta" aria-label="Semanas del curso y tu avance">
+      <div class="cinta-pista">
+        <a class="tk" href="../semana-01/index.html" data-tk="s1"><b>S1</b><span class="tk-tit">R para pensar</span><span class="tk-pct" data-estado="cero">■ 0 %</span></a>
+        <a class="tk" href="../semana-02/index.html" data-tk="s2"><b>S2</b><span class="tk-tit">Valores a datos</span><span class="tk-pct" data-estado="cero">■ 0 %</span></a>
+        <a class="tk" href="../semana-03/index.html" data-tk="s3"><b>S3</b><span class="tk-tit">Visualizar</span><span class="tk-pct" data-estado="cero">■ 0 %</span></a>
+        <a class="tk" href="../control-01/guia/index.html" data-tk="c1" data-control="Control 01: lectura, repaso y simulacro"><b>C1</b><span class="tk-tit">Control 01</span><span class="tk-pct" data-estado="cero">■ 0 %</span></a>
+        <a class="tk" href="../semana-04/index.html" data-tk="s4" aria-current="page"><b>S4</b><span class="tk-tit">Transformar</span><span class="tk-pct" data-estado="cero">■ 0 %</span></a>
+        <a class="tk" href="../semana-05/index.html" data-tk="s5"><b>S5</b><span class="tk-tit">Pipe y verbos</span><span class="tk-pct" data-estado="cero">■ 0 %</span></a>
+        <span class="tk futura" title="Semana 6: sin guía todavía"><b>S6</b><span class="tk-tit">Parcial I</span><span class="tk-pct">sin guía</span></span>
+        <span class="tk futura" title="Semana 7: sin guía todavía"><b>S7</b><span class="tk-tit">Datos tidy</span><span class="tk-pct">sin guía</span></span>
+        <span class="tk futura" title="Semana 8: sin guía todavía"><b>S8</b><span class="tk-tit">Combinar tablas</span><span class="tk-pct">sin guía</span></span>
+        <span class="tk futura" title="Semana 9: sin guía todavía"><b>S9</b><span class="tk-tit">Automatizar</span><span class="tk-pct">sin guía</span></span>
+        <span class="tk futura" title="Semana 10: sin guía todavía"><b>S10</b><span class="tk-tit">Explorar</span><span class="tk-pct">sin guía</span></span>
+        <span class="tk futura" title="Semana 11: sin guía todavía"><b>S11</b><span class="tk-tit">R con IA</span><span class="tk-pct">sin guía</span></span>
+        <span class="tk futura" title="Semana 12: sin guía todavía"><b>S12</b><span class="tk-tit">Parcial II</span><span class="tk-pct">sin guía</span></span>
+      </div>
     </nav>
-    <button class="theme-btn" type="button" aria-label="Cambiar tema claro/oscuro"><span class="ico-tema" aria-hidden="true"></span></button>
-    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu-completo"><span class="hb" aria-hidden="true"></span><span class="hb" aria-hidden="true"></span><span class="sr">Menú</span></button>
+    <button class="barra-btn cinta-pausa" type="button" aria-pressed="false" aria-label="Pausar la cinta de semanas"><span class="ico" aria-hidden="true"></span></button>
+    <button class="barra-btn buscar-btn" type="button" aria-haspopup="dialog" aria-keyshortcuts="Control+K"><span class="ico" aria-hidden="true"></span><span>Buscar</span> <kbd>Ctrl K</kbd></button>
+    <button class="barra-btn theme-btn" type="button" aria-label="Cambiar tema claro u oscuro"><span class="ico" aria-hidden="true"></span></button>
+    <button class="barra-btn menu-btn" type="button" aria-expanded="false" aria-controls="menu-completo"><span class="hb" aria-hidden="true"></span><span class="hb" aria-hidden="true"></span><span class="sr">Menú</span></button>
   </div>
+  <div class="indice-fila">
+    <button class="indice-btn" type="button" aria-expanded="false" aria-controls="indice-pop"><span class="indice-num">§ 1/16</span><span class="indice-tit">Semana 4</span><span class="indice-mom" data-mom="1"></span><span class="flecha" aria-hidden="true"></span></button>
+    <span class="indice-tiempo" aria-live="off"></span>
+    <nav class="indice-pop" id="indice-pop" aria-label="Índice de la página" hidden>
+    <ol>
+      <li class="grupo" data-mom="1">Antes de clase</li>
+      <li><a href="#uso" data-mom="1"><span class="n">1</span>Cómo usar la guía</a></li>
+      <li><a href="#mapa" data-mom="1"><span class="n">2</span>Qué puedes usar</a></li>
+      <li><a href="#lecturas" data-mom="1"><span class="n">3</span>Lecturas</a></li>
+      <li><a href="#checkpoint" data-mom="1"><span class="n">4</span>Control de lectura</a></li>
+      <li class="grupo" data-mom="2">Aprender</li>
+      <li><a href="#dplyr" data-mom="2"><span class="n">5</span>Verbos de dplyr</a></li>
+      <li><a href="#pipe" data-mom="2"><span class="n">6</span>El pipe |></a></li>
+      <li><a href="#filter" data-mom="2"><span class="n">7</span>Filtrar subpoblaciones</a></li>
+      <li><a href="#mutate" data-mom="2"><span class="n">8</span>Crear variables</a></li>
+      <li><a href="#na" data-mom="2"><span class="n">9</span>Valores faltantes</a></li>
+      <li class="grupo" data-mom="3">Practicar</li>
+      <li><a href="#trazas" data-mom="3"><span class="n">10</span>Tablas de traza</a></li>
+      <li><a href="#ejercicios" data-mom="3"><span class="n">11</span>Ejercicios</a></li>
+      <li><a href="#practica" data-mom="3"><span class="n">12</span>Práctica intensiva</a></li>
+      <li class="grupo" data-mom="4">Proyecto y evaluación</li>
+      <li><a href="#proyecto" data-mom="4"><span class="n">13</span>Proyecto</a></li>
+      <li><a href="#evaluacion" data-mom="4"><span class="n">14</span>Rumbo al Parcial</a></li>
+      <li><a href="#cheat" data-mom="4"><span class="n">15</span>Cheat sheet</a></li>
+      <li><a href="#fuentes" data-mom="4"><span class="n">16</span>Fuentes</a></li>
+    </ol>
+    </nav>
+  </div>
+  <div class="lectura" aria-hidden="true"><i></i></div>
 </header>
 <div class="menu-completo" id="menu-completo" hidden></div>
 
-<header class="hero-semana">
-  <div class="hero-in">
-    <p class="hero-num" aria-hidden="true">04</p>
-    <div class="hero-txt">
-      <p class="hero-mod"><span class="sr">Semana 4 · </span>Unidad 4 · Transformar datos para responder preguntas</p>
+<header class="portada-semana">
+  <div class="portada-in">
+    <p class="portada-num" aria-hidden="true">04</p>
+    <div class="portada-txt">
+      <p class="portada-mod"><span class="sr">Semana 4 · </span>Unidad 4 · Transformar datos para responder preguntas</p>
       <h1>Tengo una base. ¿Cómo obtengo la información que necesito?</h1>
       <p class="lead">Una base original casi nunca responde la pregunta tal como llega. Esta semana aprendes a quedarte con la subpoblación correcta, a crear las variables que el análisis necesita (crecimiento, margen, salario real) y a no dejar que un valor faltante arruine un promedio.</p>
-      <ul class="ciclo-fpen" aria-label="Ciclo de trabajo con datos del curso; resaltadas las etapas de esta semana"><li>importar</li><li class="sep" aria-hidden="true">→</li><li>ordenar</li><li class="sep" aria-hidden="true">→</li><li class="aqui">transformar</li><li class="sep" aria-hidden="true">→</li><li>visualizar</li><li class="sep" aria-hidden="true">→</li><li>modelar</li><li class="sep" aria-hidden="true">→</li><li>comunicar</li></ul>
     </div>
+    <p class="sello" aria-label="Evaluación: Primer Parcial: semana 6"><span class="sello-top">EVALÚA</span><b>Primer Parcial</b><span>semana 6</span></p>
     <p class="pregunta"><span class="pregunta-lbl">Pregunta orientadora</span><mark>¿Qué filas, qué columnas y qué variables nuevas necesito para responder mi pregunta, y qué hago con los datos que faltan?</mark></p>
-    <dl class="hero-meta"><div><dt>Lectura</dt><dd>R4DS cap. 3 y selecciones del cap. 12</dd></div><div><dt>Proyecto</dt><dd>Fases 3–4: preparación de datos</dd></div><div class="eval"><dt>Evaluación</dt><dd>Primer Parcial: semana 6</dd></div></dl>
-    <div class="progress" data-progreso-pagina>
-      <div class="progress-bar"><span></span></div>
-      <div class="progress-label"></div>
+    <div class="graf-fila">
+<figure class="graf-portada" data-lupa data-inicial="11">
+  <figcaption class="graf-cab"><b><span class="n">Gráfico 4.0</span> Textiles del Norte lidera las ventas de 2024; a Agroexport Lempa le falta el dato</b><span>Ventas 2024 por empresa, miles de USD</span></figcaption>
+  <div class="graf-lienzo" tabindex="0" role="group" aria-roledescription="gráfico interactivo" aria-label="Textiles del Norte lidera las ventas de 2024; a Agroexport Lempa le falta el dato. Ventas 2024 por empresa, miles de USD. Usa las flechas izquierda y derecha para recorrer los datos.">
+<svg viewBox="0 0 640 366" class="horiz" aria-hidden="true" focusable="false">
+<line class="rejilla" x1="196.0" x2="196.0" y1="12" y2="340"/>
+<text class="eje" x="196.0" y="358" text-anchor="middle">0</text>
+<line class="rejilla" x1="294.0" x2="294.0" y1="12" y2="340"/>
+<text class="eje" x="294.0" y="358" text-anchor="middle">500</text>
+<line class="rejilla" x1="392.0" x2="392.0" y1="12" y2="340"/>
+<text class="eje" x="392.0" y="358" text-anchor="middle">1000</text>
+<line class="rejilla" x1="490.0" x2="490.0" y1="12" y2="340"/>
+<text class="eje" x="490.0" y="358" text-anchor="middle">1500</text>
+<line class="rejilla" x1="588.0" x2="588.0" y1="12" y2="340"/>
+<text class="eje" x="588.0" y="358" text-anchor="middle">2000</text>
+<text class="eje-cat" x="186" y="30.0" text-anchor="end">Textiles del Norte</text>
+<g class="dato" data-i="0" data-x="533.1" data-y="25.5" data-val="1720" data-etq="Textiles del Norte" data-nota="Textiles del Norte · −7.0 % frente a 2023" style="--k:0"><rect class="destacado crece-h" x="196.0" y="16.3" width="337.1" height="18.4"/><text class="valor" x="539.1" y="30.0">1720</text></g>
+<text class="eje-cat" x="186" y="57.0" text-anchor="end">Metalúrgica Istmo</text>
+<g class="dato" data-i="1" data-x="497.8" data-y="52.5" data-val="1540" data-etq="Metalúrgica Istmo" data-nota="Metalúrgica Istmo · −3.7 % frente a 2023" style="--k:1"><rect class="barra-g crece-h" x="196.0" y="43.3" width="301.8" height="18.4"/><text class="valor" x="503.8" y="57.0">1540</text></g>
+<text class="eje-cat" x="186" y="84.0" text-anchor="end">Distribuidora Oriente</text>
+<g class="dato" data-i="2" data-x="480.2" data-y="79.5" data-val="1450" data-etq="Distribuidora Oriente" data-nota="Distribuidora Oriente · +9.8 % frente a 2023" style="--k:2"><rect class="barra-g crece-h" x="196.0" y="70.3" width="284.2" height="18.4"/><text class="valor" x="486.2" y="84.0">1450</text></g>
+<text class="eje-cat" x="186" y="111.0" text-anchor="end">Plásticos Pacífico</text>
+<g class="dato" data-i="3" data-x="452.8" data-y="106.5" data-val="1310" data-etq="Plásticos Pacífico" data-nota="Plásticos Pacífico · +5.6 % frente a 2023" style="--k:3"><rect class="barra-g crece-h" x="196.0" y="97.3" width="256.8" height="18.4"/><text class="valor" x="458.8" y="111.0">1310</text></g>
+<text class="eje-cat" x="186" y="138.0" text-anchor="end">Ferretería El Clavo</text>
+<g class="dato" data-i="4" data-x="331.2" data-y="133.5" data-val="690" data-etq="Ferretería El Clavo" data-nota="Ferretería El Clavo · +13.1 % frente a 2023" style="--k:4"><rect class="barra-g crece-h" x="196.0" y="124.3" width="135.2" height="18.4"/><text class="valor" x="337.2" y="138.0">690</text></g>
+<text class="eje-cat" x="186" y="165.0" text-anchor="end">Lácteos La Vega</text>
+<g class="dato" data-i="5" data-x="305.8" data-y="160.5" data-val="560" data-etq="Lácteos La Vega" data-nota="Lácteos La Vega · +3.7 % frente a 2023" style="--k:5"><rect class="barra-g crece-h" x="196.0" y="151.3" width="109.8" height="18.4"/><text class="valor" x="311.8" y="165.0">560</text></g>
+<text class="eje-cat" x="186" y="192.0" text-anchor="end">Café Cumbre</text>
+<g class="dato" data-i="6" data-x="287.1" data-y="187.5" data-val="465" data-etq="Café Cumbre" data-nota="Café Cumbre · +10.7 % frente a 2023" style="--k:6"><rect class="barra-g crece-h" x="196.0" y="178.3" width="91.1" height="18.4"/><text class="valor" x="293.1" y="192.0">465</text></g>
+<text class="eje-cat" x="186" y="219.0" text-anchor="end">Software Maya</text>
+<g class="dato" data-i="7" data-x="276.4" data-y="214.5" data-val="410" data-etq="Software Maya" data-nota="Software Maya · +36.7 % frente a 2023" style="--k:7"><rect class="barra-g crece-h" x="196.0" y="205.3" width="80.4" height="18.4"/><text class="valor" x="282.4" y="219.0">410</text></g>
+<text class="eje-cat" x="186" y="246.0" text-anchor="end">Imprenta Central</text>
+<g class="dato" data-i="8" data-x="234.8" data-y="241.5" data-val="198" data-etq="Imprenta Central" data-nota="Imprenta Central · −5.7 % frente a 2023" style="--k:8"><rect class="barra-g crece-h" x="196.0" y="232.3" width="38.8" height="18.4"/><text class="valor" x="240.8" y="246.0">198</text></g>
+<text class="eje-cat" x="186" y="273.0" text-anchor="end">Turismo Volcanes</text>
+<g class="dato" data-i="9" data-x="232.3" data-y="268.5" data-val="185" data-etq="Turismo Volcanes" data-nota="Turismo Volcanes · +23.3 % frente a 2023" style="--k:9"><rect class="barra-g crece-h" x="196.0" y="259.3" width="36.3" height="18.4"/><text class="valor" x="238.3" y="273.0">185</text></g>
+<text class="eje-cat" x="186" y="300.0" text-anchor="end">Panadería Doña Tere</text>
+<g class="dato" data-i="10" data-x="216.4" data-y="295.5" data-val="104" data-etq="Panadería Doña Tere" data-nota="Panadería Doña Tere · +9.5 % frente a 2023" style="--k:10"><rect class="barra-g crece-h" x="196.0" y="286.3" width="20.4" height="18.4"/><text class="valor" x="222.4" y="300.0">104</text></g>
+<text class="eje-cat" x="186" y="327.0" text-anchor="end">Agroexport Lempa</text>
+<g class="dato" data-i="11" data-x="230.0" data-y="322.5" data-val="NA" data-etq="Agroexport Lempa" data-nota="Agroexport Lempa · sin dato de 2024 (en 2023 vendió 980)" style="--k:11"><rect class="falta" x="197.0" y="313.3" width="64.0" height="18.4"/><text class="falta-txt" x="229.0" y="327.0" text-anchor="middle">NA</text></g>
+<line class="base" x1="196.0" x2="196.0" y1="10" y2="340"/>
+</svg>
+  </div>
+  <p class="graf-lectura sr" aria-live="polite"></p>
+  <p class="graf-fuente">Fuente: <code>datos/empresas.csv</code>, ordenado de mayor a menor; <code>NA</code> marca el dato faltante.</p>
+  <p class="graf-ayuda">Pasa el cursor, toca el gráfico o usa ← → para leer cada dato con la lupa.</p>
+</figure>
+      <aside class="ficha" aria-label="Ficha de la semana">
+        <h2>Ficha de la edición</h2>
+        <dl class="hero-meta"><div><dt>Lectura</dt><dd>R4DS cap. 3 y selecciones del cap. 12</dd></div><div><dt>Proyecto</dt><dd>Fases 3–4: preparación de datos</dd></div><div class="eval"><dt>Evaluación</dt><dd>Primer Parcial: semana 6</dd></div></dl>
+        <ul class="ciclo-fpen" aria-label="Ciclo de trabajo con datos del curso; resaltadas las etapas de esta semana"><li>importar</li><li class="sep" aria-hidden="true">→</li><li>ordenar</li><li class="sep" aria-hidden="true">→</li><li class="aqui">transformar</li><li class="sep" aria-hidden="true">→</li><li>visualizar</li><li class="sep" aria-hidden="true">→</li><li>modelar</li><li class="sep" aria-hidden="true">→</li><li>comunicar</li></ul>
+        <div class="progress" data-progreso-pagina>
+          <div class="progress-bar"><span></span></div>
+          <div class="progress-label"></div>
+        </div>
+      </aside>
     </div>
   </div>
 </header>
+<main id="contenido">
 
-<div class="layout with-toc">
-<aside class="toc" aria-label="Contenido de la página">
-  <p>Semana 4</p>
-  <ol>
-    <li class="grupo" aria-hidden="true">Antes de clase</li>
-    <li><a href="#uso">Cómo usar la guía</a></li>
-    <li><a href="#mapa">Qué puedes usar</a></li>
-    <li><a href="#lecturas">Lecturas</a></li>
-    <li><a href="#checkpoint">Control de lectura</a></li>
-    <li class="grupo" aria-hidden="true">Aprender</li>
-    <li><a href="#dplyr">Verbos de dplyr</a></li>
-    <li><a href="#pipe">El pipe |></a></li>
-    <li><a href="#filter">Filtrar subpoblaciones</a></li>
-    <li><a href="#mutate">Crear variables</a></li>
-    <li><a href="#na">Valores faltantes</a></li>
-    <li class="grupo" aria-hidden="true">Practicar</li>
-    <li><a href="#trazas">Tablas de traza</a></li>
-    <li><a href="#ejercicios">Ejercicios</a></li>
-    <li><a href="#practica">Práctica intensiva</a></li>
-    <li class="grupo" aria-hidden="true">Proyecto y evaluación</li>
-    <li><a href="#proyecto">Proyecto</a></li>
-    <li><a href="#evaluacion">Rumbo al Parcial</a></li>
-    <li><a href="#cheat">Cheat sheet</a></li>
-    <li><a href="#fuentes">Fuentes</a></li>
-  </ol>
-</aside>
-
-<main>
-
+<div class="tramo" data-tramo="1" data-mom="1" id="tramo-1">
+<div class="tramo-in">
+<header class="tramo-cab"><p class="tramo-n">Momento 1 de 4</p><p class="tramo-tit">Antes de clase</p></header>
 <section id="uso">
   <h2>Cómo usar esta guía</h2>
   <p>Hasta ahora recortabas tablas con corchetes y <code>$</code>. Esta semana llega <code>dplyr</code>: verbos con nombre (<code>select</code>, <code>filter</code>, <code>arrange</code>, <code>mutate</code>) que se encadenan con el pipe <code>|&gt;</code> y convierten una base original en <strong>la base que tu pregunta necesita</strong>. También aprendes a tratar los valores faltantes, <code>NA</code>, antes de que arruinen un promedio.</p>
@@ -226,6 +286,11 @@
   <ul class="check"><li><input type="checkbox" id="s4-cp" data-track="s4-cp"><label for="s4-cp">Respondí el control de lectura y entiendo por qué fallé las que fallé.</label></li></ul>
 </section>
 
+</div>
+</div>
+<div class="tramo" data-tramo="2" data-mom="2" id="tramo-2">
+<div class="tramo-in">
+<header class="tramo-cab"><p class="tramo-n">Momento 2 de 4</p><p class="tramo-tit">Aprender</p></header>
 <section id="dplyr">
   <h2>dplyr: verbos para transformar tablas</h2>
   <div class="box simple"><span class="box-title">En palabras simples</span>
@@ -422,6 +487,11 @@ empresas |&gt;
   </div>
 </section>
 
+</div>
+</div>
+<div class="tramo" data-tramo="3" data-mom="3" id="tramo-3">
+<div class="tramo-in">
+<header class="tramo-cab"><p class="tramo-n">Momento 3 de 4</p><p class="tramo-tit">Practicar</p></header>
 <section id="trazas">
   <h2>Tablas de traza</h2>
   <h3>Traza 1 · ¿Qué hace un <code>NA</code>?</h3>
@@ -472,7 +542,7 @@ empresas |&gt;
   <h2>Ejercicios</h2>
   <div class="ia-leyenda"><span class="ia sin">Sin IA</span><span class="ia permitida">IA permitida</span><span class="ia requerida">IA requerida</span></div>
 
-  <article class="ejercicio">
+  <article id="ej-1" class="ejercicio">
     <header><h3>E1 · Predice las filas</h3><span class="nivel">filter · ★</span><span class="ia sin">Sin IA</span></header>
     <div class="cuerpo">
       <p>Sin ejecutar, predice cuántas filas devuelve cada línea (usa la tabla de <code>empresas</code> de arriba):</p>
@@ -492,7 +562,7 @@ empresas |&gt; filter(!(sector %in% c("agro", "servicios"))) |&gt; nrow()</code>
     <ul class="check"><li><input type="checkbox" id="s4-e1c" data-track="s4-e1c"><label for="s4-e1c">Resuelto</label></li></ul>
   </article>
 
-  <article class="ejercicio">
+  <article id="ej-2" class="ejercicio">
     <header><h3>E2 · El promedio que salió NA</h3><span class="nivel">NA · ★★</span><span class="ia sin">Sin IA</span></header>
     <div class="cuerpo">
       <p>Un compañero escribe esto para el informe y obtiene <code>NA</code>. Explica por qué, corrígelo y di qué debe decir el informe además del número.</p>
@@ -506,7 +576,7 @@ empresas |&gt; filter(!(sector %in% c("agro", "servicios"))) |&gt; nrow()</code>
     <ul class="check"><li><input type="checkbox" id="s4-e2c" data-track="s4-e2c"><label for="s4-e2c">Resuelto</label></li></ul>
   </article>
 
-  <article class="ejercicio">
+  <article id="ej-3" class="ejercicio">
     <header><h3>E3 · Construye: productividad por empleado</h3><span class="nivel">mutate · ★★</span><span class="ia permitida">IA permitida</span></header>
     <div class="cuerpo">
       <p>Crea una columna <code>ventas_por_empleado</code> (ventas 2024 en miles entre empleados, redondeada a 1 decimal), quédate con las empresas que tienen ese dato, ordénalas de mayor a menor y muestra solo empresa, sector y la nueva columna. ¿Qué sector aparece arriba y por qué podría ser?</p>
@@ -536,7 +606,7 @@ empresas |&gt; filter(!(sector %in% c("agro", "servicios"))) |&gt; nrow()</code>
     <ul class="check"><li><input type="checkbox" id="s4-e3c" data-track="s4-e3c"><label for="s4-e3c">Resuelto</label></li></ul>
   </article>
 
-  <article class="ejercicio">
+  <article id="ej-4" class="ejercicio">
     <header><h3>E4 · Modifica: de variación a clasificación</h3><span class="nivel">mutate lógico · ★★</span><span class="ia permitida">IA permitida</span></header>
     <div class="cuerpo">
       <p>Agrega a <code>indicadores</code> (el resultado del <a href="#mutate">caso de <code>mutate()</code></a>) una columna lógica <code>en_riesgo</code> que sea <code>TRUE</code> cuando la empresa decreció <strong>o</strong> tiene margen negativo. Luego muestra solo las empresas en riesgo.</p>
@@ -557,7 +627,7 @@ empresas |&gt; filter(!(sector %in% c("agro", "servicios"))) |&gt; nrow()</code>
     <ul class="check"><li><input type="checkbox" id="s4-e4c" data-track="s4-e4c"><label for="s4-e4c">Resuelto</label></li></ul>
   </article>
 
-  <article class="ejercicio">
+  <article id="ej-5" class="ejercicio">
     <header><h3>E5 · Proyecto: la base para tu pregunta</h3><span class="nivel">proyecto · ★★</span><span class="ia permitida">IA permitida</span></header>
     <div class="cuerpo">
       <p>Con la base de tu proyecto, escribe un pipeline que: filtre la subpoblación que te interesa, cree al menos una variable nueva con sentido económico (tasa, margen, valor real, variación) y seleccione solo las columnas necesarias. Reporta cuántas filas tenía la base, cuántas quedaron y cuántos <code>NA</code> hay en la variable nueva.</p>
@@ -596,7 +666,7 @@ empresas |&gt; filter(!(sector %in% c("agro", "servicios"))) |&gt; nrow()</code>
   <ul class="check"><li><input type="checkbox" id="s4-px" data-track="s4-px"><label for="s4-px">Completé los ejercicios rápidos sin ejecutar el código.</label></li></ul>
 
   <h3>Problemas tipo examen</h3>
-  <article class="ejercicio problema">
+  <article id="ej-6" class="ejercicio problema">
     <header><h3>P1 · El crecimiento real de las ventas</h3><span class="nivel">mutate · ★★★</span><span class="ia sin">Sin IA</span></header>
     <div class="cuerpo">
       <p>La inflación entre 2023 y 2024 fue de 1.0 % (IPC 115.1 → 116.3). Calcula para cada empresa del <strong>comercio</strong> las ventas de 2024 a precios de 2023 (<code>ventas_2024 / 1.01</code>) y el crecimiento real en porcentaje, con un decimal. Ordena de mayor a menor crecimiento real.</p>
@@ -628,7 +698,7 @@ empresas |&gt; filter(!(sector %in% c("agro", "servicios"))) |&gt; nrow()</code>
     <ul class="check"><li><input type="checkbox" id="s4-pr1" data-track="s4-pr1"><label for="s4-pr1">Resuelto y probado con todos los casos</label></li></ul>
   </article>
 
-  <article class="ejercicio problema">
+  <article id="ej-7" class="ejercicio problema">
     <header><h3>P2 · Auditoría de faltantes</h3><span class="nivel">NA · ★★★</span><span class="ia sin">Sin IA</span></header>
     <div class="cuerpo">
       <p>Antes de un informe, la gerencia pide saber: cuántos valores faltan en cada una de las columnas <code>empleados</code>, <code>ventas_2024</code> y <code>costos_2024</code>; qué empresas tienen al menos un faltante; y el total de ventas 2024 de las que sí reportaron.</p>
@@ -663,7 +733,7 @@ sum(empresas$ventas_2024, na.rm = TRUE)</code></pre>
     <ul class="check"><li><input type="checkbox" id="s4-pr2" data-track="s4-pr2"><label for="s4-pr2">Resuelto y probado con todos los casos</label></li></ul>
   </article>
 
-  <article class="ejercicio problema">
+  <article id="ej-8" class="ejercicio problema">
     <header><h3>P3 · Encuentra los tres errores</h3><span class="nivel">lectura de código · ★★★</span><span class="ia sin">Sin IA</span></header>
     <div class="cuerpo">
       <p>Este pipeline debía listar las empresas de <strong>industria</strong> con <strong>margen positivo</strong>, de mayor a menor margen. Tiene tres errores. Encuéntralos, explica cada uno y escribe la versión corregida.</p>
@@ -702,6 +772,11 @@ sum(empresas$ventas_2024, na.rm = TRUE)</code></pre>
   </article>
 </section>
 
+</div>
+</div>
+<div class="tramo" data-tramo="4" data-mom="4" id="tramo-4">
+<div class="tramo-in">
+<header class="tramo-cab"><p class="tramo-n">Momento 4 de 4</p><p class="tramo-tit">Proyecto y evaluación</p></header>
 <section id="proyecto">
   <h2>Proyecto grupal · Preparación de los datos</h2>
   <p><strong>Fases 3 y 4: preparación y primeras transformaciones.</strong> El programa es claro: no se otorgan puntos por usar una función solo para demostrar que se conoce; cada transformación debe tener una razón ligada al problema.</p>
@@ -770,10 +845,10 @@ sum(empresas$ventas_2024, na.rm = TRUE)</code></pre>
     <a class="nav-next" href="../semana-05/index.html"><span>Semana 5: el pipe y los verbos</span><span class="btn-ico" aria-hidden="true"></span></a>
   </nav>
 </section>
-
 <footer class="pie">Guía de estudio · Fundamentos de Programación para Economía y Negocios · ESEN · Ciclo III/2026 · Catedrático: Alvin Javier Portillo Tiliano. Material de apoyo no oficial: no sustituye la lectura ni la clase; ante cualquier diferencia, mandan el programa del curso y Moodle.</footer>
-</main>
 </div>
+</div>
+</main>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-r.min.js"></script>

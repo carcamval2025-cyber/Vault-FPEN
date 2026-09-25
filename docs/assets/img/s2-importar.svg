@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 280" width="760" height="280" role="img" aria-label="El archivo datos/hogares.csv en el disco pasa por read_csv, que adivina el tipo de cada columna, y se guarda con la flecha de asignación en el objeto hogares dentro de la sesión de R. Después se audita con dim, names, head, glimpse y summary.">
 <title>El archivo datos/hogares.csv en el disco pasa por read_csv, que adivina el tipo de cada columna, y se guarda con la flecha de asignación en el objeto hogares dentro de la sesión de R. Después se audita con dim, names, head, glimpse y summary.</title>
 <style>
-  text { font-family: 'Atkinson Hyperlegible Next', 'Atkinson Hyperlegible', Arial, sans-serif; font-size: 14px; fill: #111a30; }
-  .t { font-family: Fraunces, Georgia, 'Times New Roman', serif; font-weight: 700; font-size: 16px; }
+  text { font-family: 'Schibsted Grotesk', Arial, sans-serif; font-size: 14px; fill: #111a30; }
+  .t { font-family: 'Schibsted Grotesk', 'Arial Narrow', Arial, sans-serif; font-weight: 700; font-size: 16px; }
   .m { font-family: 'JetBrains Mono', Menlo, Consolas, monospace; font-size: 13px; font-variant-ligatures: none; font-feature-settings: "liga" 0, "calt" 0; }
   .s { font-size: 12px; fill: #56607a; }
   .b { font-weight: 700; }

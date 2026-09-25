@@ -5,42 +5,67 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Guía de estudio FPEN</title>
 <meta name="description" content="Guía de estudio interactiva de Fundamentos de Programación para Economía y Negocios (ESEN, ciclo III/2026): R y el Tidyverse semana a semana, con R ejecutable en la página, quizzes, trazas y práctica tipo examen.">
+<meta name="theme-color" content="#111a30">
 <link rel="icon" href="assets/brand/fpen-favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..900,0..100,0..1&family=Atkinson+Hyperlegible+Next:ital,wght@0,200..800;1,200..800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Schibsted+Grotesk:wght@400..900&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..800;1,8..60,300..800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/guia.css">
 <script>try{var t=localStorage.getItem("fpen-guia-v1-tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
 </head>
-<body>
-
-<header class="isla-wrap">
-  <div class="isla">
-    <a class="brand" href="index.html"><img src="assets/brand/fpen-favicon.svg" alt="" width="25" height="25">FPEN <small>Guía de estudio</small></a>
-    <nav class="isla-semanas" aria-label="Semanas">
-      <a href="semana-01/index.html">S1</a>
-      <a href="semana-02/index.html">S2</a>
-      <a href="semana-03/index.html">S3</a>
-      <a href="semana-04/index.html">S4</a>
-      <a href="semana-05/index.html">S5</a>
-      <span class="futura" title="Semana 6: próximamente">S6</span>
-      <span class="futura" title="Semana 7: próximamente">S7</span>
-      <span class="futura" title="Semana 8: próximamente">S8</span>
-      <span class="futura" title="Semana 9: próximamente">S9</span>
-      <span class="futura" title="Semana 10: próximamente">S10</span>
-      <span class="futura" title="Semana 11: próximamente">S11</span>
-      <span class="futura" title="Semana 12: próximamente">S12</span>
-      <a class="control" href="control-01/guia/index.html" data-control="Control 01: lectura, repaso y simulacro">C1</a>
+<body data-raiz="">
+<a class="saltar" href="#contenido">Saltar al contenido</a>
+<header class="barra">
+  <div class="barra-fila">
+    <a class="marca" href="index.html"><img src="assets/brand/fpen-favicon.svg" alt="" width="26" height="26">FPEN<small>Guía de estudio</small></a>
+    <nav class="cinta" aria-label="Semanas del curso y tu avance">
+      <div class="cinta-pista">
+        <a class="tk" href="semana-01/index.html" data-tk="s1"><b>S1</b><span class="tk-tit">R para pensar</span><span class="tk-pct" data-estado="cero">■ 0 %</span></a>
+        <a class="tk" href="semana-02/index.html" data-tk="s2"><b>S2</b><span class="tk-tit">Valores a datos</span><span class="tk-pct" data-estado="cero">■ 0 %</span></a>
+        <a class="tk" href="semana-03/index.html" data-tk="s3"><b>S3</b><span class="tk-tit">Visualizar</span><span class="tk-pct" data-estado="cero">■ 0 %</span></a>
+        <a class="tk" href="control-01/guia/index.html" data-tk="c1" data-control="Control 01: lectura, repaso y simulacro"><b>C1</b><span class="tk-tit">Control 01</span><span class="tk-pct" data-estado="cero">■ 0 %</span></a>
+        <a class="tk" href="semana-04/index.html" data-tk="s4"><b>S4</b><span class="tk-tit">Transformar</span><span class="tk-pct" data-estado="cero">■ 0 %</span></a>
+        <a class="tk" href="semana-05/index.html" data-tk="s5"><b>S5</b><span class="tk-tit">Pipe y verbos</span><span class="tk-pct" data-estado="cero">■ 0 %</span></a>
+        <span class="tk futura" title="Semana 6: sin guía todavía"><b>S6</b><span class="tk-tit">Parcial I</span><span class="tk-pct">sin guía</span></span>
+        <span class="tk futura" title="Semana 7: sin guía todavía"><b>S7</b><span class="tk-tit">Datos tidy</span><span class="tk-pct">sin guía</span></span>
+        <span class="tk futura" title="Semana 8: sin guía todavía"><b>S8</b><span class="tk-tit">Combinar tablas</span><span class="tk-pct">sin guía</span></span>
+        <span class="tk futura" title="Semana 9: sin guía todavía"><b>S9</b><span class="tk-tit">Automatizar</span><span class="tk-pct">sin guía</span></span>
+        <span class="tk futura" title="Semana 10: sin guía todavía"><b>S10</b><span class="tk-tit">Explorar</span><span class="tk-pct">sin guía</span></span>
+        <span class="tk futura" title="Semana 11: sin guía todavía"><b>S11</b><span class="tk-tit">R con IA</span><span class="tk-pct">sin guía</span></span>
+        <span class="tk futura" title="Semana 12: sin guía todavía"><b>S12</b><span class="tk-tit">Parcial II</span><span class="tk-pct">sin guía</span></span>
+      </div>
     </nav>
-    <button class="theme-btn" type="button" aria-label="Cambiar tema claro/oscuro"><span class="ico-tema" aria-hidden="true"></span></button>
-    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu-completo"><span class="hb" aria-hidden="true"></span><span class="hb" aria-hidden="true"></span><span class="sr">Menú</span></button>
+    <button class="barra-btn cinta-pausa" type="button" aria-pressed="false" aria-label="Pausar la cinta de semanas"><span class="ico" aria-hidden="true"></span></button>
+    <button class="barra-btn buscar-btn" type="button" aria-haspopup="dialog" aria-keyshortcuts="Control+K"><span class="ico" aria-hidden="true"></span><span>Buscar</span> <kbd>Ctrl K</kbd></button>
+    <button class="barra-btn theme-btn" type="button" aria-label="Cambiar tema claro u oscuro"><span class="ico" aria-hidden="true"></span></button>
+    <button class="barra-btn menu-btn" type="button" aria-expanded="false" aria-controls="menu-completo"><span class="hb" aria-hidden="true"></span><span class="hb" aria-hidden="true"></span><span class="sr">Menú</span></button>
   </div>
+  <div class="indice-fila">
+    <button class="indice-btn" type="button" aria-expanded="false" aria-controls="indice-pop"><span class="indice-num">§ 1/6</span><span class="indice-tit">Inicio</span><span class="indice-mom" data-mom="1"></span><span class="flecha" aria-hidden="true"></span></button>
+    <span class="indice-tiempo" aria-live="off"></span>
+    <nav class="indice-pop" id="indice-pop" aria-label="Índice de la página" hidden>
+    <ol>
+      <li class="grupo" data-mom="2">La guía</li>
+      <li><a href="#recorrido" data-mom="2"><span class="n">1</span>Del código a una decisión</a></li>
+      <li><a href="#temario" data-mom="2"><span class="n">2</span>Temario</a></li>
+      <li class="grupo" data-mom="3">Cómo estudiar</li>
+      <li><a href="#uso" data-mom="3"><span class="n">3</span>Cómo estudiar con esta guía</a></li>
+      <li class="grupo" data-mom="4">El curso</li>
+      <li><a href="#evaluacion" data-mom="4"><span class="n">4</span>Evaluación</a></li>
+      <li><a href="#bibliografia" data-mom="4"><span class="n">5</span>Bibliografía</a></li>
+      <li><a href="#progreso" data-mom="4"><span class="n">6</span>Tu progreso</a></li>
+    </ol>
+    </nav>
+  </div>
+  <div class="lectura" aria-hidden="true"><i></i></div>
 </header>
 <div class="menu-completo" id="menu-completo" hidden></div>
 
-<section class="portada">
-  <div class="portada-in">
+<header class="portada">
+  <div class="portada-cab"><p class="cabecera" aria-hidden="true">FPEN</p><p class="edicion">Guía de estudio · Ciclo III/2026<br>Semanas 1 a 5 y Control 01</p></div>
+  <div class="portada-in sitio">
     <div>
+      <p class="portada-mod">ESEN · Secciones 1 y 2</p>
       <h1>Fundamentos de Programación para Economía y Negocios, <mark>semana a semana</mark></h1>
       <p class="lead">R y el Tidyverse explicados con casos de economía y negocios: ingresos, precios, salarios, ventas y empresas. Lee, responde el control de lectura, traza a mano, ejecuta R real en la página, practica con problemas tipo examen y prepara la defensa del proyecto.</p>
       <ul class="ciclo-fpen" aria-label="Ciclo de trabajo con datos del curso"><li>importar</li><li class="sep" aria-hidden="true">→</li><li>ordenar</li><li class="sep" aria-hidden="true">→</li><li>transformar</li><li class="sep" aria-hidden="true">→</li><li>visualizar</li><li class="sep" aria-hidden="true">→</li><li>modelar</li><li class="sep" aria-hidden="true">→</li><li>comunicar</li></ul>
@@ -50,16 +75,53 @@
       </div>
       <p class="datos">ESEN · Ciclo III/2026 · Secciones 1 y 2 · Catedrático: Alvin Javier Portillo Tiliano · <a href="https://moodle.esen.edu.sv/" target="_blank" rel="noopener">Moodle ESEN</a> · <a href="https://github.com/carcamval2025-cyber/Vault-FPEN" target="_blank" rel="noopener">Repositorio en GitHub</a></p>
     </div>
-    <figure class="ruta" style="margin:0"><div class="placa-core"><img data-no-inline src="assets/brand/fpen-hero-data-lab.svg" width="620" height="470" alt="Ilustración FPEN: un laboratorio de datos con una consola de R, barras y una órbita de aprendizaje."></div></figure>
+    <div>
+<figure class="graf-portada" data-lupa data-inicial="0" data-progreso-grafico>
+  <figcaption class="graf-cab"><b><span class="n">Gráfico 0</span> Tu avance, semana por semana</b><span>Porcentaje de actividades marcadas en cada guía; el tubo es el total</span></figcaption>
+  <div class="graf-lienzo" tabindex="0" role="group" aria-roledescription="gráfico interactivo" aria-label="Tu avance, semana por semana. Porcentaje de actividades marcadas en cada guía; el tubo es el total. Usa las flechas izquierda y derecha para recorrer los datos.">
+<svg viewBox="0 0 640 300" aria-hidden="true" focusable="false">
+<line class="rejilla" x1="58" x2="624" y1="266.0" y2="266.0"/>
+<text class="eje" x="50" y="270.5" text-anchor="end">0 %</text>
+<line class="rejilla" x1="58" x2="624" y1="206.0" y2="206.0"/>
+<text class="eje" x="50" y="210.5" text-anchor="end">25 %</text>
+<line class="rejilla" x1="58" x2="624" y1="146.0" y2="146.0"/>
+<text class="eje" x="50" y="150.5" text-anchor="end">50 %</text>
+<line class="rejilla" x1="58" x2="624" y1="86.0" y2="86.0"/>
+<text class="eje" x="50" y="90.5" text-anchor="end">75 %</text>
+<line class="rejilla" x1="58" x2="624" y1="26.0" y2="26.0"/>
+<text class="eje" x="50" y="30.5" text-anchor="end">100 %</text>
+<g class="dato" data-i="0" data-x="105.2" data-y="266.0" data-val="0 %" data-etq="S1" data-nota="S1 · 0 de 28 actividades" data-semana="s1" data-total="28" data-base="266.0" data-tope="26.0" style="--k:0"><rect class="tubo" x="75.0" y="26.0" width="60.4" height="240.0"/><rect class="barra-g" x="75.0" y="266.0" width="60.4" height="0"/><text class="valor" x="105.2" y="258.0" text-anchor="middle">0 %</text></g>
+<text class="eje-cat" x="105.2" y="290" text-anchor="middle">S1</text>
+<g class="dato" data-i="1" data-x="199.5" data-y="266.0" data-val="0 %" data-etq="S2" data-nota="S2 · 0 de 24 actividades" data-semana="s2" data-total="24" data-base="266.0" data-tope="26.0" style="--k:1"><rect class="tubo" x="169.3" y="26.0" width="60.4" height="240.0"/><rect class="barra-g" x="169.3" y="266.0" width="60.4" height="0"/><text class="valor" x="199.5" y="258.0" text-anchor="middle">0 %</text></g>
+<text class="eje-cat" x="199.5" y="290" text-anchor="middle">S2</text>
+<g class="dato" data-i="2" data-x="293.8" data-y="266.0" data-val="0 %" data-etq="S3" data-nota="S3 · 0 de 20 actividades" data-semana="s3" data-total="20" data-base="266.0" data-tope="26.0" style="--k:2"><rect class="tubo" x="263.6" y="26.0" width="60.4" height="240.0"/><rect class="barra-g" x="263.6" y="266.0" width="60.4" height="0"/><text class="valor" x="293.8" y="258.0" text-anchor="middle">0 %</text></g>
+<text class="eje-cat" x="293.8" y="290" text-anchor="middle">S3</text>
+<g class="dato" data-i="3" data-x="388.2" data-y="266.0" data-val="0 %" data-etq="S4" data-nota="S4 · 0 de 22 actividades" data-semana="s4" data-total="22" data-base="266.0" data-tope="26.0" style="--k:3"><rect class="tubo" x="358.0" y="26.0" width="60.4" height="240.0"/><rect class="barra-g" x="358.0" y="266.0" width="60.4" height="0"/><text class="valor" x="388.2" y="258.0" text-anchor="middle">0 %</text></g>
+<text class="eje-cat" x="388.2" y="290" text-anchor="middle">S4</text>
+<g class="dato" data-i="4" data-x="482.5" data-y="266.0" data-val="0 %" data-etq="S5" data-nota="S5 · 0 de 27 actividades" data-semana="s5" data-total="27" data-base="266.0" data-tope="26.0" style="--k:4"><rect class="tubo" x="452.3" y="26.0" width="60.4" height="240.0"/><rect class="barra-g" x="452.3" y="266.0" width="60.4" height="0"/><text class="valor" x="482.5" y="258.0" text-anchor="middle">0 %</text></g>
+<text class="eje-cat" x="482.5" y="290" text-anchor="middle">S5</text>
+<g class="dato" data-i="5" data-x="576.8" data-y="266.0" data-val="0 %" data-etq="C1" data-nota="C1 · 0 de 95 actividades" data-semana="c1" data-total="95" data-base="266.0" data-tope="26.0" style="--k:5"><rect class="tubo" x="546.6" y="26.0" width="60.4" height="240.0"/><rect class="barra-g" x="546.6" y="266.0" width="60.4" height="0"/><text class="valor" x="576.8" y="258.0" text-anchor="middle">0 %</text></g>
+<text class="eje-cat" x="576.8" y="290" text-anchor="middle">C1</text>
+<line class="base" x1="58" x2="624" y1="266.0" y2="266.0"/>
+</svg>
   </div>
-</section>
+  <p class="graf-lectura sr" aria-live="polite"></p>
+  <p class="graf-fuente">Fuente: tu progreso, guardado solo en este navegador.</p>
+  <p class="graf-ayuda">Pasa el cursor, toca el gráfico o usa ← → para leer cada dato con la lupa.</p>
+</figure>
+    </div>
+  </div>
+</header>
+<main id="contenido">
 
-<div class="layout">
-<main>
 
+<div class="tramo" data-tramo="2" data-mom="2" id="tramo-1">
+<div class="tramo-in">
+<header class="tramo-cab"><p class="tramo-n">Sección 1 de 3</p><p class="tramo-tit">La guía</p></header>
 <section id="recorrido">
   <h2>Del código a una decisión defendible</h2>
   <p>El curso conecta tres capacidades: construir, encontrar evidencia y explicar por qué el resultado tiene sentido.</p>
+  <figure class="lamina media"><div class="placa"><div class="placa-core"><img data-no-inline src="assets/brand/fpen-hero-data-lab.svg" width="620" height="470" alt="Ilustración FPEN: un laboratorio de datos con una consola de R, barras y una órbita de aprendizaje."></div></div><figcaption>El laboratorio de datos del curso: de la consola de R a las barras y la órbita de aprendizaje.</figcaption></figure>
   <div class="recorrido">
     <article class="card"><img src="assets/brand/fpen-programar.webp" width="960" height="640" loading="lazy" decoding="async" alt="Consola, objetos y vectores conectados en un flujo de programación"><div><span class="kicker">01 · Construir</span><h3>Programar</h3><p>Dar instrucciones claras a R y comprender qué hace cada parte del código.</p></div></article>
     <article class="card"><img src="assets/brand/fpen-analizar.webp" width="960" height="640" loading="lazy" decoding="async" alt="Una tabla económica transformada en barras, puntos y una curva de análisis"><div><span class="kicker">02 · Encontrar evidencia</span><h3>Analizar</h3><p>Preparar los datos, descubrir patrones y comprobar que la transformación es válida.</p></div></article>
@@ -119,6 +181,11 @@
   <p>Control 01 tiene dos páginas: la <a href="control-01/guia/index.html">guía de lectura y análisis</a> y el <a href="control-01/repaso/index.html">repaso con práctica en R y simulacro</a>.</p>
 </section>
 
+</div>
+</div>
+<div class="tramo" data-tramo="3" data-mom="3" id="tramo-2">
+<div class="tramo-in">
+<header class="tramo-cab"><p class="tramo-n">Sección 2 de 3</p><p class="tramo-tit">Cómo estudiar</p></header>
 <section id="uso">
   <h2>Cómo estudiar con esta guía</h2>
   <p>El curso es <strong>aula invertida con laboratorio</strong>: el libro es la primera fuente, la sesión activa y discute la lectura, y el laboratorio es donde el conocimiento se vuelve real. Cada semana está pensada para cuatro momentos:</p>
@@ -150,6 +217,11 @@
   </div>
 </section>
 
+</div>
+</div>
+<div class="tramo" data-tramo="4" data-mom="4" id="tramo-3">
+<div class="tramo-in">
+<header class="tramo-cab"><p class="tramo-n">Sección 3 de 3</p><p class="tramo-tit">El curso</p></header>
 <section id="evaluacion">
   <h2>Evaluación</h2>
   <div class="pesos">
@@ -210,9 +282,10 @@
   <button class="btn sec" type="button" data-borrar-progreso>Borrar mi progreso</button>
 </section>
 
-<footer class="pie">FPEN · Fundamentos de Programación para Economía y Negocios · ESEN · Ciclo III/2026 · Catedrático: Alvin Javier Portillo Tiliano. Material de apoyo no oficial: no sustituye la lectura ni la clase presencial; ante cualquier diferencia, mandan el programa del curso y Moodle.</footer>
-</main>
+<footer class="pie">Guía de estudio · Fundamentos de Programación para Economía y Negocios · ESEN · Ciclo III/2026 · Catedrático: Alvin Javier Portillo Tiliano. Material de apoyo no oficial: no sustituye la lectura ni la clase; ante cualquier diferencia, mandan el programa del curso y Moodle.</footer>
 </div>
+</div>
+</main>
 
 <script src="assets/guia.js"></script>
 </body>

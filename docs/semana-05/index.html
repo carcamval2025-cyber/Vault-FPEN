@@ -5,89 +5,148 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Semana 5 · El pipe y los verbos de transformación</title>
 <meta name="description" content="Guía de estudio FPEN, semana 5, sesión 1: el operador pipe nativo |&gt;, filter() con Y, O y %in%, arrange(), select() y rename() con nycflights13 y datos de ventas.">
+<meta name="theme-color" content="#111a30">
 <link rel="icon" href="../assets/brand/fpen-favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..900,0..100,0..1&family=Atkinson+Hyperlegible+Next:ital,wght@0,200..800;1,200..800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Schibsted+Grotesk:wght@400..900&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..800;1,8..60,300..800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/guia.css">
 <script>try{var t=localStorage.getItem("fpen-guia-v1-tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
 </head>
-<body data-semana="s5">
-
-<header class="isla-wrap">
-  <div class="isla">
-    <a class="brand" href="../index.html"><img src="../assets/brand/fpen-favicon.svg" alt="" width="25" height="25">FPEN <small>Guía de estudio</small></a>
-    <nav class="isla-semanas" aria-label="Semanas">
-      <a href="../semana-01/index.html">S1</a>
-      <a href="../semana-02/index.html">S2</a>
-      <a href="../semana-03/index.html">S3</a>
-      <a href="../semana-04/index.html">S4</a>
-      <a href="../semana-05/index.html" aria-current="page">S5</a>
-      <span class="futura" title="Semana 6: próximamente">S6</span>
-      <span class="futura" title="Semana 7: próximamente">S7</span>
-      <span class="futura" title="Semana 8: próximamente">S8</span>
-      <span class="futura" title="Semana 9: próximamente">S9</span>
-      <span class="futura" title="Semana 10: próximamente">S10</span>
-      <span class="futura" title="Semana 11: próximamente">S11</span>
-      <span class="futura" title="Semana 12: próximamente">S12</span>
-      <a class="control" href="../control-01/guia/index.html" data-control="Control 01: lectura, repaso y simulacro">C1</a>
+<body data-semana="s5" data-raiz="../">
+<a class="saltar" href="#contenido">Saltar al contenido</a>
+<header class="barra">
+  <div class="barra-fila">
+    <a class="marca" href="../index.html"><img src="../assets/brand/fpen-favicon.svg" alt="" width="26" height="26">FPEN<small>Guía de estudio</small></a>
+    <nav class="cinta" aria-label="Semanas del curso y tu avance">
+      <div class="cinta-pista">
+        <a class="tk" href="../semana-01/index.html" data-tk="s1"><b>S1</b><span class="tk-tit">R para pensar</span><span class="tk-pct" data-estado="cero">■ 0 %</span></a>
+        <a class="tk" href="../semana-02/index.html" data-tk="s2"><b>S2</b><span class="tk-tit">Valores a datos</span><span class="tk-pct" data-estado="cero">■ 0 %</span></a>
+        <a class="tk" href="../semana-03/index.html" data-tk="s3"><b>S3</b><span class="tk-tit">Visualizar</span><span class="tk-pct" data-estado="cero">■ 0 %</span></a>
+        <a class="tk" href="../control-01/guia/index.html" data-tk="c1" data-control="Control 01: lectura, repaso y simulacro"><b>C1</b><span class="tk-tit">Control 01</span><span class="tk-pct" data-estado="cero">■ 0 %</span></a>
+        <a class="tk" href="../semana-04/index.html" data-tk="s4"><b>S4</b><span class="tk-tit">Transformar</span><span class="tk-pct" data-estado="cero">■ 0 %</span></a>
+        <a class="tk" href="../semana-05/index.html" data-tk="s5" aria-current="page"><b>S5</b><span class="tk-tit">Pipe y verbos</span><span class="tk-pct" data-estado="cero">■ 0 %</span></a>
+        <span class="tk futura" title="Semana 6: sin guía todavía"><b>S6</b><span class="tk-tit">Parcial I</span><span class="tk-pct">sin guía</span></span>
+        <span class="tk futura" title="Semana 7: sin guía todavía"><b>S7</b><span class="tk-tit">Datos tidy</span><span class="tk-pct">sin guía</span></span>
+        <span class="tk futura" title="Semana 8: sin guía todavía"><b>S8</b><span class="tk-tit">Combinar tablas</span><span class="tk-pct">sin guía</span></span>
+        <span class="tk futura" title="Semana 9: sin guía todavía"><b>S9</b><span class="tk-tit">Automatizar</span><span class="tk-pct">sin guía</span></span>
+        <span class="tk futura" title="Semana 10: sin guía todavía"><b>S10</b><span class="tk-tit">Explorar</span><span class="tk-pct">sin guía</span></span>
+        <span class="tk futura" title="Semana 11: sin guía todavía"><b>S11</b><span class="tk-tit">R con IA</span><span class="tk-pct">sin guía</span></span>
+        <span class="tk futura" title="Semana 12: sin guía todavía"><b>S12</b><span class="tk-tit">Parcial II</span><span class="tk-pct">sin guía</span></span>
+      </div>
     </nav>
-    <button class="theme-btn" type="button" aria-label="Cambiar tema claro/oscuro"><span class="ico-tema" aria-hidden="true"></span></button>
-    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu-completo"><span class="hb" aria-hidden="true"></span><span class="hb" aria-hidden="true"></span><span class="sr">Menú</span></button>
+    <button class="barra-btn cinta-pausa" type="button" aria-pressed="false" aria-label="Pausar la cinta de semanas"><span class="ico" aria-hidden="true"></span></button>
+    <button class="barra-btn buscar-btn" type="button" aria-haspopup="dialog" aria-keyshortcuts="Control+K"><span class="ico" aria-hidden="true"></span><span>Buscar</span> <kbd>Ctrl K</kbd></button>
+    <button class="barra-btn theme-btn" type="button" aria-label="Cambiar tema claro u oscuro"><span class="ico" aria-hidden="true"></span></button>
+    <button class="barra-btn menu-btn" type="button" aria-expanded="false" aria-controls="menu-completo"><span class="hb" aria-hidden="true"></span><span class="hb" aria-hidden="true"></span><span class="sr">Menú</span></button>
   </div>
+  <div class="indice-fila">
+    <button class="indice-btn" type="button" aria-expanded="false" aria-controls="indice-pop"><span class="indice-num">§ 1/19</span><span class="indice-tit">Semana 5 · Sesión 1</span><span class="indice-mom" data-mom="1"></span><span class="flecha" aria-hidden="true"></span></button>
+    <span class="indice-tiempo" aria-live="off"></span>
+    <nav class="indice-pop" id="indice-pop" aria-label="Índice de la página" hidden>
+    <ol>
+      <li class="grupo" data-mom="1">Antes de clase</li>
+      <li><a href="#uso" data-mom="1"><span class="n">1</span>Cómo usar la guía</a></li>
+      <li><a href="#mapa" data-mom="1"><span class="n">2</span>Qué puedes usar</a></li>
+      <li><a href="#lecturas" data-mom="1"><span class="n">3</span>Lecturas</a></li>
+      <li><a href="#checkpoint" data-mom="1"><span class="n">4</span>Control de lectura</a></li>
+      <li class="grupo" data-mom="2">Aprender</li>
+      <li><a href="#por-que" data-mom="2"><span class="n">5</span>Los datos no llegan listos</a></li>
+      <li><a href="#funciones" data-mom="2"><span class="n">6</span>Funciones: repaso</a></li>
+      <li><a href="#pipe" data-mom="2"><span class="n">7</span>El pipe |></a></li>
+      <li><a href="#filter" data-mom="2"><span class="n">8</span>filter()</a></li>
+      <li><a href="#arrange" data-mom="2"><span class="n">9</span>arrange()</a></li>
+      <li><a href="#select" data-mom="2"><span class="n">10</span>select() y rename()</a></li>
+      <li><a href="#aplicacion" data-mom="2"><span class="n">11</span>Con datos de tu carrera</a></li>
+      <li class="grupo" data-mom="3">Practicar</li>
+      <li><a href="#trazas" data-mom="3"><span class="n">12</span>Tabla de traza</a></li>
+      <li><a href="#ejercicios" data-mom="3"><span class="n">13</span>Ejercicios</a></li>
+      <li><a href="#playground" data-mom="3"><span class="n">14</span>Playground</a></li>
+      <li><a href="#practica" data-mom="3"><span class="n">15</span>Práctica intensiva</a></li>
+      <li class="grupo" data-mom="4">Proyecto y evaluación</li>
+      <li><a href="#proyecto" data-mom="4"><span class="n">16</span>Proyecto</a></li>
+      <li><a href="#evaluacion" data-mom="4"><span class="n">17</span>Rumbo al Parcial</a></li>
+      <li><a href="#cheat" data-mom="4"><span class="n">18</span>Cheat sheet</a></li>
+      <li><a href="#fuentes" data-mom="4"><span class="n">19</span>Fuentes</a></li>
+    </ol>
+    </nav>
+  </div>
+  <div class="lectura" aria-hidden="true"><i></i></div>
 </header>
 <div class="menu-completo" id="menu-completo" hidden></div>
 
-<header class="hero-semana">
-  <div class="hero-in">
-    <p class="hero-num" aria-hidden="true">05</p>
-    <div class="hero-txt">
-      <p class="hero-mod"><span class="sr">Semana 5 · </span>Resumir, comparar e interpretar · Sesión 1 (21 de septiembre)</p>
+<header class="portada-semana">
+  <div class="portada-in">
+    <p class="portada-num" aria-hidden="true">05</p>
+    <div class="portada-txt">
+      <p class="portada-mod"><span class="sr">Semana 5 · </span>Resumir, comparar e interpretar · Sesión 1 (21 de septiembre)</p>
       <h1>El operador pipe en acción: repasando los verbos antes de agrupar</h1>
       <p class="lead">Esta sesión retoma <strong>filter()</strong>, <strong>arrange()</strong>, <strong>select()</strong> y <strong>rename()</strong>, ya vistos en la semana 4, pero ahora con la mecánica completa del pipe <code>|&gt;</code>, la diferencia entre <strong>Y</strong> y <strong>O</strong> y el uso de <code>%in%</code>.</p>
-      <ul class="ciclo-fpen" aria-label="Ciclo de trabajo con datos del curso; resaltadas las etapas de esta semana"><li>importar</li><li class="sep" aria-hidden="true">→</li><li>ordenar</li><li class="sep" aria-hidden="true">→</li><li class="aqui">transformar</li><li class="sep" aria-hidden="true">→</li><li>visualizar</li><li class="sep" aria-hidden="true">→</li><li>modelar</li><li class="sep" aria-hidden="true">→</li><li>comunicar</li></ul>
     </div>
+    <p class="sello" aria-label="Evaluación: Primer Parcial: semana 6"><span class="sello-top">EVALÚA</span><b>Primer Parcial</b><span>semana 6</span></p>
     <p class="pregunta"><span class="pregunta-lbl">Pregunta orientadora</span><mark>¿Cómo convierto miles de observaciones en la tabla exacta que necesito para responder una pregunta?</mark></p>
-    <dl class="hero-meta"><div><dt>Lectura</dt><dd>R4DS cap. 3, §3.2–3.4 (repaso)</dd></div><div><dt>Proyecto</dt><dd>Base lista para resumir</dd></div><div class="eval"><dt>Evaluación</dt><dd>Primer Parcial: semana 6</dd></div></dl>
-    <div class="progress" data-progreso-pagina>
-      <div class="progress-bar"><span></span></div>
-      <div class="progress-label"></div>
+    <div class="graf-fila">
+<figure class="graf-portada" data-lupa data-inicial="6">
+  <figcaption class="graf-cab"><b><span class="n">Gráfico 5.0</span> Julio es el mes con más vuelos desde Nueva York</b><span>Vuelos que salieron de los aeropuertos de NYC en 2013, por mes</span></figcaption>
+  <div class="graf-lienzo" tabindex="0" role="group" aria-roledescription="gráfico interactivo" aria-label="Julio es el mes con más vuelos desde Nueva York. Vuelos que salieron de los aeropuertos de NYC en 2013, por mes. Usa las flechas izquierda y derecha para recorrer los datos.">
+<svg viewBox="0 0 640 300" aria-hidden="true" focusable="false">
+<line class="rejilla" x1="58" x2="618" y1="266.0" y2="266.0"/>
+<text class="eje" x="50" y="270.5" text-anchor="end">24 000</text>
+<line class="rejilla" x1="58" x2="618" y1="184.7" y2="184.7"/>
+<text class="eje" x="50" y="189.2" text-anchor="end">26 000</text>
+<line class="rejilla" x1="58" x2="618" y1="103.3" y2="103.3"/>
+<text class="eje" x="50" y="107.8" text-anchor="end">28 000</text>
+<line class="rejilla" x1="58" x2="618" y1="22.0" y2="22.0"/>
+<text class="eje" x="50" y="26.5" text-anchor="end">30 000</text>
+<text class="eje-cat" x="58.0" y="290" text-anchor="middle">ene</text>
+<text class="eje-cat" x="108.9" y="290" text-anchor="middle">feb</text>
+<text class="eje-cat" x="159.8" y="290" text-anchor="middle">mar</text>
+<text class="eje-cat" x="210.7" y="290" text-anchor="middle">abr</text>
+<text class="eje-cat" x="261.6" y="290" text-anchor="middle">may</text>
+<text class="eje-cat" x="312.5" y="290" text-anchor="middle">jun</text>
+<text class="eje-cat" x="363.5" y="290" text-anchor="middle">jul</text>
+<text class="eje-cat" x="414.4" y="290" text-anchor="middle">ago</text>
+<text class="eje-cat" x="465.3" y="290" text-anchor="middle">sep</text>
+<text class="eje-cat" x="516.2" y="290" text-anchor="middle">oct</text>
+<text class="eje-cat" x="567.1" y="290" text-anchor="middle">nov</text>
+<text class="eje-cat" x="618.0" y="290" text-anchor="middle">dic</text>
+<path class="area" d="M58.0,143.8 L108.9,227.3 L159.8,69.4 L210.7,89.9 L261.6,71.0 L312.5,93.5 L363.5,45.4 L414.4,49.4 L465.3,120.7 L516.2,67.2 L567.1,133.1 L618.0,97.8 L618.0,266.0 L58.0,266.0 Z"/>
+<path class="serie dibuja" pathLength="1" d="M58.0,143.8 L108.9,227.3 L159.8,69.4 L210.7,89.9 L261.6,71.0 L312.5,93.5 L363.5,45.4 L414.4,49.4 L465.3,120.7 L516.2,67.2 L567.1,133.1 L618.0,97.8"/>
+<g class="dato" data-i="0" data-x="58.0" data-y="143.8" data-val="27 004" data-etq="ene" data-nota="enero · primer mes de 2013"><circle class="punto" cx="58.0" cy="143.8" r="4.5"/></g>
+<g class="dato" data-i="1" data-x="108.9" data-y="227.3" data-val="24 951" data-etq="feb" data-nota="febrero · −7.6 % sobre enero"><circle class="punto" cx="108.9" cy="227.3" r="4.5"/></g>
+<g class="dato" data-i="2" data-x="159.8" data-y="69.4" data-val="28 834" data-etq="mar" data-nota="marzo · +15.6 % sobre febrero"><circle class="punto" cx="159.8" cy="69.4" r="4.5"/></g>
+<g class="dato" data-i="3" data-x="210.7" data-y="89.9" data-val="28 330" data-etq="abr" data-nota="abril · −1.7 % sobre marzo"><circle class="punto" cx="210.7" cy="89.9" r="4.5"/></g>
+<g class="dato" data-i="4" data-x="261.6" data-y="71.0" data-val="28 796" data-etq="may" data-nota="mayo · +1.6 % sobre abril"><circle class="punto" cx="261.6" cy="71.0" r="4.5"/></g>
+<g class="dato" data-i="5" data-x="312.5" data-y="93.5" data-val="28 243" data-etq="jun" data-nota="junio · −1.9 % sobre mayo"><circle class="punto" cx="312.5" cy="93.5" r="4.5"/></g>
+<g class="dato" data-i="6" data-x="363.5" data-y="45.4" data-val="29 425" data-etq="jul" data-nota="julio · +4.2 % sobre junio"><circle class="destacado" cx="363.5" cy="45.4" r="7.5"/></g>
+<g class="dato" data-i="7" data-x="414.4" data-y="49.4" data-val="29 327" data-etq="ago" data-nota="agosto · −0.3 % sobre julio"><circle class="punto" cx="414.4" cy="49.4" r="4.5"/></g>
+<g class="dato" data-i="8" data-x="465.3" data-y="120.7" data-val="27 574" data-etq="sep" data-nota="septiembre · −6.0 % sobre agosto"><circle class="punto" cx="465.3" cy="120.7" r="4.5"/></g>
+<g class="dato" data-i="9" data-x="516.2" data-y="67.2" data-val="28 889" data-etq="oct" data-nota="octubre · +4.8 % sobre septiembre"><circle class="punto" cx="516.2" cy="67.2" r="4.5"/></g>
+<g class="dato" data-i="10" data-x="567.1" data-y="133.1" data-val="27 268" data-etq="nov" data-nota="noviembre · −5.6 % sobre octubre"><circle class="punto" cx="567.1" cy="133.1" r="4.5"/></g>
+<g class="dato" data-i="11" data-x="618.0" data-y="97.8" data-val="28 135" data-etq="dic" data-nota="diciembre · +3.2 % sobre noviembre"><circle class="punto" cx="618.0" cy="97.8" r="4.5"/></g>
+</svg>
+  </div>
+  <p class="graf-lectura sr" aria-live="polite"></p>
+  <p class="graf-fuente">Fuente: <code>nycflights13::flights</code>, vuelos contados por mes con R.</p>
+  <p class="graf-ayuda">Pasa el cursor, toca el gráfico o usa ← → para leer cada dato con la lupa.</p>
+</figure>
+      <aside class="ficha" aria-label="Ficha de la semana">
+        <h2>Ficha de la edición</h2>
+        <dl class="hero-meta"><div><dt>Lectura</dt><dd>R4DS cap. 3, §3.2–3.4 (repaso)</dd></div><div><dt>Proyecto</dt><dd>Base lista para resumir</dd></div><div class="eval"><dt>Evaluación</dt><dd>Primer Parcial: semana 6</dd></div></dl>
+        <ul class="ciclo-fpen" aria-label="Ciclo de trabajo con datos del curso; resaltadas las etapas de esta semana"><li>importar</li><li class="sep" aria-hidden="true">→</li><li>ordenar</li><li class="sep" aria-hidden="true">→</li><li class="aqui">transformar</li><li class="sep" aria-hidden="true">→</li><li>visualizar</li><li class="sep" aria-hidden="true">→</li><li>modelar</li><li class="sep" aria-hidden="true">→</li><li>comunicar</li></ul>
+        <div class="progress" data-progreso-pagina>
+          <div class="progress-bar"><span></span></div>
+          <div class="progress-label"></div>
+        </div>
+      </aside>
     </div>
   </div>
 </header>
+<main id="contenido">
 
-<div class="layout with-toc">
-<aside class="toc" aria-label="Contenido de la página">
-  <p>Semana 5 · Sesión 1</p>
-  <ol>
-    <li class="grupo" aria-hidden="true">Antes de clase</li>
-    <li><a href="#uso">Cómo usar la guía</a></li>
-    <li><a href="#mapa">Qué puedes usar</a></li>
-    <li><a href="#lecturas">Lecturas</a></li>
-    <li><a href="#checkpoint">Control de lectura</a></li>
-    <li class="grupo" aria-hidden="true">Aprender</li>
-    <li><a href="#por-que">Los datos no llegan listos</a></li>
-    <li><a href="#funciones">Funciones: repaso</a></li>
-    <li><a href="#pipe">El pipe |></a></li>
-    <li><a href="#filter">filter()</a></li>
-    <li><a href="#arrange">arrange()</a></li>
-    <li><a href="#select">select() y rename()</a></li>
-    <li><a href="#aplicacion">Con datos de tu carrera</a></li>
-    <li class="grupo" aria-hidden="true">Practicar</li>
-    <li><a href="#trazas">Tabla de traza</a></li>
-    <li><a href="#ejercicios">Ejercicios</a></li>
-    <li><a href="#playground">Playground</a></li>
-    <li><a href="#practica">Práctica intensiva</a></li>
-    <li class="grupo" aria-hidden="true">Proyecto y evaluación</li>
-    <li><a href="#proyecto">Proyecto</a></li>
-    <li><a href="#evaluacion">Rumbo al Parcial</a></li>
-    <li><a href="#cheat">Cheat sheet</a></li>
-    <li><a href="#fuentes">Fuentes</a></li>
-  </ol>
-</aside>
-
-<main>
-
+<div class="tramo" data-tramo="1" data-mom="1" id="tramo-1">
+<div class="tramo-in">
+<header class="tramo-cab"><p class="tramo-n">Momento 1 de 4</p><p class="tramo-tit">Antes de clase</p></header>
 <section id="uso">
   <h2>Cómo usar esta guía</h2>
   <p>Esta página resume la <strong>Sesión 1 de la semana 5</strong> tal como se impartió en clase: repaso de <code>filter()</code>, <code>arrange()</code>, <code>select()</code> y <code>rename()</code> (vistos en la semana 4), ahora con la mecánica completa del pipe <code>|&gt;</code>, la diferencia entre <strong>Y</strong> y <strong>O</strong>, y <code>%in%</code>. Es el puente antes de <code>group_by()</code> y <code>summarise()</code>, que llegan en la Sesión 2.</p>
@@ -234,6 +293,11 @@
   <ul class="check"><li><input type="checkbox" id="s5-cp" data-track="s5-cp"><label for="s5-cp">Respondí el control de lectura y entiendo por qué fallé las que fallé.</label></li></ul>
 </section>
 
+</div>
+</div>
+<div class="tramo" data-tramo="2" data-mom="2" id="tramo-2">
+<div class="tramo-in">
+<header class="tramo-cab"><p class="tramo-n">Momento 2 de 4</p><p class="tramo-tit">Aprender</p></header>
 <section id="por-que">
   <h2>Los datos casi nunca llegan listos</h2>
   <div class="box simple"><span class="box-title">En palabras simples</span>
@@ -456,6 +520,11 @@ flights2</code></pre>
   </div>
 </section>
 
+</div>
+</div>
+<div class="tramo" data-tramo="3" data-mom="3" id="tramo-3">
+<div class="tramo-in">
+<header class="tramo-cab"><p class="tramo-n">Momento 3 de 4</p><p class="tramo-tit">Practicar</p></header>
 <section id="trazas">
   <h2>Tabla de traza</h2>
   <p>Sigue este pipeline paso por paso sobre la base <code>ventas</code> (8 filas × 6 columnas) y anota el tamaño de la tabla después de cada verbo y la primera tienda que aparece.</p>
@@ -489,13 +558,13 @@ flights2</code></pre>
   <div class="ia-leyenda"><span class="ia sin">Sin IA</span><span class="ia permitida">IA permitida</span><span class="ia requerida">IA requerida</span></div>
 
   <h3>Repaso activo</h3>
-  <article class="ejercicio">
+  <article id="ej-1" class="ejercicio">
     <header><h3>R1 · ¿Qué hace <code>x |&gt; f(y)</code>?</h3><span class="nivel">pipe · ★</span><span class="ia sin">Sin IA</span></header>
     <div class="respuesta"><label for="s5-r1">Tu respuesta, en tus propias palabras</label><textarea id="s5-r1" data-id="s5-r1" data-min="40" placeholder="Mínimo 40 caracteres…"></textarea><span class="cuenta"></span></div>
     <details class="solucion"><summary>Respuesta de referencia</summary><div class="det"><p>Equivale a <code>f(x, y)</code>: <code>x</code> se convierte en el <strong>primer argumento</strong> de <code>f()</code> y <code>y</code> pasa a ser el segundo. El pipe no ejecuta nada distinto de lo que harías sin él: solo cambia el orden en que lo escribes.</p></div></details>
     <ul class="check"><li><input type="checkbox" id="s5-r1c" data-track="s5-r1c"><label for="s5-r1c">Resuelto</label></li></ul>
   </article>
-  <article class="ejercicio">
+  <article id="ej-2" class="ejercicio">
     <header><h3>R2 · ¿Por qué <code>filter(flights, month == 1 &amp; month == 2)</code> da 0 filas?</h3><span class="nivel">lógica · ★</span><span class="ia sin">Sin IA</span></header>
     <div class="respuesta"><label for="s5-r2">Tu respuesta</label><textarea id="s5-r2" data-id="s5-r2" data-min="40" placeholder="Mínimo 40 caracteres…"></textarea><span class="cuenta"></span></div>
     <details class="solucion"><summary>Respuesta de referencia</summary><div class="det"><p>Porque le pides a R filas donde <code>month</code> sea simultáneamente 1 y 2, y cada fila solo tiene un valor de mes. La condición correcta para “enero o febrero” usa <code>|</code> (o <code>%in% c(1, 2)</code>), no <code>&amp;</code>.</p></div></details>
@@ -503,7 +572,7 @@ flights2</code></pre>
   </article>
 
   <h3>Laboratorio · Sesión 1</h3>
-  <article class="ejercicio">
+  <article id="ej-3" class="ejercicio">
     <header><h3>E1 · Predice el resultado</h3><span class="nivel">filter · ★</span><span class="ia sin">Sin IA</span></header>
     <div class="cuerpo">
       <p>La base <code>ventas</code> tiene una fila por tienda y mes. Sin ejecutar nada, predice cuántas filas devuelve cada línea:</p>
@@ -523,7 +592,7 @@ ventas |&gt; filter(region == "Oriente" | region == "Occidente") |&gt; nrow()</c
     <ul class="check"><li><input type="checkbox" id="s5-e1c" data-track="s5-e1c"><label for="s5-e1c">Resuelto</label></li></ul>
   </article>
 
-  <article class="ejercicio">
+  <article id="ej-4" class="ejercicio">
     <header><h3>E2 · Encuentra el error</h3><span class="nivel">filter y arrange · ★★</span><span class="ia sin">Sin IA</span></header>
     <div class="cuerpo">
       <p>Un compañero escribió esto para quedarse con las tiendas de San Salvador o Santa Ana, ordenadas por mayor ingreso, pero el código tiene errores de lógica (no de sintaxis):</p>
@@ -552,7 +621,7 @@ ventas |&gt; filter(region == "Oriente" | region == "Occidente") |&gt; nrow()</c
     <ul class="check"><li><input type="checkbox" id="s5-e2c" data-track="s5-e2c"><label for="s5-e2c">Resuelto</label></li></ul>
   </article>
 
-  <article class="ejercicio">
+  <article id="ej-5" class="ejercicio">
     <header><h3>E3 · Construye el pipeline</h3><span class="nivel">pipe · ★★</span><span class="ia permitida">IA permitida</span></header>
     <div class="cuerpo">
       <p>Escribe un pipeline con <code>|&gt;</code> que, a partir de <code>ventas</code>: (1) se quede solo con los meses <code>"julio"</code>, <code>"agosto"</code> y <code>"diciembre"</code> usando <code>%in%</code>, (2) los ordene de mayor a menor <code>ingreso_total</code> y (3) seleccione solo <code>tienda</code>, <code>mes</code> e <code>ingreso_total</code>. Explica por qué usaste <code>%in%</code> en vez de encadenar tres <code>|</code>.</p>
@@ -584,7 +653,7 @@ ventas |&gt; filter(region == "Oriente" | region == "Occidente") |&gt; nrow()</c
     <ul class="check"><li><input type="checkbox" id="s5-e3c" data-track="s5-e3c"><label for="s5-e3c">Resuelto</label></li></ul>
   </article>
 
-  <article class="ejercicio">
+  <article id="ej-6" class="ejercicio">
     <header><h3>E4 · <code>select()</code> contra <code>rename()</code></h3><span class="nivel">columnas · ★★</span><span class="ia permitida">IA permitida</span></header>
     <div class="cuerpo">
       <p><code>ventas</code> tiene 6 columnas. Necesitas un data frame llamado <code>ventas_reporte</code> con <strong>todas</strong> las columnas originales, pero con <code>ingreso_total</code> renombrada a <code>ingreso_usd</code>. Escribe el código y explica por qué <code>select()</code> no es la herramienta correcta para este caso.</p>
@@ -600,7 +669,7 @@ names(ventas_reporte)</code></pre>
     <ul class="check"><li><input type="checkbox" id="s5-e4c" data-track="s5-e4c"><label for="s5-e4c">Resuelto</label></li></ul>
   </article>
 
-  <article class="ejercicio">
+  <article id="ej-7" class="ejercicio">
     <header><h3>E5 · Proyecto: dejar la base lista para agrupar</h3><span class="nivel">proyecto · ★★</span><span class="ia permitida">IA permitida</span></header>
     <div class="cuerpo">
       <div class="box nota"><span class="box-title">Conexión con tu proyecto grupal</span><p>Fase sugerida de la semana 5: preparar el data frame filtrado y con nombres claros que usarán en la Sesión 2 para construir los resúmenes descriptivos.</p></div>
@@ -724,7 +793,7 @@ creditos</code></pre>
 7 A07     comercio        950         0
 8 A08     agro           2000        60</code></pre>
 
-  <article class="ejercicio problema">
+  <article id="ej-8" class="ejercicio problema">
     <header><h3>P1 · Cartera en riesgo</h3><span class="nivel">filter con &amp; · ★★★</span><span class="ia sin">Sin IA</span></header>
     <div class="cuerpo">
       <p>El comité de crédito define “cartera en riesgo” como los créditos con <strong>más de 30 días de mora</strong> y <strong>monto de al menos $1,000</strong>. Lista esos clientes con su monto y días de mora, del más atrasado al menos atrasado.</p>
@@ -752,7 +821,7 @@ creditos</code></pre>
     <ul class="check"><li><input type="checkbox" id="s5-pr1" data-track="s5-pr1"><label for="s5-pr1">Resuelto y probado con todos los casos</label></li></ul>
   </article>
 
-  <article class="ejercicio problema">
+  <article id="ej-9" class="ejercicio problema">
     <header><h3>P2 · Informe por sectores con <code>%in%</code></h3><span class="nivel">filter, arrange y select · ★★★</span><span class="ia sin">Sin IA</span></header>
     <div class="cuerpo">
       <p>Gerencia quiere ver solo los créditos de <strong>comercio o servicios</strong>, ordenados por <strong>sector</strong> (alfabético) y, dentro de cada sector, por <strong>monto de mayor a menor</strong>, con las columnas renombradas a <code>codigo</code>, <code>sector</code> y <code>monto</code>.</p>
@@ -782,7 +851,7 @@ creditos</code></pre>
     <ul class="check"><li><input type="checkbox" id="s5-pr2" data-track="s5-pr2"><label for="s5-pr2">Resuelto y probado con todos los casos</label></li></ul>
   </article>
 
-  <article class="ejercicio problema">
+  <article id="ej-10" class="ejercicio problema">
     <header><h3>P3 · Auditoría de un pipeline ajeno</h3><span class="nivel">lectura de código · ★★★</span><span class="ia sin">Sin IA</span></header>
     <div class="cuerpo">
       <p>Un analista afirma que este pipeline lista “los créditos del agro <em>o</em> con mora mayor a 50 días”. Predice cuántas filas devuelve, explica qué calcula en realidad y corrígelo para que haga lo que dice el analista.</p>
@@ -814,6 +883,11 @@ creditos</code></pre>
   </article>
 </section>
 
+</div>
+</div>
+<div class="tramo" data-tramo="4" data-mom="4" id="tramo-4">
+<div class="tramo-in">
+<header class="tramo-cab"><p class="tramo-n">Momento 4 de 4</p><p class="tramo-tit">Proyecto y evaluación</p></header>
 <section id="proyecto">
   <h2>Proyecto grupal · Fase de la semana 5</h2>
   <p><strong>Resúmenes descriptivos aplicados a las preguntas del proyecto.</strong> En esta Sesión 1 la meta es dejar la base filtrada y con nombres claros; los resúmenes por grupo llegan en la Sesión 2.</p>
@@ -884,10 +958,10 @@ creditos</code></pre>
     <a class="nav-next" href="../control-01/guia/index.html"><span>Control 01: lectura y repaso</span><span class="btn-ico" aria-hidden="true"></span></a>
   </nav>
 </section>
-
 <footer class="pie">Guía de estudio · Fundamentos de Programación para Economía y Negocios · ESEN · Ciclo III/2026 · Catedrático: Alvin Javier Portillo Tiliano. Material de apoyo no oficial: no sustituye la lectura ni la clase; ante cualquier diferencia, mandan el programa del curso y Moodle.</footer>
-</main>
 </div>
+</div>
+</main>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-r.min.js"></script>

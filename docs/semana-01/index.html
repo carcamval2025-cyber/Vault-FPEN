@@ -5,89 +5,135 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Semana 1 · R como herramienta para pensar</title>
 <meta name="description" content="Guía de estudio FPEN, semana 1: consola y scripts, objetos y asignación, tipos de datos, operadores, funciones y vectores en R, con casos de economía y negocios.">
+<meta name="theme-color" content="#111a30">
 <link rel="icon" href="../assets/brand/fpen-favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..900,0..100,0..1&family=Atkinson+Hyperlegible+Next:ital,wght@0,200..800;1,200..800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Schibsted+Grotesk:wght@400..900&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..800;1,8..60,300..800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/guia.css">
 <script>try{var t=localStorage.getItem("fpen-guia-v1-tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
 </head>
-<body data-semana="s1">
-
-<header class="isla-wrap">
-  <div class="isla">
-    <a class="brand" href="../index.html"><img src="../assets/brand/fpen-favicon.svg" alt="" width="25" height="25">FPEN <small>Guía de estudio</small></a>
-    <nav class="isla-semanas" aria-label="Semanas">
-      <a href="../semana-01/index.html" aria-current="page">S1</a>
-      <a href="../semana-02/index.html">S2</a>
-      <a href="../semana-03/index.html">S3</a>
-      <a href="../semana-04/index.html">S4</a>
-      <a href="../semana-05/index.html">S5</a>
-      <span class="futura" title="Semana 6: próximamente">S6</span>
-      <span class="futura" title="Semana 7: próximamente">S7</span>
-      <span class="futura" title="Semana 8: próximamente">S8</span>
-      <span class="futura" title="Semana 9: próximamente">S9</span>
-      <span class="futura" title="Semana 10: próximamente">S10</span>
-      <span class="futura" title="Semana 11: próximamente">S11</span>
-      <span class="futura" title="Semana 12: próximamente">S12</span>
-      <a class="control" href="../control-01/guia/index.html" data-control="Control 01: lectura, repaso y simulacro">C1</a>
+<body data-semana="s1" data-raiz="../">
+<a class="saltar" href="#contenido">Saltar al contenido</a>
+<header class="barra">
+  <div class="barra-fila">
+    <a class="marca" href="../index.html"><img src="../assets/brand/fpen-favicon.svg" alt="" width="26" height="26">FPEN<small>Guía de estudio</small></a>
+    <nav class="cinta" aria-label="Semanas del curso y tu avance">
+      <div class="cinta-pista">
+        <a class="tk" href="../semana-01/index.html" data-tk="s1" aria-current="page"><b>S1</b><span class="tk-tit">R para pensar</span><span class="tk-pct" data-estado="cero">■ 0 %</span></a>
+        <a class="tk" href="../semana-02/index.html" data-tk="s2"><b>S2</b><span class="tk-tit">Valores a datos</span><span class="tk-pct" data-estado="cero">■ 0 %</span></a>
+        <a class="tk" href="../semana-03/index.html" data-tk="s3"><b>S3</b><span class="tk-tit">Visualizar</span><span class="tk-pct" data-estado="cero">■ 0 %</span></a>
+        <a class="tk" href="../control-01/guia/index.html" data-tk="c1" data-control="Control 01: lectura, repaso y simulacro"><b>C1</b><span class="tk-tit">Control 01</span><span class="tk-pct" data-estado="cero">■ 0 %</span></a>
+        <a class="tk" href="../semana-04/index.html" data-tk="s4"><b>S4</b><span class="tk-tit">Transformar</span><span class="tk-pct" data-estado="cero">■ 0 %</span></a>
+        <a class="tk" href="../semana-05/index.html" data-tk="s5"><b>S5</b><span class="tk-tit">Pipe y verbos</span><span class="tk-pct" data-estado="cero">■ 0 %</span></a>
+        <span class="tk futura" title="Semana 6: sin guía todavía"><b>S6</b><span class="tk-tit">Parcial I</span><span class="tk-pct">sin guía</span></span>
+        <span class="tk futura" title="Semana 7: sin guía todavía"><b>S7</b><span class="tk-tit">Datos tidy</span><span class="tk-pct">sin guía</span></span>
+        <span class="tk futura" title="Semana 8: sin guía todavía"><b>S8</b><span class="tk-tit">Combinar tablas</span><span class="tk-pct">sin guía</span></span>
+        <span class="tk futura" title="Semana 9: sin guía todavía"><b>S9</b><span class="tk-tit">Automatizar</span><span class="tk-pct">sin guía</span></span>
+        <span class="tk futura" title="Semana 10: sin guía todavía"><b>S10</b><span class="tk-tit">Explorar</span><span class="tk-pct">sin guía</span></span>
+        <span class="tk futura" title="Semana 11: sin guía todavía"><b>S11</b><span class="tk-tit">R con IA</span><span class="tk-pct">sin guía</span></span>
+        <span class="tk futura" title="Semana 12: sin guía todavía"><b>S12</b><span class="tk-tit">Parcial II</span><span class="tk-pct">sin guía</span></span>
+      </div>
     </nav>
-    <button class="theme-btn" type="button" aria-label="Cambiar tema claro/oscuro"><span class="ico-tema" aria-hidden="true"></span></button>
-    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu-completo"><span class="hb" aria-hidden="true"></span><span class="hb" aria-hidden="true"></span><span class="sr">Menú</span></button>
+    <button class="barra-btn cinta-pausa" type="button" aria-pressed="false" aria-label="Pausar la cinta de semanas"><span class="ico" aria-hidden="true"></span></button>
+    <button class="barra-btn buscar-btn" type="button" aria-haspopup="dialog" aria-keyshortcuts="Control+K"><span class="ico" aria-hidden="true"></span><span>Buscar</span> <kbd>Ctrl K</kbd></button>
+    <button class="barra-btn theme-btn" type="button" aria-label="Cambiar tema claro u oscuro"><span class="ico" aria-hidden="true"></span></button>
+    <button class="barra-btn menu-btn" type="button" aria-expanded="false" aria-controls="menu-completo"><span class="hb" aria-hidden="true"></span><span class="hb" aria-hidden="true"></span><span class="sr">Menú</span></button>
   </div>
+  <div class="indice-fila">
+    <button class="indice-btn" type="button" aria-expanded="false" aria-controls="indice-pop"><span class="indice-num">§ 1/19</span><span class="indice-tit">Semana 1</span><span class="indice-mom" data-mom="1"></span><span class="flecha" aria-hidden="true"></span></button>
+    <span class="indice-tiempo" aria-live="off"></span>
+    <nav class="indice-pop" id="indice-pop" aria-label="Índice de la página" hidden>
+    <ol>
+      <li class="grupo" data-mom="1">Antes de clase</li>
+      <li><a href="#uso" data-mom="1"><span class="n">1</span>Cómo usar la guía</a></li>
+      <li><a href="#mapa" data-mom="1"><span class="n">2</span>Qué puedes usar</a></li>
+      <li><a href="#lecturas" data-mom="1"><span class="n">3</span>Lecturas</a></li>
+      <li><a href="#checkpoint" data-mom="1"><span class="n">4</span>Control de lectura</a></li>
+      <li class="grupo" data-mom="2">Aprender</li>
+      <li><a href="#consola" data-mom="2"><span class="n">5</span>Consola y scripts</a></li>
+      <li><a href="#objetos" data-mom="2"><span class="n">6</span>Objetos y asignación</a></li>
+      <li><a href="#tipos" data-mom="2"><span class="n">7</span>Tipos de datos</a></li>
+      <li><a href="#operadores" data-mom="2"><span class="n">8</span>Operadores</a></li>
+      <li><a href="#funciones" data-mom="2"><span class="n">9</span>Funciones y argumentos</a></li>
+      <li><a href="#vectores" data-mom="2"><span class="n">10</span>Vectores</a></li>
+      <li><a href="#ayuda" data-mom="2"><span class="n">11</span>Ayuda y errores</a></li>
+      <li class="grupo" data-mom="3">Practicar</li>
+      <li><a href="#trazas" data-mom="3"><span class="n">12</span>Tablas de traza</a></li>
+      <li><a href="#ejercicios" data-mom="3"><span class="n">13</span>Ejercicios</a></li>
+      <li><a href="#playground" data-mom="3"><span class="n">14</span>Playground</a></li>
+      <li><a href="#practica" data-mom="3"><span class="n">15</span>Práctica intensiva</a></li>
+      <li class="grupo" data-mom="4">Proyecto y evaluación</li>
+      <li><a href="#proyecto" data-mom="4"><span class="n">16</span>Proyecto: Fase 1</a></li>
+      <li><a href="#evaluacion" data-mom="4"><span class="n">17</span>Rumbo al Control 01</a></li>
+      <li><a href="#cheat" data-mom="4"><span class="n">18</span>Cheat sheet</a></li>
+      <li><a href="#fuentes" data-mom="4"><span class="n">19</span>Fuentes</a></li>
+    </ol>
+    </nav>
+  </div>
+  <div class="lectura" aria-hidden="true"><i></i></div>
 </header>
 <div class="menu-completo" id="menu-completo" hidden></div>
 
-<header class="hero-semana">
-  <div class="hero-in">
-    <p class="hero-num" aria-hidden="true">01</p>
-    <div class="hero-txt">
-      <p class="hero-mod"><span class="sr">Semana 1 · </span>Unidad 1 · R como herramienta para pensar con datos</p>
+<header class="portada-semana">
+  <div class="portada-in">
+    <p class="portada-num" aria-hidden="true">01</p>
+    <div class="portada-txt">
+      <p class="portada-mod"><span class="sr">Semana 1 · </span>Unidad 1 · R como herramienta para pensar con datos</p>
       <h1>¿Qué puedo hacer con R y cómo le doy instrucciones?</h1>
       <p class="lead">Antes de analizar un solo dato económico, R necesita que aprendas a hablarle: crear objetos, hacer cálculos y usar funciones. Esta guía cubre exactamente eso, y solo eso: nada de <code>dplyr</code> ni <code>ggplot2</code> todavía.</p>
-      <ul class="ciclo-fpen" aria-label="Ciclo de trabajo con datos del curso; resaltadas las etapas de esta semana"><li>importar</li><li class="sep" aria-hidden="true">→</li><li>ordenar</li><li class="sep" aria-hidden="true">→</li><li>transformar</li><li class="sep" aria-hidden="true">→</li><li>visualizar</li><li class="sep" aria-hidden="true">→</li><li>modelar</li><li class="sep" aria-hidden="true">→</li><li>comunicar</li></ul>
     </div>
+    <p class="sello" aria-label="Evaluación: Control 01: semanas 1 a 3"><span class="sello-top">EVALÚA</span><b>Control 01</b><span>semanas 1 a 3</span></p>
     <p class="pregunta"><span class="pregunta-lbl">Pregunta orientadora</span><mark>¿Cómo le doy a R instrucciones precisas para calcular ingresos, costos y crecimientos, y cómo sé que el resultado es correcto?</mark></p>
-    <dl class="hero-meta"><div><dt>Lectura</dt><dd>R4DS cap. 2 · Workflow: basics</dd></div><div><dt>Proyecto</dt><dd>Fase 1: equipos, tema y datos</dd></div><div class="eval"><dt>Evaluación</dt><dd>Control 01: semanas 1 a 3</dd></div></dl>
-    <div class="progress" data-progreso-pagina>
-      <div class="progress-bar"><span></span></div>
-      <div class="progress-label"></div>
+    <div class="graf-fila">
+<figure class="graf-portada" data-lupa data-inicial="3">
+  <figcaption class="graf-cab"><b><span class="n">Gráfico 1.0</span> El mes 4 trae el mayor ingreso del periodo</b><span>Ingresos de una tienda por mes, en USD</span></figcaption>
+  <div class="graf-lienzo" tabindex="0" role="group" aria-roledescription="gráfico interactivo" aria-label="El mes 4 trae el mayor ingreso del periodo. Ingresos de una tienda por mes, en USD. Usa las flechas izquierda y derecha para recorrer los datos.">
+<svg viewBox="0 0 640 300" aria-hidden="true" focusable="false">
+<line class="rejilla" x1="58" x2="624" y1="266.0" y2="266.0"/>
+<text class="eje" x="50" y="270.5" text-anchor="end">0</text>
+<line class="rejilla" x1="58" x2="624" y1="218.0" y2="218.0"/>
+<text class="eje" x="50" y="222.5" text-anchor="end">1000</text>
+<line class="rejilla" x1="58" x2="624" y1="170.0" y2="170.0"/>
+<text class="eje" x="50" y="174.5" text-anchor="end">2000</text>
+<line class="rejilla" x1="58" x2="624" y1="122.0" y2="122.0"/>
+<text class="eje" x="50" y="126.5" text-anchor="end">3000</text>
+<line class="rejilla" x1="58" x2="624" y1="74.0" y2="74.0"/>
+<text class="eje" x="50" y="78.5" text-anchor="end">4000</text>
+<line class="rejilla" x1="58" x2="624" y1="26.0" y2="26.0"/>
+<text class="eje" x="50" y="30.5" text-anchor="end">5000</text>
+<g class="dato" data-i="0" data-x="128.8" data-y="64.4" data-val="4200" data-etq="mes 1" data-nota="mes 1 · punto de partida" style="--k:0"><rect class="barra-g crece" x="83.5" y="64.4" width="90.6" height="201.6"/><text class="valor" x="128.8" y="56.4" text-anchor="middle">4200</text></g>
+<text class="eje-cat" x="128.8" y="290" text-anchor="middle">mes 1</text>
+<g class="dato" data-i="1" data-x="270.2" data-y="47.6" data-val="4550" data-etq="mes 2" data-nota="mes 2 · +8.3 % sobre el mes 1" style="--k:1"><rect class="barra-g crece" x="225.0" y="47.6" width="90.6" height="218.4"/><text class="valor" x="270.2" y="39.6" text-anchor="middle">4550</text></g>
+<text class="eje-cat" x="270.2" y="290" text-anchor="middle">mes 2</text>
+<g class="dato" data-i="2" data-x="411.8" data-y="69.2" data-val="4100" data-etq="mes 3" data-nota="mes 3 · −9.9 % sobre el mes 2" style="--k:2"><rect class="barra-g crece" x="366.5" y="69.2" width="90.6" height="196.8"/><text class="valor" x="411.8" y="61.2" text-anchor="middle">4100</text></g>
+<text class="eje-cat" x="411.8" y="290" text-anchor="middle">mes 3</text>
+<g class="dato" data-i="3" data-x="553.2" data-y="35.6" data-val="4800" data-etq="mes 4" data-nota="mes 4 · +17.1 % sobre el mes 3" style="--k:3"><rect class="destacado crece" x="508.0" y="35.6" width="90.6" height="230.4"/><text class="valor" x="553.2" y="27.6" text-anchor="middle">4800</text></g>
+<text class="eje-cat" x="553.2" y="290" text-anchor="middle">mes 4</text>
+<line class="base" x1="58" x2="624" y1="266.0" y2="266.0"/>
+</svg>
+  </div>
+  <p class="graf-lectura sr" aria-live="polite"></p>
+  <p class="graf-fuente">Fuente: el vector <code>ingresos &lt;- c(4200, 4550, 4100, 4800)</code> del playground de esta semana.</p>
+  <p class="graf-ayuda">Pasa el cursor, toca el gráfico o usa ← → para leer cada dato con la lupa.</p>
+</figure>
+      <aside class="ficha" aria-label="Ficha de la semana">
+        <h2>Ficha de la edición</h2>
+        <dl class="hero-meta"><div><dt>Lectura</dt><dd>R4DS cap. 2 · Workflow: basics</dd></div><div><dt>Proyecto</dt><dd>Fase 1: equipos, tema y datos</dd></div><div class="eval"><dt>Evaluación</dt><dd>Control 01: semanas 1 a 3</dd></div></dl>
+        <ul class="ciclo-fpen" aria-label="Ciclo de trabajo con datos del curso; resaltadas las etapas de esta semana"><li>importar</li><li class="sep" aria-hidden="true">→</li><li>ordenar</li><li class="sep" aria-hidden="true">→</li><li>transformar</li><li class="sep" aria-hidden="true">→</li><li>visualizar</li><li class="sep" aria-hidden="true">→</li><li>modelar</li><li class="sep" aria-hidden="true">→</li><li>comunicar</li></ul>
+        <div class="progress" data-progreso-pagina>
+          <div class="progress-bar"><span></span></div>
+          <div class="progress-label"></div>
+        </div>
+      </aside>
     </div>
   </div>
 </header>
+<main id="contenido">
 
-<div class="layout with-toc">
-<aside class="toc" aria-label="Contenido de la página">
-  <p>Semana 1</p>
-  <ol>
-    <li class="grupo" aria-hidden="true">Antes de clase</li>
-    <li><a href="#uso">Cómo usar la guía</a></li>
-    <li><a href="#mapa">Qué puedes usar</a></li>
-    <li><a href="#lecturas">Lecturas</a></li>
-    <li><a href="#checkpoint">Control de lectura</a></li>
-    <li class="grupo" aria-hidden="true">Aprender</li>
-    <li><a href="#consola">Consola y scripts</a></li>
-    <li><a href="#objetos">Objetos y asignación</a></li>
-    <li><a href="#tipos">Tipos de datos</a></li>
-    <li><a href="#operadores">Operadores</a></li>
-    <li><a href="#funciones">Funciones y argumentos</a></li>
-    <li><a href="#vectores">Vectores</a></li>
-    <li><a href="#ayuda">Ayuda y errores</a></li>
-    <li class="grupo" aria-hidden="true">Practicar</li>
-    <li><a href="#trazas">Tablas de traza</a></li>
-    <li><a href="#ejercicios">Ejercicios</a></li>
-    <li><a href="#playground">Playground</a></li>
-    <li><a href="#practica">Práctica intensiva</a></li>
-    <li class="grupo" aria-hidden="true">Proyecto y evaluación</li>
-    <li><a href="#proyecto">Proyecto: Fase 1</a></li>
-    <li><a href="#evaluacion">Rumbo al Control 01</a></li>
-    <li><a href="#cheat">Cheat sheet</a></li>
-    <li><a href="#fuentes">Fuentes</a></li>
-  </ol>
-</aside>
-
-<main>
-
+<div class="tramo" data-tramo="1" data-mom="1" id="tramo-1">
+<div class="tramo-in">
+<header class="tramo-cab"><p class="tramo-n">Momento 1 de 4</p><p class="tramo-tit">Antes de clase</p></header>
 <section id="uso">
   <h2>Cómo usar esta guía</h2>
   <p>El curso es <strong>aula invertida</strong>: el libro es la primera fuente, la clase es laboratorio. Usa esta página en cuatro momentos:</p>
@@ -243,6 +289,11 @@
   </ul>
 </section>
 
+</div>
+</div>
+<div class="tramo" data-tramo="2" data-mom="2" id="tramo-2">
+<div class="tramo-in">
+<header class="tramo-cab"><p class="tramo-n">Momento 2 de 4</p><p class="tramo-tit">Aprender</p></header>
 <section id="consola">
   <h2>Consola y scripts</h2>
   <div class="box simple"><span class="box-title">En palabras simples</span>
@@ -451,6 +502,11 @@ r_rock</code></pre>
   </div>
 </section>
 
+</div>
+</div>
+<div class="tramo" data-tramo="3" data-mom="3" id="tramo-3">
+<div class="tramo-in">
+<header class="tramo-cab"><p class="tramo-n">Momento 3 de 4</p><p class="tramo-tit">Practicar</p></header>
 <section id="trazas">
   <h2>Tablas de traza</h2>
   <p>Una traza es ejecutar el código <em>tú</em>, línea por línea, anotando el valor de cada objeto. Llena las celdas, pulsa <strong>Comprobar</strong> y solo al final mira la solución. Si un objeto todavía no existe, escribe <em>no existe</em>.</p>
@@ -508,7 +564,7 @@ positivo &lt;- utilidad &gt; 1000</code></pre>
   <div class="ia-leyenda"><span class="ia sin">Sin IA</span><span class="ia permitida">IA permitida</span><span class="ia requerida">IA requerida</span></div>
 
   <h3>Repaso activo</h3>
-  <article class="ejercicio">
+  <article id="ej-1" class="ejercicio">
     <header><h3>R-1 · ¿Por qué un objeto?</h3><span class="nivel">objetos · ★</span><span class="ia sin">Sin IA</span></header>
     <div class="cuerpo">
       <p>Un compañero de equipo escribe <code>4200 - 3100</code> directo en la consola cada vez que necesita la utilidad de enero. ¿Qué problema tiene eso frente a usar <code>utilidad_enero &lt;- 4200 - 3100</code>, pensando en el proyecto grupal?</p>
@@ -524,7 +580,7 @@ positivo &lt;- utilidad &gt; 1000</code></pre>
     <ul class="check"><li><input type="checkbox" id="s1-r1c" data-track="s1-r1c"><label for="s1-r1c">Resuelto</label></li></ul>
   </article>
 
-  <article class="ejercicio">
+  <article id="ej-2" class="ejercicio">
     <header><h3>R-2 · Predice el error</h3><span class="nivel">lectura de errores · ★</span><span class="ia sin">Sin IA</span></header>
     <div class="cuerpo">
       <p>Este código se ejecuta línea por línea. ¿Qué error exacto muestra R y por qué?</p>
@@ -544,7 +600,7 @@ tasa_crecimiento * 100</code></pre>
 
   <h3>Laboratorio</h3>
   <p>Los dos primeros son diagnósticos (sin apoyo de IA) para ver qué entendiste sin ayuda externa.</p>
-  <article class="ejercicio">
+  <article id="ej-3" class="ejercicio">
     <header><h3>E1 · Predice el resultado</h3><span class="nivel">vectores · ★</span><span class="ia sin">Sin IA</span></header>
     <div class="cuerpo">
       <p>Una tienda registra sus ingresos y costos de cuatro meses. Sin ejecutar nada, escribe exactamente qué imprime R en la última línea.</p>
@@ -575,7 +631,7 @@ utilidad</code></pre>
     <ul class="check"><li><input type="checkbox" id="s1-e1c" data-track="s1-e1c"><label for="s1-e1c">Resuelto</label></li></ul>
   </article>
 
-  <article class="ejercicio">
+  <article id="ej-4" class="ejercicio">
     <header><h3>E2 · Encuentra el error</h3><span class="nivel">lectura de errores · ★</span><span class="ia sin">Sin IA</span></header>
     <div class="cuerpo">
       <p>Tu compañero de equipo escribió esto para ver el crecimiento proyectado de ventas y R marcó un error. Explica exactamente cuál es el error y cómo lo corregirías.</p>
@@ -604,7 +660,7 @@ Crecimiento</code></pre>
     <ul class="check"><li><input type="checkbox" id="s1-e2c" data-track="s1-e2c"><label for="s1-e2c">Resuelto</label></li></ul>
   </article>
 
-  <article class="ejercicio">
+  <article id="ej-5" class="ejercicio">
     <header><h3>E3 · Construye: utilidad promedio</h3><span class="nivel">vectores y funciones · ★★</span><span class="ia permitida">IA permitida</span></header>
     <div class="cuerpo">
       <p>Una tienda tiene ingresos <code>c(5000, 5400, 4900, 6100)</code> y costos <code>c(3200, 3300, 3100, 3500)</code>. Escribe el código para calcular (a) la utilidad de cada mes y (b) la utilidad promedio del periodo. Luego justifica: si usaste IA para esto, ¿qué verificaste antes de confiar en su respuesta?</p>
@@ -627,7 +683,7 @@ utilidad_promedio</code></pre>
     <ul class="check"><li><input type="checkbox" id="s1-e3c" data-track="s1-e3c"><label for="s1-e3c">Resuelto</label></li></ul>
   </article>
 
-  <article class="ejercicio">
+  <article id="ej-6" class="ejercicio">
     <header><h3>E4 · Modifica: de variación a índice</h3><span class="nivel">funciones · ★★</span><span class="ia permitida">IA permitida</span></header>
     <div class="cuerpo">
       <p>Este código ya calcula la variación absoluta de un precio entre dos años. Modifícalo para agregar también un <strong>número índice</strong> (2024 = 100) y explica, en tus palabras, qué te dice el índice que la variación absoluta no dice.</p>
@@ -650,7 +706,7 @@ indice_precio</code></pre>
     <ul class="check"><li><input type="checkbox" id="s1-e4c" data-track="s1-e4c"><label for="s1-e4c">Resuelto</label></li></ul>
   </article>
 
-  <article class="ejercicio">
+  <article id="ej-7" class="ejercicio">
     <header><h3>E5 · Proyecto: primer contacto con los datos de tu equipo</h3><span class="nivel">proyecto · ★★</span><span class="ia permitida">IA permitida</span></header>
     <div class="cuerpo">
       <p>Fase de esta semana en el proyecto grupal: formación de equipos y elección de tema. Con tu equipo (aunque el tema todavía pueda cambiar), anoten 4 valores ficticios que esperarían encontrar en una base real de ese tema, créenlos como un vector con <code>c()</code> y un nombre en <code>snake_case</code> que describa qué representan, y apliquen una función que ya conozcan (<code>mean()</code>, <code>sum()</code>, <code>length()</code> o <code>round()</code>) que tenga sentido para esos datos.</p>
@@ -742,7 +798,7 @@ round(ingreso_promedio, digits = 0)</code></pre>
   <ul class="check"><li><input type="checkbox" id="s1-px" data-track="s1-px"><label for="s1-px">Completé los ejercicios rápidos sin ejecutar el código.</label></li></ul>
 
   <h3>Problemas tipo examen</h3>
-  <article class="ejercicio problema">
+  <article id="ej-8" class="ejercicio problema">
     <header><h3>P1 · Margen y punto de equilibrio</h3><span class="nivel">objetos y operadores · ★★★</span><span class="ia sin">Sin IA</span></header>
     <div class="cuerpo">
       <p>Una panadería vende cada pan dulce a <strong>$0.35</strong>; cada uno le cuesta <strong>$0.20</strong> en ingredientes, y sus costos fijos del mes (alquiler y luz) son <strong>$450</strong>. Escribe un script que calcule, para una cantidad vendida en el mes: el ingreso, el costo total (fijo + variable), la utilidad, si hubo ganancia (<code>TRUE</code>/<code>FALSE</code>) y el punto de equilibrio (cuántos panes hay que vender para que la utilidad sea 0).</p>
@@ -781,7 +837,7 @@ punto_equilibrio</code></pre>
     <ul class="check"><li><input type="checkbox" id="s1-pr1" data-track="s1-pr1"><label for="s1-pr1">Resuelto y probado con todos los casos</label></li></ul>
   </article>
 
-  <article class="ejercicio problema">
+  <article id="ej-9" class="ejercicio problema">
     <header><h3>P2 · Índice de precios de una canasta</h3><span class="nivel">vectores y funciones · ★★★</span><span class="ia sin">Sin IA</span></header>
     <div class="cuerpo">
       <p>Una canasta tiene 4 productos. Sus precios en 2024 fueron <code>c(1.10, 0.85, 2.40, 3.00)</code> y en 2025 <code>c(1.20, 0.90, 2.40, 3.30)</code>. Calcula: (a) el costo de la canasta en cada año, (b) el índice de la canasta (2024 = 100) con un decimal, (c) la variación porcentual de cada producto con un decimal y (d) si todos los productos subieron o se mantuvieron (una sola respuesta <code>TRUE</code>/<code>FALSE</code> no es necesaria todavía: basta un vector lógico).</p>
@@ -815,7 +871,7 @@ precios_2025 &gt;= precios_2024</code></pre>
     <ul class="check"><li><input type="checkbox" id="s1-pr2" data-track="s1-pr2"><label for="s1-pr2">Resuelto y probado con todos los casos</label></li></ul>
   </article>
 
-  <article class="ejercicio problema">
+  <article id="ej-10" class="ejercicio problema">
     <header><h3>P3 · Proyección con crecimiento compuesto</h3><span class="nivel">operadores y vectores · ★★★</span><span class="ia sin">Sin IA</span></header>
     <div class="cuerpo">
       <p>Una cooperativa vende $12,000 al mes y espera crecer 3 % mensual. Proyecta las ventas de los próximos 3 meses con crecimiento <strong>compuesto</strong> (cada mes crece sobre el anterior), redondeadas a dos decimales, y el total de los 3 meses. Compara con un crecimiento <strong>simple</strong> (siempre 3 % sobre los $12,000 iniciales).</p>
@@ -849,6 +905,11 @@ sum(simple)</code></pre>
   </article>
 </section>
 
+</div>
+</div>
+<div class="tramo" data-tramo="4" data-mom="4" id="tramo-4">
+<div class="tramo-in">
+<header class="tramo-cab"><p class="tramo-n">Momento 4 de 4</p><p class="tramo-tit">Proyecto y evaluación</p></header>
 <section id="proyecto">
   <h2>Proyecto grupal · Fase 1</h2>
   <p><strong>Semana 1 · Formación de equipos, elección de tema y datos.</strong> El proyecto vale el 20 % de la nota, se hace en equipos de 4 y se construye durante todo el ciclo. Debe empezar con <strong>preguntas</strong>, no con gráficos.</p>
@@ -933,10 +994,10 @@ sum(simple)</code></pre>
     <a class="nav-next" href="../semana-02/index.html"><span>Semana 2: de valores a conjuntos de datos</span><span class="btn-ico" aria-hidden="true"></span></a>
   </nav>
 </section>
-
 <footer class="pie">Guía de estudio · Fundamentos de Programación para Economía y Negocios · ESEN · Ciclo III/2026 · Catedrático: Alvin Javier Portillo Tiliano. Material de apoyo no oficial: no sustituye la lectura ni la clase; ante cualquier diferencia, mandan el programa del curso y Moodle.</footer>
-</main>
 </div>
+</div>
+</main>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-r.min.js"></script>

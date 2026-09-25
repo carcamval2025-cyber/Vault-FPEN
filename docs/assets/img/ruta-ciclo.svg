@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 300" width="760" height="300" role="img" aria-label="Ruta de las 12 semanas del ciclo: el temario del Control 01 cubre las semanas 1 a 3, el primer examen parcial es en la semana 6 y el segundo en la semana 12; el proyecto grupal avanza en fases desde la semana 1 hasta la 11.">
 <title>Ruta de las 12 semanas del ciclo: el temario del Control 01 cubre las semanas 1 a 3, el primer examen parcial es en la semana 6 y el segundo en la semana 12; el proyecto grupal avanza en fases desde la semana 1 hasta la 11.</title>
 <style>
-  text { font-family: 'Atkinson Hyperlegible Next', 'Atkinson Hyperlegible', Arial, sans-serif; font-size: 14px; fill: #111a30; }
-  .t { font-family: Fraunces, Georgia, 'Times New Roman', serif; font-weight: 700; font-size: 16px; }
+  text { font-family: 'Schibsted Grotesk', Arial, sans-serif; font-size: 14px; fill: #111a30; }
+  .t { font-family: 'Schibsted Grotesk', 'Arial Narrow', Arial, sans-serif; font-weight: 700; font-size: 16px; }
   .m { font-family: 'JetBrains Mono', Menlo, Consolas, monospace; font-size: 13px; font-variant-ligatures: none; font-feature-settings: "liga" 0, "calt" 0; }
   .s { font-size: 12px; fill: #56607a; }
   .b { font-weight: 700; }

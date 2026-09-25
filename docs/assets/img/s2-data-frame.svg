@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 300" width="760" height="300" role="img" aria-label="Tres vectores del mismo largo, sucursal de tipo character, ingresos de tipo double y meta_cumplida de tipo logical, se ponen lado a lado para formar un data frame de 3 filas y 3 columnas: cada fila es una observación y cada columna una variable.">
 <title>Tres vectores del mismo largo, sucursal de tipo character, ingresos de tipo double y meta_cumplida de tipo logical, se ponen lado a lado para formar un data frame de 3 filas y 3 columnas: cada fila es una observación y cada columna una variable.</title>
 <style>
-  text { font-family: 'Atkinson Hyperlegible Next', 'Atkinson Hyperlegible', Arial, sans-serif; font-size: 14px; fill: #111a30; }
-  .t { font-family: Fraunces, Georgia, 'Times New Roman', serif; font-weight: 700; font-size: 16px; }
+  text { font-family: 'Schibsted Grotesk', Arial, sans-serif; font-size: 14px; fill: #111a30; }
+  .t { font-family: 'Schibsted Grotesk', 'Arial Narrow', Arial, sans-serif; font-weight: 700; font-size: 16px; }
   .m { font-family: 'JetBrains Mono', Menlo, Consolas, monospace; font-size: 13px; font-variant-ligatures: none; font-feature-settings: "liga" 0, "calt" 0; }
   .s { font-size: 12px; fill: #56607a; }
   .b { font-weight: 700; }

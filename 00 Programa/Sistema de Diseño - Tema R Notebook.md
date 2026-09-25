@@ -2,9 +2,13 @@
 tags: [programa, diseno, guia-fpen]
 ---
 
-# Sistema de Diseño — Guía FPEN (vigente desde el 25 de septiembre de 2026)
+# Sistema de Diseño — Guía FPEN, voz de tabloide económico (vigente desde el 25 de septiembre de 2026)
 
-> El nombre del archivo se conserva para no romper los enlaces del vault. El tema anterior, "R Notebook" (oscuro, Fraunces + Literata, 4 pestañas, XP), quedó **reemplazado** por decisión de Carlos: la guía adopta el sistema de componentes e interacción de su guía de IDS, con identidad propia de FPEN. El texto completo del sistema anterior está en el historial de git de este archivo.
+> El nombre del archivo se conserva para no romper los enlaces del vault. Historia: el tema "R Notebook" (oscuro, Fraunces + Literata, 4 pestañas) fue reemplazado el 25/09 por un sistema derivado de la guía de IDS; ese mismo día Carlos pidió **una voz propia** y, con la skill de diseño `impeccable`, eligió entre tres prototipos la dirección **"Tabloide ámbar"**, con color por momento de estudio, portada con gráfico y lupa, cinta de semanas y número gigante. Las versiones anteriores de este archivo están en el historial de git.
+
+## La idea
+
+Cada semana es **la edición de un tabloide económico**: portada con número gigante, titular, pregunta orientadora en una franja y un gráfico real de los datos de la semana que se lee con una lupa. Los temas son las noticias y el fondo cambia según el momento de estudio.
 
 ## Dónde vive
 
@@ -12,69 +16,101 @@ Todo el diseño está en `docs/assets/` y lo comparten todas las páginas. Una p
 
 | Archivo | Qué hace |
 |---|---|
-| `guia.css` | Tokens, componentes, liquid glass, ventanas estilo RStudio, modo oscuro, accesibilidad |
-| `guia.js` | Progreso (`localStorage`, clave `fpen-guia-v1`), quizzes, trazas, bloqueo de soluciones, simulacro, menú, tema, copiar, láminas SVG incrustadas |
+| `guia.css` | Tokens, tramos de color, papeles de imprenta, vidrio ahumado, barra, portada y gráfico, código estilo RStudio, modo oscuro, accesibilidad |
+| `guia.js` | Progreso (`localStorage`, clave `fpen-guia-v1`), quizzes, trazas, bloqueo de soluciones, simulacro, **cinta de semanas, índice de la página, barra de lectura, buscador Ctrl K, lupa del gráfico**, menú, tema, láminas SVG incrustadas |
 | `ejecutar-r.js` | Ejecutar y Editar código R con webR, bloques previos, CSV, gráficos, tiempo límite |
-| `icons/` | Íconos SVG de las cajas y botones |
-| `img/` | Láminas SVG independientes; `img/graficos/` tiene los gráficos de resultado generados con R |
+| `buscar.json` | Índice del buscador: semanas, secciones, ejercicios y funciones de R (cada función en la semana que la enseña). Lo genera el script de construcción |
+| `icons/` | Íconos SVG (incluye `buscar`, `pausa`, `reproducir`) |
+| `img/` | Láminas SVG; `img/graficos/` tiene los gráficos de resultado hechos con R; `img/serie-*.svg` son las series de cada semana que se ven, tenues, en el fondo |
 
 ## Identidad
 
 | Token | Valor | Uso |
 |---|---|---|
-| Azul noche (`--brand`) | `#111a30` | Portadas, barra flotante, editor de código |
-| Ámbar (`--mark`) | `#f5a623` | Resaltador de la pregunta orientadora, semana actual, lo esencial |
-| Azul R (`--accent`) | `#4c9aff` aclarado / oscurecido según el tema | Enlaces y acción principal |
-| Teal | `#2dd4bf` | Información neutra, funciones en el código |
-| Coral | `#ff6b6b` | **Sin IA** y errores |
-| Verde | `#34d399` | **IA permitida** y respuestas correctas |
-| Violeta | `#a78bfa` | **IA requerida** y proyecto grupal |
+| Ámbar (`--ambar`) | `oklch(0.83 0.155 76)` | Suelo de la portada y de "Antes de clase", semana actual en la cinta, filo del vidrio |
+| Azul noche (`--noche`) | `#111a30` | Tinta, franja de la pregunta, barra, marcos y sombras de imprenta, suelo de "Practicar" |
+| Blanco frío (`--frio`) | `oklch(0.982 0.007 255)` | Suelo de "Aprender" (lectura larga) |
+| Azul R intenso (`--azul-r`) | `oklch(0.49 0.19 260)` | Suelo de "Proyecto y evaluación" |
+| Coral | `--bad` | **Sin IA**, errores, número del gráfico |
+| Verde | `--ok` | **IA permitida**, respuestas correctas, avance |
+| Violeta | `--violet` | **IA requerida** y proyecto grupal |
 
-- Tipografías: **Fraunces** (títulos, la serif del logo), **Atkinson Hyperlegible Next** (lectura) y **JetBrains Mono** (código, sin ligaduras).
-- Logo y favicon FPEN en la barra; ilustraciones Programar, Analizar y Comunicar en el índice.
-- Un tono por semana (`body[data-semana="sN"]`, y `c1` para Control 01) cambia los campos de color del fondo y la luz de la portada.
-- Tema claro u oscuro según el sistema, con botón para cambiarlo (se recuerda en `fpen-guia-v1-tema`).
+- Tipografías: **Schibsted Grotesk** (titulares, cifras, etiquetas y gráficos), **Source Serif 4** (lectura) y **JetBrains Mono** (código, sin ligaduras). Fraunces y Atkinson dejaron de usarse.
+- Logo y favicon FPEN en la barra.
+- El fondo **no** es papel crema: es color de marca por tramo.
+
+## Tramos (momentos de estudio)
+
+Las secciones de cada página se agrupan según su índice en cuatro tramos, cada uno con su suelo:
+
+| Tramo | Momento | Suelo claro | Suelo oscuro |
+|---|---|---|---|
+| 1 | Antes de clase | ámbar | azul noche con acentos ámbar |
+| 2 | Aprender | blanco frío | azul noche profundo |
+| 3 | Practicar | azul noche (papeles oscuros, sombra ámbar) | casi negro |
+| 4 | Proyecto y evaluación | azul R intenso (papeles blancos) | azul R nocturno |
+
+Cada tramo abre con un rótulo grande ("Momento 2 de 4 · Aprender"). En el índice del sitio los tramos son "La guía", "Cómo estudiar" y "El curso". Detrás del texto corre, muy tenue, la serie de datos de la semana (la misma del gráfico de portada), que el vidrio desenfoca.
 
 ## Componentes
 
-- **Barra flotante** con S1 a S12 (las semanas sin guía, atenuadas) y C1, más menú a pantalla completa.
-- **Portada** en azul noche: número de semana en Fraunces, prompt `>` en la unidad, pregunta orientadora con resaltador ámbar, ciclo importar → … → comunicar con las etapas de la semana resaltadas, datos de lectura, proyecto y evaluación, y barra de avance.
-- **Paneles liquid glass** (transparentes, desenfoque, brillo y canto de luz). Con `prefers-reduced-transparency` pasan a sólidos; con `prefers-reduced-motion` no hay animaciones.
-- **Código como en RStudio**: pestaña de script `.R`, etiqueta R, Editar, Ejecutar y Copiar, números de línea. La salida es el panel **Console** con el prompt `>`.
-- **Caja “En palabras simples”** al inicio de cada tema (analogía de economía o negocios).
-- **Ciclo** pregunta → exploración → implementación → resultado → interpretación → verificación, con la verificación en verde.
-- **Control de lectura** (quiz autocorregible con explicación), **tablas de traza**, **ejercicios rápidos** (“¿qué imprime R?”), **ejercicios** con etiqueta de IA, cuadro de respuesta (la solución se abre al escribir el mínimo de caracteres) y **problemas tipo examen** con casos de prueba.
-- **Etiquetas de IA** como píldoras de color semántico: `<span class="ia sin">`, `ia permitida`, `ia requerida`. Toda actividad evaluada declara su nivel.
-- **Simulacro**: `<div class="simulacro" data-minutos="45">` con reloj; las soluciones se abren al finalizar o al acabarse el tiempo.
-- **Antes → después** para transformaciones (`.antes-despues` con filas que salen o columnas nuevas resaltadas).
-- **Proyecto** (entregables y preguntas de defensa), **lista “puedo…”**, **cheat sheet** y navegación entre semanas.
+- **Barra** en azul noche:
+  - **cinta de semanas**: cada semana cotiza su avance ("S2 ▲ 42 %"). Corre despacio, se detiene con el cursor, con el foco o con el botón de pausa (que se recuerda), y queda quieta con "reducir movimiento";
+  - **índice de la página**: muestra la sección actual (§ n/total), su momento y el tiempo de lectura restante, y se despliega para saltar;
+  - **buscador Ctrl K**; tema claro u oscuro; menú a pantalla completa;
+  - **barra de lectura** ámbar.
+- **Portada**:
+  - número de semana gigante, rótulo inclinado, titular y entrada;
+  - **sello** circular con la evaluación;
+  - **pregunta orientadora** en franja azul noche con subrayado ámbar;
+  - **gráfico de portada** (ver abajo) y **ficha de la edición**: lectura, proyecto, evaluación, ciclo de datos y avance.
+- **Papeles de imprenta**: cajas, ejercicios, quiz, tablas, láminas, ventanas de código. Llevan marco de 2 px y sombra sólida desplazada, sin desenfoque. Nada de bordes laterales de color.
+- **Vidrio ahumado** (azul noche translúcido con filo ámbar) solo en "En palabras simples", la nota de la lupa, el índice desplegable y el buscador. Con `prefers-reduced-transparency` pasa a sólido.
+- **Código como en RStudio**: pestaña `.R` con filo ámbar, etiqueta R, Editar, Ejecutar, Copiar y números de línea. La salida es el panel **Console**.
+- **Láminas** numeradas automáticamente ("Lámina 3 ·"), con Schibsted Grotesk y JetBrains Mono.
+- **Se mantienen sin cambios de comportamiento**:
+  - la caja "En palabras simples" y el ciclo pregunta → verificación;
+  - control de lectura, trazas, ejercicios rápidos y ejercicios con etiqueta de IA;
+  - cuadro de respuesta con solución bloqueada, problemas tipo examen y simulacro;
+  - antes → después, defensa, lista "puedo…", cheat sheet y navegación entre semanas.
+
+## Gráfico de portada con lupa
+
+- Cada semana tiene uno, con datos reales calculados con R (`portadas.R` en el script de construcción):
+  - S1: el vector `ingresos`;
+  - S2: `ventas_mensuales.csv`;
+  - S3: salario promedio por sector;
+  - S4: ventas 2024 por empresa, con el `NA` marcado;
+  - S5: vuelos por mes de `nycflights13`;
+  - C1: utilidad por punto de `ventas_campus.csv`;
+  - índice: tu avance por semana.
+- Titular con la conclusión ("Gráfico 2.0 · Las ventas cierran el año con su mejor mes"), subtítulo con unidades y fuente al pie.
+- La lupa es un clon del gráfico aumentado 2.2 veces dentro de un círculo. Se mueve con el cursor, al tocar o con las flechas ← → (Inicio y Fin también), y una región viva lee el dato.
 
 ## Código R en la página
 
 - Bloque: `<pre data-file="nombre.R"><code class="language-r">…</code></pre>`; su salida, `<pre class="salida"><code>…</code></pre>` inmediatamente después.
-- `data-previo="id"` ejecuta antes otro bloque (datos o `library()`); `data-archivos="../datos/x.csv"` deja el archivo en `datos/x.csv`; `data-norun` para fragmentos ilustrativos.
-- **Toda salida mostrada debe salir de ejecutar el código de verdad** (R local para comparar, la misma que da webR). No se escriben tibbles “a mano”: R abrevia (`diciem…`, `5506.`) y la página debe mostrar lo mismo.
-- Los paquetes se cargan con `library()` desde la semana en que el curso los introduce; `warn.conflicts = FALSE` en los bloques de preparación de dplyr para que la salida sea estable.
-
-## Láminas
-
-- SVG independientes en `docs/assets/img/`, fondo claro, Fraunces para títulos, Atkinson para etiquetas y JetBrains Mono (sin ligaduras) para código.
-- Se muestran con `<figure class="lamina"><div class="placa"><div class="placa-core"><img …></div></div><figcaption>…</figcaption></figure>`; en GitHub Pages se incrustan para usar las fuentes de la página.
-- Las ilustraciones generadas con IA se conservan como archivo aparte, con `data-no-inline` y la clase `ia-ilustracion`, que agrega al pie “Ilustración de apoyo generada con asistencia de IA”. El flujo para pedir una nueva sigue igual: prompt literal con la paleta y lo que no debe aparecer, revisar el archivo real y su fidelidad al concepto antes de integrarla, y rotularla como IA.
+- `data-previo="id"` ejecuta antes otro bloque; `data-archivos="../datos/x.csv"` deja el archivo en `datos/x.csv`; `data-norun` para fragmentos ilustrativos.
+- **Toda salida mostrada debe salir de ejecutar el código de verdad.** Lo mismo vale para los números de los gráficos de portada.
 
 ## Higiene que sigue vigente
 
 - Cero guiones largos (—) en el texto visible.
-- `prefers-reduced-motion` y `prefers-reduced-transparency` respetados.
-- Elementos interactivos nativos y accesibles por teclado (`button`, `label`, `details`).
-- Contraste suficiente en ambos temas; límite de ancho de línea en la prosa.
-- Sin scroll horizontal a 390 px; tablas y código se desplazan dentro de su propio contenedor.
+- `prefers-reduced-motion`: sin animaciones; la cinta queda quieta y el botón de pausa se oculta. `prefers-reduced-transparency`: vidrio sólido y sin serie de fondo.
+- Contenido visible sin depender de animaciones (no hay revelado al hacer scroll).
+- Elementos interactivos nativos y accesibles por teclado (`button`, `details`, `dialog`); el gráfico de portada es enfocable.
+- Contraste AA en ambos temas y en los cuatro tramos; ancho de línea de la prosa limitado a 68ch.
+- Sin scroll horizontal a 390 px; tablas, código y láminas se desplazan dentro de su contenedor, y la lupa no sale del gráfico.
 
 ## Checklist antes de publicar una página
 
-1. Ejecutar todos los bloques de R y comparar con las salidas de la página.
+1. Ejecutar todos los bloques de R y comparar con las salidas de la página; recalcular `portadas.R` si cambian los datos.
 2. Revisar ids duplicados, anclas rotas, archivos inexistentes y que los SVG sean XML válido.
-3. Con Playwright: sin scroll horizontal a 390 y 1280 px, sin errores de JavaScript, quizzes y trazas dan “correcto” con las soluciones, Ejecutar y Editar funcionan.
+3. Con Playwright:
+   - sin scroll horizontal a 390 y 1280 px y sin errores de JavaScript;
+   - quizzes y trazas dan "correcto" con las soluciones;
+   - Ejecutar y Editar funcionan;
+   - el índice salta, Ctrl K encuentra y navega, la lupa responde a las flechas y la cinta se pausa.
 4. Progresión estricta: nada de una semana posterior, salvo marcado como adelanto opcional.
 5. Registrar el resultado en `Registro de Materiales.md` y en la bitácora.
 
