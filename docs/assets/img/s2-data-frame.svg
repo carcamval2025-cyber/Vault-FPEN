@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 300" width="760" height="300" role="img" aria-label="Tres vectores del mismo largo, sucursal de tipo character, ingresos de tipo double y meta_cumplida de tipo logical, se ponen lado a lado para formar un data frame de 3 filas y 3 columnas: cada fila es una observación y cada columna una variable.">
+<title>Tres vectores del mismo largo, sucursal de tipo character, ingresos de tipo double y meta_cumplida de tipo logical, se ponen lado a lado para formar un data frame de 3 filas y 3 columnas: cada fila es una observación y cada columna una variable.</title>
+<style>
+  text { font-family: 'Atkinson Hyperlegible Next', 'Atkinson Hyperlegible', Arial, sans-serif; font-size: 14px; fill: #111a30; }
+  .t { font-family: Fraunces, Georgia, 'Times New Roman', serif; font-weight: 700; font-size: 16px; }
+  .m { font-family: 'JetBrains Mono', Menlo, Consolas, monospace; font-size: 13px; font-variant-ligatures: none; font-feature-settings: "liga" 0, "calt" 0; }
+  .s { font-size: 12px; fill: #56607a; }
+  .b { font-weight: 700; }
+  .w { fill: #ffffff; }
+  .cw { fill: #edf1fa; }
+  .ln { stroke: #56607a; stroke-width: 1.6; fill: none; }
+</style>
+<defs><marker id="p" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#56607a"/></marker><marker id="pb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2f6fd6"/></marker><marker id="pg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#138a5e"/></marker><marker id="pa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#b86e00"/></marker><marker id="pc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#c9403f"/></marker><marker id="pt" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0f8f84"/></marker><marker id="pv" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#6b4fd1"/></marker></defs>
+<text x="20" y="28" class="t">Tres vectores del mismo largo…</text>
+<text x="68" y="52" class="m b" text-anchor="middle" style="font-size:11.5px;">sucursal</text>
+<rect x="20" y="62" width="96" height="32" rx="8" fill="#dcf5ea" stroke="#138a5e" stroke-width="1.5"/>
+<text x="68" y="83" class="m" text-anchor="middle">Centro</text>
+<rect x="20" y="102" width="96" height="32" rx="8" fill="#dcf5ea" stroke="#138a5e" stroke-width="1.5"/>
+<text x="68" y="123" class="m" text-anchor="middle">Norte</text>
+<rect x="20" y="142" width="96" height="32" rx="8" fill="#dcf5ea" stroke="#138a5e" stroke-width="1.5"/>
+<text x="68" y="163" class="m" text-anchor="middle">Sur</text>
+<text x="68" y="200" class="m" text-anchor="middle" style="fill:#138a5e;font-size:12px">&lt;chr&gt;</text>
+<text x="172" y="52" class="m b" text-anchor="middle" style="font-size:11.5px;">ingresos</text>
+<rect x="124" y="62" width="96" height="32" rx="8" fill="#fff0d6" stroke="#f5a623" stroke-width="1.5"/>
+<text x="172" y="83" class="m" text-anchor="middle">4200</text>
+<rect x="124" y="102" width="96" height="32" rx="8" fill="#fff0d6" stroke="#f5a623" stroke-width="1.5"/>
+<text x="172" y="123" class="m" text-anchor="middle">3100</text>
+<rect x="124" y="142" width="96" height="32" rx="8" fill="#fff0d6" stroke="#f5a623" stroke-width="1.5"/>
+<text x="172" y="163" class="m" text-anchor="middle">5600</text>
+<text x="172" y="200" class="m" text-anchor="middle" style="fill:#f5a623;font-size:12px">&lt;dbl&gt;</text>
+<text x="276" y="52" class="m b" text-anchor="middle" style="font-size:11.5px;">meta_cumplida</text>
+<rect x="228" y="62" width="96" height="32" rx="8" fill="#eee8ff" stroke="#6b4fd1" stroke-width="1.5"/>
+<text x="276" y="83" class="m" text-anchor="middle">TRUE</text>
+<rect x="228" y="102" width="96" height="32" rx="8" fill="#eee8ff" stroke="#6b4fd1" stroke-width="1.5"/>
+<text x="276" y="123" class="m" text-anchor="middle">FALSE</text>
+<rect x="228" y="142" width="96" height="32" rx="8" fill="#eee8ff" stroke="#6b4fd1" stroke-width="1.5"/>
+<text x="276" y="163" class="m" text-anchor="middle">TRUE</text>
+<text x="276" y="200" class="m" text-anchor="middle" style="fill:#6b4fd1;font-size:12px">&lt;lgl&gt;</text>
+<path d="M340 130 H 400" fill="none" stroke="#56607a" stroke-width="2.2" marker-end="url(#p)"/>
+<text x="370" y="118" class="s" text-anchor="middle">lado a lado</text>
+<text x="420" y="28" class="t">…forman un data frame (3 × 3)</text>
+<rect x="420" y="44" width="320" height="150" rx="10" fill="#ffffff" stroke="#2b3a5c" stroke-width="1.5"/>
+<rect x="420" y="44" width="320" height="34" rx="10" fill="#eef2fb" stroke="#2b3a5c" stroke-width="1.5"/>
+<text x="476" y="66" class="m b" text-anchor="middle" style="font-size:11.5px;">sucursal</text>
+<text x="476" y="104" class="m" text-anchor="middle">Centro</text>
+<text x="476" y="140" class="m" text-anchor="middle">Norte</text>
+<text x="476" y="176" class="m" text-anchor="middle">Sur</text>
+<text x="580" y="66" class="m b" text-anchor="middle" style="font-size:11.5px;">ingresos</text>
+<text x="580" y="104" class="m" text-anchor="middle">4200</text>
+<text x="580" y="140" class="m" text-anchor="middle">3100</text>
+<text x="580" y="176" class="m" text-anchor="middle">5600</text>
+<text x="684" y="66" class="m b" text-anchor="middle" style="font-size:11.5px;">meta_cumplida</text>
+<text x="684" y="104" class="m" text-anchor="middle">TRUE</text>
+<text x="684" y="140" class="m" text-anchor="middle">FALSE</text>
+<text x="684" y="176" class="m" text-anchor="middle">TRUE</text>
+<path d="M420 116 H 740" fill="none" stroke="#c9d1e3" stroke-width="1"/>
+<path d="M420 152 H 740" fill="none" stroke="#c9d1e3" stroke-width="1"/>
+<rect x="424" y="88" width="312" height="26" rx="6" fill="none" stroke="#2f6fd6" stroke-width="1.6"/>
+<text x="748" y="106" class="s"></text>
+<text x="580" y="234" class="s" text-anchor="middle" style="fill:#2f6fd6">una fila = una observación (una sucursal)</text>
+<rect x="534" y="46" width="92" height="146" rx="6" fill="none" stroke="#f5a623" stroke-width="1.6" stroke-dasharray="5 3"/>
+<text x="580" y="256" class="s" text-anchor="middle" style="fill:#b86e00">una columna = una variable, con su propio tipo</text>
+</svg>

@@ -1,1722 +1,947 @@
 <!doctype html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>FPEN · Semana 01: R como herramienta para pensar</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Semana 1 · R como herramienta para pensar</title>
+<meta name="description" content="Guía de estudio FPEN, semana 1: consola y scripts, objetos y asignación, tipos de datos, operadores, funciones y vectores en R, con casos de economía y negocios.">
+<link rel="icon" href="../assets/brand/fpen-favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,800&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;1,7..72,400&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
-<link rel="icon" href="../assets/brand/fpen-favicon.svg" type="image/svg+xml" />
-<style>
-/* ===================================================================
-   FPEN. Semana 01. Tema "R Notebook"
-   Un solo archivo, offline, sin librerías externas.
-   =================================================================== */
-:root{
-  --bg0:#0a0f1c; --bg1:#111a30; --bg2:#182645;
-  --blue:#4c9aff; --teal:#2dd4bf; --amber:#f5a623; --coral:#ff6b6b; --violet:#a78bfa; --green:#34d399;
-  --tp:#edf1fa; --ts:#8792ae;
-  --border: rgba(237,241,250,0.09);
-  --border-strong: rgba(237,241,250,0.16);
-  /* escala de radios: 3 niveles + pill, sin valores sueltos */
-  --r-sm: 8px; --r-md: 12px; --r-lg: 16px; --r-pill: 999px;
-  --radius: var(--r-lg);
-  --font-display:'Fraunces', 'Iowan Old Style', Georgia, serif;
-  --font-body:'Literata', Georgia, 'Times New Roman', serif;
-  --font-mono:'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace;
-  --maxw: 1180px;
-  --z-base: 1; --z-grain: 2; --z-subnav: 20; --z-nav: 100; --z-modal: 1000;
-}
-
-*,*::before,*::after{ box-sizing:border-box; }
-html{ scroll-behavior:smooth; }
-body{
-  margin:0; background:var(--bg0); color:var(--tp);
-  font-family:var(--font-body); font-size:17px; line-height:1.65;
-  -webkit-font-smoothing:antialiased;
-  min-height:100dvh;
-  position:relative;
-  overflow-x:hidden;
-}
-
-/* grain texture */
-#grain{
-  position:fixed; inset:0; width:100%; height:100%;
-  pointer-events:none; z-index:var(--z-grain); opacity:0.045; mix-blend-mode:overlay;
-}
-
-::selection{ background:var(--blue); color:var(--bg0); }
-
-a{ color:var(--teal); }
-a:focus-visible, button:focus-visible, [tabindex]:focus-visible, textarea:focus-visible, .pill:focus-visible{
-  outline:2px solid var(--blue); outline-offset:3px; border-radius:4px;
-}
-
-h1,h2,h3,h4{ font-family:var(--font-display); font-weight:700; letter-spacing:-0.01em; line-height:1.15; margin:0 0 .5em; color:var(--tp); text-wrap:balance; }
-h1{ font-weight:800; }
-p{ margin:0 0 1em; color:var(--tp); max-width:72ch; text-wrap:pretty; }
-code, pre, .mono{ font-family:var(--font-mono); }
-
-.container{ max-width:var(--maxw); margin:0 auto; padding:0 clamp(16px,4vw,40px); }
-
-/* ---------- top nav ---------- */
-.topnav{
-  position:sticky; top:0; z-index:var(--z-nav);
-  background:rgba(10,15,28,0.86); backdrop-filter:blur(14px) saturate(140%);
-  border-bottom:1px solid var(--border);
-}
-.topnav-inner{ display:flex; align-items:center; gap:18px; padding:12px clamp(16px,4vw,40px); max-width:var(--maxw); margin:0 auto; }
-.brand{ display:flex; align-items:center; gap:10px; color:var(--tp); text-decoration:none; flex-shrink:0; }
-.brand img{ display:block; width:clamp(140px, 16vw, 185px); height:auto; }
-.brand .sem{ color:var(--ts); font-family:var(--font-mono); font-size:.76rem; font-weight:600; padding:3px 8px; border-radius:var(--r-pill); border:1px solid var(--border-strong); background:rgba(255,255,255,0.02); white-space:nowrap; }
-@media (max-width:560px){
-  .brand img{ width:120px; }
-  .brand .sem{ display:none; }
-}
-
-.tabs{ display:flex; gap:6px; flex:1; overflow-x:auto; scrollbar-width:none; }
-.tabs::-webkit-scrollbar{ display:none; }
-.pill{
-  appearance:none; border:1px solid transparent; background:transparent; color:var(--ts);
-  font-family:var(--font-body); font-size:.92rem; font-weight:500; letter-spacing:.01em;
-  padding:8px 16px; border-radius:999px; cursor:pointer; white-space:nowrap;
-  transition:background .18s cubic-bezier(0.16,1,0.3,1), color .18s cubic-bezier(0.16,1,0.3,1), border-color .18s cubic-bezier(0.16,1,0.3,1);
-}
-.pill:hover{ color:var(--tp); border-color:var(--border-strong); }
-.pill[aria-selected="true"]{ background:var(--bg2); color:var(--tp); border-color:var(--border-strong); }
-.pill .dot{ display:inline-block; width:6px; height:6px; border-radius:50%; margin-right:8px; vertical-align:middle; }
-
-.xp-wrap{ display:flex; align-items:center; gap:10px; flex:none; }
-.xp-badge{
-  display:flex; align-items:center; gap:7px; background:var(--bg1); border:1px solid var(--border-strong);
-  border-radius:999px; padding:6px 12px 6px 8px; font-family:var(--font-mono); font-size:.8rem; color:var(--tp);
-}
-.xp-badge .xp-icon{ width:16px; height:16px; color:var(--amber); flex:none; }
-.xp-badge b{ color:var(--amber); font-weight:700; }
-
-/* ---------- layout / panels ---------- */
-main{ position:relative; z-index:var(--z-base); }
-.tab-panel{ display:none; }
-.tab-panel.active{ display:block; animation:panelIn .5s cubic-bezier(0.16,1,0.3,1) both; }
-@keyframes panelIn{ from{ opacity:0; transform:translateY(8px); } to{ opacity:1; transform:translateY(0); } }
-
-/* ---------- hero ---------- */
-.hero{
-  position:relative; padding:clamp(48px,7vw,88px) 0 clamp(32px,5vw,56px);
-  overflow:hidden; border-bottom:1px solid var(--border);
-}
-.hero::before{
-  content:''; position:absolute; inset:-20% -10% auto -10%; height:520px;
-  background:radial-gradient(60% 60% at 20% 20%, rgba(76,154,255,0.20), transparent 60%),
-             radial-gradient(50% 50% at 85% 10%, rgba(45,212,191,0.16), transparent 60%);
-  filter:blur(10px); pointer-events:none;
-}
-.hero-grid{
-  position:absolute; inset:0; opacity:.35;
-  background-image:
-    linear-gradient(var(--border) 1px, transparent 1px),
-    linear-gradient(90deg, var(--border) 1px, transparent 1px);
-  background-size:44px 44px;
-  mask-image:radial-gradient(70% 60% at 60% 10%, black, transparent 75%);
-  pointer-events:none;
-}
-.hero-inner{ position:relative; z-index:var(--z-base); }
-.chips{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:20px; }
-.chip{
-  display:inline-flex; align-items:center; gap:6px; font-family:var(--font-mono); font-size:.74rem; font-weight:500;
-  padding:5px 11px; border-radius:999px; border:1px solid var(--border-strong); color:var(--ts); background:rgba(255,255,255,0.02);
-}
-.chip b{ color:var(--tp); font-weight:600; }
-.chip.c-blue{ border-color:rgba(76,154,255,.4); color:var(--blue); }
-.chip.c-amber{ border-color:rgba(245,166,35,.4); color:var(--amber); }
-.chip.c-violet{ border-color:rgba(167,139,250,.4); color:var(--violet); }
-
-.hero h1{ font-size:clamp(2rem,4.4vw,3.3rem); max-width:16ch; margin-bottom:.35em; }
-.hero .lede{ font-size:1.18rem; max-width:62ch; color:var(--ts); }
-
-/* data-cycle diagram, recurring brand element */
-.cycle{ display:flex; flex-wrap:wrap; gap:0; margin-top:34px; align-items:center; }
-.cycle-step{
-  display:flex; align-items:center; gap:8px; font-family:var(--font-mono); font-size:.78rem; color:var(--ts);
-  padding:8px 12px; border:1px solid var(--border); border-radius:var(--r-md); background:var(--bg1);
-}
-.cycle-step.now{ color:var(--bg0); background:var(--blue); border-color:var(--blue); font-weight:600; }
-.cycle-arrow{ color:var(--ts); padding:0 6px; opacity:.6; }
-
-/* diagrama orbital del ciclo, versión gráfica del hero principal (decorativo, ecos la marca del curso) */
-.hero-diagram{
-  position:absolute; right:clamp(8px,3vw,48px); top:50%; transform:translateY(-50%);
-  width:clamp(240px,24vw,340px); height:clamp(240px,24vw,340px); pointer-events:none;
-}
-@media (max-width:1080px){ .hero-diagram{ display:none; } }
-.hero-diagram .node-ring{ fill:none; stroke:var(--border-strong); stroke-width:1; stroke-dasharray:2 6; stroke-linecap:round; }
-.hero-diagram .node-arc{ fill:none; stroke:var(--teal); stroke-width:1.5; opacity:.55; stroke-linecap:round; }
-.hero-diagram .node{ fill:var(--bg1); stroke:var(--border-strong); stroke-width:1.5; }
-.hero-diagram .node.now{ fill:var(--blue); stroke:var(--blue); }
-.hero-diagram text{ font-family:var(--font-mono); font-size:10px; fill:var(--ts); }
-.hero-diagram .node.now ~ text, .hero-diagram text.now-label{ fill:var(--bg0); font-weight:700; }
-
-/* ---------- sub nav within a tab ---------- */
-.subnav{
-  position:sticky; top:57px; z-index:var(--z-subnav); display:flex; gap:4px; flex-wrap:wrap;
-  padding:12px clamp(16px,4vw,40px); background:rgba(10,15,28,0.92); backdrop-filter:blur(10px);
-  border-bottom:1px solid var(--border); max-width:100%; margin-bottom:8px;
-}
-.subnav a{
-  font-family:var(--font-mono); font-size:.76rem; color:var(--ts); text-decoration:none; padding:5px 10px;
-  border-radius:var(--r-sm); border:1px solid transparent;
-}
-.subnav a:hover{ color:var(--tp); border-color:var(--border); }
-
-section.block{
-  padding:clamp(40px,6vw,64px) 0; border-bottom:1px solid var(--border);
-  position:relative; isolation:isolate; counter-increment:blocknum;
-}
-section.block:last-of-type{ border-bottom:none; }
-/* numeral editorial de fondo por sección, ritmo visual recurrente en vez de bloques idénticos */
-section.block::before{
-  content:counter(blocknum, decimal-leading-zero);
-  position:absolute; left:clamp(-16px,-3.2vw,-38px); top:-.06em; z-index:-1;
-  font-family:var(--font-display); font-weight:800; font-size:clamp(4rem,9vw,7.2rem); line-height:1;
-  color:var(--tp); opacity:.035; pointer-events:none; user-select:none;
-}
-@media (max-width:900px){ section.block::before{ display:none; } }
-.block-head{ display:flex; align-items:baseline; gap:14px; margin-bottom:28px; position:relative; }
-.block-num{ font-family:var(--font-mono); color:var(--ts); font-size:.85rem; }
-.fade-in{ opacity:0; transform:translateY(14px); transition:opacity .6s cubic-bezier(0.16,1,0.3,1), transform .6s cubic-bezier(0.16,1,0.3,1); }
-.fade-in.in{ opacity:1; transform:translateY(0); }
-
-/* ---------- concept cards ---------- */
-.grid-cards{ display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:16px; }
-.card{
-  position:relative; background:linear-gradient(165deg, var(--bg2) 0%, var(--bg1) 60%); border:1px solid var(--border); border-radius:var(--radius);
-  padding:22px 22px 20px; overflow:hidden; transition:transform .22s cubic-bezier(0.16,1,0.3,1), border-color .22s cubic-bezier(0.16,1,0.3,1), box-shadow .22s cubic-bezier(0.16,1,0.3,1);
-}
-.card::before{
-  content:''; position:absolute; left:0; right:0; bottom:0; height:3px;
-  background:linear-gradient(90deg, var(--accent,var(--blue)), transparent);
-}
-.card:hover{ transform:translateY(-3px); border-color:var(--border-strong); box-shadow:0 4px 8px -2px rgba(0,0,0,.5); }
-.card:hover .card-glow{ opacity:.5; }
-.card-glow{
-  position:absolute; width:180px; height:180px; border-radius:50%; right:-60px; top:-60px;
-  background:var(--accent,var(--blue)); filter:blur(60px); opacity:0; transition:opacity .3s cubic-bezier(0.16,1,0.3,1); pointer-events:none;
-}
-.card h3{ font-size:1.08rem; display:flex; align-items:center; gap:9px; }
-.card h3 svg{ flex:none; color:var(--accent,var(--blue)); }
-.card p{ color:var(--ts); font-size:.95rem; margin-bottom:.6em; }
-.card .exemplo{
-  margin-top:12px; background:var(--bg0); border:1px solid var(--border); border-radius:var(--r-sm); padding:12px 14px;
-  font-family:var(--font-mono); font-size:.82rem; overflow-x:auto;
-}
-.card.asym{ grid-column:span 2; }
-@media (max-width:640px){ .card.asym{ grid-column:span 1; } }
-
-/* ---------- diagrama de ambiente + evaluador de juguete (Objetos y asignación) ---------- */
-.env-diagram{ display:flex; align-items:stretch; gap:18px; margin:22px 0 18px; flex-wrap:wrap; }
-.env-panel{ flex:1 1 220px; min-width:220px; }
-.env-panel-label{ display:block; font-family:var(--font-mono); font-size:.78rem; color:var(--ts); margin-bottom:8px; }
-.env-panel-label code{ color:var(--tp); }
-.env-box{
-  background:linear-gradient(165deg, var(--bg2) 0%, var(--bg1) 60%); border:1px solid var(--border); border-radius:var(--r-lg);
-  padding:16px 18px; min-height:92px; display:flex; flex-direction:column; gap:10px; justify-content:center;
-}
-.env-box-filled{ border-color:rgba(76,154,255,.35); justify-content:flex-start; }
-.env-box-title{ font-family:var(--font-mono); font-size:.72rem; text-transform:uppercase; letter-spacing:.04em; color:var(--ts); }
-.env-box-hint{ text-transform:none; letter-spacing:0; }
-.env-empty{ font-family:var(--font-mono); font-size:.85rem; color:var(--ts); font-style:italic; opacity:.7; }
-.env-entry{
-  display:flex; align-items:center; gap:8px; font-family:var(--font-mono); font-size:.9rem;
-  background:var(--bg0); border:1px solid var(--border-strong); border-radius:var(--r-sm); padding:8px 12px; width:fit-content;
-  transition:background-color .5s cubic-bezier(0.16,1,0.3,1);
-}
-.env-entry.flash{ background-color:rgba(76,154,255,.22); transition-duration:.05s; }
-.env-entry-name{ color:var(--blue); }
-.env-entry-arrow{ color:var(--ts); }
-.env-entry-value{ color:var(--tp); font-weight:600; }
-.env-arrow{ display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; flex:0 0 auto; color:var(--teal); padding:4px; }
-.env-arrow-label{ font-family:var(--font-mono); font-size:.68rem; color:var(--ts); text-align:center; max-width:110px; }
-@media (max-width:760px){ .env-arrow{ transform:rotate(90deg); } .env-arrow-label{ transform:rotate(-90deg); max-width:140px; } }
-
-.toy-eval{
-  background:linear-gradient(165deg, var(--bg2) 0%, var(--bg1) 55%); border:1px dashed var(--border-strong); border-radius:var(--r-lg);
-  padding:20px 22px; margin:20px 0;
-}
-.toy-eval-head{ display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin-bottom:12px; }
-.toy-eval-flag{
-  font-family:var(--font-mono); font-size:.66rem; text-transform:uppercase; letter-spacing:.05em; color:var(--amber);
-  border:1px solid rgba(245,166,35,.4); padding:3px 9px; border-radius:999px; flex:none;
-}
-.toy-eval-head p{ margin:0; color:var(--ts); font-size:.9rem; }
-.toy-eval-controls{ display:flex; flex-wrap:wrap; align-items:flex-end; gap:12px; margin-bottom:14px; }
-.toy-eval-controls label{ display:block; font-family:var(--font-mono); font-size:.78rem; color:var(--ts); margin-bottom:6px; }
-.toy-eval-row{ display:flex; gap:8px; }
-#toyValue{
-  background:var(--bg0); color:var(--tp); border:1px solid var(--border-strong); border-radius:var(--r-sm);
-  padding:9px 12px; font-family:var(--font-mono); font-size:.92rem; width:140px;
-}
-#toyValue:focus{ border-color:var(--blue); }
-.toy-eval-btn{
-  appearance:none; border:1px solid var(--blue); background:var(--blue); color:var(--bg0); font-family:var(--font-body);
-  font-weight:600; font-size:.9rem; padding:9px 18px; border-radius:var(--r-sm); cursor:pointer; transition:all .18s cubic-bezier(0.16,1,0.3,1);
-}
-.toy-eval-btn:hover{ background:var(--teal); border-color:var(--teal); }
-.toy-eval-console{
-  background:#060a13; border:1px solid var(--border); border-radius:var(--r-md); padding:14px 16px;
-  font-family:var(--font-mono); font-size:.85rem; line-height:1.7; overflow-x:auto;
-}
-.toy-eval-console .te-line{ white-space:pre; }
-
-/* ---------- diagramas conceptuales reutilizables (Tipos de datos, Operadores, Vectores) ---------- */
-.cpanel{
-  background:linear-gradient(165deg, var(--bg2) 0%, var(--bg1) 60%); border:1px solid var(--border); border-radius:var(--r-lg);
-  padding:18px 20px; margin:18px 0;
-}
-.cpanel-cap{ font-family:var(--font-mono); font-size:.76rem; color:var(--ts); margin-bottom:12px; }
-.cpanel-cap b{ color:var(--tp); }
-.cflow{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
-.cflow + .cflow{ margin-top:14px; }
-.cbox{
-  background:var(--bg0); border:1px solid var(--border-strong); border-radius:var(--r-sm);
-  padding:9px 13px; font-family:var(--font-mono); font-size:.85rem; text-align:center; color:var(--tp); flex:none;
-}
-.cbox.accent{ border-color:rgba(76,154,255,.45); color:var(--blue); font-weight:600; }
-.cop{ font-family:var(--font-mono); font-weight:700; color:var(--amber); font-size:.95rem; flex:none; }
-.carrow{ color:var(--teal); flex:none; display:flex; align-items:center; }
-.cbool{ font-family:var(--font-mono); font-weight:700; font-size:.8rem; padding:6px 12px; border-radius:999px; border:1px solid; flex:none; }
-.cbool.t{ color:var(--green); border-color:rgba(52,211,153,.45); background:rgba(52,211,153,.08); }
-.vec-op-row{ display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
-.vec-op-row .cbox{ width:100%; box-sizing:border-box; }
-.vec-op-mid{ text-align:center; font-family:var(--font-mono); font-size:.78rem; color:var(--ts); padding:10px 0; }
-.vec-op-mid .cop{ margin:0 4px; }
-.type-tag-row{ display:flex; flex-wrap:wrap; gap:22px; }
-.type-tag{ display:flex; flex-direction:column; align-items:center; gap:6px; }
-.type-tag-pin{
-  font-family:var(--font-mono); font-size:.68rem; text-transform:uppercase; letter-spacing:.04em;
-  padding:3px 10px; border-radius:999px; border:1px solid;
-}
-
-/* ---------- figuras conceptuales (ilustraciones SVG, complementarias a .cpanel) ---------- */
-.concept-figure{
-  margin:18px 0; border:1px solid var(--border); border-radius:var(--r-lg); overflow:hidden;
-  background:linear-gradient(165deg, var(--bg2) 0%, var(--bg1) 60%);
-}
-.concept-figure svg{ display:block; width:100%; height:auto; }
-.concept-figure figcaption{
-  font-family:var(--font-mono); font-size:.76rem; color:var(--ts); line-height:1.5;
-  padding:12px 20px; border-top:1px solid var(--border);
-}
-
-/* ---------- code blocks (manual highlighting) ---------- */
-.code{
-  background:var(--bg1); border:1px solid var(--border); border-radius:var(--r-md); padding:16px 18px;
-  font-family:var(--font-mono); font-size:.86rem; line-height:1.7; overflow-x:auto; white-space:pre;
-}
-.code .c-kw{ color:var(--violet); }         /* palabras clave: function, if, else, for */
-.code .c-fn{ color:var(--blue); }           /* nombres de función */
-.code .c-str{ color:var(--green); }         /* strings */
-.code .c-num{ color:var(--amber); }         /* números */
-.code .c-cm{ color:var(--ts); font-style:italic; } /* comentarios */
-.code .c-op{ color:var(--teal); }           /* operadores <- |> etc */
-.code .c-out{ color:var(--ts); }            /* salida de consola #> */
-.code .c-err{ color:var(--coral); }
-
-/* ---------- badges nivel de IA ---------- */
-.ai-badge{
-  display:inline-flex; align-items:center; gap:7px; font-family:var(--font-mono); font-size:.72rem; font-weight:700;
-  letter-spacing:.03em; text-transform:uppercase; padding:6px 12px; border-radius:999px; border:1px solid;
-}
-.ai-badge svg{ width:13px; height:13px; }
-.ai-none{ color:var(--coral); border-color:rgba(255,107,107,.45); background:rgba(255,107,107,.08); }
-.ai-ok{ color:var(--green); border-color:rgba(52,211,153,.45); background:rgba(52,211,153,.08); }
-.ai-req{ color:var(--violet); border-color:rgba(167,139,250,.45); background:rgba(167,139,250,.08); }
-
-/* ---------- lab exercise ---------- */
-.progress-wrap{ margin:26px 0 6px; }
-.progress-label{ display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:.75rem; color:var(--ts); margin-bottom:7px; }
-.progress-track{ position:relative; height:12px; border-radius:999px; background:var(--bg1); border:1px solid var(--border); overflow:hidden; }
-.progress-fill{
-  height:100%; width:100%; transform:scaleX(0); transform-origin:left;
-  background:linear-gradient(90deg, var(--blue), var(--teal));
-  transition:transform .5s cubic-bezier(0.16,1,0.3,1); border-radius:var(--r-pill);
-}
-/* marcas de los 5 ejercicios sobre la barra, capa aparte para no interferir con el fill */
-.progress-track::after{
-  content:''; position:absolute; inset:0; pointer-events:none; z-index:1;
-  background-image:repeating-linear-gradient(90deg, var(--bg0) 0, var(--bg0) 2px, transparent 2px, transparent 20%);
-  background-size:100% 100%;
-  opacity:.9;
-}
-
-.exercise{
-  background:linear-gradient(165deg, var(--bg2) 0%, var(--bg1) 45%); border:1px solid var(--border); border-radius:var(--r-lg); padding:28px clamp(20px,3vw,32px);
-  margin-bottom:22px; position:relative; overflow:hidden;
-}
-.exercise::before{
-  content:''; position:absolute; top:0; left:0; right:0; height:3px;
-  background:linear-gradient(90deg, var(--accent,var(--blue)), transparent);
-}
-.exercise-head{ display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:10px; margin-bottom:14px; }
-.exercise-title{ display:flex; align-items:center; gap:12px; }
-.exercise-num{ font-family:var(--font-mono); color:var(--ts); font-size:.85rem; }
-.exercise h3{ font-size:1.1rem; margin:0; }
-.exercise .desc{ color:var(--ts); font-size:.95rem; }
-
-textarea.answer{
-  width:100%; min-height:110px; margin-top:14px; background:var(--bg0); color:var(--tp); border:1px solid var(--border-strong);
-  border-radius:var(--r-md); padding:14px; font-family:var(--font-body); font-size:.98rem; line-height:1.55; resize:vertical;
-}
-textarea.answer:focus{ border-color:var(--blue); }
-textarea.answer::placeholder{ color:var(--ts); opacity:1; }
-.answer-meta{ display:flex; justify-content:space-between; align-items:center; margin-top:9px; gap:10px; flex-wrap:wrap; }
-.char-count{ font-family:var(--font-mono); font-size:.74rem; color:var(--ts); }
-.reveal-btn{
-  appearance:none; border:1px solid var(--border-strong); background:var(--bg2); color:var(--tp); font-family:var(--font-body);
-  font-weight:600; font-size:.9rem; padding:9px 18px; border-radius:var(--r-sm); cursor:pointer; transition:all .18s cubic-bezier(0.16,1,0.3,1);
-}
-.reveal-btn:disabled{ opacity:.4; cursor:not-allowed; }
-.reveal-btn:not(:disabled):hover{ background:var(--blue); border-color:var(--blue); color:var(--bg0); }
-
-.feedback{
-  margin-top:16px; padding:18px 20px; border-radius:var(--r-md); background:var(--bg0); border:1px solid var(--border-strong);
-  display:none;
-}
-.feedback.show{ display:block; animation:panelIn .35s cubic-bezier(0.16,1,0.3,1) both; }
-.feedback h4{ font-size:.85rem; text-transform:uppercase; letter-spacing:.05em; color:var(--teal); margin-bottom:10px; font-family:var(--font-mono); font-weight:600; }
-.feedback ul{ margin:0; padding-left:1.15em; color:var(--ts); font-size:.93rem; }
-.feedback li{ margin-bottom:6px; }
-.feedback li b{ color:var(--tp); }
-
-.check-list{ list-style:none; margin:14px 0 0; padding:0; display:grid; gap:9px; }
-.check-item{ display:flex; align-items:flex-start; gap:10px; font-size:.92rem; cursor:pointer; user-select:none; }
-.check-item input{ position:absolute; opacity:0; width:1px; height:1px; }
-.check-box{
-  flex:none; width:19px; height:19px; border-radius:5px; border:1.5px solid var(--border-strong); margin-top:2px;
-  display:flex; align-items:center; justify-content:center; transition:all .15s cubic-bezier(0.16,1,0.3,1);
-}
-.check-item input:checked + .check-box{ background:var(--green); border-color:var(--green); }
-.check-item input:checked + .check-box svg{ opacity:1; }
-.check-item.wrong input:checked + .check-box{ background:var(--coral); border-color:var(--coral); }
-.check-box svg{ width:12px; height:12px; color:var(--bg0); opacity:0; }
-.check-item span.txt{ color:var(--ts); }
-.check-item input:checked ~ span.txt{ color:var(--tp); }
-
-.verify-box{
-  margin-top:20px; padding:22px 24px; border-radius:var(--r-lg); border:1px dashed var(--border-strong);
-  background:linear-gradient(180deg, rgba(76,154,255,.05), transparent);
-}
-.verify-box h4{ font-family:var(--font-display); font-size:1.05rem; margin-bottom:8px; }
-.verify-box p{ color:var(--ts); font-size:.92rem; margin-bottom:0; }
-
-/* ---------- playground ---------- */
-.pg-dataset{
-  background:linear-gradient(165deg, var(--bg2) 0%, var(--bg1) 55%); border:1px solid var(--border); border-radius:var(--r-lg); padding:20px 22px; margin:24px 0 32px;
-}
-.pg-dataset h3{ font-size:.95rem; font-family:var(--font-mono); text-transform:uppercase; letter-spacing:.04em; color:var(--teal); margin-bottom:12px; }
-table.dataset{ width:100%; border-collapse:collapse; font-family:var(--font-mono); font-size:.86rem; display:block; overflow-x:auto; }
-table.dataset th, table.dataset td{ text-align:left; padding:7px 12px; border-bottom:1px solid var(--border); }
-table.dataset th{ color:var(--ts); font-weight:500; }
-
-.pg-item{ display:grid; grid-template-columns:1fr; gap:14px; margin-bottom:26px; }
-.pg-item > div{ min-width:0; } /* evita que el contenido pre/monoespaciado desborde la celda del grid */
-@media(min-width:880px){ .pg-item{ grid-template-columns:1.1fr 1fr; } }
-.pg-num{ font-family:var(--font-mono); color:var(--ts); font-size:.8rem; margin-bottom:8px; display:block; }
-.pg-out{
-  background:#060a13; border:1px solid var(--border); border-radius:var(--r-md); padding:16px 18px;
-  font-family:var(--font-mono); font-size:.85rem; color:var(--ts); line-height:1.7;
-}
-.pg-out .flag{
-  display:inline-block; font-family:var(--font-mono); font-size:.66rem; text-transform:uppercase; letter-spacing:.05em;
-  color:var(--amber); border:1px solid rgba(245,166,35,.4); padding:2px 8px; border-radius:999px; margin-bottom:10px;
-}
-
-/* ---------- cheat sheet ---------- */
-.cheat-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:16px; }
-.cheat-card{ background:linear-gradient(165deg, var(--bg2) 0%, var(--bg1) 55%); border:1px solid var(--border); border-radius:var(--r-lg); padding:20px 22px; }
-.cheat-card h3{ font-size:.92rem; font-family:var(--font-mono); text-transform:uppercase; letter-spacing:.04em; color:var(--ts); margin-bottom:14px; }
-table.cheat{ width:100%; border-collapse:collapse; font-size:.86rem; }
-table.cheat td{ padding:6px 4px; border-bottom:1px solid var(--border); vertical-align:top; }
-table.cheat td.f{ font-family:var(--font-mono); color:var(--teal); white-space:nowrap; padding-right:10px; }
-.vocab-badges{ display:flex; flex-wrap:wrap; gap:8px; }
-.vocab-badge{ font-family:var(--font-mono); font-size:.78rem; padding:5px 10px; border-radius:var(--r-sm); background:var(--bg2); color:var(--tp); border:1px solid var(--border); }
-
-/* ---------- footer ---------- */
-footer{ padding:40px 0 60px; color:var(--ts); font-size:.85rem; }
-footer a{ color:var(--ts); }
-footer .foot-inner{ border-top:1px solid var(--border); padding-top:24px; display:flex; flex-wrap:wrap; justify-content:space-between; gap:14px; }
-
-/* utility */
-.sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
-::-webkit-scrollbar{ width:10px; height:10px; }
-::-webkit-scrollbar-thumb{ background:var(--bg2); border-radius:99px; }
-
-/* reducción de movimiento: al final de la hoja de estilos a propósito,
-   así gana sobre cualquier regla anterior con la misma especificidad */
-@media (prefers-reduced-motion: reduce){
-  *, *::before, *::after{
-    animation-duration:0.01ms !important; animation-iteration-count:1 !important;
-    transition-duration:0.01ms !important; scroll-behavior:auto !important;
-  }
-  .fade-in{ opacity:1; transform:none; }
-}
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..900,0..100,0..1&family=Atkinson+Hyperlegible+Next:ital,wght@0,200..800;1,200..800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/guia.css">
+<script>try{var t=localStorage.getItem("fpen-guia-v1-tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
 </head>
-<body>
+<body data-semana="s1">
 
-<svg id="grain" aria-hidden="true">
-  <filter id="grainFilter">
-    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch" result="noise"/>
-    <feColorMatrix in="noise" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.6 0"/>
-  </filter>
-  <rect width="100%" height="100%" filter="url(#grainFilter)"/>
-</svg>
+<header class="isla-wrap">
+  <div class="isla">
+    <a class="brand" href="../index.html"><img src="../assets/brand/fpen-favicon.svg" alt="" width="25" height="25">FPEN <small>Guía de estudio</small></a>
+    <nav class="isla-semanas" aria-label="Semanas">
+      <a href="../semana-01/index.html" aria-current="page">S1</a>
+      <a href="../semana-02/index.html">S2</a>
+      <a href="../semana-03/index.html">S3</a>
+      <a href="../semana-04/index.html">S4</a>
+      <a href="../semana-05/index.html">S5</a>
+      <span class="futura" title="Semana 6: próximamente">S6</span>
+      <span class="futura" title="Semana 7: próximamente">S7</span>
+      <span class="futura" title="Semana 8: próximamente">S8</span>
+      <span class="futura" title="Semana 9: próximamente">S9</span>
+      <span class="futura" title="Semana 10: próximamente">S10</span>
+      <span class="futura" title="Semana 11: próximamente">S11</span>
+      <span class="futura" title="Semana 12: próximamente">S12</span>
+      <a class="control" href="../control-01/guia/index.html" data-control="Control 01: lectura, repaso y simulacro">C1</a>
+    </nav>
+    <button class="theme-btn" type="button" aria-label="Cambiar tema claro/oscuro"><span class="ico-tema" aria-hidden="true"></span></button>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu-completo"><span class="hb" aria-hidden="true"></span><span class="hb" aria-hidden="true"></span><span class="sr">Menú</span></button>
+  </div>
+</header>
+<div class="menu-completo" id="menu-completo" hidden></div>
 
-<!-- ============================================================ NAV ============================================================ -->
-<nav class="topnav">
-  <div class="topnav-inner">
-    <a class="brand" href="../" aria-label="Volver al índice de FPEN">
-      <img src="../assets/brand/fpen-logo.svg" width="420" height="96" alt="FPEN, Programación, Economía y Negocios">
-      <span class="sem">· Semana 01</span>
-    </a>
-    <div class="tabs" role="tablist" aria-label="Secciones de la sesión">
-      <button class="pill" id="tab-guia" role="tab" aria-selected="true" aria-controls="panel-guia" data-tab="guia"><span class="dot" style="background:var(--blue)"></span>Guía de Estudio</button>
-      <button class="pill" id="tab-lab" role="tab" aria-selected="false" aria-controls="panel-lab" data-tab="lab"><span class="dot" style="background:var(--coral)"></span>Laboratorio</button>
-      <button class="pill" id="tab-playground" role="tab" aria-selected="false" aria-controls="panel-playground" data-tab="playground"><span class="dot" style="background:var(--teal)"></span>R Playground</button>
-      <button class="pill" id="tab-cheat" role="tab" aria-selected="false" aria-controls="panel-cheat" data-tab="cheat"><span class="dot" style="background:var(--amber)"></span>Cheat Sheet</button>
+<header class="hero-semana">
+  <div class="hero-in">
+    <p class="hero-num" aria-hidden="true">01</p>
+    <div class="hero-txt">
+      <p class="hero-mod"><span class="sr">Semana 1 · </span>Unidad 1 · R como herramienta para pensar con datos</p>
+      <h1>¿Qué puedo hacer con R y cómo le doy instrucciones?</h1>
+      <p class="lead">Antes de analizar un solo dato económico, R necesita que aprendas a hablarle: crear objetos, hacer cálculos y usar funciones. Esta guía cubre exactamente eso, y solo eso: nada de <code>dplyr</code> ni <code>ggplot2</code> todavía.</p>
+      <ul class="ciclo-fpen" aria-label="Ciclo de trabajo con datos del curso; resaltadas las etapas de esta semana"><li>importar</li><li class="sep" aria-hidden="true">→</li><li>ordenar</li><li class="sep" aria-hidden="true">→</li><li>transformar</li><li class="sep" aria-hidden="true">→</li><li>visualizar</li><li class="sep" aria-hidden="true">→</li><li>modelar</li><li class="sep" aria-hidden="true">→</li><li>comunicar</li></ul>
     </div>
-    <div class="xp-wrap">
-      <div class="xp-badge" title="Puntos de experiencia de esta sesión">
-        <svg class="xp-icon" viewBox="0 0 24 24" fill="none"><path d="M12 2l2.6 6.6L21 10l-5 4.4L17.4 21 12 17.3 6.6 21 8 14.4 3 10l6.4-1.4L12 2z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
-        <span><b id="xpCount">0</b> XP</span>
-      </div>
+    <p class="pregunta"><span class="pregunta-lbl">Pregunta orientadora</span><mark>¿Cómo le doy a R instrucciones precisas para calcular ingresos, costos y crecimientos, y cómo sé que el resultado es correcto?</mark></p>
+    <dl class="hero-meta"><div><dt>Lectura</dt><dd>R4DS cap. 2 · Workflow: basics</dd></div><div><dt>Proyecto</dt><dd>Fase 1: equipos, tema y datos</dd></div><div class="eval"><dt>Evaluación</dt><dd>Control 01: semanas 1 a 3</dd></div></dl>
+    <div class="progress" data-progreso-pagina>
+      <div class="progress-bar"><span></span></div>
+      <div class="progress-label"></div>
     </div>
   </div>
-</nav>
+</header>
+
+<div class="layout with-toc">
+<aside class="toc" aria-label="Contenido de la página">
+  <p>Semana 1</p>
+  <ol>
+    <li class="grupo" aria-hidden="true">Antes de clase</li>
+    <li><a href="#uso">Cómo usar la guía</a></li>
+    <li><a href="#mapa">Qué puedes usar</a></li>
+    <li><a href="#lecturas">Lecturas</a></li>
+    <li><a href="#checkpoint">Control de lectura</a></li>
+    <li class="grupo" aria-hidden="true">Aprender</li>
+    <li><a href="#consola">Consola y scripts</a></li>
+    <li><a href="#objetos">Objetos y asignación</a></li>
+    <li><a href="#tipos">Tipos de datos</a></li>
+    <li><a href="#operadores">Operadores</a></li>
+    <li><a href="#funciones">Funciones y argumentos</a></li>
+    <li><a href="#vectores">Vectores</a></li>
+    <li><a href="#ayuda">Ayuda y errores</a></li>
+    <li class="grupo" aria-hidden="true">Practicar</li>
+    <li><a href="#trazas">Tablas de traza</a></li>
+    <li><a href="#ejercicios">Ejercicios</a></li>
+    <li><a href="#playground">Playground</a></li>
+    <li><a href="#practica">Práctica intensiva</a></li>
+    <li class="grupo" aria-hidden="true">Proyecto y evaluación</li>
+    <li><a href="#proyecto">Proyecto: Fase 1</a></li>
+    <li><a href="#evaluacion">Rumbo al Control 01</a></li>
+    <li><a href="#cheat">Cheat sheet</a></li>
+    <li><a href="#fuentes">Fuentes</a></li>
+  </ol>
+</aside>
 
 <main>
-<!-- ============================================================ TAB: GUÍA ============================================================ -->
-<section id="panel-guia" class="tab-panel active" role="tabpanel" aria-labelledby="tab-guia">
 
-  <div class="hero">
-    <div class="hero-grid" aria-hidden="true"></div>
-    <svg class="hero-diagram" viewBox="0 0 300 300" aria-hidden="true" focusable="false">
-      <circle class="node-ring" cx="150" cy="150" r="105"/>
-      <path class="node-arc" d="M150,45 A105,105 0 0,1 240.9,97.5"/>
-      <g>
-        <circle class="node now" cx="150" cy="45" r="15"/>
-        <text x="150" y="45" text-anchor="middle" dy=".35em" class="now-label">1</text>
-      </g>
-      <g>
-        <circle class="node" cx="240.9" cy="97.5" r="13"/>
-        <text x="240.9" y="97.5" text-anchor="middle" dy=".35em">2</text>
-      </g>
-      <g>
-        <circle class="node" cx="240.9" cy="202.5" r="13"/>
-        <text x="240.9" y="202.5" text-anchor="middle" dy=".35em">3</text>
-      </g>
-      <g>
-        <circle class="node" cx="150" cy="255" r="13"/>
-        <text x="150" y="255" text-anchor="middle" dy=".35em">4</text>
-      </g>
-      <g>
-        <circle class="node" cx="59.1" cy="202.5" r="13"/>
-        <text x="59.1" y="202.5" text-anchor="middle" dy=".35em">5</text>
-      </g>
-      <g>
-        <circle class="node" cx="59.1" cy="97.5" r="13"/>
-        <text x="59.1" y="97.5" text-anchor="middle" dy=".35em">6</text>
-      </g>
-    </svg>
-    <div class="container hero-inner">
-      <div class="chips">
-        <span class="chip c-blue"><b>Semana 01</b></span>
-        <span class="chip">Unidad: R como herramienta para pensar</span>
-        <span class="chip c-amber">Lectura previa · R4DS Cap. 2, Flujo de trabajo: conceptos básicos</span>
-        <span class="chip c-violet">Fase del proyecto: formación de equipos y elección de tema</span>
-      </div>
-      <h1>¿Qué puedo hacer con R y cómo le doy instrucciones?</h1>
-      <p class="lede">Antes de analizar un solo dato económico, R necesita que aprendas a hablarle: crear objetos, hacer cálculos y usar funciones. Esta guía cubre exactamente eso, y solo eso. Nada de <code>dplyr</code>, nada de <code>ggplot2</code> todavía: eso llega en las próximas semanas.</p>
+<section id="uso">
+  <h2>Cómo usar esta guía</h2>
+  <p>El curso es <strong>aula invertida</strong>: el libro es la primera fuente, la clase es laboratorio. Usa esta página en cuatro momentos:</p>
+  <div class="momentos">
+    <div><strong>Antes de clase</strong>Lee el capítulo 2 de R4DS y responde el <a href="#checkpoint">control de lectura</a> sin volver al libro.</div>
+    <div><strong>Con RStudio abierto</strong>Cada bloque de R de esta página tiene <strong>Ejecutar</strong> y <strong>Editar</strong>: corre R de verdad en tu navegador. Después copia el código a un script tuyo.</div>
+    <div><strong>Después de clase</strong>Llena las <a href="#trazas">trazas</a> a mano y resuelve los <a href="#ejercicios">ejercicios</a> antes de abrir la solución.</div>
+    <div><strong>Antes de evaluar</strong>Haz la <a href="#practica">práctica intensiva</a> y repasa la lista de <a href="#evaluacion">“puedo…”</a>.</div>
+  </div>
+  <p>Cada tema sigue el mismo ciclo del curso. Acostúmbrate a él: es la forma de resolver un problema real y la forma en que te van a preguntar en la defensa del proyecto.</p>
+  <ul class="ciclo-leyenda" aria-label="Ciclo de trabajo">
+    <li>Pregunta</li><li class="sep">→</li><li>Exploración</li><li class="sep">→</li><li>Implementación</li><li class="sep">→</li><li>Resultado</li><li class="sep">→</li><li>Interpretación</li><li class="sep">→</li><li class="v">Verificación</li>
+  </ul>
+  <div class="box nota">
+    <span class="box-title">El mapa de todo el curso</span>
+    <p>El ciclo <strong>importar → ordenar → transformar → visualizar → modelar → comunicar</strong> de la portada es el mapa de las 12 semanas, no solo de hoy. Esta semana construyes las piezas más básicas, el paso “0”: objetos, cálculos y funciones. Sin esto, ningún otro paso del ciclo es posible.</p>
+  </div>
+</section>
 
-      <div class="cycle" aria-label="Ciclo de trabajo con datos en este curso">
-        <div class="cycle-step now">1 · importar</div><span class="cycle-arrow">→</span>
-        <div class="cycle-step">2 · ordenar</div><span class="cycle-arrow">→</span>
-        <div class="cycle-step">3 · transformar</div><span class="cycle-arrow">→</span>
-        <div class="cycle-step">4 · visualizar</div><span class="cycle-arrow">→</span>
-        <div class="cycle-step">5 · modelar</div><span class="cycle-arrow">→</span>
-        <div class="cycle-step">6 · comunicar</div>
-      </div>
-      <p style="margin-top:14px;font-size:.85rem;color:var(--ts)">Este ciclo es el mapa de todo el curso, no solo de hoy. Esta semana estás construyendo las piezas más básicas (el paso "0"): objetos, cálculos y funciones. Sin esto, ningún otro paso del ciclo es posible.</p>
+<section id="mapa">
+  <h2>Qué puedes usar esta semana</h2>
+  <p>Regla de progresión: en esta guía nunca se usa algo que el curso enseña en una semana posterior. Si lo ves antes, está marcado como <em>adelanto opcional</em>.</p>
+  <div class="permisos">
+    <div class="si">
+      <h4>Sí, desde ahora (solo R base)</h4>
+      <ul>
+        <li>Consola y scripts de RStudio</li>
+        <li>Asignación con <code>&lt;-</code> y nombres en <code>snake_case</code></li>
+        <li>Tipos <code>numeric</code>, <code>character</code> y <code>logical</code></li>
+        <li>Operadores <code>+ - * / ^ %% %/%</code> y de comparación <code>== != &lt; &gt; &lt;= &gt;=</code></li>
+        <li><code>c()</code>, <code>class()</code>, <code>length()</code>, <code>sum()</code>, <code>mean()</code>, <code>round(x, digits = )</code> y <code>?nombre</code></li>
+      </ul>
+    </div>
+    <div class="no">
+      <h4>Todavía no</h4>
+      <ul>
+        <li>Extraer elementos de un vector (<code>ingresos[1]</code>) → semana 2</li>
+        <li>Data frames e importar un CSV → semana 2</li>
+        <li><code>library()</code> y <code>ggplot2</code> → semana 3</li>
+        <li><code>dplyr</code> y el pipe <code>|&gt;</code> → semana 4</li>
+      </ul>
     </div>
   </div>
+</section>
 
-  <nav class="subnav" aria-label="Navegación dentro de la guía">
-    <a href="#g-consola">Consola y scripts</a>
-    <a href="#g-objetos">Objetos y asignación</a>
-    <a href="#g-tipos">Tipos de datos</a>
-    <a href="#g-operadores">Operadores</a>
-    <a href="#g-funciones">Funciones</a>
-    <a href="#g-vectores">Vectores</a>
-    <a href="#g-ayuda">Ayuda y errores</a>
-    <a href="#g-tabla">Tabla de referencia</a>
-    <a href="#g-repaso">Repaso activo</a>
+<section id="lecturas">
+  <h2>Lecturas de preparación</h2>
+  <p>Marca cada lectura cuando la termines. Tu avance se guarda en este navegador.</p>
+  <ul class="check">
+    <li><input type="checkbox" id="s1-l1" data-track="s1-l1"><label for="s1-l1"><span class="ref">[R4DS] Cap. 2</span> “Workflow: basics” (Flujo de trabajo: conceptos básicos). Enfócate en: R como calculadora, crear objetos con <code>&lt;-</code>, comentarios que explican el porqué, nombres en <code>snake_case</code> y cómo se llama a una función.</label></li>
+    <li><input type="checkbox" id="s1-l2" data-track="s1-l2"><label for="s1-l2"><span class="ref">[R4DS] Cap. 4</span> “Workflow: code style” (solo como referencia de estilo). Enfócate en: espacios alrededor de operadores, <code>&lt;-</code> en lugar de <code>=</code> para asignar y nombres descriptivos.</label></li>
+    <li><input type="checkbox" id="s1-l3" data-track="s1-l3"><label for="s1-l3"><span class="ref">Instalación</span> R y RStudio instalados y funcionando: abre RStudio, crea un script nuevo (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>N</kbd>) y ejecuta una línea con <kbd>Ctrl</kbd>+<kbd>Enter</kbd>.</label></li>
+  </ul>
+  <div class="box nota">
+    <span class="box-title">Dónde leer</span>
+    <ul>
+      <li><a href="https://r4ds.hadley.nz/workflow-basics.html" target="_blank" rel="noopener">R for Data Science (2.ª ed.), cap. 2: Workflow: basics</a> (libre en línea, en inglés).</li>
+      <li><a href="https://r4ds.hadley.nz/workflow-style.html" target="_blank" rel="noopener">R for Data Science (2.ª ed.), cap. 4: Workflow: code style</a>.</li>
+      <li>La traducción libre al español <a href="https://es.r4ds.hadley.nz/" target="_blank" rel="noopener">es.r4ds.hadley.nz</a> corresponde a la 1.ª edición: sirve, pero sus capítulos tienen otra numeración.</li>
+      <li><a href="https://posit.co/download/rstudio-desktop/" target="_blank" rel="noopener">Descargar R y RStudio Desktop</a> (Posit).</li>
+    </ul>
+  </div>
+</section>
+
+<section id="checkpoint">
+  <h2>Control de lectura</h2>
+  <p>Responde <strong>después</strong> de leer y sin volver al libro. Cada respuesta muestra por qué es correcta o no.</p>
+  <div class="quiz">
+    <div class="qq" data-q="s1-q1">
+      <p>¿Cuál es la diferencia entre R y RStudio?</p>
+      <div class="quiz-opts">
+        <button class="quiz-opt" data-ok>R es el lenguaje que interpreta y ejecuta las instrucciones; RStudio es el entorno donde las escribes y organizas.</button>
+        <button class="quiz-opt">Son lo mismo: RStudio es el nombre nuevo de R.</button>
+        <button class="quiz-opt">RStudio ejecuta el código y R solo guarda los archivos.</button>
+        <button class="quiz-opt">R sirve para gráficos y RStudio para cálculos.</button>
+      </div>
+      <p class="why">R es el motor; RStudio es el tablero. Sin R instalado, RStudio no puede ejecutar ni una línea.</p>
+    </div>
+    <div class="qq" data-q="s1-q2">
+      <p>Escribes <code>ingresos_enero &lt;- 4200</code> y presionas <kbd>Ctrl</kbd>+<kbd>Enter</kbd>. ¿Qué muestra la consola?</p>
+      <div class="quiz-opts">
+        <button class="quiz-opt" data-ok>Nada: R guarda el valor en el objeto y no imprime.</button>
+        <button class="quiz-opt"><code>[1] 4200</code></button>
+        <button class="quiz-opt"><code>TRUE</code></button>
+        <button class="quiz-opt">Un error, porque falta imprimir.</button>
+      </div>
+      <p class="why">Una asignación no imprime. Para ver el valor escribes el nombre del objeto solo, en su propia línea.</p>
+    </div>
+    <div class="qq" data-q="s1-q3">
+      <p>¿Cuál es el nombre de objeto que sigue el estilo del curso?</p>
+      <div class="quiz-opts">
+        <button class="quiz-opt" data-ok><code>tasa_crecimiento</code></button>
+        <button class="quiz-opt"><code>TasaCrecimiento</code></button>
+        <button class="quiz-opt"><code>tasa.crecimiento</code></button>
+        <button class="quiz-opt"><code>2tasa</code></button>
+      </div>
+      <p class="why">El curso usa <code>snake_case</code>: minúsculas y guion bajo. <code>2tasa</code> ni siquiera es válido, porque un nombre no puede empezar con un dígito.</p>
+    </div>
+    <div class="qq" data-q="s1-q4">
+      <p>¿Qué tipo tiene el valor <code>"comercio"</code>?</p>
+      <div class="quiz-opts">
+        <button class="quiz-opt" data-ok><code>character</code></button>
+        <button class="quiz-opt"><code>numeric</code></button>
+        <button class="quiz-opt"><code>logical</code></button>
+        <button class="quiz-opt">No tiene tipo hasta que lo declares.</button>
+      </div>
+      <p class="why">El texto va entre comillas y es <code>character</code>. En R el tipo viaja pegado al valor: no se declara aparte.</p>
+    </div>
+    <div class="qq" data-q="s1-q5">
+      <p>¿Qué devuelve <code>1100 &gt; 0</code>?</p>
+      <div class="quiz-opts">
+        <button class="quiz-opt" data-ok><code>TRUE</code></button>
+        <button class="quiz-opt"><code>1100</code></button>
+        <button class="quiz-opt"><code>1</code></button>
+        <button class="quiz-opt"><code>"sí"</code></button>
+      </div>
+      <p class="why">Un operador de comparación recibe dos valores y devuelve un <code>logical</code>: <code>TRUE</code> o <code>FALSE</code>.</p>
+    </div>
+    <div class="qq" data-q="s1-q6">
+      <p>En <code>round(3.14159, digits = 2)</code>, ¿qué es <code>digits</code>?</p>
+      <div class="quiz-opts">
+        <button class="quiz-opt" data-ok>Un argumento con nombre que indica cuántos decimales conservar.</button>
+        <button class="quiz-opt">Otra función que se ejecuta antes de <code>round()</code>.</button>
+        <button class="quiz-opt">Un objeto que debe existir antes.</button>
+        <button class="quiz-opt">El resultado de la función.</button>
+      </div>
+      <p class="why"><code>round</code> es la función, <code>3.14159</code> y <code>digits = 2</code> son sus argumentos, y <code>3.14</code> es el resultado.</p>
+    </div>
+    <div class="qq" data-q="s1-q7">
+      <p><code>ingresos &lt;- c(4200, 4550, 4100, 4800)</code>. ¿Qué devuelve <code>ingresos * 1.05</code>?</p>
+      <div class="quiz-opts">
+        <button class="quiz-opt" data-ok>Cuatro valores: cada ingreso multiplicado por 1.05.</button>
+        <button class="quiz-opt">Un solo número: la suma multiplicada por 1.05.</button>
+        <button class="quiz-opt">Solo el primer ingreso multiplicado por 1.05.</button>
+        <button class="quiz-opt">Un error: hace falta un ciclo.</button>
+      </div>
+      <p class="why">La aritmética sobre un vector es <strong>vectorizada</strong>: se aplica a cada elemento y devuelve un vector del mismo largo.</p>
+    </div>
+    <div class="qq" data-q="s1-q8">
+      <p>La consola muestra <code>+</code> en lugar de <code>&gt;</code>. ¿Qué pasó?</p>
+      <div class="quiz-opts">
+        <button class="quiz-opt" data-ok>R espera que termines la instrucción: falta cerrar una comilla o un paréntesis.</button>
+        <button class="quiz-opt">R está sumando algo en segundo plano.</button>
+        <button class="quiz-opt">Se instaló un paquete nuevo.</button>
+        <button class="quiz-opt">El script se guardó.</button>
+      </div>
+      <p class="why">El <code>+</code> es el aviso de continuación. Presiona <kbd>Esc</kbd>, corrige la línea y vuelve a ejecutarla.</p>
+    </div>
+    <div class="quiz-score"><span data-score></span><button class="btn sec" type="button" data-reset>Reiniciar quiz</button></div>
+  </div>
+  <ul class="check">
+    <li><input type="checkbox" id="s1-cp" data-track="s1-cp"><label for="s1-cp">Respondí el control de lectura y entiendo por qué fallé las que fallé.</label></li>
+  </ul>
+</section>
+
+<section id="consola">
+  <h2>Consola y scripts</h2>
+  <div class="box simple"><span class="box-title">En palabras simples</span>
+    <p>La consola es la <strong>calculadora de escritorio</strong> del contador: sirve para verificar una tasa rápido, pero no deja rastro. El script es el <strong>libro de trabajo</strong>: cada cálculo queda escrito, en orden, y cualquiera del equipo puede repetirlo el próximo mes con datos nuevos.</p>
+  </div>
+  <p>En RStudio hay dos lugares donde puedes escribir código, y confundirlos es el primer error casi universal de quien empieza:</p>
+  <figure class="lamina media"><div class="placa"><div class="placa-core"><img src="../assets/img/s1-rstudio.svg" alt="Los cuatro paneles de RStudio: el editor de scripts arriba a la izquierda, la consola abajo a la izquierda, el panel Environment arriba a la derecha con los objetos creados, y el panel de archivos, gráficos y ayuda abajo a la derecha." width="760" height="400" loading="lazy" decoding="async"></div></div><figcaption>Escribes en el <strong>script</strong>, ejecutas con <kbd>Ctrl</kbd>+<kbd>Enter</kbd>, el resultado sale en la <strong>consola</strong> y los objetos creados aparecen en <strong>Environment</strong>.</figcaption></figure>
+  <div class="grid">
+    <div class="card">
+      <h3>Consola</h3>
+      <p>Escribes una instrucción, presionas <kbd>Enter</kbd>, R la ejecuta y la olvida. Útil para probar algo rápido o usarla como calculadora, igual que harías con una calculadora de escritorio para verificar una tasa de crecimiento a mano.</p>
+<pre data-file="consola.R"><code class="language-r">1 / 200 * 30</code></pre>
+<pre class="salida"><code>[1] 0.15</code></pre>
+    </div>
+    <div class="card">
+      <h3>Script (.R)</h3>
+      <p>Un archivo que guarda cada línea que escribes, en orden. Es tu registro reproducible: si vuelves mañana, o si tu equipo del proyecto grupal necesita repetir tu análisis, el script es lo que lo hace posible. Toda instrucción que quieras conservar va en un script, nunca solo en la consola.</p>
+    </div>
+  </div>
+  <div class="box ojo"><span class="box-title">Regla práctica del curso</span>
+    <p>Si el resultado te importa para tu proyecto o tu tarea, escríbelo en un script y ejecútalo desde ahí (<kbd>Ctrl</kbd>/<kbd>Cmd</kbd>+<kbd>Enter</kbd>). No lo dejes viviendo solo en la consola.</p>
+  </div>
+</section>
+
+<section id="objetos">
+  <h2>Objetos y asignación</h2>
+  <div class="box simple"><span class="box-title">En palabras simples</span>
+    <p>Un objeto es una <strong>celda con nombre</strong> en una hoja de cálculo: en vez de recordar “el 4200 de enero”, lo guardas en <code>ingresos_enero</code> y lo usas cuantas veces quieras. La diferencia con la hoja de cálculo: en R la celda no se recalcula sola; cada línea se ejecuta una vez, cuando tú la corres.</p>
+  </div>
+  <div class="ciclo">
+    <h3>Caso: guardar los ingresos de enero de un emprendimiento</h3>
+    <div class="paso"><div>
+      <span class="etq">Pregunta</span>
+      <p>Tu emprendimiento generó $4,200 en enero. Quieres usar ese número más adelante en el mismo script sin volver a escribirlo ni buscarlo. ¿Qué hace R exactamente cuando escribes <code>ingresos_enero &lt;- 4200</code>? La línea no imprime nada, pero algo sí pasó.</p>
+    </div></div>
+    <div class="paso"><div>
+      <span class="etq">Exploración</span>
+      <figure class="lamina media"><div class="placa"><div class="placa-core"><img src="../assets/img/s1-ambiente.svg" alt="Antes de ejecutar la línea, el ambiente de R (panel Environment) está vacío. Después de ejecutar ingresos_enero asignado a 4200, el ambiente contiene un objeto llamado ingresos_enero con el valor 4200." width="760" height="250" loading="lazy" decoding="async"></div></div><figcaption>R evalúa <code>4200</code>, lo guarda bajo el nombre <code>ingresos_enero</code> y se queda en silencio.</figcaption></figure>
+    </div></div>
+    <div class="paso"><div>
+      <span class="etq">Implementación</span>
+<pre data-file="objetos.R"><code class="language-r">ingresos_enero &lt;- 4200   # guarda el valor; no imprime nada
+ingresos_enero            # escribir el nombre solo muestra lo que hay adentro</code></pre>
+      <p>Pulsa <strong>Editar</strong>, cambia el 4200 por otro valor y vuelve a ejecutar: la primera línea sigue sin imprimir nada.</p>
+    </div></div>
+    <div class="paso"><div>
+      <span class="etq">Resultado</span>
+<pre class="salida"><code>[1] 4200</code></pre>
+    </div></div>
+    <div class="paso"><div>
+      <span class="etq">Interpretación</span>
+      <p>La primera línea <strong>no imprimió nada</strong>: R evaluó el número, lo guardó y se quedó en silencio, exactamente como en la lámina. Solo cuando escribes el nombre del objeto solo, en su propia línea, R busca esa caja y te muestra lo que hay adentro. El <code>[1]</code> dice que ese es el primer (y único) elemento.</p>
+    </div></div>
+    <div class="paso verif"><div>
+      <span class="etq">Verificación: ¿cómo sé que es correcto?</span>
+      <ul>
+        <li>En RStudio, el objeto aparece en el panel <strong>Environment</strong> con su valor.</li>
+        <li>Escribir su nombre en la consola muestra el mismo valor.</li>
+        <li>Si reasignas <code>ingresos_enero &lt;- 4600</code>, los objetos calculados antes con él <strong>no cambian</strong> hasta que vuelvas a ejecutar esas líneas (lo verás en la <a href="#trazas">traza 1</a>).</li>
+      </ul>
+    </div></div>
+  </div>
+  <div class="box nota"><span class="box-title">Hábito de estilo</span>
+    <p>Se asigna con el operador <code>&lt;-</code>, no con <code>=</code> (ver la <a href="#cheat">referencia de estilo</a>). Atajo en RStudio: <kbd>Alt</kbd>/<kbd>Option</kbd> + <kbd>-</kbd> escribe <code>&lt;-</code> con los espacios correctos. Úsalo desde ya: es el hábito que más tiempo te ahorra en todo el curso.</p>
+  </div>
+</section>
+
+<section id="tipos">
+  <h2>Tipos de datos</h2>
+  <div class="box simple"><span class="box-title">En palabras simples</span>
+    <p>Cada valor lleva una <strong>etiqueta de bodega</strong> pegada: “número”, “texto” o “sí/no”. R mira la etiqueta antes de operar: puede sumar dos precios, pero no puede sumar un precio con la palabra “comercio”.</p>
+  </div>
+  <p>No todos los valores son iguales para R. El tipo no es algo que tú declares aparte: viaja pegado al valor desde el momento en que lo creas, como una etiqueta. Los tres tipos que necesitas esta semana:</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Tipo</th><th>Qué guarda</th><th>Ejemplo económico</th></tr></thead>
+    <tbody>
+      <tr><td><code>numeric</code></td><td>Cualquier número, con o sin decimales.</td><td><code>precio_dolar &lt;- 3.75</code>: ingresos, precios, tasas, cantidades.</td></tr>
+      <tr><td><code>character</code></td><td>Texto, siempre entre comillas.</td><td><code>sector &lt;- "comercio"</code>: países, categorías, sectores.</td></tr>
+      <tr><td><code>logical</code></td><td>Solo <code>TRUE</code> o <code>FALSE</code>.</td><td><code>hubo_crecimiento &lt;- TRUE</code>: el resultado natural de una comparación.</td></tr>
+    </tbody>
+  </table></div>
+  <figure class="lamina media ia-ilustracion"><div class="placa"><div class="placa-core"><img data-no-inline src="../assets/img/ia-s1-tipos.svg" alt="Tres valores con su tipo pegado como etiqueta física: 3.75 con la etiqueta numeric, comercio con la etiqueta character y TRUE con la etiqueta logical." width="960" height="640" loading="lazy" decoding="async"></div></div><figcaption>Cada valor lleva su tipo pegado: <strong>numeric</strong>, <strong>character</strong> y <strong>logical</strong> son las tres etiquetas de esta semana.</figcaption></figure>
+  <p>¿Cómo saber el tipo de un objeto que ya creaste? <code>class()</code> te lo dice:</p>
+<pre data-file="tipos.R"><code class="language-r">precio_dolar &lt;- 3.75
+sector &lt;- "comercio"
+hubo_crecimiento &lt;- TRUE
+class(precio_dolar)
+class(sector)
+class(hubo_crecimiento)</code></pre>
+<pre class="salida"><code>[1] "numeric"
+[1] "character"
+[1] "logical"</code></pre>
+</section>
+
+<section id="operadores">
+  <h2>Operadores</h2>
+  <div class="box simple"><span class="box-title">En palabras simples</span>
+    <p>Los aritméticos son las <strong>teclas de la calculadora</strong>: entran dos números y sale un número. Los de comparación son las <strong>preguntas de sí o no</strong> que hace un gerente: “¿la utilidad fue mayor que cero?”. Entran dos valores y sale <code>TRUE</code> o <code>FALSE</code>.</p>
+  </div>
+  <figure class="lamina media"><div class="placa"><div class="placa-core"><img src="../assets/img/s1-operadores.svg" alt="Arriba, aritmética: ingresos_enero 4200 menos costos_enero 3100 da utilidad 1100. Abajo, comparación: utilidad 1100 mayor que 0 da TRUE." width="760" height="260" loading="lazy" decoding="async"></div></div><figcaption><strong>Aritmética</strong>: dos números entran, un número sale. <strong>Comparación</strong>: dos valores entran, un <code>TRUE</code>/<code>FALSE</code> sale.</figcaption></figure>
+  <div class="ciclo">
+    <h3>Caso: ¿tuvo utilidad el emprendimiento en enero?</h3>
+    <div class="paso"><div><span class="etq">Pregunta</span><p>En enero entraron $4,200 y los costos fueron $3,100. ¿Cuánto quedó y fue positivo?</p></div></div>
+    <div class="paso"><div><span class="etq">Exploración</span><p>Entradas: ingresos y costos. Salidas: la utilidad (un número) y la respuesta a “¿hubo ganancia?” (un sí/no). Necesitas un operador aritmético y uno de comparación.</p></div></div>
+    <div class="paso"><div><span class="etq">Implementación</span>
+<pre data-file="utilidad.R"><code class="language-r">ingresos_enero &lt;- 4200
+costos_enero &lt;- 3100
+utilidad &lt;- ingresos_enero - costos_enero
+utilidad
+utilidad &gt; 0          # ¿hubo ganancia?
+utilidad / ingresos_enero * 100   # margen en porcentaje</code></pre>
+    </div></div>
+    <div class="paso"><div><span class="etq">Resultado</span>
+<pre class="salida"><code>[1] 1100
+[1] TRUE
+[1] 26.19048</code></pre>
+    </div></div>
+    <div class="paso"><div><span class="etq">Interpretación</span><p>Quedaron $1,100 de utilidad, sí fue positiva, y de cada dólar vendido quedaron unos 26 centavos (margen de 26.2 %).</p></div></div>
+    <div class="paso verif"><div><span class="etq">Verificación: ¿cómo sé que es correcto?</span><ul><li>A mano: 4200 − 3100 = 1100 y 1100 / 4200 ≈ 0.262.</li><li>El margen debe estar entre 0 y 100 si la utilidad es positiva y menor que el ingreso.</li></ul></div></div>
+  </div>
+  <figure class="lamina media ia-ilustracion"><div class="placa"><div class="placa-core"><img data-no-inline src="../assets/img/ia-s1-operadores.svg" alt="A la izquierda, aritmética: dos números entran y sale un número. A la derecha, comparación: dos valores entran y sale TRUE o FALSE." width="960" height="640" loading="lazy" decoding="async"></div></div><figcaption>A la izquierda, aritmética (dos números entran, un número sale); a la derecha, comparación (dos valores entran, un <code>TRUE</code>/<code>FALSE</code> sale).</figcaption></figure>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Aritméticos</th><th>Significado</th><th>De comparación</th><th>Significado</th></tr></thead>
+    <tbody>
+      <tr><td><code>+ -</code></td><td>suma, resta</td><td><code>==</code></td><td>igual a (dos signos)</td></tr>
+      <tr><td><code>* /</code></td><td>multiplicación, división</td><td><code>!=</code></td><td>distinto de</td></tr>
+      <tr><td><code>^</code></td><td>potencia</td><td><code>&lt; &gt;</code></td><td>menor, mayor</td></tr>
+      <tr><td><code>%%</code></td><td>residuo de la división</td><td><code>&lt;= &gt;=</code></td><td>menor o igual, mayor o igual</td></tr>
+      <tr><td><code>%/%</code></td><td>división entera</td><td></td><td></td></tr>
+    </tbody>
+  </table></div>
+  <p>Los de comparación son la base de cualquier filtro que harás desde la semana 4.</p>
+</section>
+
+<section id="funciones">
+  <h2>Funciones y argumentos</h2>
+  <div class="box simple"><span class="box-title">En palabras simples</span>
+    <p>Una función es una <strong>ventanilla de trámites</strong>: entregas los documentos que pide (los argumentos) y te devuelve un resultado. <code>round()</code> es la ventanilla que redondea; el argumento <code>digits</code> es la casilla del formulario donde dices cuántos decimales quieres.</p>
+  </div>
+  <p>Una función es una instrucción con nombre que recibe <strong>argumentos</strong> entre paréntesis y devuelve un resultado. Sintaxis general:</p>
+<pre data-file="sintaxis.R" data-norun><code class="language-r">nombre_funcion(argumento1 = valor1, argumento2 = valor2)</code></pre>
+  <p>Ejemplo con <code>round()</code>, que redondea un número; el argumento <code>digits</code> controla a cuántos decimales:</p>
+<pre data-file="redondeo.R"><code class="language-r">round(3.14159, digits = 2)
+round(3.14159, 2)      # mismo resultado: el segundo valor es digits
+round(3.14159)         # sin digits: 0 decimales por defecto</code></pre>
+<pre class="salida"><code>[1] 3.14
+[1] 3.14
+[1] 3</code></pre>
+  <p>No siempre hace falta escribir el nombre del argumento: <code>round(3.14159, 2)</code> funciona igual, porque R sabe que el segundo valor en esa posición es <code>digits</code>. Nombrarlo es más claro cuando la función tiene varios argumentos, un hábito que conviene practicar desde ya.</p>
+</section>
+
+<section id="vectores">
+  <h2>Vectores</h2>
+  <div class="box simple"><span class="box-title">En palabras simples</span>
+    <p>Un vector es una <strong>fila de la hoja de ventas</strong>: los ingresos de enero a abril viven juntos bajo un solo nombre. Si subes todos los precios 5 %, no lo haces celda por celda: aplicas la misma regla a toda la fila de una vez.</p>
+  </div>
+  <p>Un vector es una <strong>serie pequeña de observaciones</strong> del mismo tipo, guardadas en un solo objeto. Se construye con <code>c()</code> (de “combine”):</p>
+<pre data-file="vector.R" id="s1-ingresos"><code class="language-r"># ingresos de un pequeño negocio, cuatro meses
+ingresos &lt;- c(4200, 4550, 4100, 4800)
+ingresos</code></pre>
+<pre class="salida"><code>[1] 4200 4550 4100 4800</code></pre>
+  <figure class="lamina media"><div class="placa"><div class="placa-core"><img src="../assets/img/s1-vector.svg" alt="Arriba, las cuatro cajas 4200, 4550, 4100 y 4800 forman un solo objeto llamado ingresos. Abajo, la misma operación por 1.05 se aplica a las cuatro posiciones a la vez y da 4410, 4777.5, 4305 y 5040." width="760" height="300" loading="lazy" decoding="async"></div></div><figcaption>Las cuatro cajas son <strong>un solo objeto</strong>. La operación <code>× 1.05</code> ocurre en las cuatro posiciones a la vez, no una por una.</figcaption></figure>
+  <p>La aritmética sobre un vector se aplica a <strong>cada elemento a la vez</strong>: no necesitas un ciclo para esto (los ciclos llegan en la semana 9):</p>
+<pre data-file="proyeccion.R" data-previo="s1-ingresos"><code class="language-r">ingresos * 1.05   # proyección con 5 % de crecimiento
+length(ingresos)  # cuántas observaciones hay
+sum(ingresos)     # ingreso acumulado
+mean(ingresos)    # ingreso promedio</code></pre>
+<pre class="salida"><code>[1] 4410.0 4777.5 4305.0 5040.0
+[1] 4
+[1] 17650
+[1] 4412.5</code></pre>
+  <div class="grid">
+    <figure class="lamina ia-ilustracion" style="margin:0"><div class="placa"><div class="placa-core"><img data-no-inline src="../assets/img/ia-s1-vector.svg" alt="Cuatro cajas idénticas conectadas en una fila, con los subíndices 1 a 4, que forman un solo vector llamado ingresos." width="960" height="640" loading="lazy" decoding="async"></div></div><figcaption>Las cuatro cajas comparten el mismo tono porque son un solo objeto.</figcaption></figure>
+    <figure class="lamina ia-ilustracion" style="margin:0"><div class="placa"><div class="placa-core"><img data-no-inline src="../assets/img/ia-s1-vectorizada.svg" alt="Cuatro flechas paralelas aplican la misma operación por 1.05 a las cuatro posiciones del vector al mismo tiempo." width="960" height="640" loading="lazy" decoding="async"></div></div><figcaption>Cuatro flechas paralelas, no una detrás de otra.</figcaption></figure>
+  </div>
+  <div class="box adelanto"><span class="box-title">Todavía no</span>
+    <p>Extraer un elemento individual de un vector (<code>ingresos[1]</code>) es contenido de la semana 2, junto con más operaciones vectorizadas.</p>
+  </div>
+</section>
+
+<section id="ayuda">
+  <h2>Uso de ayuda y lectura de errores</h2>
+  <div class="box simple"><span class="box-title">En palabras simples</span>
+    <p>Un mensaje de error es un <strong>rechazo de la ventanilla con el motivo escrito</strong>: “falta la firma”, “el nombre no coincide”. No es un regaño: te dice exactamente qué corregir. Leerlo completo ahorra más tiempo que adivinar.</p>
+  </div>
+  <p>Vas a cometer errores de tipeo constantemente: es normal, y R te lo va a decir. Aprender a leer esos mensajes es tan importante como aprender la sintaxis.</p>
+  <div class="grid">
+    <div class="card">
+      <h3>Pedir ayuda</h3>
+      <p>Antepón <code>?</code> al nombre de cualquier función para abrir su documentación oficial en el panel Help de RStudio:</p>
+<pre data-file="ayuda.R" data-norun><code class="language-r">?round</code></pre>
+    </div>
+    <div class="card">
+      <h3>Objeto no encontrado</h3>
+      <p>R distingue mayúsculas de minúsculas y cada letra cuenta. Un nombre mal escrito no existe para R, aunque exista uno casi igual:</p>
+<pre data-file="error.R"><code class="language-r">r_rocks &lt;- 8
+r_rock</code></pre>
+<pre class="salida"><code>Error: object 'r_rock' not found</code></pre>
+    </div>
+    <div class="card">
+      <h3>La consola espera algo (<code>+</code>)</h3>
+      <p>Si tu consola muestra <code>+</code> en vez de <code>&gt;</code>, R piensa que tu instrucción sigue incompleta: casi siempre falta cerrar una comilla o un paréntesis. Presiona <kbd>Esc</kbd> y vuelve a intentarlo.</p>
+<pre class="salida" data-file="Console"><code>&gt; mensaje &lt;- "Hola
++</code></pre>
+    </div>
+  </div>
+</section>
+
+<section id="trazas">
+  <h2>Tablas de traza</h2>
+  <p>Una traza es ejecutar el código <em>tú</em>, línea por línea, anotando el valor de cada objeto. Llena las celdas, pulsa <strong>Comprobar</strong> y solo al final mira la solución. Si un objeto todavía no existe, escribe <em>no existe</em>.</p>
+
+  <h3>Traza 1 · Un objeto no se recalcula solo</h3>
+<pre data-file="presupuesto.R"><code class="language-r">presupuesto &lt;- 2000
+gasto &lt;- presupuesto * 0.15
+saldo &lt;- presupuesto - gasto
+presupuesto &lt;- 3000
+saldo_nuevo &lt;- presupuesto - gasto</code></pre>
+  <div class="traza">
+    <div class="table-wrap"><table>
+      <thead><tr><th>Después de la línea</th><th>presupuesto</th><th>gasto</th><th>saldo</th><th>saldo_nuevo</th></tr></thead>
+      <tbody>
+        <tr><td class="dado">1</td><td><input data-a="2000" aria-label="presupuesto tras la línea 1"></td><td><input data-a="no existe" aria-label="gasto tras la línea 1"></td><td><input data-a="no existe" aria-label="saldo tras la línea 1"></td><td><input data-a="no existe" aria-label="saldo_nuevo tras la línea 1"></td></tr>
+        <tr><td class="dado">2</td><td><input data-a="2000" aria-label="presupuesto tras la línea 2"></td><td><input data-a="300" aria-label="gasto tras la línea 2"></td><td><input data-a="no existe" aria-label="saldo tras la línea 2"></td><td><input data-a="no existe" aria-label="saldo_nuevo tras la línea 2"></td></tr>
+        <tr><td class="dado">3</td><td><input data-a="2000" aria-label="presupuesto tras la línea 3"></td><td><input data-a="300" aria-label="gasto tras la línea 3"></td><td><input data-a="1700" aria-label="saldo tras la línea 3"></td><td><input data-a="no existe" aria-label="saldo_nuevo tras la línea 3"></td></tr>
+        <tr><td class="dado">4</td><td><input data-a="3000" aria-label="presupuesto tras la línea 4"></td><td><input data-a="300" aria-label="gasto tras la línea 4"></td><td><input data-a="1700" aria-label="saldo tras la línea 4"></td><td><input data-a="no existe" aria-label="saldo_nuevo tras la línea 4"></td></tr>
+        <tr><td class="dado">5</td><td><input data-a="3000" aria-label="presupuesto tras la línea 5"></td><td><input data-a="300" aria-label="gasto tras la línea 5"></td><td><input data-a="1700" aria-label="saldo tras la línea 5"></td><td><input data-a="2700" aria-label="saldo_nuevo tras la línea 5"></td></tr>
+      </tbody>
+    </table></div>
+    <div class="acciones"><button class="btn" type="button" data-comprobar>Comprobar</button><button class="btn sec" type="button" data-solucion>Ver solución</button><button class="btn sec" type="button" data-limpiar>Limpiar</button><span class="resultado" aria-live="polite"></span></div>
+  </div>
+  <details class="defensa"><summary>¿Por qué <code>gasto</code> sigue en 300 después de la línea 4?</summary><div>
+    <p>R no es una hoja de cálculo con fórmulas vivas: la línea 2 se ejecutó una vez, cuando <code>presupuesto</code> valía 2000, y guardó el número 300. Reasignar <code>presupuesto</code> no vuelve a ejecutar la línea 2. Por eso <code>saldo_nuevo</code> mezcla el presupuesto nuevo con un gasto viejo: 3000 − 300 = 2700, no 2550. Para actualizarlo hay que volver a correr la línea del gasto.</p>
+  </div></details>
+
+  <h3>Traza 2 · Operaciones sobre vectores</h3>
+<pre data-file="tienda.R"><code class="language-r">ingresos &lt;- c(3200, 3450, 2980, 3600)
+costos &lt;- c(2100, 2200, 2050, 2300)
+utilidad &lt;- ingresos - costos
+positivo &lt;- utilidad &gt; 1000</code></pre>
+  <p>Escribe los vectores separados por comas (por ejemplo <code>1, 2, 3</code>).</p>
+  <div class="traza">
+    <div class="table-wrap"><table>
+      <thead><tr><th>Objeto</th><th>Valor</th><th>Tipo (class)</th><th>length()</th></tr></thead>
+      <tbody>
+        <tr><td class="dado">utilidad</td><td><input data-a="1100, 1250, 930, 1300" aria-label="valor de utilidad"></td><td><input data-a="numeric" aria-label="tipo de utilidad"></td><td><input data-a="4" aria-label="length de utilidad"></td></tr>
+        <tr><td class="dado">positivo</td><td><input data-a="TRUE, TRUE, FALSE, TRUE" aria-label="valor de positivo"></td><td><input data-a="logical" aria-label="tipo de positivo"></td><td><input data-a="4" aria-label="length de positivo"></td></tr>
+        <tr><td class="dado">sum(utilidad)</td><td><input data-a="4580" aria-label="valor de sum(utilidad)"></td><td><input data-a="numeric" aria-label="tipo de sum(utilidad)"></td><td><input data-a="1" aria-label="length de sum(utilidad)"></td></tr>
+        <tr><td class="dado">mean(utilidad)</td><td><input data-a="1145" aria-label="valor de mean(utilidad)"></td><td><input data-a="numeric" aria-label="tipo de mean(utilidad)"></td><td><input data-a="1" aria-label="length de mean(utilidad)"></td></tr>
+      </tbody>
+    </table></div>
+    <div class="acciones"><button class="btn" type="button" data-comprobar>Comprobar</button><button class="btn sec" type="button" data-solucion>Ver solución</button><button class="btn sec" type="button" data-limpiar>Limpiar</button><span class="resultado" aria-live="polite"></span></div>
+  </div>
+  <ul class="check">
+    <li><input type="checkbox" id="s1-t1" data-track="s1-t1"><label for="s1-t1">Completé la traza 1 sin ver la solución y puedo explicar por qué <code>gasto</code> no cambió.</label></li>
+    <li><input type="checkbox" id="s1-t2" data-track="s1-t2"><label for="s1-t2">Completé la traza 2 y distingo un resultado de largo 4 de uno de largo 1.</label></li>
+  </ul>
+</section>
+
+<section id="ejercicios">
+  <h2>Ejercicios</h2>
+  <p>Cada ejercicio parte de una pregunta de negocio, nunca de “escriba el siguiente comando”. Escribe tu respuesta en el cuadro: la solución se abre cuando llegas al mínimo de caracteres. Lo que escribes se guarda solo en este navegador. Cada ejercicio declara su nivel de IA, según la política del curso:</p>
+  <div class="ia-leyenda"><span class="ia sin">Sin IA</span><span class="ia permitida">IA permitida</span><span class="ia requerida">IA requerida</span></div>
+
+  <h3>Repaso activo</h3>
+  <article class="ejercicio">
+    <header><h3>R-1 · ¿Por qué un objeto?</h3><span class="nivel">objetos · ★</span><span class="ia sin">Sin IA</span></header>
+    <div class="cuerpo">
+      <p>Un compañero de equipo escribe <code>4200 - 3100</code> directo en la consola cada vez que necesita la utilidad de enero. ¿Qué problema tiene eso frente a usar <code>utilidad_enero &lt;- 4200 - 3100</code>, pensando en el proyecto grupal?</p>
+    </div>
+    <div class="respuesta"><label for="s1-r1">Tu respuesta</label><textarea id="s1-r1" data-id="s1-r1" data-min="40" placeholder="Escribe tu respuesta aquí (mínimo 40 caracteres)…"></textarea><span class="cuenta"></span></div>
+    <details class="solucion"><summary>Qué debería incluir una buena respuesta</summary><div class="det">
+      <ul>
+        <li><strong>Reutilización:</strong> el objeto se puede usar después sin recalcular ni volver a escribir.</li>
+        <li><strong>Trazabilidad:</strong> el nombre <code>utilidad_enero</code> documenta qué representa el número; <code>1100</code> solo, no.</li>
+        <li><strong>Trabajo en equipo:</strong> un script con objetos con nombre lo puede leer otra persona del equipo; una consola llena de cálculos sueltos, no.</li>
+      </ul>
+    </div></details>
+    <ul class="check"><li><input type="checkbox" id="s1-r1c" data-track="s1-r1c"><label for="s1-r1c">Resuelto</label></li></ul>
+  </article>
+
+  <article class="ejercicio">
+    <header><h3>R-2 · Predice el error</h3><span class="nivel">lectura de errores · ★</span><span class="ia sin">Sin IA</span></header>
+    <div class="cuerpo">
+      <p>Este código se ejecuta línea por línea. ¿Qué error exacto muestra R y por qué?</p>
+<pre data-file="predice_error.R"><code class="language-r">Tasa_Crecimiento &lt;- 0.05
+tasa_crecimiento * 100</code></pre>
+    </div>
+    <div class="respuesta"><label for="s1-r2">Tu respuesta</label><textarea id="s1-r2" data-id="s1-r2" data-min="30" placeholder="Escribe el mensaje de error que esperas y por qué…"></textarea><span class="cuenta"></span></div>
+    <details class="solucion"><summary>Qué debería incluir una buena respuesta</summary><div class="det">
+<pre class="salida"><code>Error: object 'tasa_crecimiento' not found</code></pre>
+      <ul>
+        <li><strong>Por qué:</strong> el objeto se creó como <code>Tasa_Crecimiento</code>, con mayúsculas. R distingue mayúsculas de minúsculas: son dos nombres distintos.</li>
+        <li><strong>Conexión con estilo:</strong> esto es exactamente lo que evita la regla de usar siempre <code>snake_case</code> en minúsculas: consistencia, no solo estética.</li>
+      </ul>
+    </div></details>
+    <ul class="check"><li><input type="checkbox" id="s1-r2c" data-track="s1-r2c"><label for="s1-r2c">Resuelto</label></li></ul>
+  </article>
+
+  <h3>Laboratorio</h3>
+  <p>Los dos primeros son diagnósticos (sin apoyo de IA) para ver qué entendiste sin ayuda externa.</p>
+  <article class="ejercicio">
+    <header><h3>E1 · Predice el resultado</h3><span class="nivel">vectores · ★</span><span class="ia sin">Sin IA</span></header>
+    <div class="cuerpo">
+      <p>Una tienda registra sus ingresos y costos de cuatro meses. Sin ejecutar nada, escribe exactamente qué imprime R en la última línea.</p>
+<pre data-file="e1.R"><code class="language-r">ingresos &lt;- c(3200, 3450, 2980, 3600)
+costos   &lt;- c(2100, 2200, 2050, 2300)
+utilidad &lt;- ingresos - costos
+utilidad</code></pre>
+    </div>
+    <div class="respuesta"><label for="s1-e1">Tu predicción</label><textarea id="s1-e1" data-id="s1-e1" data-min="15" placeholder="Escribe el resultado exacto que esperas ver…"></textarea><span class="cuenta"></span></div>
+    <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<pre class="salida"><code>[1] 1100 1250  930 1300</code></pre>
+      <ul>
+        <li>Resta elemento por elemento, en el mismo orden: <code>3200 − 2100</code>, <code>3450 − 2200</code>, etc.</li>
+        <li><strong>Si escribiste un solo número:</strong> repasa <a href="#vectores">Vectores</a>: la resta se aplica a los cuatro pares, no se “colapsa” en un total.</li>
+        <li>R alinea los números a la derecha: por eso aparece un espacio extra antes de <code>930</code>.</li>
+      </ul>
+      <div class="quiz">
+        <div class="qq" data-q="s1-e1-auto">
+          <p>Autoevaluación: ¿cuál afirmación es correcta?</p>
+          <div class="quiz-opts">
+            <button class="quiz-opt" data-ok>R restó los vectores elemento por elemento, sin que yo escribiera un ciclo.</button>
+            <button class="quiz-opt">R suma automáticamente los cuatro resultados en un solo número.</button>
+          </div>
+          <p class="why">La operación es vectorizada y conserva el largo. Para un total habría que escribir <code>sum(utilidad)</code>.</p>
+        </div>
+      </div>
+    </div></details>
+    <ul class="check"><li><input type="checkbox" id="s1-e1c" data-track="s1-e1c"><label for="s1-e1c">Resuelto</label></li></ul>
+  </article>
+
+  <article class="ejercicio">
+    <header><h3>E2 · Encuentra el error</h3><span class="nivel">lectura de errores · ★</span><span class="ia sin">Sin IA</span></header>
+    <div class="cuerpo">
+      <p>Tu compañero de equipo escribió esto para ver el crecimiento proyectado de ventas y R marcó un error. Explica exactamente cuál es el error y cómo lo corregirías.</p>
+<pre data-file="e2.R"><code class="language-r">ventas_2025 &lt;- c(1200, 1450, 1300)
+crecimiento &lt;- ventas_2025 * 1.08
+Crecimiento</code></pre>
+    </div>
+    <div class="respuesta"><label for="s1-e2">Tu respuesta</label><textarea id="s1-e2" data-id="s1-e2" data-min="30" placeholder="¿Cuál es el error exacto y cómo lo corriges?"></textarea><span class="cuenta"></span></div>
+    <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<pre class="salida"><code>Error: object 'Crecimiento' not found</code></pre>
+      <ul>
+        <li><strong>Causa:</strong> el objeto se creó como <code>crecimiento</code>, en minúscula. Para R son dos nombres distintos, aunque a nosotros nos parezcan “el mismo”.</li>
+        <li><strong>Corrección:</strong> escribir <code>crecimiento</code> en la última línea, tal como se creó.</li>
+      </ul>
+      <div class="quiz">
+        <div class="qq" data-q="s1-e2-auto">
+          <p>Autoevaluación: ¿cuál afirmación es correcta?</p>
+          <div class="quiz-opts">
+            <button class="quiz-opt" data-ok>Usar siempre <code>snake_case</code> en minúsculas evita este tipo de error.</button>
+            <button class="quiz-opt">R ignora mayúsculas y minúsculas al buscar un objeto.</button>
+          </div>
+          <p class="why">R es sensible a mayúsculas. Una convención única de nombres elimina la duda de cómo se escribió cada objeto.</p>
+        </div>
+      </div>
+    </div></details>
+    <ul class="check"><li><input type="checkbox" id="s1-e2c" data-track="s1-e2c"><label for="s1-e2c">Resuelto</label></li></ul>
+  </article>
+
+  <article class="ejercicio">
+    <header><h3>E3 · Construye: utilidad promedio</h3><span class="nivel">vectores y funciones · ★★</span><span class="ia permitida">IA permitida</span></header>
+    <div class="cuerpo">
+      <p>Una tienda tiene ingresos <code>c(5000, 5400, 4900, 6100)</code> y costos <code>c(3200, 3300, 3100, 3500)</code>. Escribe el código para calcular (a) la utilidad de cada mes y (b) la utilidad promedio del periodo. Luego justifica: si usaste IA para esto, ¿qué verificaste antes de confiar en su respuesta?</p>
+    </div>
+    <div class="respuesta"><label for="s1-e3">Tu código y tu justificación</label><textarea id="s1-e3" data-id="s1-e3" data-min="50" placeholder="Pega o escribe tu código, y tu justificación…"></textarea><span class="cuenta"></span></div>
+    <details class="solucion"><summary>Solución de referencia y criterios</summary><div class="det">
+<pre data-file="e3.R"><code class="language-r">ingresos &lt;- c(5000, 5400, 4900, 6100)
+costos   &lt;- c(3200, 3300, 3100, 3500)
+utilidad &lt;- ingresos - costos  # vectorizado, no mes por mes
+utilidad_promedio &lt;- mean(utilidad)
+utilidad_promedio</code></pre>
+<pre class="salida"><code>[1] 2075</code></pre>
+      <ul>
+        <li><strong>Nombres con sentido:</strong> <code>utilidad</code>, <code>utilidad_promedio</code>, no <code>x</code>, <code>y</code>.</li>
+        <li><strong>Vectorizado, no manual:</strong> una resta de vectores, no cuatro restas escritas a mano.</li>
+        <li><code>mean()</code> aplicado al vector <code>utilidad</code>, no a <code>ingresos</code> y <code>costos</code> por separado.</li>
+        <li><strong>Verificación (con o sin IA):</strong> un cálculo mental rápido: las utilidades son 1800, 2100, 1800 y 2600; su suma es 8300 y 8300 / 4 = 2075.</li>
+      </ul>
+    </div></details>
+    <ul class="check"><li><input type="checkbox" id="s1-e3c" data-track="s1-e3c"><label for="s1-e3c">Resuelto</label></li></ul>
+  </article>
+
+  <article class="ejercicio">
+    <header><h3>E4 · Modifica: de variación a índice</h3><span class="nivel">funciones · ★★</span><span class="ia permitida">IA permitida</span></header>
+    <div class="cuerpo">
+      <p>Este código ya calcula la variación absoluta de un precio entre dos años. Modifícalo para agregar también un <strong>número índice</strong> (2024 = 100) y explica, en tus palabras, qué te dice el índice que la variación absoluta no dice.</p>
+<pre data-file="e4.R" id="s1-precios"><code class="language-r">precio_2024 &lt;- 12.50
+precio_2025 &lt;- 13.90
+variacion &lt;- precio_2025 - precio_2024
+variacion</code></pre>
+    </div>
+    <div class="respuesta"><label for="s1-e4">La línea que agregarías y tu explicación</label><textarea id="s1-e4" data-id="s1-e4" data-min="50" placeholder="Escribe la línea que agregarías y tu explicación…"></textarea><span class="cuenta"></span></div>
+    <details class="solucion"><summary>Solución de referencia y criterios</summary><div class="det">
+<pre data-file="e4_indice.R" data-previo="s1-precios"><code class="language-r">indice_precio &lt;- round(precio_2025 / precio_2024 * 100, digits = 1)
+indice_precio</code></pre>
+<pre class="salida"><code>[1] 111.2</code></pre>
+      <ul>
+        <li><strong>Fórmula del índice:</strong> (valor nuevo / valor base) × 100, con el año base como referencia = 100.</li>
+        <li><code>round(..., digits = 1)</code> usado con argumento nombrado, como en la guía.</li>
+        <li><strong>Explicación esperada:</strong> la variación absoluta (1.40) depende de la unidad (dólares); el índice (111.2) dice directamente “11.2 % más que la base” y es comparable entre productos con precios muy distintos. Por eso los índices se usan tanto en economía.</li>
+      </ul>
+    </div></details>
+    <ul class="check"><li><input type="checkbox" id="s1-e4c" data-track="s1-e4c"><label for="s1-e4c">Resuelto</label></li></ul>
+  </article>
+
+  <article class="ejercicio">
+    <header><h3>E5 · Proyecto: primer contacto con los datos de tu equipo</h3><span class="nivel">proyecto · ★★</span><span class="ia permitida">IA permitida</span></header>
+    <div class="cuerpo">
+      <p>Fase de esta semana en el proyecto grupal: formación de equipos y elección de tema. Con tu equipo (aunque el tema todavía pueda cambiar), anoten 4 valores ficticios que esperarían encontrar en una base real de ese tema, créenlos como un vector con <code>c()</code> y un nombre en <code>snake_case</code> que describa qué representan, y apliquen una función que ya conozcan (<code>mean()</code>, <code>sum()</code>, <code>length()</code> o <code>round()</code>) que tenga sentido para esos datos.</p>
+    </div>
+    <div class="respuesta"><label for="s1-e5">Tema, vector y función</label><textarea id="s1-e5" data-id="s1-e5" data-min="60" placeholder="Tema del equipo, el vector en R, y qué función aplicaron y por qué…"></textarea><span class="cuenta"></span></div>
+    <details class="solucion"><summary>Criterios (no hay una única respuesta correcta)</summary><div class="det">
+      <ul>
+        <li><strong>El nombre del vector responde</strong> a la pregunta “¿qué representa cada valor?”: una pregunta de defensa que reaparecerá en las semanas 9 y 11.</li>
+        <li><strong>La función elegida tiene sentido</strong> para ese tipo de dato (¿tiene sentido un promedio? ¿un total? ¿solo contar cuántos hay?).</li>
+        <li><strong>Los valores son plausibles</strong> para el tema, aunque sean ficticios, no números al azar sin relación con la idea del equipo.</li>
+        <li>Guarda esta respuesta: la retomarás en la semana 2 cuando busquen la base de datos real.</li>
+      </ul>
+    </div></details>
+    <ul class="check"><li><input type="checkbox" id="s1-e5c" data-track="s1-e5c"><label for="s1-e5c">Resuelto con mi equipo</label></li></ul>
+  </article>
+
+  <div class="box ok"><span class="box-title">¿Cómo sabemos que este resultado es correcto?</span>
+    <p>En cada ejercicio la verificación fue la misma idea aplicada de distintas formas: comparar el resultado de R con un cálculo hecho a mano o mental (E1, E3), leer el mensaje de error completo en vez de adivinar (E2) y preguntar qué información nueva aporta un resultado frente a otro ya conocido (E4). Esta pregunta cierra cada laboratorio del curso: hazla incluso cuando el código “corre sin error”. Que no falle no significa que responda la pregunta correcta.</p>
+  </div>
+</section>
+
+<section id="playground">
+  <h2>Playground</h2>
+  <p>Cuatro fragmentos progresivos, usando solo lo que ya viste esta semana. Cada uno se ejecuta con R real en tu navegador: modifícalos y compara con la salida de referencia. Después cópialos a tu propio RStudio.</p>
+  <div class="table-wrap"><table class="datos">
+    <caption>Dataset de referencia: ingresos de un emprendimiento (US$), una serie pequeña de observaciones.</caption>
+    <thead><tr><th>Mes</th><th class="num">Enero</th><th class="num">Febrero</th><th class="num">Marzo</th><th class="num">Abril</th></tr></thead>
+    <tbody><tr><td>Ingresos</td><td class="num">4200</td><td class="num">4550</td><td class="num">4100</td><td class="num">4800</td></tr></tbody>
+  </table></div>
+  <h3>01 · Crear e imprimir el vector</h3>
+<pre data-file="playground_01.R" id="s1-pg1"><code class="language-r">ingresos &lt;- c(4200, 4550, 4100, 4800)
+ingresos</code></pre>
+<pre class="salida"><code>[1] 4200 4550 4100 4800</code></pre>
+  <h3>02 · Inspeccionarlo con funciones</h3>
+<pre data-file="playground_02.R" data-previo="s1-pg1"><code class="language-r">length(ingresos)  # cuántas observaciones tiene
+class(ingresos)   # qué tipo de dato es
+sum(ingresos)     # ingreso acumulado del periodo</code></pre>
+<pre class="salida"><code>[1] 4
+[1] "numeric"
+[1] 17650</code></pre>
+  <h3>03 · Operación vectorizada: proyección con crecimiento</h3>
+<pre data-file="playground_03.R" data-previo="s1-pg1"><code class="language-r">tasa_crecimiento &lt;- 0.05  # 5 % mensual esperado
+proyeccion &lt;- ingresos * (1 + tasa_crecimiento)
+proyeccion</code></pre>
+<pre class="salida"><code>[1] 4410.0 4777.5 4305.0 5040.0</code></pre>
+  <h3>04 · <code>mean()</code> + <code>round()</code> con argumento nombrado</h3>
+<pre data-file="playground_04.R" data-previo="s1-pg1"><code class="language-r">ingreso_promedio &lt;- mean(ingresos)
+round(ingreso_promedio, digits = 0)</code></pre>
+<pre class="salida"><code>[1] 4412</code></pre>
+  <div class="box nota"><span class="box-title">¿Por qué 4412 y no 4413?</span>
+    <p>El promedio exacto es 4412.5. R redondea los .5 al número <strong>par</strong> más cercano (norma IEC 60559), así que 4412.5 queda en 4412. En contabilidad a veces se pide redondear siempre hacia arriba; si tu caso lo exige, dilo y verifícalo.</p>
+  </div>
+  <div class="table-wrap"><table>
+    <caption style="caption-side:top;text-align:left;padding:.6rem .8rem;font-weight:700">Funciones usadas en este Playground</caption>
+    <tbody>
+      <tr><td><code>c()</code></td><td>Combina valores en un vector.</td></tr>
+      <tr><td><code>length()</code></td><td>Cuenta cuántos elementos tiene un vector.</td></tr>
+      <tr><td><code>class()</code></td><td>Muestra el tipo de dato de un objeto.</td></tr>
+      <tr><td><code>sum()</code></td><td>Suma todos los elementos de un vector.</td></tr>
+      <tr><td><code>mean()</code></td><td>Calcula el promedio de un vector.</td></tr>
+      <tr><td><code>round(x, digits = )</code></td><td>Redondea al número de decimales indicado.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="practica">
+  <h2>Práctica intensiva</h2>
+  <p>Más práctica para asegurar lo básico: primero ejercicios rápidos que se corrigen solos, luego problemas tipo examen con casos de prueba. Resuélvelos en papel antes de abrir la solución.</p>
+  <h3>Ejercicios rápidos · ¿Qué imprime R?</h3>
+  <p>Escribe solo lo que va después de <code>[1]</code>. Para varios valores, sepáralos con comas; para texto, sin comillas.</p>
+  <div class="traza taladro">
+    <div class="table-wrap"><table>
+      <thead><tr><th>Código</th><th>Tu respuesta</th></tr></thead>
+      <tbody>
+        <tr><td class="dado codigo"><pre class="mini"><code class="language-r">17 %/% 5</code></pre></td><td><input data-a="3" aria-label="Respuesta"></td></tr>
+        <tr><td class="dado codigo"><pre class="mini"><code class="language-r">17 %% 5</code></pre></td><td><input data-a="2" aria-label="Respuesta"></td></tr>
+        <tr><td class="dado codigo"><pre class="mini"><code class="language-r">2 ^ 3 * 10</code></pre></td><td><input data-a="80" aria-label="Respuesta"></td></tr>
+        <tr><td class="dado codigo"><pre class="mini"><code class="language-r">(1 + 0.1) * 200</code></pre></td><td><input data-a="220" aria-label="Respuesta"></td></tr>
+        <tr><td class="dado codigo"><pre class="mini"><code class="language-r">class("7")</code></pre></td><td><input data-a="character" aria-label="Respuesta"></td></tr>
+        <tr><td class="dado codigo"><pre class="mini"><code class="language-r">1500 &gt;= 1500</code></pre></td><td><input data-a="TRUE" aria-label="Respuesta"></td></tr>
+        <tr><td class="dado codigo"><pre class="mini"><code class="language-r">c(10, 20, 30) / 10</code></pre></td><td><input data-a="1, 2, 3" aria-label="Respuesta"></td></tr>
+        <tr><td class="dado codigo"><pre class="mini"><code class="language-r">round(2.675, digits = 1)</code></pre></td><td><input data-a="2.7" aria-label="Respuesta"></td></tr>
+        <tr><td class="dado codigo"><pre class="mini"><code class="language-r">length(c(120, 80, 95))</code></pre></td><td><input data-a="3" aria-label="Respuesta"></td></tr>
+        <tr><td class="dado codigo"><pre class="mini"><code class="language-r">"Comercio" == "comercio"</code></pre></td><td><input data-a="FALSE" aria-label="Respuesta"></td></tr>
+      </tbody>
+    </table></div>
+    <div class="acciones"><button class="btn" type="button" data-comprobar>Comprobar</button><button class="btn sec" type="button" data-solucion>Ver solución</button><button class="btn sec" type="button" data-limpiar>Limpiar</button><span class="resultado" aria-live="polite"></span></div>
+  </div>
+  <ul class="check"><li><input type="checkbox" id="s1-px" data-track="s1-px"><label for="s1-px">Completé los ejercicios rápidos sin ejecutar el código.</label></li></ul>
+
+  <h3>Problemas tipo examen</h3>
+  <article class="ejercicio problema">
+    <header><h3>P1 · Margen y punto de equilibrio</h3><span class="nivel">objetos y operadores · ★★★</span><span class="ia sin">Sin IA</span></header>
+    <div class="cuerpo">
+      <p>Una panadería vende cada pan dulce a <strong>$0.35</strong>; cada uno le cuesta <strong>$0.20</strong> en ingredientes, y sus costos fijos del mes (alquiler y luz) son <strong>$450</strong>. Escribe un script que calcule, para una cantidad vendida en el mes: el ingreso, el costo total (fijo + variable), la utilidad, si hubo ganancia (<code>TRUE</code>/<code>FALSE</code>) y el punto de equilibrio (cuántos panes hay que vender para que la utilidad sea 0).</p>
+      <p><strong>Tu script debe cumplir estos casos de prueba:</strong></p>
+      <div class="table-wrap"><table><thead><tr><th class="num">Panes vendidos</th><th class="num">Ingreso</th><th class="num">Costo total</th><th class="num">Utilidad</th><th>¿Ganancia?</th></tr></thead><tbody>
+        <tr><td class="num">2000</td><td class="num">700</td><td class="num">850</td><td class="num">−150</td><td>FALSE</td></tr>
+        <tr><td class="num">3000</td><td class="num">1050</td><td class="num">1050</td><td class="num">0</td><td>FALSE</td></tr>
+        <tr><td class="num">4000</td><td class="num">1400</td><td class="num">1250</td><td class="num">150</td><td>TRUE</td></tr>
+      </tbody></table></div>
+      <p>Punto de equilibrio esperado: <strong>3000 panes</strong>.</p>
+    </div>
+    <details><summary>Pista</summary><div class="det"><p>Cada pan deja un <em>margen de contribución</em> de 0.35 − 0.20. El punto de equilibrio es cuántos de esos márgenes hacen falta para cubrir los $450 fijos. Cuidado: con utilidad exactamente 0, “¿hubo ganancia?” es <code>FALSE</code> si usas <code>&gt;</code>.</p></div></details>
+    <details class="solucion"><summary>Solución</summary><div class="det">
+<pre data-file="panaderia.R"><code class="language-r">precio &lt;- 0.35
+costo_unitario &lt;- 0.20
+costo_fijo &lt;- 450
+panes &lt;- c(2000, 3000, 4000)   # los tres casos a la vez
+
+ingreso &lt;- precio * panes
+costo_total &lt;- costo_fijo + costo_unitario * panes
+utilidad &lt;- ingreso - costo_total
+ingreso
+costo_total
+utilidad
+utilidad &gt; 0
+punto_equilibrio &lt;- costo_fijo / (precio - costo_unitario)
+punto_equilibrio</code></pre>
+<pre class="salida"><code>[1]  700 1050 1400
+[1]  850 1050 1250
+[1] -150    0  150
+[1] FALSE FALSE  TRUE
+[1] 3000</code></pre>
+      <p><strong>Verificación:</strong> con 3000 panes la utilidad es exactamente 0, que es la definición del punto de equilibrio: los dos resultados se confirman entre sí. Usar un vector con los tres casos prueba todo de una vez.</p>
+      <div class="box ojo"><span class="box-title">Si en tu RStudio ves -1.136868e-13</span><p>Puede pasar si calculas en otro orden: 0.35 y 0.20 no se guardan exactos en binario. Es un error de redondeo de la máquina, no de lógica; <code>round(utilidad, 2)</code> lo muestra como 0.</p></div>
+    </div></details>
+    <ul class="check"><li><input type="checkbox" id="s1-pr1" data-track="s1-pr1"><label for="s1-pr1">Resuelto y probado con todos los casos</label></li></ul>
+  </article>
+
+  <article class="ejercicio problema">
+    <header><h3>P2 · Índice de precios de una canasta</h3><span class="nivel">vectores y funciones · ★★★</span><span class="ia sin">Sin IA</span></header>
+    <div class="cuerpo">
+      <p>Una canasta tiene 4 productos. Sus precios en 2024 fueron <code>c(1.10, 0.85, 2.40, 3.00)</code> y en 2025 <code>c(1.20, 0.90, 2.40, 3.30)</code>. Calcula: (a) el costo de la canasta en cada año, (b) el índice de la canasta (2024 = 100) con un decimal, (c) la variación porcentual de cada producto con un decimal y (d) si todos los productos subieron o se mantuvieron (una sola respuesta <code>TRUE</code>/<code>FALSE</code> no es necesaria todavía: basta un vector lógico).</p>
+      <p><strong>Tu script debe cumplir estos casos de prueba:</strong></p>
+      <div class="table-wrap"><table><thead><tr><th>Resultado</th><th>Valor esperado</th></tr></thead><tbody>
+        <tr><td>Costo canasta 2024 / 2025</td><td>7.35 / 7.80</td></tr>
+        <tr><td>Índice 2025</td><td>106.1</td></tr>
+        <tr><td>Variación % por producto</td><td>9.1, 5.9, 0.0, 10.0</td></tr>
+        <tr><td><code>precios_2025 &gt;= precios_2024</code></td><td>TRUE TRUE TRUE TRUE</td></tr>
+      </tbody></table></div>
+    </div>
+    <details><summary>Pista</summary><div class="det"><p>El costo de la canasta es <code>sum()</code> de los precios. La variación porcentual de cada producto es vectorizada: <code>(nuevo - viejo) / viejo * 100</code>, sin ciclos.</p></div></details>
+    <details class="solucion"><summary>Solución</summary><div class="det">
+<pre data-file="canasta.R"><code class="language-r">precios_2024 &lt;- c(1.10, 0.85, 2.40, 3.00)
+precios_2025 &lt;- c(1.20, 0.90, 2.40, 3.30)
+canasta_2024 &lt;- sum(precios_2024)
+canasta_2025 &lt;- sum(precios_2025)
+canasta_2024
+canasta_2025
+round(canasta_2025 / canasta_2024 * 100, digits = 1)
+round((precios_2025 - precios_2024) / precios_2024 * 100, digits = 1)
+precios_2025 &gt;= precios_2024</code></pre>
+<pre class="salida"><code>[1] 7.35
+[1] 7.8
+[1] 106.1
+[1]  9.1  5.9  0.0 10.0
+[1] TRUE TRUE TRUE TRUE</code></pre>
+      <p><strong>Interpretación:</strong> la canasta cuesta 6.1 % más, aunque un producto no subió y otro subió 10 %. El índice resume, pero esconde la dispersión: por eso conviene mirar ambos.</p>
+      <p><strong>Verificación:</strong> 7.80 / 7.35 = 1.0612…, que coincide con 106.1. R imprime <code>7.8</code> sin el cero final: es el mismo número.</p>
+    </div></details>
+    <ul class="check"><li><input type="checkbox" id="s1-pr2" data-track="s1-pr2"><label for="s1-pr2">Resuelto y probado con todos los casos</label></li></ul>
+  </article>
+
+  <article class="ejercicio problema">
+    <header><h3>P3 · Proyección con crecimiento compuesto</h3><span class="nivel">operadores y vectores · ★★★</span><span class="ia sin">Sin IA</span></header>
+    <div class="cuerpo">
+      <p>Una cooperativa vende $12,000 al mes y espera crecer 3 % mensual. Proyecta las ventas de los próximos 3 meses con crecimiento <strong>compuesto</strong> (cada mes crece sobre el anterior), redondeadas a dos decimales, y el total de los 3 meses. Compara con un crecimiento <strong>simple</strong> (siempre 3 % sobre los $12,000 iniciales).</p>
+      <p><strong>Tu script debe cumplir estos casos de prueba:</strong></p>
+      <div class="table-wrap"><table><thead><tr><th>Mes</th><th class="num">Compuesto</th><th class="num">Simple</th></tr></thead><tbody>
+        <tr><td>1</td><td class="num">12360.00</td><td class="num">12360</td></tr>
+        <tr><td>2</td><td class="num">12730.80</td><td class="num">12720</td></tr>
+        <tr><td>3</td><td class="num">13112.72</td><td class="num">13080</td></tr>
+        <tr><td>Total</td><td class="num">38203.52</td><td class="num">38160</td></tr>
+      </tbody></table></div>
+    </div>
+    <details><summary>Pista</summary><div class="det"><p>Compuesto: <code>ventas * (1 + tasa) ^ mes</code>. Simple: <code>ventas * (1 + tasa * mes)</code>. Si <code>meses &lt;- c(1, 2, 3)</code>, ambas fórmulas son vectorizadas.</p></div></details>
+    <details class="solucion"><summary>Solución</summary><div class="det">
+<pre data-file="proyeccion_compuesta.R"><code class="language-r">ventas &lt;- 12000
+tasa &lt;- 0.03
+meses &lt;- c(1, 2, 3)
+compuesto &lt;- round(ventas * (1 + tasa) ^ meses, digits = 2)
+simple &lt;- ventas * (1 + tasa * meses)
+compuesto
+simple
+sum(compuesto)
+sum(simple)</code></pre>
+<pre class="salida"><code>[1] 12360.00 12730.80 13112.72
+[1] 12360 12720 13080
+[1] 38203.52
+[1] 38160</code></pre>
+      <p><strong>Interpretación:</strong> la diferencia en tres meses es de $43.52; parece poco, pero crece con el tiempo porque el compuesto aplica el 3 % también a lo que ya creció.</p>
+      <p><strong>Verificación:</strong> mes 1: 12000 × 1.03 = 12360 en ambos (deben coincidir). Mes 2 compuesto: 12360 × 1.03 = 12730.80.</p>
+    </div></details>
+    <ul class="check"><li><input type="checkbox" id="s1-pr3" data-track="s1-pr3"><label for="s1-pr3">Resuelto y probado con todos los casos</label></li></ul>
+  </article>
+</section>
+
+<section id="proyecto">
+  <h2>Proyecto grupal · Fase 1</h2>
+  <p><strong>Semana 1 · Formación de equipos, elección de tema y datos.</strong> El proyecto vale el 20 % de la nota, se hace en equipos de 4 y se construye durante todo el ciclo. Debe empezar con <strong>preguntas</strong>, no con gráficos.</p>
+  <div class="card">
+    <h3>Entregables de esta fase</h3>
+    <ul class="check">
+      <li><input type="checkbox" id="s1-p1" data-track="s1-p1"><label for="s1-p1"><strong>Equipo de 4</strong> formado (se permiten equipos mixtos entre secciones).</label></li>
+      <li><input type="checkbox" id="s1-p2" data-track="s1-p2"><label for="s1-p2"><strong>Tema</strong> dentro de economía, negocios, finanzas o fenómenos sociales (precios, empleo, ventas, desigualdad, comercio…).</label></li>
+      <li><input type="checkbox" id="s1-p3" data-track="s1-p3"><label for="s1-p3"><strong>Una pregunta principal</strong> tentativa y 3 a 5 secundarias, concretas y respondibles con datos.</label></li>
+      <li><input type="checkbox" id="s1-p4" data-track="s1-p4"><label for="s1-p4"><strong>Fuente de datos candidata</strong> (del docente o pública y confiable).</label></li>
+      <li><input type="checkbox" id="s1-p5" data-track="s1-p5"><label for="s1-p5">Un <strong>script</strong> del equipo con el vector del ejercicio E5.</label></li>
+    </ul>
+  </div>
+  <p>Ejemplo de preguntas que da el programa: <em>¿Cómo se relacionan las características educativas y laborales con los ingresos de las personas de la muestra?</em> (principal) y <em>¿Cómo se distribuyen los ingresos? ¿Existen diferencias de ingreso entre niveles educativos?</em> (secundarias).</p>
+  <h3>Preguntas de defensa (practica en voz alta)</h3>
+  <p>El docente puede preguntar a cualquier integrante sobre cualquier parte del trabajo. Empieza a practicar desde ya:</p>
+  <details class="defensa"><summary>¿Qué problema quieren entender y quién tomaría decisiones con su análisis?</summary><div><p>Responde con un usuario concreto (“la alcaldía”, “una cadena de tiendas”), una decisión concreta (“dónde abrir una sucursal”) y la pregunta principal. Un proyecto que solo “analiza una base” sin preguntas queda en el nivel insuficiente de la rúbrica.</p></div></details>
+  <details class="defensa"><summary>¿Por qué trabajan en un script y no en la consola?</summary><div><p>Porque el script conserva cada paso en orden y se puede volver a ejecutar completo cuando cambian los datos; así otro integrante puede reproducir y revisar el análisis. La consola no deja un procedimiento reproducible.</p></div></details>
+  <details class="defensa"><summary>¿Qué hace exactamente <code>&lt;-</code> en <code>ingresos &lt;- c(...)</code>?</summary><div><p>Evalúa lo de la derecha y lo guarda en un objeto con el nombre de la izquierda. No imprime nada y no crea una fórmula viva: si los datos cambian, hay que volver a ejecutar las líneas que dependen de ese objeto.</p></div></details>
+  <details class="defensa"><summary>¿Por qué sus objetos se llaman como se llaman?</summary><div><p>Porque el nombre documenta qué representa cada valor (<code>ingreso_mensual_usd</code>, no <code>x</code>) y el <code>snake_case</code> en minúsculas evita errores de “objeto no encontrado” por mayúsculas.</p></div></details>
+  <details class="defensa"><summary>¿Cómo sabrían que un cálculo del script es correcto?</summary><div><p>Comprobándolo a mano con un caso pequeño, comparando con un resultado que ya conocen y revisando que el orden de magnitud tenga sentido (un margen no puede ser 260 %). Que el código corra sin errores no demuestra que el análisis sea correcto.</p></div></details>
+</section>
+
+<section id="evaluacion">
+  <h2>Rumbo al Control 01</h2>
+  <p>El Control 01 cubre las semanas 1 a 3. Su material de repaso está en la <a href="../control-01/guia/index.html">guía de lectura</a> y en el <a href="../control-01/repaso/index.html">repaso con simulacro</a>. En controles y exámenes <strong>no se permite IA</strong>. Esta lista cubre lo de la semana 1:</p>
+  <ul class="check">
+    <li><input type="checkbox" id="s1-v1" data-track="s1-v1"><label for="s1-v1">Puedo explicar la diferencia entre R y RStudio, y entre consola y script.</label></li>
+    <li><input type="checkbox" id="s1-v2" data-track="s1-v2"><label for="s1-v2">Puedo crear objetos con <code>&lt;-</code> y predecir qué pasa si reasigno uno sin volver a ejecutar lo que depende de él.</label></li>
+    <li><input type="checkbox" id="s1-v3" data-track="s1-v3"><label for="s1-v3">Puedo reconocer los tipos <code>numeric</code>, <code>character</code> y <code>logical</code> y comprobarlos con <code>class()</code>.</label></li>
+    <li><input type="checkbox" id="s1-v4" data-track="s1-v4"><label for="s1-v4">Puedo identificar función, argumentos y resultado en una llamada como <code>round(x, digits = 2)</code>.</label></li>
+    <li><input type="checkbox" id="s1-v5" data-track="s1-v5"><label for="s1-v5">Puedo predecir el resultado de una operación vectorizada y resumir un vector con <code>sum()</code>, <code>mean()</code> y <code>length()</code>.</label></li>
+    <li><input type="checkbox" id="s1-v6" data-track="s1-v6"><label for="s1-v6">Puedo leer un mensaje <code>object not found</code> y corregirlo.</label></li>
+  </ul>
+</section>
+
+<section id="cheat">
+  <h2>Cheat Sheet · Semana 1</h2>
+  <h3>Vocabulario</h3>
+  <ul class="vocab"><li>objeto</li><li>asignación</li><li>vector</li><li>función</li><li>argumento</li><li>numeric</li><li>character</li><li>logical</li><li>snake_case</li></ul>
+  <div class="grid">
+    <div class="card">
+      <h3>Funciones y operadores</h3>
+      <div class="table-wrap"><table><tbody>
+        <tr><td><code>&lt;-</code></td><td>Asignar. Siempre con espacios: <code>x &lt;- 5</code>, nunca <code>x&lt;-5</code>.</td></tr>
+        <tr><td><code>c()</code></td><td>Crear un vector combinando valores.</td></tr>
+        <tr><td><code>class()</code></td><td>Ver el tipo de un objeto.</td></tr>
+        <tr><td><code>length()</code></td><td>Contar elementos.</td></tr>
+        <tr><td><code>sum()</code> / <code>mean()</code></td><td>Total / promedio.</td></tr>
+        <tr><td><code>round(x, digits = )</code></td><td>Redondear a <code>digits</code> decimales.</td></tr>
+        <tr><td><code>?nombre</code></td><td>Abrir la documentación oficial de una función.</td></tr>
+        <tr><td><code>#</code></td><td>Comentario: explica el <em>por qué</em>, no el <em>qué</em>.</td></tr>
+      </tbody></table></div>
+    </div>
+    <div class="card">
+      <h3>Operadores</h3>
+      <div class="table-wrap"><table><tbody>
+        <tr><td><code>+ - * /</code></td><td>Aritméticos</td></tr>
+        <tr><td><code>^</code></td><td>Potencia</td></tr>
+        <tr><td><code>%% %/%</code></td><td>Residuo / división entera</td></tr>
+        <tr><td><code>== != &lt; &gt; &lt;= &gt;=</code></td><td>Comparación → <code>TRUE</code>/<code>FALSE</code></td></tr>
+      </tbody></table></div>
+    </div>
+  </div>
+  <h3>La regla del curso</h3>
+  <ul class="ciclo-leyenda" aria-label="Ciclo de trabajo">
+    <li>Pregunta</li><li class="sep">→</li><li>Exploración</li><li class="sep">→</li><li>Implementación</li><li class="sep">→</li><li>Resultado</li><li class="sep">→</li><li>Interpretación</li><li class="sep">→</li><li class="v">Verificación</li>
+  </ul>
+  <p>Cierra siempre con: <strong>¿Cómo sabemos que este resultado es correcto?</strong></p>
+</section>
+
+<section id="fuentes">
+  <h2>Fuentes</h2>
+  <ul>
+    <li><strong>[R4DS]</strong> Wickham, H., Çetinkaya-Rundel, M. y Grolemund, G. (2023). <em>R for Data Science</em>, 2.ª ed. O’Reilly. Cap. 2 “Workflow: basics” (lectura de esta semana) y cap. 4 “Workflow: code style”. Libre en <a href="https://r4ds.hadley.nz/" target="_blank" rel="noopener">r4ds.hadley.nz</a>.</li>
+    <li>Programa oficial del curso (ESEN, 2026): semana 1, “R como herramienta para pensar con datos”.</li>
+    <li>Próxima lectura (semana 2): R4DS cap. 7, “Data import”.</li>
+  </ul>
+  <p style="font-size:.9rem;color:var(--ink-3)">Esta guía resume los temas asignados por el programa del curso; no reproduce el contenido del libro ni cita páginas.</p>
+  <nav class="nav-semanas" aria-label="Navegación entre semanas">
+    <a class="nav-prev" href="../index.html"><span class="btn-ico" aria-hidden="true"></span><span>Inicio</span></a>
+    <a class="nav-next" href="../semana-02/index.html"><span>Semana 2: de valores a conjuntos de datos</span><span class="btn-ico" aria-hidden="true"></span></a>
   </nav>
-
-  <div class="container">
-
-    <section class="block fade-in" id="g-consola">
-      <div class="block-head"><span class="block-num">01</span><h2>Consola y scripts</h2></div>
-      <p>En RStudio hay dos lugares donde puedes escribir código, y confundirlos es el primer error casi universal de quien empieza:</p>
-      <div class="grid-cards">
-        <div class="card" style="--accent:var(--blue)">
-          <div class="card-glow"></div>
-          <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 17l4-4-4-4M12 19h8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Consola</h3>
-          <p>Escribes una instrucción, presionas Enter, R la ejecuta y la olvida. Útil para probar algo rápido o usarla como calculadora, igual que harías con una calculadora de escritorio para verificar una tasa de crecimiento a mano.</p>
-          <div class="exemplo">1 / 200 * 30<br><span style="color:var(--ts)">#&gt; [1] 0.15</span></div>
-        </div>
-        <div class="card" style="--accent:var(--teal)">
-          <div class="card-glow"></div>
-          <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M14 3v4a1 1 0 0 0 1 1h4M6 21h12a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>Script (.R)</h3>
-          <p>Un archivo que guarda cada línea que escribes, en orden. Es tu registro reproducible: si vuelves mañana, o si tu equipo del proyecto grupal necesita repetir tu análisis, el script es lo que hace eso posible. Toda instrucción que quieras conservar va en un script, nunca solo en la consola.</p>
-        </div>
-      </div>
-      <p style="margin-top:18px;color:var(--ts);font-size:.92rem">Regla práctica para este curso: si el resultado te importa para tu proyecto o tu tarea, escríbelo en un script y ejecútalo desde ahí (Cmd/Ctrl + Enter), no lo dejes viviendo solo en la consola.</p>
-    </section>
-
-    <section class="block fade-in" id="g-objetos">
-      <div class="block-head"><span class="block-num">02</span><h2>Objetos y asignación</h2></div>
-      <p>Tu emprendimiento generó $4,200 en enero. Quieres usar ese número más adelante en el mismo script, sin volver a escribirlo ni buscarlo. ¿Qué hace R exactamente cuando escribes <code>ingresos_enero &lt;- 4200</code>? La línea no imprime nada, pero algo sí pasó. Esto es lo que pasó:</p>
-
-      <div class="env-diagram" role="img" aria-label="Diagrama: antes de ejecutar la línea, el ambiente de R está vacío. Después de ejecutar ingresos_enero asignado a 4200, el ambiente contiene un objeto llamado ingresos_enero con el valor 4200.">
-        <div class="env-panel">
-          <span class="env-panel-label">Antes de ejecutar la línea</span>
-          <div class="env-box">
-            <span class="env-box-title">Ambiente de R <span class="env-box-hint">(el panel "Environment" de RStudio)</span></span>
-            <div class="env-empty">vacío, todavía no existe ningún objeto</div>
-          </div>
-        </div>
-        <div class="env-arrow" aria-hidden="true">
-          <svg width="30" height="20" viewBox="0 0 40 24" fill="none"><path d="M2 12h32m0 0l-8-8m8 8l-8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <span class="env-arrow-label">R evalúa <code>4200</code> y lo guarda</span>
-        </div>
-        <div class="env-panel">
-          <span class="env-panel-label">Después de <code>ingresos_enero &lt;- 4200</code></span>
-          <div class="env-box env-box-filled">
-            <span class="env-box-title">Ambiente de R</span>
-            <div class="env-entry">
-              <span class="env-entry-name">ingresos_enero</span>
-              <span class="env-entry-arrow">→</span>
-              <span class="env-entry-value" id="envValue">4200</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="toy-eval">
-        <div class="toy-eval-head">
-          <span class="toy-eval-flag">Simulación en JavaScript, no ejecución real de R</span>
-          <p>Cambia el valor y mira qué pasa en el ambiente y en la consola.</p>
-        </div>
-        <div class="toy-eval-controls">
-          <div>
-            <label for="toyValue">Nuevo valor de <code>ingresos_enero</code></label>
-            <div class="toy-eval-row">
-              <input type="number" id="toyValue" value="4200" step="1" inputmode="decimal">
-              <button type="button" class="toy-eval-btn" id="toyAssignBtn">Asignar</button>
-            </div>
-          </div>
-        </div>
-        <div class="toy-eval-console" id="toyConsole" aria-live="polite">
-          <div class="te-line"><span class="c-fn">ingresos_enero</span> <span class="c-op">&lt;-</span> <span class="c-num">4200</span></div>
-          <div class="te-line"><span class="c-fn">ingresos_enero</span></div>
-          <div class="te-line c-out">#&gt; [1] 4200</div>
-        </div>
-      </div>
-
-      <p>Fíjate en algo importante: la primera línea <b>no imprimió nada</b>, ni antes ni ahora que cambiaste el valor arriba. R evaluó el número, lo guardó bajo el nombre <code>ingresos_enero</code> y se quedó en silencio, exactamente como en el diagrama. Solo cuando escribes el nombre del objeto solo, en su propia línea, R busca esa caja y te muestra lo que hay adentro.</p>
-      <p style="color:var(--ts);font-size:.92rem">Se crea con el operador de asignación <code>&lt;-</code>, no con <code>=</code> (ver <a href="#g-tabla">por qué, en la tabla de estilo</a>). Atajo en RStudio: Alt/Option + guion (<code>-</code>) escribe <code>&lt;-</code> con los espacios correctos automáticamente. Úsalo desde ya: es el hábito que más tiempo te ahorra en todo el curso.</p>
-    </section>
-
-    <section class="block fade-in" id="g-tipos">
-      <div class="block-head"><span class="block-num">03</span><h2>Tipos de datos</h2></div>
-      <p>No todos los valores son iguales para R. El tipo no es algo que tú declares aparte: viaja pegado al valor desde el momento en que lo creas, como una etiqueta.</p>
-      <div class="cpanel">
-        <div class="cpanel-cap">El tipo es una propiedad del valor, no un paso extra</div>
-        <div class="type-tag-row">
-          <div class="type-tag">
-            <span class="type-tag-pin" style="color:var(--amber);border-color:rgba(245,166,35,.4)">numeric</span>
-            <div class="cbox">3.75</div>
-          </div>
-          <div class="type-tag">
-            <span class="type-tag-pin" style="color:var(--green);border-color:rgba(52,211,153,.4)">character</span>
-            <div class="cbox">"comercio"</div>
-          </div>
-          <div class="type-tag">
-            <span class="type-tag-pin" style="color:var(--violet);border-color:rgba(167,139,250,.4)">logical</span>
-            <div class="cbox">TRUE</div>
-          </div>
-        </div>
-      </div>
-      <figure class="concept-figure">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 640" width="100%" height="100%" role="img" aria-labelledby="tdtitle tddesc">
-          <title id="tdtitle">Tipos de Datos en R — Valor con Etiqueta Física</title>
-          <desc id="tddesc">Tres valores distintos (número, texto, interruptor lógico) cada uno con su etiqueta de tipo pegada: numeric, character y logical.</desc>
-          <defs>
-            <pattern id="grid-pattern-td" width="40" height="40" patternUnits="userSpaceOnUse">
-              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#4c9aff" stroke-width="1" stroke-opacity="0.04" />
-            </pattern>
-            <linearGradient id="card-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#182645" stop-opacity="0.9" />
-              <stop offset="100%" stop-color="#111a30" stop-opacity="0.9" />
-            </linearGradient>
-            <radialGradient id="amber-glow" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stop-color="#f5a623" stop-opacity="0.25" />
-              <stop offset="100%" stop-color="#f5a623" stop-opacity="0" />
-            </radialGradient>
-            <radialGradient id="green-glow" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stop-color="#34d399" stop-opacity="0.25" />
-              <stop offset="100%" stop-color="#34d399" stop-opacity="0" />
-            </radialGradient>
-            <radialGradient id="violet-glow" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stop-color="#a78bfa" stop-opacity="0.25" />
-              <stop offset="100%" stop-color="#a78bfa" stop-opacity="0" />
-            </radialGradient>
-          </defs>
-          <rect width="960" height="640" fill="#0a0f1c" />
-          <rect width="960" height="640" fill="url(#grid-pattern-td)" />
-          <g fill="none" stroke-linecap="round">
-            <line x1="80" y1="320" x2="880" y2="320" stroke="#4c9aff" stroke-opacity="0.07" stroke-width="1" stroke-dasharray="4 8" />
-            <circle cx="200" cy="320" r="140" stroke="#f5a623" stroke-opacity="0.05" stroke-width="1.5" stroke-dasharray="4 12" />
-            <circle cx="480" cy="320" r="140" stroke="#34d399" stroke-opacity="0.05" stroke-width="1.5" stroke-dasharray="4 12" />
-            <circle cx="760" cy="320" r="140" stroke="#a78bfa" stroke-opacity="0.05" stroke-width="1.5" stroke-dasharray="4 12" />
-          </g>
-          <g transform="translate(90, 160)">
-            <circle cx="110" cy="160" r="120" fill="url(#amber-glow)" />
-            <rect width="220" height="320" rx="22" fill="url(#card-grad)" stroke="#f5a623" stroke-opacity="0.3" stroke-width="1.5" />
-            <rect x="2" y="2" width="216" height="5" rx="2.5" fill="#f5a623" />
-            <g transform="translate(110, 95)">
-              <circle cx="0" cy="0" r="48" fill="#111a30" stroke="#f5a623" stroke-width="3" />
-              <circle cx="0" cy="0" r="40" fill="#182645" stroke="#f5a623" stroke-opacity="0.4" stroke-width="1.5" stroke-dasharray="3 5" />
-              <text x="0" y="9" fill="#f5a623" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="26" font-weight="800" text-anchor="middle" letter-spacing="-1">42.5</text>
-              <circle cx="28" cy="-28" r="3" fill="#f5a623" />
-            </g>
-            <path d="M 138 128 C 150 160 140 180 125 195" fill="none" stroke="#f5a623" stroke-width="2" stroke-dasharray="4 3" stroke-linecap="round" />
-            <circle cx="138" cy="128" r="3.5" fill="#f5a623" />
-            <g transform="translate(38, 205)">
-              <path d="M 18 0 L 132 0 C 138 0 144 6 144 12 L 144 48 C 144 54 138 60 132 60 L 18 60 C 10 60 0 48 0 30 C 0 12 10 0 18 0 Z" fill="#0a0f1c" stroke="#f5a623" stroke-width="2" />
-              <circle cx="15" cy="30" r="5" fill="#111a30" stroke="#f5a623" stroke-width="1.5" />
-              <circle cx="15" cy="30" r="2" fill="#0a0f1c" />
-              <text x="80" y="36" fill="#f5a623" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="16" font-weight="700" text-anchor="middle" letter-spacing="1">numeric</text>
-            </g>
-          </g>
-          <g transform="translate(370, 160)">
-            <circle cx="110" cy="160" r="120" fill="url(#green-glow)" />
-            <rect width="220" height="320" rx="22" fill="url(#card-grad)" stroke="#34d399" stroke-opacity="0.3" stroke-width="1.5" />
-            <rect x="2" y="2" width="216" height="5" rx="2.5" fill="#34d399" />
-            <g transform="translate(110, 95)">
-              <rect x="-65" y="-36" width="130" height="72" rx="16" fill="#111a30" stroke="#34d399" stroke-width="3" />
-              <rect x="-57" y="-28" width="114" height="56" rx="10" fill="#182645" stroke="#34d399" stroke-opacity="0.3" stroke-width="1" />
-              <text x="0" y="9" fill="#edf1fa" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="21" font-weight="700" text-anchor="middle">
-                <tspan fill="#34d399" font-size="24">“</tspan>ESEN<tspan fill="#34d399" font-size="24">”</tspan>
-              </text>
-              <circle cx="50" cy="-20" r="3" fill="#34d399" />
-            </g>
-            <path d="M 148 120 C 158 155 145 178 128 195" fill="none" stroke="#34d399" stroke-width="2" stroke-dasharray="4 3" stroke-linecap="round" />
-            <circle cx="148" cy="120" r="3.5" fill="#34d399" />
-            <g transform="translate(38, 205)">
-              <path d="M 18 0 L 132 0 C 138 0 144 6 144 12 L 144 48 C 144 54 138 60 132 60 L 18 60 C 10 60 0 48 0 30 C 0 12 10 0 18 0 Z" fill="#0a0f1c" stroke="#34d399" stroke-width="2" />
-              <circle cx="15" cy="30" r="5" fill="#111a30" stroke="#34d399" stroke-width="1.5" />
-              <circle cx="15" cy="30" r="2" fill="#0a0f1c" />
-              <text x="80" y="36" fill="#34d399" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="14.5" font-weight="700" text-anchor="middle" letter-spacing="0.5">character</text>
-            </g>
-          </g>
-          <g transform="translate(650, 160)">
-            <circle cx="110" cy="160" r="120" fill="url(#violet-glow)" />
-            <rect width="220" height="320" rx="22" fill="url(#card-grad)" stroke="#a78bfa" stroke-opacity="0.3" stroke-width="1.5" />
-            <rect x="2" y="2" width="216" height="5" rx="2.5" fill="#a78bfa" />
-            <g transform="translate(110, 95)">
-              <rect x="-60" y="-30" width="120" height="60" rx="30" fill="#0a0f1c" stroke="#a78bfa" stroke-width="3" />
-              <circle cx="-32" cy="0" r="4" fill="#182645" stroke="#a78bfa" stroke-opacity="0.4" stroke-width="1.5" />
-              <circle cx="28" cy="0" r="22" fill="#a78bfa" />
-              <circle cx="28" cy="0" r="15" fill="#111a30" stroke="#a78bfa" stroke-width="2" />
-              <text x="28" y="6" fill="#a78bfa" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="16" font-weight="800" text-anchor="middle">T</text>
-              <circle cx="48" cy="-22" r="3" fill="#a78bfa" />
-            </g>
-            <path d="M 148 118 C 158 152 145 178 128 195" fill="none" stroke="#a78bfa" stroke-width="2" stroke-dasharray="4 3" stroke-linecap="round" />
-            <circle cx="148" cy="118" r="3.5" fill="#a78bfa" />
-            <g transform="translate(38, 205)">
-              <path d="M 18 0 L 132 0 C 138 0 144 6 144 12 L 144 48 C 144 54 138 60 132 60 L 18 60 C 10 60 0 48 0 30 C 0 12 10 0 18 0 Z" fill="#0a0f1c" stroke="#a78bfa" stroke-width="2" />
-              <circle cx="15" cy="30" r="5" fill="#111a30" stroke="#a78bfa" stroke-width="1.5" />
-              <circle cx="15" cy="30" r="2" fill="#0a0f1c" />
-              <text x="80" y="36" fill="#a78bfa" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="16" font-weight="700" text-anchor="middle" letter-spacing="1">logical</text>
-            </g>
-          </g>
-          <g transform="translate(90, 520)">
-            <line x1="0" y1="0" x2="780" y2="0" stroke="#4c9aff" stroke-opacity="0.2" stroke-width="1.5" stroke-dasharray="6 8" />
-            <circle cx="390" cy="0" r="4" fill="#4c9aff" fill-opacity="0.6" />
-          </g>
-        </svg>
-        <figcaption>Ilustración de apoyo (generada con asistencia de IA): cada valor lleva su tipo pegado, como una etiqueta física — <b>numeric</b>, <b>character</b> y <b>logical</b> son las tres etiquetas de esta semana.</figcaption>
-      </figure>
-      <p>Los tres tipos que necesitas esta semana:</p>
-      <div class="grid-cards">
-        <div class="card" style="--accent:var(--amber)">
-          <div class="card-glow"></div>
-          <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h10M4 18h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>numeric</h3>
-          <p>Cualquier número, con o sin decimales. Ingresos, precios, tasas de crecimiento, cantidades.</p>
-          <div class="exemplo"><span class="c-fn">precio_dolar</span> <span class="c-op">&lt;-</span> <span class="c-num">3.75</span></div>
-        </div>
-        <div class="card" style="--accent:var(--green)">
-          <div class="card-glow"></div>
-          <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 7V5a1 1 0 0 1 1-1h3m9 0h3a1 1 0 0 1 1 1v2M4 17v2a1 1 0 0 0 1 1h3m9 0h3a1 1 0 0 0 1-1v-2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>character</h3>
-          <p>Texto, siempre entre comillas. Nombres de países, categorías, sectores económicos.</p>
-          <div class="exemplo"><span class="c-fn">sector</span> <span class="c-op">&lt;-</span> <span class="c-str">"comercio"</span></div>
-        </div>
-        <div class="card" style="--accent:var(--violet)">
-          <div class="card-glow"></div>
-          <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4m5 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" stroke="currentColor" stroke-width="1.6"/></svg>logical</h3>
-          <p>Solo dos valores posibles: <code>TRUE</code> o <code>FALSE</code>. Resultado natural de una pregunta de comparación.</p>
-          <div class="exemplo"><span class="c-fn">hubo_crecimiento</span> <span class="c-op">&lt;-</span> <span class="c-kw">TRUE</span></div>
-        </div>
-      </div>
-      <p style="margin-top:16px;color:var(--ts);font-size:.92rem">¿Cómo saber el tipo de un objeto que ya creaste? <code>class(precio_dolar)</code> te lo dice: lo verás en el Playground de esta semana.</p>
-    </section>
-
-    <section class="block fade-in" id="g-operadores">
-      <div class="block-head"><span class="block-num">04</span><h2>Operadores</h2></div>
-      <div class="cpanel">
-        <div class="cpanel-cap"><b>Aritméticos</b>: dos números entran, un número sale</div>
-        <div class="cflow">
-          <div class="cbox">ingresos_enero: 4200</div>
-          <span class="cop">−</span>
-          <div class="cbox">costos_enero: 3100</div>
-          <span class="carrow"><svg width="20" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 12h14m0 0l-5-5m5 5l-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          <div class="cbox accent">utilidad: 1100</div>
-        </div>
-        <div class="cpanel-cap" style="margin-top:18px"><b>De comparación</b>: dos valores entran, un <code>TRUE</code>/<code>FALSE</code> sale</div>
-        <div class="cflow">
-          <div class="cbox">utilidad: 1100</div>
-          <span class="cop">&gt;</span>
-          <div class="cbox">0</div>
-          <span class="carrow"><svg width="20" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 12h14m0 0l-5-5m5 5l-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          <span class="cbool t">TRUE</span>
-        </div>
-      </div>
-      <figure class="concept-figure">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 640" width="100%" height="100%" role="img" aria-labelledby="actitle acdesc">
-          <title id="actitle">Aritmética vs Comparación en R</title>
-          <desc id="acdesc">Aritmética: dos números entran y sale un número. Comparación: dos valores entran y sale un valor lógico (TRUE/FALSE).</desc>
-          <defs>
-            <pattern id="grid-pattern-ac" width="40" height="40" patternUnits="userSpaceOnUse">
-              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#4c9aff" stroke-width="1" stroke-opacity="0.04" />
-            </pattern>
-            <linearGradient id="panel-grad-ac" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#182645" stop-opacity="0.85" />
-              <stop offset="100%" stop-color="#111a30" stop-opacity="0.85" />
-            </linearGradient>
-            <linearGradient id="arrow-grad-ar" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="#f5a623" />
-              <stop offset="100%" stop-color="#4c9aff" />
-            </linearGradient>
-            <linearGradient id="arrow-grad-cp" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="#2dd4bf" />
-              <stop offset="100%" stop-color="#34d399" />
-            </linearGradient>
-            <radialGradient id="true-glow" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stop-color="#34d399" stop-opacity="0.9" />
-              <stop offset="60%" stop-color="#34d399" stop-opacity="0.4" />
-              <stop offset="100%" stop-color="#34d399" stop-opacity="0" />
-            </radialGradient>
-          </defs>
-          <rect width="960" height="640" fill="#0a0f1c" />
-          <rect width="960" height="640" fill="url(#grid-pattern-ac)" />
-          <g fill="none" stroke-linecap="round">
-            <line x1="480" y1="50" x2="480" y2="590" stroke="#4c9aff" stroke-opacity="0.18" stroke-width="1.5" stroke-dasharray="4 8" />
-            <circle cx="480" cy="320" r="16" fill="#0a0f1c" stroke="#4c9aff" stroke-opacity="0.3" stroke-width="1.5" />
-            <circle cx="480" cy="320" r="4" fill="#4c9aff" fill-opacity="0.7" />
-          </g>
-          <g transform="translate(48, 70)">
-            <rect width="404" height="500" rx="24" fill="url(#panel-grad-ac)" stroke="#4c9aff" stroke-opacity="0.28" stroke-width="1.5" />
-            <rect x="2" y="2" width="400" height="5" rx="2.5" fill="#4c9aff" />
-            <g transform="translate(24, 28)">
-              <rect width="110" height="26" rx="6" fill="#0a0f1c" stroke="#4c9aff" stroke-opacity="0.35" />
-              <circle cx="14" cy="13" r="3.5" fill="#4c9aff" />
-              <text x="64" y="18" fill="#4c9aff" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700" text-anchor="middle" letter-spacing="1">ARITMÉTICA</text>
-            </g>
-            <g transform="translate(72, 140)">
-              <circle cx="0" cy="0" r="34" fill="#111a30" stroke="#f5a623" stroke-width="2.5" />
-              <circle cx="0" cy="0" r="28" fill="#182645" stroke="#f5a623" stroke-opacity="0.3" stroke-dasharray="3 4" />
-              <text x="0" y="7" fill="#f5a623" font-family="'JetBrains Mono', monospace" font-size="20" font-weight="800" text-anchor="middle">8</text>
-            </g>
-            <g transform="translate(72, 280)">
-              <circle cx="0" cy="0" r="34" fill="#111a30" stroke="#f5a623" stroke-width="2.5" />
-              <circle cx="0" cy="0" r="28" fill="#182645" stroke="#f5a623" stroke-opacity="0.3" stroke-dasharray="3 4" />
-              <text x="0" y="7" fill="#f5a623" font-family="'JetBrains Mono', monospace" font-size="20" font-weight="800" text-anchor="middle">3</text>
-            </g>
-            <g fill="none" stroke-linecap="round">
-              <path d="M 108 140 C 145 140 148 210 172 210" stroke="#f5a623" stroke-width="2.5" stroke-dasharray="4 4" />
-              <path d="M 108 280 C 145 280 148 210 172 210" stroke="#f5a623" stroke-width="2.5" stroke-dasharray="4 4" />
-            </g>
-            <g transform="translate(196, 210)">
-              <circle cx="0" cy="0" r="25" fill="#0a0f1c" stroke="#4c9aff" stroke-width="2.5" />
-              <path d="M -8 0 H 8 M 0 -8 V 8" stroke="#4c9aff" stroke-width="3" stroke-linecap="round" />
-            </g>
-            <g transform="translate(221, 210)">
-              <line x1="0" y1="0" x2="48" y2="0" stroke="url(#arrow-grad-ar)" stroke-width="3" stroke-linecap="round" />
-              <polygon points="44,-6 56,0 44,6" fill="#4c9aff" />
-            </g>
-            <g transform="translate(324, 210)">
-              <circle cx="0" cy="0" r="46" fill="#4c9aff" fill-opacity="0.08" />
-              <circle cx="0" cy="0" r="38" fill="#111a30" stroke="#4c9aff" stroke-width="3" />
-              <circle cx="0" cy="0" r="31" fill="#182645" stroke="#4c9aff" stroke-opacity="0.4" stroke-dasharray="3 4" />
-              <text x="0" y="8" fill="#4c9aff" font-family="'JetBrains Mono', monospace" font-size="22" font-weight="800" text-anchor="middle">11</text>
-            </g>
-            <g transform="translate(36, 420)">
-              <rect width="332" height="46" rx="12" fill="#0a0f1c" stroke="#4c9aff" stroke-opacity="0.25" />
-              <text x="166" y="28" fill="#8792ae" font-family="'JetBrains Mono', monospace" font-size="13" font-weight="600" text-anchor="middle">
-                número <tspan fill="#4c9aff">+</tspan> número <tspan fill="#4c9aff">→</tspan> <tspan fill="#4c9aff" font-weight="800">número</tspan>
-              </text>
-            </g>
-          </g>
-          <g transform="translate(508, 70)">
-            <rect width="404" height="500" rx="24" fill="url(#panel-grad-ac)" stroke="#2dd4bf" stroke-opacity="0.28" stroke-width="1.5" />
-            <rect x="2" y="2" width="400" height="5" rx="2.5" fill="#2dd4bf" />
-            <g transform="translate(24, 28)">
-              <rect width="124" height="26" rx="6" fill="#0a0f1c" stroke="#2dd4bf" stroke-opacity="0.35" />
-              <circle cx="14" cy="13" r="3.5" fill="#2dd4bf" />
-              <text x="70" y="18" fill="#2dd4bf" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700" text-anchor="middle" letter-spacing="1">COMPARACIÓN</text>
-            </g>
-            <g transform="translate(72, 140)">
-              <circle cx="0" cy="0" r="34" fill="#111a30" stroke="#f5a623" stroke-width="2.5" />
-              <circle cx="0" cy="0" r="28" fill="#182645" stroke="#f5a623" stroke-opacity="0.3" stroke-dasharray="3 4" />
-              <text x="0" y="7" fill="#f5a623" font-family="'JetBrains Mono', monospace" font-size="20" font-weight="800" text-anchor="middle">8</text>
-            </g>
-            <g transform="translate(72, 280)">
-              <circle cx="0" cy="0" r="34" fill="#111a30" stroke="#f5a623" stroke-width="2.5" />
-              <circle cx="0" cy="0" r="28" fill="#182645" stroke="#f5a623" stroke-opacity="0.3" stroke-dasharray="3 4" />
-              <text x="0" y="7" fill="#f5a623" font-family="'JetBrains Mono', monospace" font-size="20" font-weight="800" text-anchor="middle">3</text>
-            </g>
-            <g fill="none" stroke-linecap="round">
-              <path d="M 108 140 C 145 140 148 210 172 210" stroke="#f5a623" stroke-width="2.5" stroke-dasharray="4 4" />
-              <path d="M 108 280 C 145 280 148 210 172 210" stroke="#f5a623" stroke-width="2.5" stroke-dasharray="4 4" />
-            </g>
-            <g transform="translate(196, 210)">
-              <circle cx="0" cy="0" r="25" fill="#0a0f1c" stroke="#2dd4bf" stroke-width="2.5" />
-              <path d="M -5 -8 L 5 0 L -5 8" fill="none" stroke="#2dd4bf" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
-            </g>
-            <g transform="translate(221, 210)">
-              <line x1="0" y1="0" x2="48" y2="0" stroke="url(#arrow-grad-cp)" stroke-width="3" stroke-linecap="round" />
-              <polygon points="44,-6 56,0 44,6" fill="#34d399" />
-            </g>
-            <g transform="translate(324, 210)">
-              <rect x="-24" y="-54" width="48" height="108" rx="24" fill="#0a0f1c" stroke="#34d399" stroke-width="2.5" />
-              <circle cx="0" cy="-27" r="26" fill="url(#true-glow)" />
-              <circle cx="0" cy="-27" r="16" fill="#34d399" />
-              <circle cx="0" cy="-27" r="10" fill="#edf1fa" fill-opacity="0.85" />
-              <line x1="-14" y1="0" x2="14" y2="0" stroke="#182645" stroke-width="2" />
-              <circle cx="0" cy="27" r="14" fill="#182645" stroke="#ff6b6b" stroke-opacity="0.35" stroke-width="1.5" />
-              <circle cx="0" cy="27" r="5" fill="#111a30" />
-              <g transform="translate(0, 72)">
-                <rect x="-32" y="-12" width="64" height="24" rx="6" fill="#0a0f1c" stroke="#34d399" stroke-width="1.5" />
-                <text x="0" y="4.5" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="800" text-anchor="middle">TRUE</text>
-              </g>
-            </g>
-            <g transform="translate(36, 420)">
-              <rect width="332" height="46" rx="12" fill="#0a0f1c" stroke="#2dd4bf" stroke-opacity="0.25" />
-              <text x="166" y="28" fill="#8792ae" font-family="'JetBrains Mono', monospace" font-size="13" font-weight="600" text-anchor="middle">
-                valor <tspan fill="#2dd4bf">&gt;</tspan> valor <tspan fill="#34d399">→</tspan> <tspan fill="#34d399" font-weight="800">logical</tspan>
-              </text>
-            </g>
-          </g>
-        </svg>
-        <figcaption>Ilustración de apoyo (generada con asistencia de IA): a la izquierda, aritmética (dos números entran, un número sale); a la derecha, comparación (dos valores entran, un <code>TRUE</code>/<code>FALSE</code> sale).</figcaption>
-      </figure>
-      <div class="grid-cards">
-        <div class="card asym" style="--accent:var(--blue)">
-          <div class="card-glow"></div>
-          <h3>Aritméticos</h3>
-          <p>Los mismos que en cualquier calculadora, aplicados a objetos con nombre económico en vez de números sueltos:</p>
-          <div class="exemplo"><span class="c-fn">utilidad</span> <span class="c-op">&lt;-</span> <span class="c-fn">ingresos_enero</span> <span class="c-op">-</span> <span class="c-fn">costos_enero</span>
-<span class="c-cm"># +  -  *  /  ^ (potencia)  %% (residuo)  %/% (división entera)</span></div>
-        </div>
-        <div class="card" style="--accent:var(--coral)">
-          <div class="card-glow"></div>
-          <h3>De comparación</h3>
-          <p>Devuelven <code>TRUE</code> o <code>FALSE</code>. Base de cualquier filtro que harás desde la Semana 04.</p>
-          <div class="exemplo"><span class="c-fn">utilidad</span> <span class="c-op">&gt;</span> <span class="c-num">0</span>
-<span class="c-cm"># ==  !=  &lt;  &gt;  &lt;=  &gt;=</span></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="block fade-in" id="g-funciones">
-      <div class="block-head"><span class="block-num">05</span><h2>Funciones y argumentos</h2></div>
-      <p>Una función es una instrucción con nombre que recibe <b>argumentos</b> (entre paréntesis) y devuelve un resultado. Sintaxis general:</p>
-      <div class="code"><span class="c-fn">nombre_funcion</span>(<span class="c-op">argumento1</span> <span class="c-op">=</span> valor1, <span class="c-op">argumento2</span> <span class="c-op">=</span> valor2)</div>
-      <p>Ejemplo con <code>round()</code>, que redondea un número: el argumento <code>digits</code> controla a cuántos decimales:</p>
-      <div class="code"><span class="c-fn">round</span>(<span class="c-num">3.14159</span>, digits <span class="c-op">=</span> <span class="c-num">2</span>)
-<span class="c-out">#&gt; [1] 3.14</span></div>
-      <p style="color:var(--ts);font-size:.92rem">No siempre hace falta escribir el nombre del argumento: <code>round(3.14159, 2)</code> funciona igual, porque R sabe que el segundo valor en esa posición es <code>digits</code>. Nombrarlo es más claro cuando la función tiene varios argumentos, hábito que conviene practicar desde ya.</p>
-    </section>
-
-    <section class="block fade-in" id="g-vectores">
-      <div class="block-head"><span class="block-num">06</span><h2>Vectores</h2></div>
-      <p>Un vector es una <b>serie pequeña de observaciones</b> del mismo tipo, guardadas en un solo objeto. Se construye con <code>c()</code> (de "combine"):</p>
-      <div class="code"><span class="c-cm"># ingresos de un pequeño negocio, cuatro meses</span>
-<span class="c-fn">ingresos</span> <span class="c-op">&lt;-</span> <span class="c-fn">c</span>(<span class="c-num">4200</span>, <span class="c-num">4550</span>, <span class="c-num">4100</span>, <span class="c-num">4800</span>)
-<span class="c-fn">ingresos</span>
-<span class="c-out">#&gt; [1] 4200 4550 4100 4800</span></div>
-
-      <div class="cpanel">
-        <div class="cpanel-cap">Las 4 cajas de abajo son <b>un solo objeto</b>, no cuatro objetos sueltos: todas viven bajo el nombre <code>ingresos</code></div>
-        <div class="vec-op-row">
-          <div class="cbox">4200</div><div class="cbox">4550</div><div class="cbox">4100</div><div class="cbox">4800</div>
-        </div>
-        <div class="vec-op-mid">↑ las cuatro juntas, en este orden, son <code>ingresos</code></div>
-      </div>
-      <figure class="concept-figure">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 640" width="100%" height="100%" role="img" aria-labelledby="v1title v1desc">
-          <title id="v1title">Concepto de Vector — Fila de Cajas en R</title>
-          <desc id="v1desc">Cuatro cajas contiguas del mismo tamaño y tono azul con valores numéricos mensuales, unidas como un solo objeto vector.</desc>
-          <defs>
-            <pattern id="grid-pattern-v1" width="40" height="40" patternUnits="userSpaceOnUse">
-              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#4c9aff" stroke-width="1" stroke-opacity="0.035" />
-            </pattern>
-            <linearGradient id="vbox-grad" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stop-color="#182645" />
-              <stop offset="100%" stop-color="#111a30" />
-            </linearGradient>
-          </defs>
-          <rect width="960" height="640" fill="#0a0f1c" />
-          <rect width="960" height="640" fill="url(#grid-pattern-v1)" />
-          <g fill="none" stroke-linecap="round">
-            <line x1="120" y1="275" x2="840" y2="275" stroke="#4c9aff" stroke-opacity="0.08" stroke-width="1" stroke-dasharray="4 8" />
-          </g>
-          <g transform="translate(320, 100)">
-            <rect width="320" height="38" rx="8" fill="#111a30" stroke="#4c9aff" stroke-opacity="0.3" stroke-width="1.5" />
-            <text x="160" y="24" fill="#8792ae" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="14" font-weight="600" text-anchor="middle">
-              <tspan fill="#4c9aff" font-weight="700">ingresos</tspan> <tspan fill="#2dd4bf">&lt;-</tspan> <tspan fill="#4c9aff">c</tspan>(<tspan fill="#edf1fa">4200, 4550, 4100, 4800</tspan>)
-            </text>
-          </g>
-          <g transform="translate(170, 175)">
-            <rect width="620" height="230" rx="20" fill="#111a30" fill-opacity="0.35" stroke="#4c9aff" stroke-opacity="0.5" stroke-width="1.5" stroke-dasharray="6 8" />
-            <g transform="translate(180, 212)">
-              <rect width="260" height="36" rx="8" fill="#0a0f1c" stroke="#4c9aff" stroke-width="1.5" />
-              <circle cx="20" cy="18" r="4" fill="#4c9aff" />
-              <text x="140" y="23" fill="#4c9aff" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="13" font-weight="700" text-anchor="middle" letter-spacing="0.5">un solo objeto: ingresos</text>
-            </g>
-          </g>
-          <g fill="#182645" stroke="#4c9aff" stroke-opacity="0.5" stroke-width="1.5">
-            <rect x="326" y="270" width="20" height="10" rx="2" />
-            <line x1="326" y1="275" x2="346" y2="275" stroke="#4c9aff" stroke-width="2" />
-            <rect x="470" y="270" width="20" height="10" rx="2" />
-            <line x1="470" y1="275" x2="490" y2="275" stroke="#4c9aff" stroke-width="2" />
-            <rect x="614" y="270" width="20" height="10" rx="2" />
-            <line x1="614" y1="275" x2="634" y2="275" stroke="#4c9aff" stroke-width="2" />
-          </g>
-          <g transform="translate(202, 213)">
-            <rect width="124" height="124" rx="16" fill="url(#vbox-grad)" stroke="#4c9aff" stroke-width="2" />
-            <rect x="4" y="3" width="116" height="4" rx="2" fill="#4c9aff" />
-            <text x="14" y="26" fill="#8792ae" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="11" font-weight="600">[1]</text>
-            <text x="62" y="74" fill="#edf1fa" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="24" font-weight="700" text-anchor="middle" letter-spacing="-0.5">4200</text>
-          </g>
-          <g transform="translate(346, 213)">
-            <rect width="124" height="124" rx="16" fill="url(#vbox-grad)" stroke="#4c9aff" stroke-width="2" />
-            <rect x="4" y="3" width="116" height="4" rx="2" fill="#4c9aff" />
-            <text x="14" y="26" fill="#8792ae" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="11" font-weight="600">[2]</text>
-            <text x="62" y="74" fill="#edf1fa" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="24" font-weight="700" text-anchor="middle" letter-spacing="-0.5">4550</text>
-          </g>
-          <g transform="translate(490, 213)">
-            <rect width="124" height="124" rx="16" fill="url(#vbox-grad)" stroke="#4c9aff" stroke-width="2" />
-            <rect x="4" y="3" width="116" height="4" rx="2" fill="#4c9aff" />
-            <text x="14" y="26" fill="#8792ae" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="11" font-weight="600">[3]</text>
-            <text x="62" y="74" fill="#edf1fa" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="24" font-weight="700" text-anchor="middle" letter-spacing="-0.5">4100</text>
-          </g>
-          <g transform="translate(634, 213)">
-            <rect width="124" height="124" rx="16" fill="url(#vbox-grad)" stroke="#4c9aff" stroke-width="2" />
-            <rect x="4" y="3" width="116" height="4" rx="2" fill="#4c9aff" />
-            <text x="14" y="26" fill="#8792ae" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="11" font-weight="600">[4]</text>
-            <text x="62" y="74" fill="#edf1fa" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="24" font-weight="700" text-anchor="middle" letter-spacing="-0.5">4800</text>
-          </g>
-        </svg>
-        <figcaption>Ilustración de apoyo (generada con asistencia de IA): las 4 cajas comparten el mismo tono porque son un solo objeto — <code>ingresos</code> — no cuatro variables sueltas.</figcaption>
-      </figure>
-
-      <p>La aritmética sobre un vector se aplica a <b>cada elemento a la vez</b>: no necesitas un ciclo para esto (ese tema llega en la Semana 09):</p>
-      <div class="code"><span class="c-fn">ingresos</span> <span class="c-op">*</span> <span class="c-num">1.05</span>  <span class="c-cm"># proyección con 5% de crecimiento</span>
-<span class="c-out">#&gt; [1] 4410.0 4777.5 4305.0 5040.0</span></div>
-
-      <div class="cpanel">
-        <div class="cpanel-cap">La misma operación ocurre en las 4 posiciones <b>a la vez</b>, no una por una en secuencia</div>
-        <div class="vec-op-row">
-          <div class="cbox">4200</div><div class="cbox">4550</div><div class="cbox">4100</div><div class="cbox">4800</div>
-        </div>
-        <div class="vec-op-mid">↓ <span class="cop">× (1 + 0.05)</span> aplicado a las 4 a la vez ↓</div>
-        <div class="vec-op-row">
-          <div class="cbox accent">4410</div><div class="cbox accent">4777.5</div><div class="cbox accent">4305</div><div class="cbox accent">5040</div>
-        </div>
-      </div>
-      <figure class="concept-figure">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 640" width="100%" height="100%" role="img" aria-labelledby="v2title v2desc">
-          <title id="v2title">Operación Vectorizada en R — Todo a la Vez</title>
-          <desc id="v2desc">Cuatro flechas verticales paralelas aplican la misma operación por 1.05 simultáneamente a los 4 elementos de un vector, produciendo un vector resultado.</desc>
-          <defs>
-            <pattern id="grid-pattern-v2" width="40" height="40" patternUnits="userSpaceOnUse">
-              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#4c9aff" stroke-width="1" stroke-opacity="0.035" />
-            </pattern>
-            <linearGradient id="in-grad" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stop-color="#182645" />
-              <stop offset="100%" stop-color="#111a30" />
-            </linearGradient>
-            <linearGradient id="res-grad" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stop-color="#142c33" />
-              <stop offset="100%" stop-color="#0e1f26" />
-            </linearGradient>
-            <linearGradient id="v-arrow-grad" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stop-color="#4c9aff" />
-              <stop offset="50%" stop-color="#2dd4bf" />
-              <stop offset="100%" stop-color="#34d399" />
-            </linearGradient>
-          </defs>
-          <rect width="960" height="640" fill="#0a0f1c" />
-          <rect width="960" height="640" fill="url(#grid-pattern-v2)" />
-          <g transform="translate(350, 24)">
-            <rect width="260" height="34" rx="8" fill="#111a30" stroke="#2dd4bf" stroke-opacity="0.3" stroke-width="1.5" />
-            <text x="130" y="22" fill="#8792ae" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="13.5" font-weight="600" text-anchor="middle">
-              <tspan fill="#4c9aff" font-weight="700">ingresos</tspan> <tspan fill="#2dd4bf">*</tspan> <tspan fill="#34d399" font-weight="700">1.05</tspan>
-            </text>
-          </g>
-          <g transform="translate(186, 68)">
-            <rect width="588" height="114" rx="16" fill="#111a30" fill-opacity="0.25" stroke="#4c9aff" stroke-opacity="0.35" stroke-width="1.2" stroke-dasharray="5 7" />
-          </g>
-          <g transform="translate(210, 78)">
-            <rect width="120" height="96" rx="14" fill="url(#in-grad)" stroke="#4c9aff" stroke-width="2" />
-            <rect x="3" y="3" width="114" height="3.5" rx="2" fill="#4c9aff" />
-            <text x="12" y="22" fill="#8792ae" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="600">[1]</text>
-            <text x="60" y="58" fill="#edf1fa" font-family="'JetBrains Mono', monospace" font-size="20" font-weight="700" text-anchor="middle">4200</text>
-          </g>
-          <g transform="translate(350, 78)">
-            <rect width="120" height="96" rx="14" fill="url(#in-grad)" stroke="#4c9aff" stroke-width="2" />
-            <rect x="3" y="3" width="114" height="3.5" rx="2" fill="#4c9aff" />
-            <text x="12" y="22" fill="#8792ae" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="600">[2]</text>
-            <text x="60" y="58" fill="#edf1fa" font-family="'JetBrains Mono', monospace" font-size="20" font-weight="700" text-anchor="middle">4550</text>
-          </g>
-          <g transform="translate(490, 78)">
-            <rect width="120" height="96" rx="14" fill="url(#in-grad)" stroke="#4c9aff" stroke-width="2" />
-            <rect x="3" y="3" width="114" height="3.5" rx="2" fill="#4c9aff" />
-            <text x="12" y="22" fill="#8792ae" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="600">[3]</text>
-            <text x="60" y="58" fill="#edf1fa" font-family="'JetBrains Mono', monospace" font-size="20" font-weight="700" text-anchor="middle">4100</text>
-          </g>
-          <g transform="translate(630, 78)">
-            <rect width="120" height="96" rx="14" fill="url(#in-grad)" stroke="#4c9aff" stroke-width="2" />
-            <rect x="3" y="3" width="114" height="3.5" rx="2" fill="#4c9aff" />
-            <text x="12" y="22" fill="#8792ae" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="600">[4]</text>
-            <text x="60" y="58" fill="#edf1fa" font-family="'JetBrains Mono', monospace" font-size="20" font-weight="700" text-anchor="middle">4800</text>
-          </g>
-          <line x1="200" y1="280" x2="760" y2="280" stroke="#2dd4bf" stroke-opacity="0.18" stroke-width="1" stroke-dasharray="3 6" />
-          <g transform="translate(270, 188)">
-            <line x1="0" y1="0" x2="0" y2="182" stroke="url(#v-arrow-grad)" stroke-width="3" stroke-linecap="round" />
-            <polygon points="-6,176 0,192 6,176" fill="#34d399" />
-            <g transform="translate(0, 92)">
-              <rect x="-35" y="-14" width="70" height="28" rx="6" fill="#0a0f1c" stroke="#2dd4bf" stroke-width="1.5" />
-              <text x="0" y="5" fill="#2dd4bf" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700" text-anchor="middle">× 1.05</text>
-            </g>
-          </g>
-          <g transform="translate(410, 188)">
-            <line x1="0" y1="0" x2="0" y2="182" stroke="url(#v-arrow-grad)" stroke-width="3" stroke-linecap="round" />
-            <polygon points="-6,176 0,192 6,176" fill="#34d399" />
-            <g transform="translate(0, 92)">
-              <rect x="-35" y="-14" width="70" height="28" rx="6" fill="#0a0f1c" stroke="#2dd4bf" stroke-width="1.5" />
-              <text x="0" y="5" fill="#2dd4bf" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700" text-anchor="middle">× 1.05</text>
-            </g>
-          </g>
-          <g transform="translate(550, 188)">
-            <line x1="0" y1="0" x2="0" y2="182" stroke="url(#v-arrow-grad)" stroke-width="3" stroke-linecap="round" />
-            <polygon points="-6,176 0,192 6,176" fill="#34d399" />
-            <g transform="translate(0, 92)">
-              <rect x="-35" y="-14" width="70" height="28" rx="6" fill="#0a0f1c" stroke="#2dd4bf" stroke-width="1.5" />
-              <text x="0" y="5" fill="#2dd4bf" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700" text-anchor="middle">× 1.05</text>
-            </g>
-          </g>
-          <g transform="translate(690, 188)">
-            <line x1="0" y1="0" x2="0" y2="182" stroke="url(#v-arrow-grad)" stroke-width="3" stroke-linecap="round" />
-            <polygon points="-6,176 0,192 6,176" fill="#34d399" />
-            <g transform="translate(0, 92)">
-              <rect x="-35" y="-14" width="70" height="28" rx="6" fill="#0a0f1c" stroke="#2dd4bf" stroke-width="1.5" />
-              <text x="0" y="5" fill="#2dd4bf" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700" text-anchor="middle">× 1.05</text>
-            </g>
-          </g>
-          <g transform="translate(186, 382)">
-            <rect width="588" height="152" rx="16" fill="#111a30" fill-opacity="0.35" stroke="#34d399" stroke-opacity="0.5" stroke-width="1.5" stroke-dasharray="5 7" />
-            <g transform="translate(154, 134)">
-              <rect width="280" height="34" rx="8" fill="#0a0f1c" stroke="#34d399" stroke-width="1.5" />
-              <circle cx="18" cy="17" r="4" fill="#34d399" />
-              <text x="148" y="22" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="12.5" font-weight="700" text-anchor="middle" letter-spacing="0.5">resultado: ingresos * 1.05</text>
-            </g>
-          </g>
-          <g transform="translate(210, 394)">
-            <rect width="120" height="96" rx="14" fill="url(#res-grad)" stroke="#34d399" stroke-width="2.5" />
-            <rect x="3" y="3" width="114" height="3.5" rx="2" fill="#34d399" />
-            <text x="12" y="22" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="600">[1]</text>
-            <text x="60" y="58" fill="#edf1fa" font-family="'JetBrains Mono', monospace" font-size="20" font-weight="700" text-anchor="middle">4410</text>
-          </g>
-          <g transform="translate(350, 394)">
-            <rect width="120" height="96" rx="14" fill="url(#res-grad)" stroke="#34d399" stroke-width="2.5" />
-            <rect x="3" y="3" width="114" height="3.5" rx="2" fill="#34d399" />
-            <text x="12" y="22" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="600">[2]</text>
-            <text x="60" y="58" fill="#edf1fa" font-family="'JetBrains Mono', monospace" font-size="18.5" font-weight="700" text-anchor="middle">4777.5</text>
-          </g>
-          <g transform="translate(490, 394)">
-            <rect width="120" height="96" rx="14" fill="url(#res-grad)" stroke="#34d399" stroke-width="2.5" />
-            <rect x="3" y="3" width="114" height="3.5" rx="2" fill="#34d399" />
-            <text x="12" y="22" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="600">[3]</text>
-            <text x="60" y="58" fill="#edf1fa" font-family="'JetBrains Mono', monospace" font-size="20" font-weight="700" text-anchor="middle">4305</text>
-          </g>
-          <g transform="translate(630, 394)">
-            <rect width="120" height="96" rx="14" fill="url(#res-grad)" stroke="#34d399" stroke-width="2.5" />
-            <rect x="3" y="3" width="114" height="3.5" rx="2" fill="#34d399" />
-            <text x="12" y="22" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="600">[4]</text>
-            <text x="60" y="58" fill="#edf1fa" font-family="'JetBrains Mono', monospace" font-size="20" font-weight="700" text-anchor="middle">5040</text>
-          </g>
-        </svg>
-        <figcaption>Ilustración de apoyo (generada con asistencia de IA): 4 flechas paralelas, no una detrás de otra — la misma operación <code>× 1.05</code> ocurre en las 4 posiciones al mismo tiempo.</figcaption>
-      </figure>
-
-      <p style="color:var(--ts);font-size:.92rem"><b>Todavía no</b> vamos a extraer un elemento individual de un vector (<code>ingresos[1]</code>): eso, junto con más operaciones vectorizadas, es contenido de la Semana 02.</p>
-    </section>
-
-    <section class="block fade-in" id="g-ayuda">
-      <div class="block-head"><span class="block-num">07</span><h2>Uso de ayuda y lectura de errores</h2></div>
-      <p>Vas a cometer errores de tipeo constantemente: es normal, y R te lo va a decir. Aprender a leer esos mensajes es tan importante como aprender la sintaxis.</p>
-      <div class="grid-cards">
-        <div class="card" style="--accent:var(--teal)">
-          <div class="card-glow"></div>
-          <h3>Pedir ayuda</h3>
-          <p>Antepón <code>?</code> al nombre de cualquier función para abrir su documentación oficial en RStudio:</p>
-          <div class="exemplo"><span class="c-op">?</span><span class="c-fn">round</span></div>
-        </div>
-        <div class="card" style="--accent:var(--coral)">
-          <div class="card-glow"></div>
-          <h3>Objeto no encontrado</h3>
-          <p>R distingue mayúsculas de minúsculas. Un nombre mal escrito no existe para R, aunque exista uno casi igual:</p>
-          <div class="exemplo"><span class="c-fn">r_rocks</span> <span class="c-op">&lt;-</span> <span class="c-num">8</span>
-<span class="c-fn">r_rock</span>
-<span class="c-err">#&gt; Error: object 'r_rock' not found</span></div>
-        </div>
-        <div class="card asym" style="--accent:var(--amber)">
-          <div class="card-glow"></div>
-          <h3>La consola espera algo (<code>+</code>)</h3>
-          <p>Si tu consola muestra <code>+</code> en vez de <code>&gt;</code>, R piensa que tu instrucción sigue incompleta: casi siempre falta cerrar una comilla o un paréntesis. Presiona Esc y vuelve a intentarlo.</p>
-          <div class="exemplo">&gt; <span class="c-fn">mensaje</span> <span class="c-op">&lt;-</span> <span class="c-str">"Hola</span>
-+</div>
-        </div>
-      </div>
-    </section>
-
-    <section class="block fade-in" id="g-tabla">
-      <div class="block-head"><span class="block-num">08</span><h2>Tabla de referencia de la semana</h2></div>
-      <div class="cheat-card" style="max-width:720px">
-        <table class="cheat">
-          <tr><td class="f">&lt;-</td><td>Asignación. Siempre con espacios: <code>x &lt;- 5</code>, nunca <code>x&lt;-5</code>.</td></tr>
-          <tr><td class="f">c()</td><td>Construye un vector combinando valores.</td></tr>
-          <tr><td class="f">class()</td><td>Devuelve el tipo de un objeto.</td></tr>
-          <tr><td class="f">round()</td><td>Redondea un número al número de decimales indicado en <code>digits</code>.</td></tr>
-          <tr><td class="f">?nombre</td><td>Abre la documentación oficial de una función.</td></tr>
-          <tr><td class="f">+ − * / ^</td><td>Operadores aritméticos (potencia con <code>^</code>).</td></tr>
-          <tr><td class="f">== != &lt; &gt;</td><td>Operadores de comparación: devuelven <code>TRUE</code>/<code>FALSE</code>.</td></tr>
-          <tr><td class="f">#</td><td>Inicia un comentario: explica el <i>por qué</i>, no el <i>qué</i>.</td></tr>
-        </table>
-      </div>
-    </section>
-
-    <section class="block fade-in" id="g-repaso">
-      <div class="block-head"><span class="block-num">09</span><h2>Repaso activo</h2></div>
-      <p>Escribe tu respuesta antes de revelar la correcta: el botón se activa solo después de un mínimo de caracteres. No se entrega; es para ti.</p>
-
-      <div class="exercise" style="--accent:var(--blue)">
-        <div class="exercise-head"><div class="exercise-title"><span class="exercise-num">R-1</span><h3>¿Por qué un objeto?</h3></div></div>
-        <p class="desc">Un compañero de equipo escribe <code>4200 - 3100</code> directo en la consola cada vez que necesita la utilidad de enero. ¿Qué problema tiene eso frente a usar <code>utilidad_enero &lt;- 4200 - 3100</code>, pensando en el proyecto grupal?</p>
-        <textarea class="answer" data-min="40" placeholder="Escribe tu respuesta aquí (mínimo 40 caracteres)..."></textarea>
-        <div class="answer-meta"><span class="char-count">0 / 40</span><button class="reveal-btn" disabled>Revelar criterios</button></div>
-        <div class="feedback"><h4>Qué debería incluir una buena respuesta</h4><ul>
-          <li><b>Reutilización:</b> el objeto se puede usar después sin recalcular ni retipear.</li>
-          <li><b>Trazabilidad:</b> el nombre <code>utilidad_enero</code> documenta qué representa el número: <code>1100</code> solo, no.</li>
-          <li><b>Trabajo en equipo:</b> un script con objetos con nombre es legible por otra persona del equipo; una consola llena de cálculos sueltos no lo es.</li>
-        </ul></div>
-      </div>
-
-      <div class="exercise" style="--accent:var(--teal)">
-        <div class="exercise-head"><div class="exercise-title"><span class="exercise-num">R-2</span><h3>Predice el error</h3></div></div>
-        <p class="desc">Este código se ejecuta línea por línea. ¿Qué error exacto muestra R y por qué?</p>
-        <div class="code" style="margin-bottom:14px"><span class="c-fn">Tasa_Crecimiento</span> <span class="c-op">&lt;-</span> <span class="c-num">0.05</span>
-<span class="c-fn">tasa_crecimiento</span> <span class="c-op">*</span> <span class="c-num">100</span></div>
-        <textarea class="answer" data-min="30" placeholder="Escribe el mensaje de error que esperas y por qué..."></textarea>
-        <div class="answer-meta"><span class="char-count">0 / 30</span><button class="reveal-btn" disabled>Revelar criterios</button></div>
-        <div class="feedback"><h4>Qué debería incluir una buena respuesta</h4><ul>
-          <li><b>Error exacto:</b> <code>Error: object 'tasa_crecimiento' not found</code>.</li>
-          <li><b>Por qué:</b> el objeto se creó como <code>Tasa_Crecimiento</code> (con mayúsculas): R distingue mayúsculas de minúsculas, son dos nombres distintos.</li>
-          <li><b>Conexión con estilo:</b> esto es exactamente lo que evita la regla de usar siempre <code>snake_case</code> en minúsculas: consistencia, no solo estética.</li>
-        </ul></div>
-      </div>
-    </section>
-
-  </div>
 </section>
 
-<!-- ============================================================ TAB: LABORATORIO ============================================================ -->
-<section id="panel-lab" class="tab-panel" role="tabpanel" aria-labelledby="tab-lab">
-
-  <div class="hero" style="padding-top:clamp(36px,5vw,56px)">
-    <div class="hero-grid" aria-hidden="true"></div>
-    <div class="container hero-inner">
-      <div class="chips">
-        <span class="chip c-blue"><b>Semana 01</b></span>
-        <span class="chip">5 ejercicios · dificultad progresiva</span>
-        <span class="chip c-violet">Ej. 05 conecta con tu proyecto grupal</span>
-      </div>
-      <h1 style="font-size:clamp(1.8rem,3.6vw,2.6rem)">Laboratorio</h1>
-      <p class="lede">Cada ejercicio parte de una pregunta de negocio, nunca de "escriba el siguiente comando". Los dos primeros son diagnósticos (sin apoyo de IA) para ver qué entendiste de la guía sin ayuda externa.</p>
-      <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:20px">
-        <span class="ai-badge ai-none"><svg viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>Sin IA</span>
-        <span class="ai-badge ai-ok"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>IA permitida</span>
-        <span class="ai-badge ai-req"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 8v5m0 3h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>IA requerida</span>
-      </div>
-      <div class="progress-wrap">
-        <div class="progress-label"><span>Progreso del laboratorio</span><span id="progressPct">0%</span></div>
-        <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="container" style="padding:36px 0 0">
-
-    <div class="exercise" style="--accent:var(--coral)">
-      <div class="exercise-head">
-        <div class="exercise-title"><span class="exercise-num">Ej. 01</span><h3>Predice el resultado</h3></div>
-        <span class="ai-badge ai-none"><svg viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>Sin IA</span>
-      </div>
-      <p class="desc">Una tienda registra sus ingresos y costos de cuatro meses. Sin ejecutar nada, escribe exactamente qué imprime R en la última línea.</p>
-      <div class="code" style="margin:14px 0"><span class="c-fn">ingresos</span> <span class="c-op">&lt;-</span> <span class="c-fn">c</span>(<span class="c-num">3200</span>, <span class="c-num">3450</span>, <span class="c-num">2980</span>, <span class="c-num">3600</span>)
-<span class="c-fn">costos</span>   <span class="c-op">&lt;-</span> <span class="c-fn">c</span>(<span class="c-num">2100</span>, <span class="c-num">2200</span>, <span class="c-num">2050</span>, <span class="c-num">2300</span>)
-<span class="c-fn">utilidad</span> <span class="c-op">&lt;-</span> <span class="c-fn">ingresos</span> <span class="c-op">-</span> <span class="c-fn">costos</span>
-<span class="c-fn">utilidad</span></div>
-      <textarea class="answer" data-min="15" placeholder="Escribe el resultado exacto que esperas ver..."></textarea>
-      <div class="answer-meta"><span class="char-count">0 / 15</span><button class="reveal-btn" disabled data-xp="10">Revelar respuesta</button></div>
-      <div class="feedback"><h4>Respuesta y criterios</h4><ul>
-        <li><b>Salida esperada:</b> <code>#&gt; [1] 1100 1250 930 1300</code>: resta elemento por elemento, en el mismo orden.</li>
-        <li><b>Si escribiste un solo número:</b> revisa la sección <a href="#g-vectores">Vectores</a> de la Guía: la resta se aplica a los cuatro pares, no se "colapsa" en un total.</li>
-        <li><b>Correcto si</b> tu respuesta tiene 4 valores, en el orden ingresos[1]-costos[1], ingresos[2]-costos[2], etc.</li>
-      </ul></div>
-      <ul class="check-list" aria-label="Autoevaluación">
-        <li><label class="check-item"><input type="checkbox" data-xp="5"><span class="check-box"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt">R restó los vectores elemento por elemento, sin que yo escribiera un ciclo.</span></label></li>
-        <li><label class="check-item wrong"><input type="checkbox" data-xp="0"><span class="check-box"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt">R suma automáticamente los cuatro resultados en un solo número.</span></label></li>
-      </ul>
-    </div>
-
-    <div class="exercise" style="--accent:var(--coral)">
-      <div class="exercise-head">
-        <div class="exercise-title"><span class="exercise-num">Ej. 02</span><h3>Encuentra el error</h3></div>
-        <span class="ai-badge ai-none"><svg viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>Sin IA</span>
-      </div>
-      <p class="desc">Tu compañero de equipo escribió esto para ver el crecimiento proyectado de ventas y R marcó un error. Explica exactamente cuál es el error y cómo lo corregirías.</p>
-      <div class="code" style="margin:14px 0"><span class="c-fn">ventas_2025</span> <span class="c-op">&lt;-</span> <span class="c-fn">c</span>(<span class="c-num">1200</span>, <span class="c-num">1450</span>, <span class="c-num">1300</span>)
-<span class="c-fn">crecimiento</span> <span class="c-op">&lt;-</span> <span class="c-fn">ventas_2025</span> <span class="c-op">*</span> <span class="c-num">1.08</span>
-<span class="c-fn">Crecimiento</span></div>
-      <textarea class="answer" data-min="30" placeholder="¿Cuál es el error exacto y cómo lo corriges?"></textarea>
-      <div class="answer-meta"><span class="char-count">0 / 30</span><button class="reveal-btn" disabled data-xp="10">Revelar respuesta</button></div>
-      <div class="feedback"><h4>Respuesta y criterios</h4><ul>
-        <li><b>Error exacto:</b> <code>Error: object 'Crecimiento' not found</code>.</li>
-        <li><b>Causa:</b> el objeto se creó como <code>crecimiento</code> (minúscula); R distingue mayúsculas de minúsculas: son dos nombres distintos para R, aunque a nosotros nos parezcan "el mismo".</li>
-        <li><b>Corrección:</b> escribir <code>crecimiento</code> en la última línea, tal como se creó.</li>
-      </ul></div>
-      <ul class="check-list" aria-label="Autoevaluación">
-        <li><label class="check-item"><input type="checkbox" data-xp="5"><span class="check-box"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt">Usar siempre snake_case en minúsculas evita este tipo de error.</span></label></li>
-        <li><label class="check-item wrong"><input type="checkbox" data-xp="0"><span class="check-box"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt">R ignora mayúsculas y minúsculas al buscar un objeto.</span></label></li>
-      </ul>
-    </div>
-
-    <div class="exercise" style="--accent:var(--green)">
-      <div class="exercise-head">
-        <div class="exercise-title"><span class="exercise-num">Ej. 03</span><h3>Construye: utilidad promedio</h3></div>
-        <span class="ai-badge ai-ok"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>IA permitida</span>
-      </div>
-      <p class="desc">Una tienda tiene ingresos <code>c(5000, 5400, 4900, 6100)</code> y costos <code>c(3200, 3300, 3100, 3500)</code>. Escribe el código para calcular (a) la utilidad de cada mes y (b) la utilidad promedio del periodo. Luego justifica: si usaste IA para esto, ¿qué verificaste antes de confiar en su respuesta?</p>
-      <textarea class="answer" data-min="50" placeholder="Pega o escribe tu código, y tu justificación..."></textarea>
-      <div class="answer-meta"><span class="char-count">0 / 50</span><button class="reveal-btn" disabled data-xp="15">Revelar solución de referencia</button></div>
-      <div class="feedback"><h4>Solución de referencia y criterios</h4>
-        <div class="code" style="margin-bottom:12px"><span class="c-fn">ingresos</span> <span class="c-op">&lt;-</span> <span class="c-fn">c</span>(<span class="c-num">5000</span>, <span class="c-num">5400</span>, <span class="c-num">4900</span>, <span class="c-num">6100</span>)
-<span class="c-fn">costos</span>   <span class="c-op">&lt;-</span> <span class="c-fn">c</span>(<span class="c-num">3200</span>, <span class="c-num">3300</span>, <span class="c-num">3100</span>, <span class="c-num">3500</span>)
-<span class="c-fn">utilidad</span> <span class="c-op">&lt;-</span> <span class="c-fn">ingresos</span> <span class="c-op">-</span> <span class="c-fn">costos</span>  <span class="c-cm"># por qué: vectorizado, no mes por mes</span>
-<span class="c-fn">utilidad_promedio</span> <span class="c-op">&lt;-</span> <span class="c-fn">mean</span>(<span class="c-fn">utilidad</span>)
-<span class="c-fn">utilidad_promedio</span>
-<span class="c-out">#&gt; [1] 1800</span></div>
-        <ul>
-          <li><b>Nombres con sentido:</b> <code>utilidad</code>, <code>utilidad_promedio</code>, no <code>x</code>, <code>y</code>.</li>
-          <li><b>Vectorizado, no manual:</b> una resta de vectores, no cuatro restas escritas a mano.</li>
-          <li><b>mean()</b> aplicado al vector <code>utilidad</code>, no a <code>ingresos</code> y <code>costos</code> por separado.</li>
-          <li><b>Verificación de IA (si aplica):</b> ¿revisaste que <code>mean()</code> usara las variables correctas y que el resultado (1800) coincidiera con un cálculo mental rápido ((1800+2100+1800+2600)/4)?</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="exercise" style="--accent:var(--green)">
-      <div class="exercise-head">
-        <div class="exercise-title"><span class="exercise-num">Ej. 04</span><h3>Modifica: de variación a índice</h3></div>
-        <span class="ai-badge ai-ok"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>IA permitida</span>
-      </div>
-      <p class="desc">Este código ya calcula la variación absoluta de un precio entre dos años. Modifícalo para agregar también un <b>número índice</b> (2024 = 100) y explica, en tus palabras, qué te dice el índice que la variación absoluta no dice.</p>
-      <div class="code" style="margin:14px 0"><span class="c-fn">precio_2024</span> <span class="c-op">&lt;-</span> <span class="c-num">12.50</span>
-<span class="c-fn">precio_2025</span> <span class="c-op">&lt;-</span> <span class="c-num">13.90</span>
-<span class="c-fn">variacion</span> <span class="c-op">&lt;-</span> <span class="c-fn">precio_2025</span> <span class="c-op">-</span> <span class="c-fn">precio_2024</span></div>
-      <textarea class="answer" data-min="50" placeholder="Escribe la línea que agregarías y tu explicación..."></textarea>
-      <div class="answer-meta"><span class="char-count">0 / 50</span><button class="reveal-btn" disabled data-xp="15">Revelar solución de referencia</button></div>
-      <div class="feedback"><h4>Solución de referencia y criterios</h4>
-        <div class="code" style="margin-bottom:12px"><span class="c-fn">indice_precio</span> <span class="c-op">&lt;-</span> <span class="c-fn">round</span>(<span class="c-fn">precio_2025</span> <span class="c-op">/</span> <span class="c-fn">precio_2024</span> <span class="c-op">*</span> <span class="c-num">100</span>, digits <span class="c-op">=</span> <span class="c-num">1</span>)
-<span class="c-fn">indice_precio</span>
-<span class="c-out">#&gt; [1] 111.2</span></div>
-        <ul>
-          <li><b>Fórmula del índice:</b> (valor nuevo / valor base) × 100, con el año base como referencia = 100.</li>
-          <li><b>round(..., digits = 1)</b> usado con argumento nombrado, como en la Guía.</li>
-          <li><b>Explicación esperada:</b> la variación absoluta (1.40) depende de la unidad (dólares); el índice (111.2) dice directamente "11.2% más que la base" y es comparable entre productos con precios muy distintos: por eso los índices se usan tanto en economía.</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="exercise" style="--accent:var(--violet)">
-      <div class="exercise-head">
-        <div class="exercise-title"><span class="exercise-num">Ej. 05 · Proyecto</span><h3>Primer contacto con los datos de tu equipo</h3></div>
-        <span class="ai-badge ai-ok"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>IA permitida</span>
-      </div>
-      <p class="desc">Fase de esta semana en el proyecto grupal: formación de equipos y elección de tema. Con tu equipo (aunque el tema todavía pueda cambiar), anoten 4 valores ficticios que esperarían encontrar en una base real de ese tema, créenlos como un vector con <code>c()</code> y un nombre en <code>snake_case</code> que describa qué representan, y apliquen una función que ya conozcan (<code>mean()</code>, <code>sum()</code>, <code>length()</code> o <code>round()</code>) que tenga sentido para esos datos.</p>
-      <textarea class="answer" data-min="60" placeholder="Tema del equipo, el vector en R, y qué función aplicaron y por qué..."></textarea>
-      <div class="answer-meta"><span class="char-count">0 / 60</span><button class="reveal-btn" disabled data-xp="20">Revelar criterios</button></div>
-      <div class="feedback"><h4>Criterios (esto no tiene una única respuesta correcta)</h4><ul>
-        <li><b>El nombre del vector responde</b> a la pregunta "¿qué representa cada valor?": pregunta de defensa que reaparecerá en la Semana 09 y 11.</li>
-        <li><b>La función elegida tiene sentido</b> para ese tipo de dato (¿tiene sentido un promedio? ¿un total? ¿solo contar cuántos hay?).</li>
-        <li><b>Los valores son plausibles</b> para el tema, aunque sean ficticios, no números al azar sin relación con la idea del equipo.</li>
-        <li>Guarda esta respuesta: la retomarás en la Semana 02 cuando busquen la base de datos real.</li>
-      </ul></div>
-    </div>
-
-    <div class="verify-box fade-in">
-      <h4>¿Cómo sabemos que este resultado es correcto?</h4>
-      <p>En cada ejercicio de hoy, la verificación fue la misma idea aplicada de distintas formas: comparar el resultado de R contra un cálculo hecho a mano o mental (Ej. 01, 03), leer el mensaje de error completo en vez de adivinar (Ej. 02), y preguntar qué información nueva aporta un resultado frente a otro ya conocido (Ej. 04). Esta pregunta va a cerrar cada laboratorio del curso: acostúmbrate a hacértela incluso cuando el código "corre sin error": que no truene no significa que esté respondiendo la pregunta correcta.</p>
-    </div>
-
-  </div>
-</section>
-
-<!-- ============================================================ TAB: PLAYGROUND ============================================================ -->
-<section id="panel-playground" class="tab-panel" role="tabpanel" aria-labelledby="tab-playground">
-
-  <div class="hero" style="padding-top:clamp(36px,5vw,56px)">
-    <div class="hero-grid" aria-hidden="true"></div>
-    <div class="container hero-inner">
-      <div class="chips">
-        <span class="chip c-blue"><b>Semana 01</b></span>
-        <span class="chip">Salida precomputada, no ejecución en vivo</span>
-      </div>
-      <h1 style="font-size:clamp(1.8rem,3.6vw,2.6rem)">R Playground</h1>
-      <p class="lede">Cuatro fragmentos progresivos, usando solo lo que ya viste en la Guía de esta semana. El código y su salida están mostrados uno junto al otro como referencia. Para ejecutarlo de verdad, ábrelo en tu propio RStudio.</p>
-    </div>
-  </div>
-
-  <div class="container" style="padding:36px 0 60px">
-
-    <div class="pg-dataset">
-      <h3>Dataset de referencia: ingresos de un emprendimiento (4 meses)</h3>
-      <table class="dataset">
-        <tr><th>Mes</th><th>Enero</th><th>Febrero</th><th>Marzo</th><th>Abril</th></tr>
-        <tr><td>Ingresos (US$)</td><td>4200</td><td>4550</td><td>4100</td><td>4800</td></tr>
-      </table>
-      <p style="margin:12px 0 0;color:var(--ts);font-size:.85rem">En R: <code class="mono">ingresos &lt;- c(4200, 4550, 4100, 4800)</code>: una serie pequeña de observaciones, el mismo tipo de estructura que verás una y otra vez este curso antes de llegar a bases de datos completas en la Semana 02.</p>
-    </div>
-
-    <div class="pg-item fade-in">
-      <div>
-        <span class="pg-num">01 · Crear e imprimir el vector</span>
-        <div class="code"><span class="c-fn">ingresos</span> <span class="c-op">&lt;-</span> <span class="c-fn">c</span>(<span class="c-num">4200</span>, <span class="c-num">4550</span>, <span class="c-num">4100</span>, <span class="c-num">4800</span>)
-<span class="c-fn">ingresos</span></div>
-      </div>
-      <div class="pg-out"><span class="flag">Salida</span><br>[1] 4200 4550 4100 4800</div>
-    </div>
-
-    <div class="pg-item fade-in">
-      <div>
-        <span class="pg-num">02 · Inspeccionarlo con funciones</span>
-        <div class="code"><span class="c-fn">length</span>(<span class="c-fn">ingresos</span>)  <span class="c-cm"># cuántas observaciones tiene</span>
-<span class="c-fn">class</span>(<span class="c-fn">ingresos</span>)   <span class="c-cm"># qué tipo de dato es</span>
-<span class="c-fn">sum</span>(<span class="c-fn">ingresos</span>)     <span class="c-cm"># ingreso acumulado del periodo</span></div>
-      </div>
-      <div class="pg-out"><span class="flag">Salida</span><br>[1] 4<br>[1] "numeric"<br>[1] 17650</div>
-    </div>
-
-    <div class="pg-item fade-in">
-      <div>
-        <span class="pg-num">03 · Operación vectorizada: proyección con crecimiento</span>
-        <div class="code"><span class="c-fn">tasa_crecimiento</span> <span class="c-op">&lt;-</span> <span class="c-num">0.05</span>  <span class="c-cm"># 5% mensual esperado</span>
-<span class="c-fn">proyeccion</span> <span class="c-op">&lt;-</span> <span class="c-fn">ingresos</span> <span class="c-op">*</span> (<span class="c-num">1</span> <span class="c-op">+</span> <span class="c-fn">tasa_crecimiento</span>)
-<span class="c-fn">proyeccion</span></div>
-      </div>
-      <div class="pg-out"><span class="flag">Salida</span><br>[1] 4410.0 4777.5 4305.0 5040.0</div>
-    </div>
-
-    <div class="pg-item fade-in">
-      <div>
-        <span class="pg-num">04 · mean() + round(), argumento nombrado</span>
-        <div class="code"><span class="c-fn">ingreso_promedio</span> <span class="c-op">&lt;-</span> <span class="c-fn">mean</span>(<span class="c-fn">ingresos</span>)
-<span class="c-fn">round</span>(<span class="c-fn">ingreso_promedio</span>, digits <span class="c-op">=</span> <span class="c-num">0</span>)</div>
-      </div>
-      <div class="pg-out"><span class="flag">Salida</span><br>[1] 4412</div>
-    </div>
-
-    <div class="cheat-card fade-in" style="margin-top:8px">
-      <h3>Funciones nuevas usadas en este Playground</h3>
-      <table class="cheat">
-        <tr><td class="f">c()</td><td>Combina valores en un vector.</td></tr>
-        <tr><td class="f">length()</td><td>Cuenta cuántos elementos tiene un vector.</td></tr>
-        <tr><td class="f">class()</td><td>Muestra el tipo de dato de un objeto.</td></tr>
-        <tr><td class="f">sum()</td><td>Suma todos los elementos de un vector.</td></tr>
-        <tr><td class="f">mean()</td><td>Calcula el promedio de un vector.</td></tr>
-        <tr><td class="f">round(x, digits=)</td><td>Redondea al número de decimales indicado.</td></tr>
-      </table>
-    </div>
-
-  </div>
-</section>
-
-<!-- ============================================================ TAB: CHEAT SHEET ============================================================ -->
-<section id="panel-cheat" class="tab-panel" role="tabpanel" aria-labelledby="tab-cheat">
-  <div class="container" style="padding:40px 0 60px">
-    <div class="block-head" style="margin-bottom:22px">
-      <h2 style="margin:0">Cheat Sheet · Semana 01</h2>
-    </div>
-
-    <div class="cheat-grid">
-
-      <div class="cheat-card">
-        <h3>Vocabulario</h3>
-        <div class="vocab-badges">
-          <span class="vocab-badge">objeto</span>
-          <span class="vocab-badge">asignación</span>
-          <span class="vocab-badge">vector</span>
-          <span class="vocab-badge">función</span>
-          <span class="vocab-badge">argumento</span>
-          <span class="vocab-badge">numeric</span>
-          <span class="vocab-badge">character</span>
-          <span class="vocab-badge">logical</span>
-          <span class="vocab-badge">snake_case</span>
-        </div>
-      </div>
-
-      <div class="cheat-card">
-        <h3>Funciones y operadores</h3>
-        <table class="cheat">
-          <tr><td class="f">&lt;-</td><td>Asignar</td></tr>
-          <tr><td class="f">c()</td><td>Crear vector</td></tr>
-          <tr><td class="f">class()</td><td>Ver el tipo</td></tr>
-          <tr><td class="f">length()</td><td>Contar elementos</td></tr>
-          <tr><td class="f">sum() / mean()</td><td>Total / promedio</td></tr>
-          <tr><td class="f">round(x, digits=)</td><td>Redondear</td></tr>
-          <tr><td class="f">?nombre</td><td>Ver ayuda</td></tr>
-        </table>
-      </div>
-
-      <div class="cheat-card">
-        <h3>Operadores</h3>
-        <table class="cheat">
-          <tr><td class="f">+ − * /</td><td>Aritméticos</td></tr>
-          <tr><td class="f">^</td><td>Potencia</td></tr>
-          <tr><td class="f">%% %/%</td><td>Residuo / división entera</td></tr>
-          <tr><td class="f">== != &lt; &gt; &lt;= &gt;=</td><td>Comparación → TRUE/FALSE</td></tr>
-        </table>
-      </div>
-
-      <div class="cheat-card" style="grid-column:1/-1">
-        <h3>La regla del curso</h3>
-        <div class="cycle" style="margin-top:6px">
-          <div class="cycle-step">pregunta</div><span class="cycle-arrow">→</span>
-          <div class="cycle-step">exploración</div><span class="cycle-arrow">→</span>
-          <div class="cycle-step">implementación</div><span class="cycle-arrow">→</span>
-          <div class="cycle-step">resultado</div><span class="cycle-arrow">→</span>
-          <div class="cycle-step">interpretación</div><span class="cycle-arrow">→</span>
-          <div class="cycle-step now">verificación</div>
-        </div>
-        <p style="margin-top:14px;color:var(--ts);font-size:.9rem">Cierra siempre con: <b style="color:var(--tp)">¿Cómo sabemos que este resultado es correcto?</b></p>
-      </div>
-
-    </div>
-
-    <footer style="padding:32px 0 0">
-      <div class="foot-inner" style="border-top:1px solid var(--border)">
-        <div>Lectura de esta semana: R4DS Cap. 2, <i>Flujo de trabajo: conceptos básicos</i>.</div>
-        <div>Próxima lectura (Semana 02): R4DS Cap. 7, <i>Importación de datos</i>.</div>
-      </div>
-    </footer>
-  </div>
-</section>
+<footer class="pie">Guía de estudio · Fundamentos de Programación para Economía y Negocios · ESEN · Ciclo III/2026 · Catedrático: Alvin Javier Portillo Tiliano. Material de apoyo no oficial: no sustituye la lectura ni la clase; ante cualquier diferencia, mandan el programa del curso y Moodle.</footer>
 </main>
+</div>
 
-<footer>
-  <div class="container foot-inner">
-    <div>FPEN · Fundamentos de Programación para Economía y Negocios, ESEN, Ciclo III/2026<br>Catedrático: Alvin Javier Portillo Tiliano</div>
-    <div>Material de apoyo. No sustituye la lectura ni la clase presencial.</div>
-  </div>
-</footer>
-
-<script>
-(function(){
-  "use strict";
-
-  /* ---------------- estado en memoria (sin localStorage) ---------------- */
-  var state = { xp: 0 };
-
-  var xpEl = document.getElementById('xpCount');
-  var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  function addXP(n){
-    if(!n) return;
-    state.xp += n;
-    xpEl.textContent = state.xp;
-    if(!prefersReducedMotion){
-      xpEl.parentElement.animate(
-        [{ transform:'scale(1)' },{ transform:'scale(1.18)' },{ transform:'scale(1)' }],
-        { duration:380, easing:'cubic-bezier(0.16,1,0.3,1)' }
-      );
-    }
-  }
-
-  /* ---------------- pestañas principales ---------------- */
-  var pills = Array.prototype.slice.call(document.querySelectorAll('.pill[data-tab]'));
-  var panels = {
-    guia: document.getElementById('panel-guia'),
-    lab: document.getElementById('panel-lab'),
-    playground: document.getElementById('panel-playground'),
-    cheat: document.getElementById('panel-cheat')
-  };
-  function activateTab(name){
-    pills.forEach(function(p){ p.setAttribute('aria-selected', String(p.dataset.tab === name)); });
-    Object.keys(panels).forEach(function(k){ panels[k].classList.toggle('active', k === name); });
-    window.scrollTo({ top:0, behavior:'auto' });
-    observeFadeIns();
-  }
-  pills.forEach(function(p){ p.addEventListener('click', function(){ activateTab(p.dataset.tab); }); });
-
-  /* ---------------- textareas con revelar-tras-mínimo ---------------- */
-  document.querySelectorAll('.exercise, .verify-box, .grid-cards').forEach(function(){}); // no-op, mantiene estructura clara
-
-  document.querySelectorAll('textarea.answer').forEach(function(ta){
-    var min = parseInt(ta.dataset.min || '0', 10);
-    var wrap = ta.closest('.exercise') || ta.parentElement;
-    var counter = wrap.querySelector('.char-count');
-    var btn = wrap.querySelector('.reveal-btn');
-    function update(){
-      var len = ta.value.trim().length;
-      if(counter) counter.textContent = len + ' / ' + min;
-      if(btn) btn.disabled = len < min;
-    }
-    ta.addEventListener('input', update);
-    update();
-  });
-
-  document.querySelectorAll('.reveal-btn').forEach(function(btn){
-    btn.addEventListener('click', function(){
-      if(btn.disabled) return;
-      var wrap = btn.closest('.exercise') || btn.parentElement.parentElement;
-      var fb = wrap.querySelector('.feedback');
-      btn.textContent = 'Criterios revelados';
-      btn.disabled = true;
-      if(fb && !fb.classList.contains('show')){
-        fb.classList.add('show');
-        addXP(parseInt(btn.dataset.xp || '0', 10));
-        updateProgress();
-      }
-    });
-  });
-
-  /* ---------------- checkboxes de autoevaluación ---------------- */
-  document.querySelectorAll('.check-item input[type="checkbox"]').forEach(function(cb){
-    cb.addEventListener('change', function(){
-      if(cb.checked && !cb.dataset.counted){
-        cb.dataset.counted = '1';
-        addXP(parseInt(cb.dataset.xp || '0', 10));
-      }
-      updateProgress();
-    });
-  });
-
-  /* ---------------- barra de progreso del laboratorio ---------------- */
-  var labPanel = document.getElementById('panel-lab');
-  var progressFill = document.getElementById('progressFill');
-  var progressPct = document.getElementById('progressPct');
-  function updateProgress(){
-    if(!labPanel) return;
-    var buttons = labPanel.querySelectorAll('.reveal-btn');
-    var boxes = labPanel.querySelectorAll('.check-item input[type="checkbox"]');
-    var total = buttons.length + boxes.length;
-    if(total === 0) return;
-    var done = 0;
-    buttons.forEach(function(b){ if(b.disabled && b.textContent.indexOf('revelados') > -1) done++; });
-    boxes.forEach(function(b){ if(b.checked) done++; });
-    var pct = Math.round((done / total) * 100);
-    progressFill.style.transform = 'scaleX(' + (pct / 100) + ')';
-    progressPct.textContent = pct + '%';
-  }
-
-  /* ---------------- fade-in al hacer scroll ---------------- */
-  var io = ('IntersectionObserver' in window) ? new IntersectionObserver(function(entries){
-    entries.forEach(function(e){ if(e.isIntersecting) e.target.classList.add('in'); });
-  }, { threshold:0.05, rootMargin:'0px 0px -8% 0px' }) : null;
-  function observeFadeIns(){
-    document.querySelectorAll('.fade-in:not(.in)').forEach(function(el){
-      if(io) io.observe(el); else el.classList.add('in');
-    });
-  }
-  observeFadeIns();
-
-  /* red de seguridad: si por cualquier motivo el observer no revela una sección
-     (p. ej. captura de pantalla, salto de foco, navegador atípico), nunca debe
-     quedar contenido educativo permanentemente invisible. */
-  window.addEventListener('load', function(){
-    setTimeout(function(){
-      document.querySelectorAll('.fade-in:not(.in)').forEach(function(el){ el.classList.add('in'); });
-    }, 1500);
-  });
-
-  /* ---------------- evaluador de juguete: Objetos y asignación (simulación en JS, no R real) ---------------- */
-  (function(){
-    var toyInput = document.getElementById('toyValue');
-    var toyBtn = document.getElementById('toyAssignBtn');
-    var envValueEl = document.getElementById('envValue');
-    var envEntry = envValueEl ? envValueEl.closest('.env-entry') : null;
-    var consoleEl = document.getElementById('toyConsole');
-    if(!(toyBtn && toyInput && envValueEl && consoleEl)) return;
-    function assign(){
-      var raw = toyInput.value.trim();
-      var n = Number(raw);
-      if(raw === '' || isNaN(n)) return;
-      var display = String(n);
-      envValueEl.textContent = display;
-      consoleEl.innerHTML =
-        '<div class="te-line"><span class="c-fn">ingresos_enero</span> <span class="c-op">&lt;-</span> <span class="c-num">' + display + '</span></div>' +
-        '<div class="te-line"><span class="c-fn">ingresos_enero</span></div>' +
-        '<div class="te-line c-out">#&gt; [1] ' + display + '</div>';
-      if(envEntry){
-        envEntry.classList.remove('flash');
-        void envEntry.offsetWidth; /* fuerza reflow para reiniciar la transición */
-        envEntry.classList.add('flash');
-        setTimeout(function(){ envEntry.classList.remove('flash'); }, 700);
-      }
-    }
-    toyBtn.addEventListener('click', assign);
-    toyInput.addEventListener('keydown', function(e){ if(e.key === 'Enter'){ e.preventDefault(); assign(); } });
-  })();
-
-  /* ---------------- subnav interna: activar pestaña Guía si se llega por enlace ---------------- */
-  document.querySelectorAll('.subnav a').forEach(function(a){
-    a.addEventListener('click', function(){ activateTab('guia'); });
-  });
-
-})();
-</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-r.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+<script src="../assets/guia.js"></script>
+<script src="../assets/ejecutar-r.js"></script>
 </body>
 </html>

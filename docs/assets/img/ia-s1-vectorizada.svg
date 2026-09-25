@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 640" width="100%" height="100%" role="img" aria-labelledby="v2title v2desc">
+          <title id="v2title">Operación Vectorizada en R — Todo a la Vez</title>
+          <desc id="v2desc">Cuatro flechas verticales paralelas aplican la misma operación por 1.05 simultáneamente a los 4 elementos de un vector, produciendo un vector resultado.</desc>
+          <defs>
+            <pattern id="grid-pattern-v2" width="40" height="40" patternUnits="userSpaceOnUse">
+              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#4c9aff" stroke-width="1" stroke-opacity="0.035" />
+            </pattern>
+            <linearGradient id="in-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#182645" />
+              <stop offset="100%" stop-color="#111a30" />
+            </linearGradient>
+            <linearGradient id="res-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#142c33" />
+              <stop offset="100%" stop-color="#0e1f26" />
+            </linearGradient>
+            <linearGradient id="v-arrow-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#4c9aff" />
+              <stop offset="50%" stop-color="#2dd4bf" />
+              <stop offset="100%" stop-color="#34d399" />
+            </linearGradient>
+          </defs>
+          <rect width="960" height="640" fill="#0a0f1c" />
+          <rect width="960" height="640" fill="url(#grid-pattern-v2)" />
+          <g transform="translate(350, 24)">
+            <rect width="260" height="34" rx="8" fill="#111a30" stroke="#2dd4bf" stroke-opacity="0.3" stroke-width="1.5" />
+            <text x="130" y="22" fill="#8792ae" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="13.5" font-weight="600" text-anchor="middle">
+              <tspan fill="#4c9aff" font-weight="700">ingresos</tspan> <tspan fill="#2dd4bf">*</tspan> <tspan fill="#34d399" font-weight="700">1.05</tspan>
+            </text>
+          </g>
+          <g transform="translate(186, 68)">
+            <rect width="588" height="114" rx="16" fill="#111a30" fill-opacity="0.25" stroke="#4c9aff" stroke-opacity="0.35" stroke-width="1.2" stroke-dasharray="5 7" />
+          </g>
+          <g transform="translate(210, 78)">
+            <rect width="120" height="96" rx="14" fill="url(#in-grad)" stroke="#4c9aff" stroke-width="2" />
+            <rect x="3" y="3" width="114" height="3.5" rx="2" fill="#4c9aff" />
+            <text x="12" y="22" fill="#8792ae" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="600">[1]</text>
+            <text x="60" y="58" fill="#edf1fa" font-family="'JetBrains Mono', monospace" font-size="20" font-weight="700" text-anchor="middle">4200</text>
+          </g>
+          <g transform="translate(350, 78)">
+            <rect width="120" height="96" rx="14" fill="url(#in-grad)" stroke="#4c9aff" stroke-width="2" />
+            <rect x="3" y="3" width="114" height="3.5" rx="2" fill="#4c9aff" />
+            <text x="12" y="22" fill="#8792ae" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="600">[2]</text>
+            <text x="60" y="58" fill="#edf1fa" font-family="'JetBrains Mono', monospace" font-size="20" font-weight="700" text-anchor="middle">4550</text>
+          </g>
+          <g transform="translate(490, 78)">
+            <rect width="120" height="96" rx="14" fill="url(#in-grad)" stroke="#4c9aff" stroke-width="2" />
+            <rect x="3" y="3" width="114" height="3.5" rx="2" fill="#4c9aff" />
+            <text x="12" y="22" fill="#8792ae" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="600">[3]</text>
+            <text x="60" y="58" fill="#edf1fa" font-family="'JetBrains Mono', monospace" font-size="20" font-weight="700" text-anchor="middle">4100</text>
+          </g>
+          <g transform="translate(630, 78)">
+            <rect width="120" height="96" rx="14" fill="url(#in-grad)" stroke="#4c9aff" stroke-width="2" />
+            <rect x="3" y="3" width="114" height="3.5" rx="2" fill="#4c9aff" />
+            <text x="12" y="22" fill="#8792ae" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="600">[4]</text>
+            <text x="60" y="58" fill="#edf1fa" font-family="'JetBrains Mono', monospace" font-size="20" font-weight="700" text-anchor="middle">4800</text>
+          </g>
+          <line x1="200" y1="280" x2="760" y2="280" stroke="#2dd4bf" stroke-opacity="0.18" stroke-width="1" stroke-dasharray="3 6" />
+          <g transform="translate(270, 188)">
+            <line x1="0" y1="0" x2="0" y2="182" stroke="url(#v-arrow-grad)" stroke-width="3" stroke-linecap="round" />
+            <polygon points="-6,176 0,192 6,176" fill="#34d399" />
+            <g transform="translate(0, 92)">
+              <rect x="-35" y="-14" width="70" height="28" rx="6" fill="#0a0f1c" stroke="#2dd4bf" stroke-width="1.5" />
+              <text x="0" y="5" fill="#2dd4bf" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700" text-anchor="middle">× 1.05</text>
+            </g>
+          </g>
+          <g transform="translate(410, 188)">
+            <line x1="0" y1="0" x2="0" y2="182" stroke="url(#v-arrow-grad)" stroke-width="3" stroke-linecap="round" />
+            <polygon points="-6,176 0,192 6,176" fill="#34d399" />
+            <g transform="translate(0, 92)">
+              <rect x="-35" y="-14" width="70" height="28" rx="6" fill="#0a0f1c" stroke="#2dd4bf" stroke-width="1.5" />
+              <text x="0" y="5" fill="#2dd4bf" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700" text-anchor="middle">× 1.05</text>
+            </g>
+          </g>
+          <g transform="translate(550, 188)">
+            <line x1="0" y1="0" x2="0" y2="182" stroke="url(#v-arrow-grad)" stroke-width="3" stroke-linecap="round" />
+            <polygon points="-6,176 0,192 6,176" fill="#34d399" />
+            <g transform="translate(0, 92)">
+              <rect x="-35" y="-14" width="70" height="28" rx="6" fill="#0a0f1c" stroke="#2dd4bf" stroke-width="1.5" />
+              <text x="0" y="5" fill="#2dd4bf" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700" text-anchor="middle">× 1.05</text>
+            </g>
+          </g>
+          <g transform="translate(690, 188)">
+            <line x1="0" y1="0" x2="0" y2="182" stroke="url(#v-arrow-grad)" stroke-width="3" stroke-linecap="round" />
+            <polygon points="-6,176 0,192 6,176" fill="#34d399" />
+            <g transform="translate(0, 92)">
+              <rect x="-35" y="-14" width="70" height="28" rx="6" fill="#0a0f1c" stroke="#2dd4bf" stroke-width="1.5" />
+              <text x="0" y="5" fill="#2dd4bf" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700" text-anchor="middle">× 1.05</text>
+            </g>
+          </g>
+          <g transform="translate(186, 382)">
+            <rect width="588" height="152" rx="16" fill="#111a30" fill-opacity="0.35" stroke="#34d399" stroke-opacity="0.5" stroke-width="1.5" stroke-dasharray="5 7" />
+            <g transform="translate(154, 134)">
+              <rect width="280" height="34" rx="8" fill="#0a0f1c" stroke="#34d399" stroke-width="1.5" />
+              <circle cx="18" cy="17" r="4" fill="#34d399" />
+              <text x="148" y="22" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="12.5" font-weight="700" text-anchor="middle" letter-spacing="0.5">resultado: ingresos * 1.05</text>
+            </g>
+          </g>
+          <g transform="translate(210, 394)">
+            <rect width="120" height="96" rx="14" fill="url(#res-grad)" stroke="#34d399" stroke-width="2.5" />
+            <rect x="3" y="3" width="114" height="3.5" rx="2" fill="#34d399" />
+            <text x="12" y="22" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="600">[1]</text>
+            <text x="60" y="58" fill="#edf1fa" font-family="'JetBrains Mono', monospace" font-size="20" font-weight="700" text-anchor="middle">4410</text>
+          </g>
+          <g transform="translate(350, 394)">
+            <rect width="120" height="96" rx="14" fill="url(#res-grad)" stroke="#34d399" stroke-width="2.5" />
+            <rect x="3" y="3" width="114" height="3.5" rx="2" fill="#34d399" />
+            <text x="12" y="22" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="600">[2]</text>
+            <text x="60" y="58" fill="#edf1fa" font-family="'JetBrains Mono', monospace" font-size="18.5" font-weight="700" text-anchor="middle">4777.5</text>
+          </g>
+          <g transform="translate(490, 394)">
+            <rect width="120" height="96" rx="14" fill="url(#res-grad)" stroke="#34d399" stroke-width="2.5" />
+            <rect x="3" y="3" width="114" height="3.5" rx="2" fill="#34d399" />
+            <text x="12" y="22" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="600">[3]</text>
+            <text x="60" y="58" fill="#edf1fa" font-family="'JetBrains Mono', monospace" font-size="20" font-weight="700" text-anchor="middle">4305</text>
+          </g>
+          <g transform="translate(630, 394)">
+            <rect width="120" height="96" rx="14" fill="url(#res-grad)" stroke="#34d399" stroke-width="2.5" />
+            <rect x="3" y="3" width="114" height="3.5" rx="2" fill="#34d399" />
+            <text x="12" y="22" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="600">[4]</text>
+            <text x="60" y="58" fill="#edf1fa" font-family="'JetBrains Mono', monospace" font-size="20" font-weight="700" text-anchor="middle">5040</text>
+          </g>
+        </svg>

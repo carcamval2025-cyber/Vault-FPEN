@@ -38,17 +38,19 @@ es mejor preguntar al usuario que inventar contenido nuevo.
 4. Analogías y ejemplos siempre conectados a economía/negocios (crecimiento,
    ingresos, costos, ventas, empleo, precios, indicadores) — nunca ejemplos
    genéricos sin relación económica.
-5. Cualquier material `.html` de sesión debe seguir la paleta y los componentes de
-   `00 Programa/Sistema de Diseño - Tema R Notebook.md` — no inventar una paleta ni
-   tipografía nueva. Las herramientas de diseño externas se usan para ELEVAR la
-   ejecución dentro de ese sistema, nunca para renegociarlo.
+5. Cualquier página de la guía debe usar los componentes compartidos de `docs/assets/`
+   (`guia.css`, `guia.js`, `ejecutar-r.js`) y seguir
+   `00 Programa/Sistema de Diseño - Tema R Notebook.md` (desde el 2026-09-25 describe el
+   sistema vigente, "Guía FPEN"; el tema "R Notebook" quedó reemplazado). No inventar una
+   paleta ni tipografía nueva ni copiar CSS suelto en una página: los cambios de diseño
+   van en `docs/assets/`.
 6. Antes de generar cualquier material, preguntar si hay ambigüedad.
 
 ## Estructura de carpetas
 
 - `00 Programa/` — contexto del curso, mapa curricular (12 semanas), evaluación y
   rúbricas, política de IA, proyecto grupal, sistema de diseño vigente
-  (`Sistema de Diseño - Tema R Notebook.md`).
+  (`Sistema de Diseño - Tema R Notebook.md`, que hoy describe la Guía FPEN).
 - `01 Semanas/` — una nota por semana (`Semana 01` … `Semana 12`), con su propio
   contenido, funciones nuevas permitidas y estado del material.
 - `02 Referencias/` — notas-resumen de los documentos originales del curso (programa
@@ -64,19 +66,26 @@ es mejor preguntar al usuario que inventar contenido nuevo.
 - `06 Código R/` — código de R propio de Carlos (scripts de cada sesión de clase);
   `Entregas/` contiene las guías/entregas ya resueltas y evaluadas.
 - `assets/banners/` — SVGs de banner para Obsidian (no relevantes fuera de Obsidian).
-- `docs/` — sitio estático publicado en GitHub Pages una vez configurado (índice +
-  una carpeta por semana disponible). Repo: `github.com/carcamval2025-cyber/Vault-FPEN`
-  (público), Pages sirve desde `/docs`.
+- `docs/` — sitio estático publicado en GitHub Pages (índice + `semana-NN/index.html`
+  por semana disponible + `control-01/guia/` y `control-01/repaso/`). `docs/assets/` tiene
+  el CSS, el JS, los íconos, las láminas SVG (`img/`) y los gráficos (`img/graficos/`);
+  `docs/datos/` tiene los CSV de práctica. Repo: `github.com/carcamval2025-cyber/Vault-FPEN`
+  (público), Pages sirve desde `/docs`. Descripción completa en `README.md`.
 
 ## Formato del material de cada sesión (resumen — la fuente completa es el Claude Project)
 
-Un solo archivo `.html` por sesión (`FPEN_Semana[NN]_[Titulo].html`), con 4 pestañas:
-Guía de Estudio, Laboratorio (mínimo 5 ejercicios progresivos con badge de nivel de
-IA cada uno), R Playground (4 fragmentos con solo funciones ya enseñadas hasta esa
-semana), Cheat Sheet. Offline salvo Google Fonts. Sin librerías JS externas. Íconos
-SVG inline, nunca emoji funcionales. El estándar de calidad de referencia es
-`FPEN_Semana01_R_Como_Herramienta_Para_Pensar.html` — cualquier material nuevo se
-compara contra ese archivo antes de darse por terminado.
+Una página por semana en `docs/semana-NN/index.html` (una sola página larga, sin
+pestañas), con este orden: cómo usar la guía, qué puedes usar / todavía no, lecturas,
+control de lectura (quiz), temas (cada uno abre con "En palabras simples" y se resuelve
+con el ciclo pregunta → exploración → implementación → resultado → interpretación →
+verificación), tablas de traza, ejercicios (cada uno con su etiqueta de nivel de IA,
+cuadro de respuesta y solución desplegable; el laboratorio de 5 ejercicios va aquí),
+playground cuando aplique, práctica intensiva (ejercicios rápidos + 3 problemas tipo
+examen con casos de prueba y solución), proyecto (fase + preguntas de defensa), lista
+"puedo…", cheat sheet y fuentes. Los bloques de R se ejecutan con webR; toda salida
+mostrada debe salir de ejecutar el código de verdad. El estándar de referencia es
+`docs/semana-01/index.html`. Los `.html` de `04 Materiales Generados/` son las versiones
+anteriores (tema R Notebook) y se conservan como archivo.
 
 ## Cómo trabajar aquí
 
@@ -88,8 +97,10 @@ compara contra ese archivo antes de darse por terminado.
 3. Después de generar: registrar el resultado en `Registro de Materiales.md` y una
    nueva entrada en `03 Aprendizaje del Agente/Bitácora/` (misma plantilla que las
    existentes).
-4. Si el material incluye HTML, verificar contra el checklist de curación en
-   `00 Programa/Sistema de Diseño - Tema R Notebook.md` antes de darlo por terminado.
+4. Si el material incluye HTML, verificar contra el checklist de
+   `00 Programa/Sistema de Diseño - Tema R Notebook.md` antes de darlo por terminado:
+   salidas de R comparadas con R real, ids y anclas, SVG válidos, sin scroll horizontal
+   a 390 y 1280 px y sin errores de JavaScript.
 
 ## Ver también (rutas de archivo, no wikilinks)
 

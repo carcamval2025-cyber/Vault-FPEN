@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 250" width="760" height="250" role="img" aria-label="Antes de ejecutar la línea, el ambiente de R está vacío. Después de ejecutar ingresos_enero &lt;- 4200, el ambiente contiene el objeto ingresos_enero con el valor 4200.">
+<title>Antes de ejecutar la línea, el ambiente de R está vacío. Después de ejecutar ingresos_enero &lt;- 4200, el ambiente contiene el objeto ingresos_enero con el valor 4200.</title>
+<style>
+  text { font-family: 'Atkinson Hyperlegible Next', 'Atkinson Hyperlegible', Arial, sans-serif; font-size: 14px; fill: #111a30; }
+  .t { font-family: Fraunces, Georgia, 'Times New Roman', serif; font-weight: 700; font-size: 16px; }
+  .m { font-family: 'JetBrains Mono', Menlo, Consolas, monospace; font-size: 13px; font-variant-ligatures: none; font-feature-settings: "liga" 0, "calt" 0; }
+  .s { font-size: 12px; fill: #56607a; }
+  .b { font-weight: 700; }
+  .w { fill: #ffffff; }
+  .cw { fill: #edf1fa; }
+  .ln { stroke: #56607a; stroke-width: 1.6; fill: none; }
+</style>
+<defs><marker id="p" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#56607a"/></marker><marker id="pb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2f6fd6"/></marker><marker id="pg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#138a5e"/></marker><marker id="pa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#b86e00"/></marker><marker id="pc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#c9403f"/></marker><marker id="pt" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0f8f84"/></marker><marker id="pv" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#6b4fd1"/></marker></defs>
+<text x="20" y="30" class="t">Antes de ejecutar la línea</text>
+<rect x="20" y="46" width="250" height="170" rx="10" fill="#ffffff" stroke="#2b3a5c" stroke-width="1.5"/>
+<rect x="20" y="46" width="250" height="32" rx="10" fill="#eef2fb" stroke="#2b3a5c" stroke-width="1.5"/>
+<text x="36" y="67" class="b" style="font-size:13px;">Ambiente de R (Environment)</text>
+<text x="145" y="140" class="s" text-anchor="middle">vacío: todavía no</text>
+<text x="145" y="158" class="s" text-anchor="middle">existe ningún objeto</text>
+<text x="380" y="30" class="t" text-anchor="middle">R evalúa y guarda</text>
+<rect x="292" y="100" width="176" height="34" rx="8" fill="#111a30" stroke="#111a30" stroke-width="1.5"/>
+<text x="380" y="122" class="m" text-anchor="middle" style="fill:#edf1fa;font-size:12px">ingresos_enero &lt;- 4200</text>
+<path d="M292 170 H 468" fill="none" stroke="#b86e00" stroke-width="2.2" marker-end="url(#pa)"/>
+<text x="380" y="196" class="s" text-anchor="middle">no imprime nada</text>
+<text x="490" y="30" class="t">Después de ejecutarla</text>
+<rect x="490" y="46" width="250" height="170" rx="10" fill="#ffffff" stroke="#2b3a5c" stroke-width="1.5"/>
+<rect x="490" y="46" width="250" height="32" rx="10" fill="#eef2fb" stroke="#2b3a5c" stroke-width="1.5"/>
+<text x="506" y="67" class="b" style="font-size:13px;">Ambiente de R (Environment)</text>
+<rect x="506" y="110" width="218" height="44" rx="8" fill="#fff0d6" stroke="#f5a623" stroke-width="1.6"/>
+<text x="520" y="137" class="m b">ingresos_enero</text>
+<text x="648" y="137" class="b" text-anchor="middle" style="fill:#b86e00">→</text>
+<text x="700" y="137" class="m b" text-anchor="middle">4200</text>
+<text x="615" y="186" class="s" text-anchor="middle">un nombre que apunta a un valor</text>
+</svg>

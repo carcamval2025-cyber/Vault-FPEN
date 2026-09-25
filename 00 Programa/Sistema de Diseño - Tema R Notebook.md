@@ -1,167 +1,83 @@
 ---
-tags: [programa, diseno, tema-r-notebook]
+tags: [programa, diseno, guia-fpen]
 ---
 
-# Sistema de Diseño — Tema "R Notebook"
+# Sistema de Diseño — Guía FPEN (vigente desde el 25 de septiembre de 2026)
 
-Sistema nuevo, no reciclado de otros cursos — pensado para R/Tidyverse en vez de SQL/MariaDB (a diferencia de la plantilla original del curso SIN).
+> El nombre del archivo se conserva para no romper los enlaces del vault. El tema anterior, "R Notebook" (oscuro, Fraunces + Literata, 4 pestañas, XP), quedó **reemplazado** por decisión de Carlos: la guía adopta el sistema de componentes e interacción de su guía de IDS, con identidad propia de FPEN. El texto completo del sistema anterior está en el historial de git de este archivo.
 
-## Paleta de colores
+## Dónde vive
 
-```
---bg0:    #0a0f1c   (fondo base)
---bg1:    #111a30   (tarjetas y paneles)
---bg2:    #182645   (hover states, headers internos)
---blue:   #4c9aff   (acción principal, correcto, R/RStudio)
---teal:   #2dd4bf   (información, tidyverse, links)
---amber:  #f5a623   (advertencias, lecturas previas)
---coral:  #ff6b6b   (errores, problemas, "Sin IA")
---violet: #a78bfa   (proyecto grupal, trabajo en equipo)
---green:  #34d399   (éxito, feedback correcto, "IA permitida")
---tp:     #edf1fa   (texto principal)
---ts:     #8792ae   (texto secundario)
-```
+Todo el diseño está en `docs/assets/` y lo comparten todas las páginas. Una página nueva **no** trae CSS ni JS propios.
 
-**Uso semántico obligatorio** — no se puede reasignar color por color sin romper la convención del curso:
+| Archivo | Qué hace |
+|---|---|
+| `guia.css` | Tokens, componentes, liquid glass, ventanas estilo RStudio, modo oscuro, accesibilidad |
+| `guia.js` | Progreso (`localStorage`, clave `fpen-guia-v1`), quizzes, trazas, bloqueo de soluciones, simulacro, menú, tema, copiar, láminas SVG incrustadas |
+| `ejecutar-r.js` | Ejecutar y Editar código R con webR, bloques previos, CSV, gráficos, tiempo límite |
+| `icons/` | Íconos SVG de las cajas y botones |
+| `img/` | Láminas SVG independientes; `img/graficos/` tiene los gráficos de resultado generados con R |
 
-- coral = "Sin IA" y errores
-- verde = "IA permitida" y respuestas correctas
-- violeta = "IA requerida" y todo lo relacionado al proyecto grupal
-- ámbar = lecturas previas y advertencias
-- azul/teal = navegación, información neutra y código de R
+## Identidad
 
-## Tipografía
-
-| Uso | Fuente | Notas |
+| Token | Valor | Uso |
 |---|---|---|
-| Display / Títulos | `Fraunces` (700–800) | Serif editorial — evita el look genérico de dashboard |
-| Cuerpo / Lectura | `Literata` | Serif optimizada para lectura extendida |
-| Código / Mono | `JetBrains Mono` | Alta legibilidad para distinguir `1`/`l`/`I` y operadores de R (`<-`, `\|>`, `::`) |
+| Azul noche (`--brand`) | `#111a30` | Portadas, barra flotante, editor de código |
+| Ámbar (`--mark`) | `#f5a623` | Resaltador de la pregunta orientadora, semana actual, lo esencial |
+| Azul R (`--accent`) | `#4c9aff` aclarado / oscurecido según el tema | Enlaces y acción principal |
+| Teal | `#2dd4bf` | Información neutra, funciones en el código |
+| Coral | `#ff6b6b` | **Sin IA** y errores |
+| Verde | `#34d399` | **IA permitida** y respuestas correctas |
+| Violeta | `#a78bfa` | **IA requerida** y proyecto grupal |
 
-Nunca tipografías genéricas (Inter, Roboto, Arial, system-ui) para el display.
+- Tipografías: **Fraunces** (títulos, la serif del logo), **Atkinson Hyperlegible Next** (lectura) y **JetBrains Mono** (código, sin ligaduras).
+- Logo y favicon FPEN en la barra; ilustraciones Programar, Analizar y Comunicar en el índice.
+- Un tono por semana (`body[data-semana="sN"]`, y `c1` para Control 01) cambia los campos de color del fondo y la luz de la portada.
+- Tema claro u oscuro según el sistema, con botón para cambiarlo (se recuerda en `fpen-guia-v1-tema`).
 
-## Componentes obligatorios en cada sesión
+## Componentes
 
-1. Hero con grid animado o diagrama del ciclo importar→ordenar→transformar→visualizar→modelar→comunicar (marca recurrente del curso)
-2. Navegación sticky con pills por sección
-3. Sistema XP en el nav global que suma puntos por interacciones completadas
-4. Badges de nivel de IA visibles en cada ejercicio — texto con color semántico, nunca emoji
-5. Tarjetas de conceptos con hover glow + barra degradada al fondo
-6. Respuestas con textarea — el botón de revelar deshabilitado hasta un mínimo de caracteres
-7. Panel de feedback con criterios de evaluación completos, no frases de aliento genéricas
-8. Barra de progreso en el laboratorio
-9. Bloques de código R con resaltado manual (vanilla JS/CSS, sin librerías externas)
-10. Íconos SVG inline — nunca emojis, nunca librerías externas de íconos
-11. Grain texture con SVG filter en el body
-12. Pregunta de verificación recurrente ("¿Cómo sabemos que este resultado es correcto?") como cierre de cada laboratorio
+- **Barra flotante** con S1 a S12 (las semanas sin guía, atenuadas) y C1, más menú a pantalla completa.
+- **Portada** en azul noche: número de semana en Fraunces, prompt `>` en la unidad, pregunta orientadora con resaltador ámbar, ciclo importar → … → comunicar con las etapas de la semana resaltadas, datos de lectura, proyecto y evaluación, y barra de avance.
+- **Paneles liquid glass** (transparentes, desenfoque, brillo y canto de luz). Con `prefers-reduced-transparency` pasan a sólidos; con `prefers-reduced-motion` no hay animaciones.
+- **Código como en RStudio**: pestaña de script `.R`, etiqueta R, Editar, Ejecutar y Copiar, números de línea. La salida es el panel **Console** con el prompt `>`.
+- **Caja “En palabras simples”** al inicio de cada tema (analogía de economía o negocios).
+- **Ciclo** pregunta → exploración → implementación → resultado → interpretación → verificación, con la verificación en verde.
+- **Control de lectura** (quiz autocorregible con explicación), **tablas de traza**, **ejercicios rápidos** (“¿qué imprime R?”), **ejercicios** con etiqueta de IA, cuadro de respuesta (la solución se abre al escribir el mínimo de caracteres) y **problemas tipo examen** con casos de prueba.
+- **Etiquetas de IA** como píldoras de color semántico: `<span class="ia sin">`, `ia permitida`, `ia requerida`. Toda actividad evaluada declara su nivel.
+- **Simulacro**: `<div class="simulacro" data-minutos="45">` con reloj; las soluciones se abren al finalizar o al acabarse el tiempo.
+- **Antes → después** para transformaciones (`.antes-despues` con filas que salen o columnas nuevas resaltadas).
+- **Proyecto** (entregables y preguntas de defensa), **lista “puedo…”**, **cheat sheet** y navegación entre semanas.
 
-## Estructura de cada archivo de sesión (4 pestañas)
+## Código R en la página
 
-1. **Guía de Estudio** — hero con chips de contexto, navegación interna sticky, conceptos clave, analogías económicas, tabla de referencia, repaso activo con textareas
-2. **Laboratorio** — hero con chips de dificultad y badge de IA por ejercicio, barra de progreso, 5 ejercicios mínimo progresivos (01–02 interpretación/predicción, 03–04 construcción con justificación, 05 ejercicio "Proyecto"), checkboxes de verificación, reflexión final
-3. **R Playground** — 4 fragmentos progresivos con SOLO funciones ya enseñadas hasta esa semana, dataset simulado con contexto económico, salida junto al código
-4. **Cheat Sheet** — compacto, vocabulario con badges, tabla de funciones de la semana, diagrama de la regla central, footer con bibliografía
+- Bloque: `<pre data-file="nombre.R"><code class="language-r">…</code></pre>`; su salida, `<pre class="salida"><code>…</code></pre>` inmediatamente después.
+- `data-previo="id"` ejecuta antes otro bloque (datos o `library()`); `data-archivos="../datos/x.csv"` deja el archivo en `datos/x.csv`; `data-norun` para fragmentos ilustrativos.
+- **Toda salida mostrada debe salir de ejecutar el código de verdad** (R local para comparar, la misma que da webR). No se escriben tibbles “a mano”: R abrevia (`diciem…`, `5506.`) y la página debe mostrar lo mismo.
+- Los paquetes se cargan con `library()` desde la semana en que el curso los introduce; `warn.conflicts = FALSE` en los bloques de preparación de dplyr para que la salida sea estable.
 
-## Objetivo: la Guía debe poder sustituir la lectura (26 de agosto de 2026)
+## Láminas
 
-Ambición explícita de Carlos, más alta que la de "Estructura de cada archivo de sesión" de arriba: la pestaña **Guía de Estudio** no es solo un resumen de apoyo antes o después de la lectura asignada de R4DS — la meta es que pueda funcionar como sustituto real de esa lectura, visualizando los mismos conceptos que el capítulo explica en prosa. No cambia la estructura de 4 pestañas ni ningún token de marca; cambia el nivel de exigencia de cada sección de concepto dentro de la Guía.
+- SVG independientes en `docs/assets/img/`, fondo claro, Fraunces para títulos, Atkinson para etiquetas y JetBrains Mono (sin ligaduras) para código.
+- Se muestran con `<figure class="lamina"><div class="placa"><div class="placa-core"><img …></div></div><figcaption>…</figcaption></figure>`; en GitHub Pages se incrustan para usar las fuentes de la página.
+- Las ilustraciones generadas con IA se conservan como archivo aparte, con `data-no-inline` y la clase `ia-ilustracion`, que agrega al pie “Ilustración de apoyo generada con asistencia de IA”. El flujo para pedir una nueva sigue igual: prompt literal con la paleta y lo que no debe aparecer, revisar el archivo real y su fidelidad al concepto antes de integrarla, y rotularla como IA.
 
-Técnicas a aplicar por sección de concepto, en las 12 semanas (no solo donde ya se probó):
+## Higiene que sigue vigente
 
-1. **Diagramar el comportamiento invisible de R**, no solo el resultado. Cosas que R4DS explica con párrafos porque no se ven en el código (qué pasa al asignar con `<-`, por qué un vector es "una cosa" con varios valores, por qué una operación vectorizada ocurre elemento por elemento a la vez, por qué un data frame es columnas de vectores del mismo largo) necesitan su propio diagrama SVG inline (cajas, flechas, color semántico del documento) en vez de solo una frase. Misma técnica que las ilustraciones del libro, en el lenguaje visual propio de este curso — nunca copiar las ilustraciones originales de R4DS.
-2. **Transformaciones como antes/después**, no como código junto a su salida. `filter`, `mutate`, `group_by`+`summarise`, pivots, joins: mostrar una tabla antes → la operación → una tabla después, con filas o celdas resaltadas conectando ambas, para que la transformación se vea en vez de tener que simularse mentalmente leyendo el código.
-3. **Recorrido narrativo con pregunta real primero**, no definición aislada seguida de un ejemplo. Plantear la pregunta económica concreta, resolverla en 3-4 pasos con un cambio visual en cada paso, generalizar la regla al final — el mismo orden que usa el libro para dar ganas de seguir leyendo.
-4. **Interactividad honesta** donde el cálculo es simple: un "evaluador de juguete" en JS vanilla, restringido a las funciones ya vistas esa semana, que deje cambiar un valor y ver el resultado recalcularse en vivo. Sigue siendo sujeto a la regla de "Ejecución real vs. simulada" de abajo: se debe etiquetar explícitamente como simulación en JS, nunca como ejecución real de R.
-5. **Mapa conceptual propio de la semana**, distinto del ciclo global de 6 pasos que ya vive en el hero — un segundo visual, más pequeño, que muestre cómo se conectan entre sí los 4-6 conceptos de esa semana específica.
-6. **Verificar contra el capítulo real antes de llamarlo sustituto**: hoy el proyecto solo tiene subido el Capítulo 4 de R4DS (estilo de código), no los capítulos conceptuales que cada semana necesita según el mapa curricular. Antes de dar por buena una sección como "capaz de reemplazar la lectura", habría que poder compararla concepto por concepto contra el capítulo asignado real — pedirle a Carlos que suba los capítulos de R4DS correspondientes a la Knowledge del proyecto conforme se vayan necesitando, en vez de trabajar solo con paráfrasis general del libro (ya es regla existente en "Conexión con el libro" del programa maestro, aquí se vuelve más urgente).
+- Cero guiones largos (—) en el texto visible.
+- `prefers-reduced-motion` y `prefers-reduced-transparency` respetados.
+- Elementos interactivos nativos y accesibles por teclado (`button`, `label`, `details`).
+- Contraste suficiente en ambos temas; límite de ancho de línea en la prosa.
+- Sin scroll horizontal a 390 px; tablas y código se desplazan dentro de su propio contenedor.
 
-Piloto: se probó primero en una sola sección de la Guía de la Semana 01 antes de generalizarse a las demás secciones o semanas — ver [[2026-08-26 - Piloto de sustitución de lectura (Semana 01)]] para el resultado y qué se ajustó.
+## Checklist antes de publicar una página
 
-## Ilustraciones SVG generadas con IA (26 de agosto de 2026)
-
-Complemento válido a la técnica 1 de la sección anterior ("diagramar el comportamiento invisible... SVG inline"): además de los diagramas construidos a mano en CSS/SVG dentro del propio HTML, se puede pedir a una herramienta externa de generación de imágenes (en este curso, Antigravity, fuera de esta sesión) que genere una ilustración SVG más elaborada para el mismo concepto. Esta sección documenta el flujo que hay que seguir cada vez que se haga esto, no solo el resultado de la primera vez — los agentes futuros deben repetir este proceso, no solo copiar el patrón de inserción.
-
-**Regla de formato, no negociable:** la ilustración se incrusta como **SVG inline**, nunca como `<img src="ruta/al/archivo.svg">`. El documento maestro exige que cada sesión sea un solo archivo `.html` autocontenido y offline (ver "Formato de entrega" abajo); el archivo ni siquiera usa una referencia externa para su propio favicon (va como `data:` URI). Antes de agregar la primera ilustración se debe verificar que el archivo objetivo siga sin dependencias externas — si alguna vez esa premisa cambia, esta regla habría que revisarla explícitamente, no asumir que sigue aplicando.
-
-**Flujo a seguir (verificar en cada paso, no solo al final):**
-
-1. **Prompt específico y literal**, no una descripción vaga del concepto. Incluir: la paleta exacta del documento (hex de cada token), qué NO debe aparecer (nombrar explícitamente los motivos genéricos de IA que hay que evitar — ver el hallazgo de abajo), y si es posible adjuntar como referencia visual una ilustración ya aprobada del mismo curso para igualar estilo exacto, no solo paleta.
-2. **Nunca integrar a ciegas lo que devuelve la herramienta externa.** Verificar el archivo real primero: confirmar que existe en la ruta correcta (no una copia vieja en otra carpeta), que el SVG es válido, y renderizarlo a PNG (Playwright con el SVG embebido en una página mínima) para inspeccionarlo visualmente antes de tocar el HTML.
-3. **Evaluar fidelidad al concepto, no solo si "se ve bien".** Una ilustración pulida visualmente puede no comunicar el concepto pedido. Hallazgo real de la Semana 01: los primeros 2 de 4 SVG pedidos para "Vectores" salieron como iconografía genérica de "dashboard conectado" (pantallas, gráficos de barras/líneas dentro de tarjetas) en vez de la fila de cajas conectadas que pedía el prompt — un motivo de IA por defecto que se cuela incluso con un prompt razonable si no se prohíbe explícitamente. Los otros 2 (Tipos de datos, Operadores) sí coincidieron bien al primer intento.
-4. **Si la fidelidad falla, regenerar con un prompt más restrictivo que nombre explícitamente el motivo genérico a evitar**, en vez de aceptar el resultado igual o descartar la ilustración por completo. En la Semana 01 esto funcionó: el segundo prompt para "Vectores" prohibió explícitamente "iconos de pantallas, gráficas de barras o de líneas como elemento decorativo" y describió la composición exacta (4 cajas idénticas, subíndices `[1]`-`[4]`, mismos valores que el diagrama CSS ya existente) — el resultado coincidió con el concepto al segundo intento.
-5. **Reportar la evaluación de fidelidad al usuario antes de integrar**, con las previsualizaciones, cuando el resultado sea desigual entre varias piezas de un mismo pedido — no integrar automáticamente solo porque una instrucción (propia o de un documento externo tipo "handoff") lo pida.
-6. **Insertar como complemento, no como reemplazo**, del diagrama ya construido a mano para esa misma sección — inmediatamente después de él, dentro de un `<figure class="concept-figure">` (componente CSS nuevo: mismo degradado/borde que `.cpanel`, para que se lea como la misma familia visual, con `<figcaption>` debajo).
-7. **Rotular la ilustración como generada con IA** en el propio `<figcaption>` visible — no queda oculto ni se presenta como si fuera un dibujo hecho a mano para el curso.
-8. **Verificar colisión de `id` internos** (gradientes, patrones, `<title>`/`<desc>`) entre las distintas piezas SVG incrustadas y contra los `id` ya existentes en el archivo — cada SVG generado externamente trae sus propios nombres de `id`, y no hay garantía de que sean únicos entre piezas distintas.
-9. **Verificación final igual que cualquier otro cambio de esta sección**: Playwright en escritorio y móvil, sin desbordamiento horizontal, en ambos archivos (`FPEN_SemanaNN_...html` y su copia `docs/semana-NN/index.html`).
-
-Caso completo (las 4 ilustraciones de la Semana 01, incluyendo el prompt de regeneración exacto que corrigió el problema de "Vectores") en [[2026-08-26 - Integración de ilustraciones SVG generadas con IA (Semana 01)]].
-
-## Ejecución real vs. simulada en el R Playground
-
-R no puede ejecutarse de forma confiable con JavaScript vanilla. Dos caminos válidos, **nunca mezclados en el mismo archivo sin dejarlo explícito**:
-
-- **Por defecto:** código R junto a salida **precomputada** (texto de consola o SVG estático), dejando claro que es referencia, no ejecución en vivo. Mantiene el archivo 100% offline.
-- **Opcional/avanzado:** **webR** (WebAssembly) vía CDN para ejecución real — rompe el offline-first y añade carga pesada de WASM. Solo si el usuario lo pide explícitamente y acepta la excepción online-only.
-
-## Formato de entrega
-
-- Un solo archivo `.html` por sesión/material, todo integrado en pestañas. **Una semana puede tener más de un material** (por ejemplo, si hay más de una sesión de clase esa semana, o si un tema se divide en dos entregas) — no asumir una relación 1:1 entre semana y archivo.
-- Nombre: `FPEN_Semana[NN]_[Titulo].html` (ej. `FPEN_Semana01_R_Como_Herramienta_Para_Pensar.html`). Cuando una semana tiene más de un material, el `[Titulo]` de cada uno ya los distingue de forma natural (títulos distintos → nombres de archivo distintos); si dos materiales de la misma semana compartieran título, agregar un sufijo `a`/`b` al número de semana (`Semana01b`).
-- Offline salvo Google Fonts (y webR si se pidió explícitamente).
-- Sin librerías JS externas (nada de jQuery, Bootstrap, Chart.js, resaltado de sintaxis externo) — todo vanilla.
-- Íconos SVG inline, nunca Font Awesome ni emojis funcionales.
-- Responsive.
-- Textareas editables con progreso en memoria de JS (sin `localStorage`).
-
-## Higiene anti-AI-slop (checklist para cada sesión nueva)
-
-Reglas destiladas de un archivo personal de skills de diseño (`design-taste-frontend`, `high-end-visual-design`, `impeccable`), filtradas a lo *register-agnostic* — la mayoría de esas skills están pensadas para landing pages de marketing (React/Tailwind/GSAP), un registro distinto al de este curso, así que **no** se adoptaron reglas que entrarían en conflicto con este documento (ban a serifs, ban a secciones numeradas, bento grids, etc.). Solo lo universal:
-
-- **Cero guiones largos (—)** en el texto visible. Es la señal de IA más citada en estas skills. Reescribir con coma, dos puntos, punto y seguido o punto medio, según el contexto de cada frase — nunca con un reemplazo automático ciego.
-- **`@media (prefers-reduced-motion: reduce)`** obligatorio en todo archivo con animaciones (fade-in, hover, transiciones). Debe declararse **al final** de la hoja de estilos, no al inicio — si no, pierde la cascada contra reglas posteriores con la misma especificidad.
-- **Animaciones GPU-safe**: animar solo `transform` y `opacity`, nunca `width`/`height`/`top`/`left` (ej. la barra de progreso usa `transform:scaleX()`, no `width`).
-- **Contraste explícito en `::placeholder`** de cualquier textarea/input — no depender del gris por defecto del navegador.
-- **Límite de ancho de línea** en prosa (`max-width` en `ch`, ~65–75) para que los párrafos no corran de borde a borde en pantallas anchas.
-- **Escala de radios de borde limitada** (3–4 valores como máximo, vía variables CSS) en vez de valores sueltos repartidos por todo el archivo.
-- **Ojo con los hijos de CSS Grid con `white-space:pre`** (bloques de código): pueden desbordar su celda en móvil por el `min-width:auto` por defecto — fijar `min-width:0` explícito.
-- **Bordes laterales de color como "acento" están señalados como patrón genérico** — si se necesita codificación semántica por color en una tarjeta, preferir una barra superior degradada (como `.card::before`) sobre un `border-left` plano.
-
-Lo que se decidió **no** tocar y por qué: la paleta de colores de este documento ya evita las dos alertas más citadas contra "paletas de IA" (el morado por defecto en todo, y la paleta beige+bronce "premium-consumer"), así que sus valores hex se mantienen fijos — la mejora de calidad se aplica a nivel de disciplina de tokens (arriba), no de color. Igual se mantiene la tipografía Fraunces, el grain texture con `feTurbulence` y las secciones numeradas 01–09, aunque skills genéricas los señalen como "Tell": aquí son requisitos deliberados de este documento, no defaults perezosos. Detalle completo del primer pase de auditoría en [[2026-08-26 - Primer material HTML (Semana 01)]].
-
-## Checklist de curación (26 de agosto de 2026, segundo pase)
-
-Checklist técnico, adaptado del archivo personal de skills de Carlos (`impeccable`, `ui-ux-pro-max`), que se aplica **automáticamente a toda sesión nueva (Semanas 02-12)** sin que haga falta pedirlo de nuevo. Ninguno de estos puntos toca color ni tipografía — son higiene de implementación, no de marca:
-
-1. **Cero bordes "side-stripe"** (`border-left`/`border-right` de color como único acento de una tarjeta, caja o alerta). Si se necesita codificación semántica por color en una tarjeta, usar borde completo + tinte de fondo, o una barra superior degradada (patrón ya usado en `.card::before` y `.exercise::before`) — nunca un borde lateral plano.
-2. **Todo elemento interactivo debe ser real y accesible por teclado**: usar `<button>`/`<a>`/`<label>` nativos en vez de `<div onclick>`; cualquier `role`/`aria-*` debe venir acompañado de comportamiento real (Enter/Espacio activan, no solo click de mouse). Ejemplo de bug real encontrado y corregido en este pase: los checkboxes de autoevaluación (`.check-item`) tenían el `<input>` visualmente oculto sin envolver en `<label>`, así que un clic en el texto o el ícono visible no marcaba nada — solo funcionaba clicando un área de 1×1px invisible. Se corrigió envolviendo cada `.check-item` en un `<label>`.
-3. **`@media (prefers-reduced-motion: reduce)` obligatorio**, cubriendo tanto CSS (`transition`/`animation`) como cualquier animación disparada por JS (`Element.animate()`, como el rebote del contador de XP) — comprobar con `window.matchMedia('(prefers-reduced-motion: reduce)').matches` antes de invocar `.animate()`.
-4. **Curva de easing `cubic-bezier(0.16,1,0.3,1)` (expo-out)** en todas las transiciones y animaciones con propósito de interfaz (hover, aparición de panel, barra de progreso, rebote de XP) — nunca `ease`/`linear`/`ease-out` por defecto del navegador.
-5. **Contraste WCAG AA (≥4.5:1) verificado numéricamente**, no asumido — calcular con luminancia relativa real para: `--ts` sobre `--bg0`/`--bg1`/`--bg2`; cada color semántico (`--coral`/`--green`/`--violet`/`--amber`/`--blue`/`--teal`) sobre los fondos donde aparece como texto, incluyendo fondos compositados (ej. `rgba(color, .08)` de los badges de IA sobre `--bg1`). En la auditoría de la Semana 01 los 20+ pares verificados dieron entre 4.82:1 y 16.91:1 — la paleta ya pasa sin ajustes, pero cualquier color semántico nuevo que se agregue debe verificarse igual antes de usarse.
-6. **Sin patrón "ghost-card"**: nunca combinar `border:1px solid` con un `box-shadow` de blur ≥16px en el mismo elemento (ej. tarjetas al hover) — es una de las señales de IA más específicas señaladas por `impeccable`. Si hace falta feedback de profundidad al hover, usar un `box-shadow` de blur ≤8px, o apoyarse en el `transform:translateY()` y el glow radial que las tarjetas ya tienen.
-7. **Escala de z-index formal por variables**, incluso para el apilamiento simple (fondo vs. contenido vs. overlay de grain) — nunca números sueltos como `z-index:1`/`z-index:2` sin declarar como token, aunque el valor en sí sea pequeño y razonable.
-
-Registro completo de ambos pases (incluyendo por qué el bug del checkbox y los otros hallazgos no se detectaron en el primer pase) en [[2026-08-26 - Primer material HTML (Semana 01)]].
-
-## Elevación visual (26 de agosto de 2026, tercer pase — composición, no higiene)
-
-A diferencia de los dos pases anteriores (higiene técnica: accesibilidad, motion, contraste), este pase respondió a feedback subjetivo directo de Carlos ("el diseño no es el mejor de todos") sobre `FPEN_Semana01_R_Como_Herramienta_Para_Pensar.html`. Diagnóstico (vía capturas de pantalla de las 4 pestañas, revisadas con el framework de `design-critique`): el archivo cumplía todas las reglas técnicas pero se sentía plano y monótono — secciones numeradas 01-09 con el mismo patrón visual repetido sin variación de ritmo, tarjetas con relleno uniforme sin profundidad, y el hero sin un elemento gráfico propio (el "diagrama del ciclo" de este documento existía solo como fila de píldoras de texto, no como imagen). Mejoras aplicadas, **todas dentro de los tokens de color/tipografía ya fijos, sin agregar ninguno nuevo**:
-
-1. **Diagrama orbital del ciclo en el hero principal**: SVG decorativo (nodos 1-6 en círculo, arco activo entre el paso actual y el siguiente) posicionado junto al título, visible solo en escritorio ancho (≥1080px) para no competir con el texto en móvil, donde ya existe la fila de píldoras equivalente. Le da al hero una identidad gráfica real en vez de solo texto y un fondo de grid casi imperceptible.
-2. **Profundidad sutil en tarjetas** (`.card`, `.exercise`, `.cheat-card`, `.pg-dataset`): de relleno plano `var(--bg1)` a un degradado diagonal `var(--bg2)` → `var(--bg1)` de 165°, casi imperceptible pero suficiente para separar visualmente cada tarjeta del fondo de página en vez de fundirse con él.
-3. **Numeral editorial de fondo por sección** (solo pestaña Guía, las 9 secciones `section.block`): un contador CSS (`counter-increment`/`counter()`, sin tocar el HTML de cada sección) genera un numeral grande (hasta ~7rem) en Fraunces al `opacity:.035` detrás del encabezado de cada sección, colgando parcialmente en el margen izquierdo. Rompe la monotonía de "bloque tras bloque idéntico" con un motivo editorial recurrente, oculto en móvil (`max-width:900px`) para no estorbar en pantallas angostas.
-4. **Barra de progreso segmentada** en el Laboratorio: de una barra lisa de 8px a 12px con 4 marcas verticales (vía `repeating-linear-gradient` en una capa `::after` separada del relleno) que dividen visualmente los 5 ejercicios — refuerza la lectura de "voy en el ejercicio 2 de 5" que antes solo daba el porcentaje.
-
-**Gotcha técnico encontrado**: el numeral de fondo (punto 3) usa `position:absolute` + `z-index:-1` dentro de `section.block`, pero `position:relative` por sí solo **no crea un contexto de apilamiento** — sin `isolation:isolate` explícito en `section.block`, el numeral se pintaba por encima del contenido en vez de detrás (el orden de pintado de CSS pone los descendientes posicionados con `z-index:auto/0` *después* del contenido en flujo no posicionado, así que un simple `z-index` negativo sin contexto propio se escapa al ancestro de apilamiento más cercano). Se corrigió agregando `isolation:isolate` a `section.block`.
-
-**Verificación**: Playwright en escritorio (1440×900) y móvil (390×844) sin desbordamiento horizontal en ninguna pestaña, prueba de interacción completa (textarea → revelar → XP → checkbox por label) repetida y funcionando igual que antes de estos cambios, y prueba de `reducedMotion:'reduce'` (el `fade-in` sigue resolviendo a opacidad 1). También se regeneró `docs/semana-01/index.html` a partir del archivo corregido (reaplicando solo sus dos diferencias propias: favicon y enlace de vuelta al índice) y se verificó de nuevo contra un servidor HTTP local, no `file://` (ver [[2026-08-26 - Curación técnica (segundo pase) y publicación en GitHub Pages]] para por qué eso importa).
-
-## Estándar de calidad de referencia
-
-Establecido el 26 de agosto de 2026, actualizado el mismo día tras el tercer pase: **`FPEN_Semana01_R_Como_Herramienta_Para_Pensar.html`** (carpeta del curso, fuera del vault — registro completo en [[Registro de Materiales]] y en [[2026-08-26 - Primer material HTML (Semana 01)]]). Se construyó combinando varias herramientas de diseño (frontend-design, ui-ux-pro-max, principios visuales de canvas-design) **dentro** de la paleta y tipografía ya fijas de este documento, no reemplazándolas, se pasó por la checklist de higiene anti-AI-slop de arriba, y finalmente por un pase de composición/ritmo visual (sección anterior) — ese es el patrón completo a repetir: elevar la ejecución (jerarquía, composición, motion, pulido) y aplicar higiene register-agnostic, nunca renegociar el sistema de marca del curso.
-
-Cualquier sesión nueva debe compararse contra este archivo antes de darse por terminada.
+1. Ejecutar todos los bloques de R y comparar con las salidas de la página.
+2. Revisar ids duplicados, anclas rotas, archivos inexistentes y que los SVG sean XML válido.
+3. Con Playwright: sin scroll horizontal a 390 y 1280 px, sin errores de JavaScript, quizzes y trazas dan “correcto” con las soluciones, Ejecutar y Editar funcionan.
+4. Progresión estricta: nada de una semana posterior, salvo marcado como adelanto opcional.
+5. Registrar el resultado en `Registro de Materiales.md` y en la bitácora.
 
 ## Notas relacionadas
 
-[[Programa General]] · [[Política de IA]] · [[Patrones que Funcionan Bien]] · [[Errores Comunes a Evitar]]
+[[Programa General]] · [[Política de IA]] · [[Patrones que Funcionan Bien]] · [[Errores Comunes a Evitar]] · [[Registro de Materiales]]

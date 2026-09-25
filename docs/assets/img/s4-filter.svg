@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 300" width="760" height="300" role="img" aria-label="Una tabla de seis empresas entra a filter con la condición sector igual a industria y empleados mayor o igual a 90; solo pasan Textiles del Norte y Metalúrgica Istmo, las demás filas quedan tachadas. Las columnas no cambian.">
+<title>Una tabla de seis empresas entra a filter con la condición sector igual a industria y empleados mayor o igual a 90; solo pasan Textiles del Norte y Metalúrgica Istmo, las demás filas quedan tachadas. Las columnas no cambian.</title>
+<style>
+  text { font-family: 'Atkinson Hyperlegible Next', 'Atkinson Hyperlegible', Arial, sans-serif; font-size: 14px; fill: #111a30; }
+  .t { font-family: Fraunces, Georgia, 'Times New Roman', serif; font-weight: 700; font-size: 16px; }
+  .m { font-family: 'JetBrains Mono', Menlo, Consolas, monospace; font-size: 13px; font-variant-ligatures: none; font-feature-settings: "liga" 0, "calt" 0; }
+  .s { font-size: 12px; fill: #56607a; }
+  .b { font-weight: 700; }
+  .w { fill: #ffffff; }
+  .cw { fill: #edf1fa; }
+  .ln { stroke: #56607a; stroke-width: 1.6; fill: none; }
+</style>
+<defs><marker id="p" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#56607a"/></marker><marker id="pb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2f6fd6"/></marker><marker id="pg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#138a5e"/></marker><marker id="pa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#b86e00"/></marker><marker id="pc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#c9403f"/></marker><marker id="pt" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0f8f84"/></marker><marker id="pv" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#6b4fd1"/></marker></defs>
+<text x="20" y="26" class="m b" style="fill:#2f6fd6;font-size:14px">empresas</text>
+<rect x="20" y="36" width="350" height="236" rx="8" fill="#ffffff" stroke="#2b3a5c" stroke-width="1.5"/>
+<rect x="20" y="36" width="350" height="30" rx="8" fill="#eef2fb" stroke="#2b3a5c" stroke-width="1.5"/>
+<text x="32" y="56" class="m b" style="font-size:11.5px;">empresa</text>
+<text x="200" y="56" class="m b" style="font-size:11.5px;">sector</text>
+<text x="358" y="56" class="m b" text-anchor="end" style="font-size:11.5px;">empleados</text>
+<text x="32" y="90" class="m" style="fill:#8792ae;font-size:11.5px">Café Cumbre</text>
+<text x="200" y="90" class="m" style="fill:#8792ae;font-size:11.5px">agro</text>
+<text x="356" y="90" class="m" text-anchor="end" style="fill:#8792ae;font-size:11.5px">35</text>
+<path d="M30 86 H 360" fill="none" stroke="#c9403f" stroke-width="1.1"/>
+<rect x="24" y="102" width="342" height="26" rx="4" fill="#dcf5ea" stroke="#dcf5ea" stroke-width="1"/>
+<text x="32" y="120" class="m" style="fill:#111a30;font-size:11.5px">Textiles del Norte</text>
+<text x="200" y="120" class="m" style="fill:#111a30;font-size:11.5px">industria</text>
+<text x="356" y="120" class="m" text-anchor="end" style="fill:#111a30;font-size:11.5px">120</text>
+<text x="32" y="150" class="m" style="fill:#8792ae;font-size:11.5px">Ferretería El Clavo</text>
+<text x="200" y="150" class="m" style="fill:#8792ae;font-size:11.5px">comercio</text>
+<text x="356" y="150" class="m" text-anchor="end" style="fill:#8792ae;font-size:11.5px">18</text>
+<path d="M30 146 H 360" fill="none" stroke="#c9403f" stroke-width="1.1"/>
+<text x="32" y="180" class="m" style="fill:#8792ae;font-size:11.5px">Plásticos Pacífico</text>
+<text x="200" y="180" class="m" style="fill:#8792ae;font-size:11.5px">industria</text>
+<text x="356" y="180" class="m" text-anchor="end" style="fill:#8792ae;font-size:11.5px">80</text>
+<path d="M30 176 H 360" fill="none" stroke="#c9403f" stroke-width="1.1"/>
+<text x="32" y="210" class="m" style="fill:#8792ae;font-size:11.5px">Software Maya</text>
+<text x="200" y="210" class="m" style="fill:#8792ae;font-size:11.5px">servicios</text>
+<text x="356" y="210" class="m" text-anchor="end" style="fill:#8792ae;font-size:11.5px">25</text>
+<path d="M30 206 H 360" fill="none" stroke="#c9403f" stroke-width="1.1"/>
+<rect x="24" y="222" width="342" height="26" rx="4" fill="#dcf5ea" stroke="#dcf5ea" stroke-width="1"/>
+<text x="32" y="240" class="m" style="fill:#111a30;font-size:11.5px">Metalúrgica Istmo</text>
+<text x="200" y="240" class="m" style="fill:#111a30;font-size:11.5px">industria</text>
+<text x="356" y="240" class="m" text-anchor="end" style="fill:#111a30;font-size:11.5px">95</text>
+<rect x="392" y="118" width="196" height="70" rx="10" fill="#111a30" stroke="#111a30" stroke-width="1.5"/>
+<text x="490" y="144" class="m" text-anchor="middle" style="fill:#edf1fa;font-size:11px">filter(sector == "industria",</text>
+<text x="490" y="164" class="m" text-anchor="middle" style="fill:#edf1fa;font-size:11px">       empleados &gt;= 90)</text>
+<path d="M372 153 H 388" fill="none" stroke="#56607a" stroke-width="2" marker-end="url(#p)"/>
+<path d="M590 153 H 600" fill="none" stroke="#138a5e" stroke-width="2" marker-end="url(#pg)"/>
+<rect x="604" y="106" width="136" height="94" rx="10" fill="#dcf5ea" stroke="#138a5e" stroke-width="1.4"/>
+<text x="672" y="136" class="t" text-anchor="middle" style="fill:#138a5e;font-size:18px">2 filas</text>
+<text x="672" y="158" class="m" text-anchor="middle" style="font-size:10.5px;">Textiles del Norte</text>
+<text x="672" y="176" class="m" text-anchor="middle" style="font-size:10.5px;">Metalúrgica Istmo</text>
+<text x="672" y="226" class="s" text-anchor="middle">mismas columnas</text>
+</svg>

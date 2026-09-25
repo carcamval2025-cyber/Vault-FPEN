@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 300" width="760" height="300" role="img" aria-label="Arriba, las cuatro cajas 4200, 4550, 4100 y 4800 forman un solo objeto llamado ingresos. Abajo, la misma operación por 1.05 se aplica a las cuatro posiciones a la vez y da 4410, 4777.5, 4305 y 5040.">
+<title>Arriba, las cuatro cajas 4200, 4550, 4100 y 4800 forman un solo objeto llamado ingresos. Abajo, la misma operación por 1.05 se aplica a las cuatro posiciones a la vez y da 4410, 4777.5, 4305 y 5040.</title>
+<style>
+  text { font-family: 'Atkinson Hyperlegible Next', 'Atkinson Hyperlegible', Arial, sans-serif; font-size: 14px; fill: #111a30; }
+  .t { font-family: Fraunces, Georgia, 'Times New Roman', serif; font-weight: 700; font-size: 16px; }
+  .m { font-family: 'JetBrains Mono', Menlo, Consolas, monospace; font-size: 13px; font-variant-ligatures: none; font-feature-settings: "liga" 0, "calt" 0; }
+  .s { font-size: 12px; fill: #56607a; }
+  .b { font-weight: 700; }
+  .w { fill: #ffffff; }
+  .cw { fill: #edf1fa; }
+  .ln { stroke: #56607a; stroke-width: 1.6; fill: none; }
+</style>
+<defs><marker id="p" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#56607a"/></marker><marker id="pb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2f6fd6"/></marker><marker id="pg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#138a5e"/></marker><marker id="pa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#b86e00"/></marker><marker id="pc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#c9403f"/></marker><marker id="pt" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0f8f84"/></marker><marker id="pv" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#6b4fd1"/></marker></defs>
+<text x="20" y="28" class="t">Un vector: cuatro valores, un solo objeto</text>
+<rect x="150" y="44" width="580" height="74" rx="12" fill="#e3edff" stroke="#2f6fd6" stroke-width="1.4" stroke-dasharray="6 4"/>
+<text x="30" y="88" class="m b" style="fill:#2f6fd6;font-size:15px">ingresos</text>
+<path d="M112 83 H 146" fill="none" stroke="#2f6fd6" stroke-width="1.8" marker-end="url(#pb)"/>
+<rect x="168" y="56" width="124" height="50" rx="8" fill="#eef2fb" stroke="#2b3a5c" stroke-width="1.5"/>
+<text x="230" y="78" class="m b" text-anchor="middle">4200</text>
+<text x="230" y="96" class="s" text-anchor="middle">ene</text>
+<rect x="308" y="56" width="124" height="50" rx="8" fill="#eef2fb" stroke="#2b3a5c" stroke-width="1.5"/>
+<text x="370" y="78" class="m b" text-anchor="middle">4550</text>
+<text x="370" y="96" class="s" text-anchor="middle">feb</text>
+<rect x="448" y="56" width="124" height="50" rx="8" fill="#eef2fb" stroke="#2b3a5c" stroke-width="1.5"/>
+<text x="510" y="78" class="m b" text-anchor="middle">4100</text>
+<text x="510" y="96" class="s" text-anchor="middle">mar</text>
+<rect x="588" y="56" width="124" height="50" rx="8" fill="#eef2fb" stroke="#2b3a5c" stroke-width="1.5"/>
+<text x="650" y="78" class="m b" text-anchor="middle">4800</text>
+<text x="650" y="96" class="s" text-anchor="middle">abr</text>
+<path d="M230 120 V 182" fill="none" stroke="#b86e00" stroke-width="2" marker-end="url(#pa)"/>
+<path d="M370 120 V 182" fill="none" stroke="#b86e00" stroke-width="2" marker-end="url(#pa)"/>
+<path d="M510 120 V 182" fill="none" stroke="#b86e00" stroke-width="2" marker-end="url(#pa)"/>
+<path d="M650 120 V 182" fill="none" stroke="#b86e00" stroke-width="2" marker-end="url(#pa)"/>
+<rect x="262" y="136" width="234" height="30" rx="15" fill="#ffffff" stroke="#f5a623" stroke-width="1.4"/>
+<text x="379" y="156" class="b" text-anchor="middle" style="fill:#b86e00;font-size:13px">× 1.05 en las 4 a la vez</text>
+<rect x="168" y="190" width="124" height="50" rx="8" fill="#fff0d6" stroke="#f5a623" stroke-width="1.5"/>
+<text x="230" y="220" class="m" text-anchor="middle">4410</text>
+<rect x="308" y="190" width="124" height="50" rx="8" fill="#fff0d6" stroke="#f5a623" stroke-width="1.5"/>
+<text x="370" y="220" class="m" text-anchor="middle">4777.5</text>
+<rect x="448" y="190" width="124" height="50" rx="8" fill="#fff0d6" stroke="#f5a623" stroke-width="1.5"/>
+<text x="510" y="220" class="m" text-anchor="middle">4305</text>
+<rect x="588" y="190" width="124" height="50" rx="8" fill="#fff0d6" stroke="#f5a623" stroke-width="1.5"/>
+<text x="650" y="220" class="m" text-anchor="middle">5040</text>
+<text x="30" y="222" class="m b" style="fill:#b86e00;font-size:13px">ingresos * 1.05</text>
+<text x="379" y="276" class="s" text-anchor="middle">El resultado tiene el mismo largo: 4 valores, no un total.</text>
+</svg>

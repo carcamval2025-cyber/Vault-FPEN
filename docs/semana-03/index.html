@@ -1,0 +1,628 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Semana 3 · Visualizar antes de modelar</title>
+<meta name="description" content="Guía de estudio FPEN, semana 3: ggplot2 con data, aes y geom; barras, histograma, boxplot, dispersión y líneas; estéticas, facetas y cómo elegir el gráfico según la pregunta.">
+<link rel="icon" href="../assets/brand/fpen-favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..900,0..100,0..1&family=Atkinson+Hyperlegible+Next:ital,wght@0,200..800;1,200..800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/guia.css">
+<script>try{var t=localStorage.getItem("fpen-guia-v1-tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body data-semana="s3">
+
+<header class="isla-wrap">
+  <div class="isla">
+    <a class="brand" href="../index.html"><img src="../assets/brand/fpen-favicon.svg" alt="" width="25" height="25">FPEN <small>Guía de estudio</small></a>
+    <nav class="isla-semanas" aria-label="Semanas">
+      <a href="../semana-01/index.html">S1</a>
+      <a href="../semana-02/index.html">S2</a>
+      <a href="../semana-03/index.html" aria-current="page">S3</a>
+      <a href="../semana-04/index.html">S4</a>
+      <a href="../semana-05/index.html">S5</a>
+      <span class="futura" title="Semana 6: próximamente">S6</span>
+      <span class="futura" title="Semana 7: próximamente">S7</span>
+      <span class="futura" title="Semana 8: próximamente">S8</span>
+      <span class="futura" title="Semana 9: próximamente">S9</span>
+      <span class="futura" title="Semana 10: próximamente">S10</span>
+      <span class="futura" title="Semana 11: próximamente">S11</span>
+      <span class="futura" title="Semana 12: próximamente">S12</span>
+      <a class="control" href="../control-01/guia/index.html" data-control="Control 01: lectura, repaso y simulacro">C1</a>
+    </nav>
+    <button class="theme-btn" type="button" aria-label="Cambiar tema claro/oscuro"><span class="ico-tema" aria-hidden="true"></span></button>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu-completo"><span class="hb" aria-hidden="true"></span><span class="hb" aria-hidden="true"></span><span class="sr">Menú</span></button>
+  </div>
+</header>
+<div class="menu-completo" id="menu-completo" hidden></div>
+
+<header class="hero-semana">
+  <div class="hero-in">
+    <p class="hero-num" aria-hidden="true">03</p>
+    <div class="hero-txt">
+      <p class="hero-mod"><span class="sr">Semana 3 · </span>Unidad 3 · Visualizar antes de modelar</p>
+      <h1>¿Qué puedo descubrir de mis datos antes de calcular?</h1>
+      <p class="lead">Un buen gráfico muestra en segundos lo que una tabla esconde: dónde se concentran los salarios, qué grupo está mejor, si dos variables se mueven juntas. Esta semana aprendes la gramática de <code>ggplot2</code> y, sobre todo, a elegir el gráfico que responde tu pregunta.</p>
+      <ul class="ciclo-fpen" aria-label="Ciclo de trabajo con datos del curso; resaltadas las etapas de esta semana"><li>importar</li><li class="sep" aria-hidden="true">→</li><li>ordenar</li><li class="sep" aria-hidden="true">→</li><li>transformar</li><li class="sep" aria-hidden="true">→</li><li class="aqui">visualizar</li><li class="sep" aria-hidden="true">→</li><li>modelar</li><li class="sep" aria-hidden="true">→</li><li>comunicar</li></ul>
+    </div>
+    <p class="pregunta"><span class="pregunta-lbl">Pregunta orientadora</span><mark>¿Qué gráfico responde mi pregunta, y qué puedo afirmar (y qué no) a partir de él?</mark></p>
+    <dl class="hero-meta"><div><dt>Lectura</dt><dd>R4DS cap. 1 · Data visualization</dd></div><div><dt>Proyecto</dt><dd>Fases 3–4: primeras visualizaciones</dd></div><div class="eval"><dt>Evaluación</dt><dd>Control 01: semanas 1 a 3</dd></div></dl>
+    <div class="progress" data-progreso-pagina>
+      <div class="progress-bar"><span></span></div>
+      <div class="progress-label"></div>
+    </div>
+  </div>
+</header>
+
+<div class="layout with-toc">
+<aside class="toc" aria-label="Contenido de la página">
+  <p>Semana 3</p>
+  <ol>
+    <li class="grupo" aria-hidden="true">Antes de clase</li>
+    <li><a href="#uso">Cómo usar la guía</a></li>
+    <li><a href="#mapa">Qué puedes usar</a></li>
+    <li><a href="#lecturas">Lecturas</a></li>
+    <li><a href="#checkpoint">Control de lectura</a></li>
+    <li class="grupo" aria-hidden="true">Aprender</li>
+    <li><a href="#gramatica">La gramática</a></li>
+    <li><a href="#una-variable">Una variable</a></li>
+    <li><a href="#comparar">Comparar grupos</a></li>
+    <li><a href="#relaciones">Relaciones y estéticas</a></li>
+    <li><a href="#tiempo">Evolución en el tiempo</a></li>
+    <li><a href="#elegir">Elegir el gráfico</a></li>
+    <li class="grupo" aria-hidden="true">Practicar</li>
+    <li><a href="#trazas">Traza de gráficos</a></li>
+    <li><a href="#ejercicios">Ejercicios</a></li>
+    <li><a href="#practica">Práctica intensiva</a></li>
+    <li class="grupo" aria-hidden="true">Proyecto y evaluación</li>
+    <li><a href="#proyecto">Proyecto: Fases 3–4</a></li>
+    <li><a href="#evaluacion">Rumbo al Control 01</a></li>
+    <li><a href="#cheat">Cheat sheet</a></li>
+    <li><a href="#fuentes">Fuentes</a></li>
+  </ol>
+</aside>
+
+<main>
+
+<section id="uso">
+  <h2>Cómo usar esta guía</h2>
+  <blockquote class="cita">“El gráfico simple ha traído más información a la mente del analista de datos que cualquier otro dispositivo.”<cite>John Tukey, citado en R4DS, capítulo 1</cite></blockquote>
+  <p>Esta semana llega la primera librería grande del curso, <code>ggplot2</code>, y con ella una idea: <strong>mirar los datos antes de calcular</strong>. Cada gráfico responde una pregunta distinta; elegir mal el gráfico no produce un error de R, pero sí una respuesta a la pregunta equivocada.</p>
+  <div class="momentos">
+    <div><strong>Antes de clase</strong>Lee R4DS cap. 1 y responde el <a href="#checkpoint">control de lectura</a>.</div>
+    <div><strong>Con RStudio abierto</strong>Descarga <a href="../datos/salarios.csv" download>salarios.csv</a> y <a href="../datos/ventas_mensuales.csv" download>ventas_mensuales.csv</a> a tu carpeta <code>datos/</code>. Aquí los gráficos se dibujan al pulsar <strong>Ejecutar</strong> (la primera vez se instala ggplot2).</div>
+    <div><strong>Después de clase</strong>Haz la <a href="#trazas">traza de elección de gráficos</a> y los <a href="#ejercicios">ejercicios</a>.</div>
+    <div><strong>Antes del Control 01</strong>Practica los <a href="#practica">problemas tipo examen</a>: siempre piden interpretar, no solo dibujar.</div>
+  </div>
+  <ul class="ciclo-leyenda" aria-label="Ciclo de trabajo">
+    <li>Pregunta</li><li class="sep">→</li><li>Exploración</li><li class="sep">→</li><li>Implementación</li><li class="sep">→</li><li>Resultado</li><li class="sep">→</li><li>Interpretación</li><li class="sep">→</li><li class="v">Verificación</li>
+  </ul>
+</section>
+
+<section id="mapa">
+  <h2>Qué puedes usar esta semana</h2>
+  <div class="permisos">
+    <div class="si">
+      <h4>Sí, desde ahora</h4>
+      <ul>
+        <li>Todo lo de las semanas 1 y 2 (vectores, indexación, data frames, <code>read_csv()</code>)</li>
+        <li><code>library(ggplot2)</code>: <code>ggplot()</code>, <code>aes()</code> y el <code>+</code> entre capas</li>
+        <li>Geoms: <code>geom_bar()</code>, <code>geom_histogram()</code>, <code>geom_freqpoly()</code>, <code>geom_boxplot()</code>, <code>geom_point()</code>, <code>geom_line()</code>, <code>geom_smooth()</code></li>
+        <li>Estéticas <code>color</code>, <code>fill</code>, <code>shape</code>; <code>labs()</code> y <code>facet_wrap()</code></li>
+      </ul>
+    </div>
+    <div class="no">
+      <h4>Todavía no</h4>
+      <ul>
+        <li><code>filter()</code>, <code>mutate()</code> y el pipe <code>|&gt;</code> → semana 4 (esta semana, si hace falta un subconjunto, se usan corchetes)</li>
+        <li>Resúmenes por grupo con <code>group_by()</code> → semana 5</li>
+        <li>Gráficos con muchas capas y análisis exploratorio completo → semana 10</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="lecturas">
+  <h2>Lecturas de preparación</h2>
+  <ul class="check">
+    <li><input type="checkbox" id="s3-l1" data-track="s3-l1"><label for="s3-l1"><span class="ref">[R4DS] Cap. 1</span> “Data visualization”. Enfócate en: la progresión <code>ggplot()</code> vacío → <code>aes()</code> → geom → capas → <code>labs()</code>; mapeo global contra local; gráficos de una y de dos variables; facetas.</label></li>
+  </ul>
+  <div class="box nota"><span class="box-title">Dónde leer</span>
+    <ul>
+      <li><a href="https://r4ds.hadley.nz/data-visualize.html" target="_blank" rel="noopener">R4DS (2.ª ed.), cap. 1: Data visualization</a>.</li>
+      <li><a href="https://ggplot2.tidyverse.org/" target="_blank" rel="noopener">Documentación de ggplot2</a>.</li>
+    </ul>
+  </div>
+  <div class="box adelanto"><span class="box-title">Nota de progresión</span>
+    <p>El libro usa <code>penguins</code>, <code>mpg</code> y <code>diamonds</code>, que no tienen relación económica. Esta guía reconstruye la misma progresión con salarios y ventas. Los ejercicios del capítulo que mencionan <code>fct_infreq()</code> (factores, semana 7) son adelanto opcional.</p>
+  </div>
+</section>
+
+<section id="checkpoint">
+  <h2>Control de lectura</h2>
+  <div class="quiz">
+    <div class="qq" data-q="s3-q1">
+      <p>¿Qué dibuja <code>ggplot(salarios, aes(x = educacion_anios, y = salario_mensual))</code> sin nada más?</p>
+      <div class="quiz-opts">
+        <button class="quiz-opt" data-ok>Solo los ejes vacíos: falta una geom que dibuje las observaciones.</button>
+        <button class="quiz-opt">Un diagrama de dispersión.</button>
+        <button class="quiz-opt">Un error por falta de geom.</button>
+        <button class="quiz-opt">Una recta de tendencia.</button>
+      </div>
+      <p class="why"><code>ggplot()</code> + <code>aes()</code> declaran los datos y el sistema de coordenadas; las marcas las pone una geom como <code>geom_point()</code>.</p>
+    </div>
+    <div class="qq" data-q="s3-q2">
+      <p>¿Qué gráfico responde “¿cuántas personas hay por sector?”</p>
+      <div class="quiz-opts">
+        <button class="quiz-opt" data-ok><code>geom_bar()</code> con <code>x = sector</code></button>
+        <button class="quiz-opt"><code>geom_histogram()</code> con <code>x = sector</code></button>
+        <button class="quiz-opt"><code>geom_point()</code> con <code>x = sector</code></button>
+        <button class="quiz-opt"><code>geom_line()</code> con <code>x = sector</code></button>
+      </div>
+      <p class="why">Contar registros de una variable categórica es el trabajo de <code>geom_bar()</code>: la altura es la frecuencia.</p>
+    </div>
+    <div class="qq" data-q="s3-q3">
+      <p>¿Qué controla <code>binwidth = 50</code> en un histograma de salarios?</p>
+      <div class="quiz-opts">
+        <button class="quiz-opt" data-ok>El ancho de cada intervalo del eje x: 50 dólares.</button>
+        <button class="quiz-opt">Que haya 50 barras.</button>
+        <button class="quiz-opt">Que la barra más alta mida 50.</button>
+        <button class="quiz-opt">Que se muestren solo 50 personas.</button>
+      </div>
+      <p class="why">Cambiar el ancho reagrupa los mismos datos: puede revelar o esconder la forma de la distribución.</p>
+    </div>
+    <div class="qq" data-q="s3-q4">
+      <p>¿Qué diferencia hay entre <code>geom_point(aes(color = sector))</code> y <code>geom_point(color = "blue")</code>?</p>
+      <div class="quiz-opts">
+        <button class="quiz-opt" data-ok>El primero asigna un color distinto por sector y crea una leyenda; el segundo pinta todo de azul.</button>
+        <button class="quiz-opt">Ninguna.</button>
+        <button class="quiz-opt">El segundo da error.</button>
+        <button class="quiz-opt">El primero pinta todo de un color llamado “sector”.</button>
+      </div>
+      <p class="why">Dentro de <code>aes()</code> es un <strong>mapeo</strong> (depende de los datos); fuera, un <strong>valor fijo</strong>.</p>
+    </div>
+    <div class="qq" data-q="s3-q5">
+      <p>¿Qué muestra la línea dentro de la caja de un boxplot?</p>
+      <div class="quiz-opts">
+        <button class="quiz-opt" data-ok>La mediana.</button>
+        <button class="quiz-opt">La media.</button>
+        <button class="quiz-opt">El valor máximo.</button>
+        <button class="quiz-opt">El total del grupo.</button>
+      </div>
+      <p class="why">La caja va del percentil 25 al 75 y la línea central es la mediana; los bigotes llegan a los valores no atípicos más alejados.</p>
+    </div>
+    <div class="qq" data-q="s3-q6">
+      <p>Pones <code>aes(color = sector)</code> dentro de <code>ggplot()</code> y agregas <code>geom_smooth(method = "lm")</code>. ¿Qué pasa?</p>
+      <div class="quiz-opts">
+        <button class="quiz-opt" data-ok>Sale una recta por cada sector, porque el mapeo global se hereda a todas las capas.</button>
+        <button class="quiz-opt">Sale una sola recta para todos.</button>
+        <button class="quiz-opt">No sale ninguna recta.</button>
+        <button class="quiz-opt">Error: no se puede combinar color y smooth.</button>
+      </div>
+      <p class="why">Lo que va en <code>ggplot(aes(...))</code> es global. Para una sola recta, el color va solo en <code>geom_point(aes(color = sector))</code>.</p>
+    </div>
+    <div class="qq" data-q="s3-q7">
+      <p>Un diagrama de dispersión muestra que más años de educación se asocian con salarios más altos. ¿Qué se puede afirmar?</p>
+      <div class="quiz-opts">
+        <button class="quiz-opt" data-ok>Que en estos datos hay una asociación positiva; no que la educación cause el salario.</button>
+        <button class="quiz-opt">Que cada año de estudio causa $36 más de salario.</button>
+        <button class="quiz-opt">Nada: los gráficos no sirven para eso.</button>
+        <button class="quiz-opt">Que la relación vale para todo el país.</button>
+      </div>
+      <p class="why">Un gráfico describe una asociación observada. La causalidad requiere otro diseño; y 40 personas no representan al país.</p>
+    </div>
+    <div class="qq" data-q="s3-q8">
+      <p>¿Qué geom usas para la evolución de las ventas mes a mes?</p>
+      <div class="quiz-opts">
+        <button class="quiz-opt" data-ok><code>geom_line()</code> con <code>x = mes</code></button>
+        <button class="quiz-opt"><code>geom_histogram()</code> con <code>x = ventas</code></button>
+        <button class="quiz-opt"><code>geom_boxplot()</code> con <code>x = mes</code></button>
+        <button class="quiz-opt"><code>geom_bar()</code> sin <code>y</code></button>
+      </div>
+      <p class="why">La línea une observaciones <strong>ordenadas en el tiempo</strong>. Unir puntos de un histograma no crea una serie temporal: su eje x es un monto, no un momento.</p>
+    </div>
+    <div class="quiz-score"><span data-score></span><button class="btn sec" type="button" data-reset>Reiniciar quiz</button></div>
+  </div>
+  <ul class="check"><li><input type="checkbox" id="s3-cp" data-track="s3-cp"><label for="s3-cp">Respondí el control de lectura y entiendo por qué fallé las que fallé.</label></li></ul>
+</section>
+
+<section id="gramatica">
+  <h2>La gramática de un gráfico</h2>
+  <div class="box simple"><span class="box-title">En palabras simples</span>
+    <p>Un gráfico de ggplot2 se arma como una <strong>presentación para la junta directiva</strong>: primero eliges la hoja de datos (<code>data</code>), luego decides qué va en cada eje y qué se pinta de color (<code>aes</code>) y por último eliges la forma de mostrarlo: barras, puntos o líneas (la <code>geom</code>). Las capas se suman con <code>+</code>, como diapositivas superpuestas.</p>
+  </div>
+  <figure class="lamina media"><div class="placa"><div class="placa-core"><img src="../assets/img/s3-capas.svg" alt="Tres capas que se suman con más: ggplot con los datos salarios da un lienzo vacío; aes con x igual a educación e y igual a salario agrega los ejes; geom_point dibuja un punto por persona." width="760" height="280" loading="lazy" decoding="async"></div></div><figcaption>Datos + estéticas + geom. Sin geom no hay marcas: <code>ggplot()</code> solo declara el sistema de coordenadas.</figcaption></figure>
+  <p>Los ejemplos usan <code>salarios.csv</code>: 40 personas de cuatro sectores con su sexo, edad, años de educación y salario mensual (datos simulados). Este bloque la prepara; los demás lo ejecutan antes, solos:</p>
+<pre data-file="preparar.R" id="s3-salarios" data-archivos="../datos/salarios.csv"><code class="language-r">library(readr)
+library(ggplot2)
+salarios &lt;- read_csv("datos/salarios.csv", show_col_types = FALSE)
+dim(salarios)
+names(salarios)</code></pre>
+<pre class="salida"><code>[1] 40  6
+[1] "persona"         "sector"          "sexo"            "edad"           
+[5] "educacion_anios" "salario_mensual"</code></pre>
+  <div class="ciclo">
+    <h3>Caso: ¿se paga mejor a quien estudió más?</h3>
+    <div class="paso"><div><span class="etq">Pregunta</span><p>En esta muestra, ¿las personas con más años de educación ganan más?</p></div></div>
+    <div class="paso"><div><span class="etq">Exploración</span><p>Son dos variables <strong>numéricas</strong> medidas en cada persona: la herramienta es un diagrama de dispersión, un punto por persona. Primero se arma paso a paso para ver qué aporta cada pieza.</p></div></div>
+    <div class="paso"><div><span class="etq">Implementación</span>
+<pre data-file="lienzo.R" data-previo="s3-salarios"><code class="language-r">ggplot(data = salarios)       # 1. lienzo vacío</code></pre>
+<pre data-file="ejes.R" data-previo="s3-salarios"><code class="language-r">ggplot(data = salarios,
+       mapping = aes(x = educacion_anios, y = salario_mensual))   # 2. ejes, sin marcas</code></pre>
+<pre data-file="dispersion.R" data-previo="s3-salarios"><code class="language-r">ggplot(data = salarios,
+       mapping = aes(x = educacion_anios, y = salario_mensual)) +
+  geom_point()                                             # 3. un punto por persona</code></pre>
+    </div></div>
+    <div class="paso"><div><span class="etq">Resultado</span>
+      <figure class="lamina media"><div class="placa"><div class="placa-core"><img src="../assets/img/graficos/s3-dispersion.png" alt="Diagrama de dispersión de años de educación contra salario mensual: los puntos suben de izquierda a derecha, de unos 250 dólares con 6 años de estudio a unos 950 con 18." width="1050" height="660" loading="lazy" decoding="async"></div></div><figcaption>Resultado del paso 3, generado con R.</figcaption></figure>
+    </div></div>
+    <div class="paso"><div><span class="etq">Interpretación</span><p>Los puntos suben de izquierda a derecha: en esta muestra, más años de educación se asocian con salarios más altos. Hay dispersión: con la misma educación, los salarios varían bastante (el sector también influye, como verás en el boxplot).</p></div></div>
+    <div class="paso verif"><div><span class="etq">Verificación: ¿cómo sé que es correcto?</span><ul><li>El gráfico debe tener 40 puntos, uno por fila (algunos pueden superponerse).</li><li>Los ejes deben cubrir el rango de <code>summary()</code>: educación de 6 a 18 años, salario de 240 a 960.</li><li>La palabra es <strong>asociación</strong>: el gráfico no demuestra que estudiar cause el salario.</li></ul></div></div>
+  </div>
+</section>
+
+<section id="una-variable">
+  <h2>Una variable a la vez: categórica o numérica</h2>
+  <div class="box simple"><span class="box-title">En palabras simples</span>
+    <p>Para una variable <strong>categórica</strong> (el sector) se cuenta cuántos hay en cada grupo, como las <strong>cajas de un archivo</strong> con una etiqueta cada una. Para una <strong>numérica</strong> (el salario) se agrupan los montos en <strong>tramos</strong>, como los tramos de una tabla de impuestos, y se cuenta cuántas personas caen en cada tramo.</p>
+  </div>
+  <p>Una variable <strong>categórica</strong> toma uno de un conjunto pequeño de valores; una <strong>numérica</strong> admite un rango amplio donde sumar y promediar tiene sentido. Cada tipo pide una geom distinta:</p>
+<pre data-file="barras.R" data-previo="s3-salarios"><code class="language-r">ggplot(salarios, aes(x = sector)) +
+  geom_bar()</code></pre>
+  <figure class="lamina media"><div class="placa"><div class="placa-core"><img src="../assets/img/graficos/s3-barras.png" alt="Gráfico de barras con cuatro sectores, agro, comercio, industria y servicios, cada uno con una barra de altura 10." width="1050" height="660" loading="lazy" decoding="async"></div></div><figcaption>Diez personas por sector. Mismo número de registros <strong>no</strong> es mismo salario ni mismo desempeño: solo dice cuántos datos hay.</figcaption></figure>
+<pre data-file="histograma.R" data-previo="s3-salarios"><code class="language-r">ggplot(salarios, aes(x = salario_mensual)) +
+  geom_histogram(binwidth = 100)</code></pre>
+  <figure class="lamina media"><div class="placa"><div class="placa-core"><img src="../assets/img/graficos/s3-histograma.png" alt="Histograma del salario mensual con intervalos de 100 dólares: la mayoría de personas se concentra entre 550 y 800 dólares, con pocas por debajo de 400." width="1050" height="660" loading="lazy" decoding="async"></div></div><figcaption>La altura de cada barra es <strong>cuántas personas</strong> caen en ese tramo de 100 dólares, nunca una suma de dinero.</figcaption></figure>
+  <div class="box ojo"><span class="box-title">Qué controla <code>binwidth</code></span>
+    <p>Fija el ancho de cada intervalo en unidades del eje x. Cambiarlo (de 100 a 25, o a 300) altera cuántas observaciones caen en cada barra y la lectura de la forma, aunque los datos no cambien. Muy angosto genera ruido; muy ancho oculta la forma. Pruébalo: pulsa <strong>Editar</strong> en el bloque de arriba y cambia el 100.</p>
+  </div>
+  <p><code>geom_freqpoly()</code> muestra la misma información como línea. Su eje x sigue siendo un <strong>monto</strong>, no el tiempo: unir los puntos no la convierte en una serie temporal.</p>
+</section>
+
+<section id="comparar">
+  <h2>Comparar grupos: el boxplot</h2>
+  <div class="box simple"><span class="box-title">En palabras simples</span>
+    <p>Un boxplot es el <strong>resumen de planilla por departamento</strong> en una sola figura: dónde está el salario del medio (la línea), entre qué valores gana la mitad central del personal (la caja) y hasta dónde llegan los extremos (los bigotes).</p>
+  </div>
+  <div class="ciclo">
+    <h3>Caso: ¿qué sector paga mejor?</h3>
+    <div class="paso"><div><span class="etq">Pregunta</span><p>¿Cómo se comparan los salarios entre los cuatro sectores de la muestra?</p></div></div>
+    <div class="paso"><div><span class="etq">Exploración</span><p>Una variable numérica (salario) y una categórica (sector): un boxplot por sector permite comparar la mediana y la dispersión a la vez.</p></div></div>
+    <div class="paso"><div><span class="etq">Implementación</span>
+<pre data-file="boxplot.R" data-previo="s3-salarios"><code class="language-r">ggplot(salarios, aes(x = sector, y = salario_mensual)) +
+  geom_boxplot() +
+  labs(title = "Salario mensual por sector",
+       x = "Sector", y = "Salario mensual (USD)")</code></pre>
+    </div></div>
+    <div class="paso"><div><span class="etq">Resultado</span>
+      <figure class="lamina media"><div class="placa"><div class="placa-core"><img src="../assets/img/graficos/s3-boxplot.png" alt="Boxplot del salario mensual por sector: agro tiene la mediana más baja, cerca de 510 dólares; comercio ronda 660; industria y servicios, cerca de 750." width="1050" height="660" loading="lazy" decoding="async"></div></div><figcaption>Resultado generado con R.</figcaption></figure>
+    </div></div>
+    <div class="paso"><div><span class="etq">Interpretación</span><p>El agro tiene la mediana más baja; industria y servicios, las más altas y parecidas entre sí. Las cajas se traslapan: dentro de cada sector hay personas que ganan más que la mediana de otro.</p></div></div>
+    <div class="paso verif"><div><span class="etq">Verificación: ¿cómo sé que es correcto?</span>
+      <p>Comprueba una caja con números: el promedio de un sector se calcula con indexación (la mediana del gráfico y el promedio no son iguales, pero deben estar cerca si no hay extremos):</p>
+<pre data-file="verificar_agro.R" data-previo="s3-salarios"><code class="language-r">mean(salarios$salario_mensual[salarios$sector == "agro"])
+mean(salarios$salario_mensual[salarios$sector == "servicios"])</code></pre>
+<pre class="salida"><code>[1] 484
+[1] 765</code></pre>
+      <p>Con 10 personas por sector, las cajas son estimaciones frágiles: es una limitación que se dice, no un error del código.</p>
+    </div></div>
+  </div>
+</section>
+
+<section id="relaciones">
+  <h2>Relaciones y estéticas: <code>color</code>, capas y facetas</h2>
+  <div class="box simple"><span class="box-title">En palabras simples</span>
+    <p>El color es la <strong>leyenda de colores del informe</strong>: si lo pones en el encabezado (<code>ggplot()</code>), se aplica a todas las páginas; si lo pones en una sola diapositiva (una geom), solo afecta a esa. Las facetas son <strong>un gráfico por sucursal</strong>, lado a lado y con la misma escala.</p>
+  </div>
+  <p>Colocar <code>aes(color = sector)</code> dentro de <code>ggplot()</code> lo convierte en un mapeo <strong>global</strong>: se hereda a todas las capas, incluida una recta de tendencia, y produce una recta por cada sector. Si quieres puntos coloreados por sector pero <strong>una sola</strong> recta general, el color va solo en <code>geom_point()</code>:</p>
+<pre data-file="color_local.R" data-previo="s3-salarios"><code class="language-r">ggplot(salarios, aes(x = educacion_anios, y = salario_mensual)) +
+  geom_point(aes(color = sector)) +
+  geom_smooth(method = "lm", se = FALSE, color = "black") +
+  labs(title = "Educación y salario", x = "Años de educación",
+       y = "Salario mensual (USD)", color = "Sector")</code></pre>
+  <figure class="lamina media"><div class="placa"><div class="placa-core"><img src="../assets/img/graficos/s3-color.png" alt="Dispersión de educación contra salario con puntos coloreados por sector y una sola recta negra de tendencia creciente para todos los datos." width="1050" height="660" loading="lazy" decoding="async"></div></div><figcaption>Color <strong>local</strong> en los puntos y una recta global. Fuera de <code>aes()</code>, <code>color = "black"</code> es un valor fijo, no un mapeo.</figcaption></figure>
+  <p>Cuando la tercera variable es categórica, las facetas suelen comunicar mejor que acumular color, forma y tamaño en un mismo gráfico:</p>
+<pre data-file="facetas.R" data-previo="s3-salarios"><code class="language-r">ggplot(salarios, aes(x = educacion_anios, y = salario_mensual)) +
+  geom_point() +
+  facet_wrap(~sector)</code></pre>
+  <figure class="lamina media"><div class="placa"><div class="placa-core"><img src="../assets/img/graficos/s3-facetas.png" alt="Cuatro paneles, uno por sector, cada uno con la dispersión de educación contra salario; en todos los paneles los puntos suben, y el panel de agro está más abajo." width="1050" height="660" loading="lazy" decoding="async"></div></div><figcaption>Un subgráfico por sector, con la misma escala para poder comparar.</figcaption></figure>
+</section>
+
+<section id="tiempo">
+  <h2>Evolución en el tiempo: <code>geom_line()</code></h2>
+  <div class="box simple"><span class="box-title">En palabras simples</span>
+    <p>Una línea de tiempo es el <strong>electrocardiograma del negocio</strong>: cada punto es un mes y la línea muestra si el pulso sube, baja o tiene temporadas. Solo tiene sentido unir los puntos cuando el eje x es tiempo.</p>
+  </div>
+<pre data-file="linea.R" data-archivos="../datos/ventas_mensuales.csv"><code class="language-r">library(readr)
+library(ggplot2)
+ventas &lt;- read_csv("datos/ventas_mensuales.csv", show_col_types = FALSE)
+ggplot(ventas, aes(x = mes, y = ventas_miles)) +
+  geom_line() +
+  geom_point() +
+  labs(title = "Ventas mensuales de una cadena de ferreterías",
+       x = "Mes", y = "Ventas (miles de USD)")</code></pre>
+  <figure class="lamina media"><div class="placa"><div class="placa-core"><img src="../assets/img/graficos/s3-linea.png" alt="Línea de ventas mensuales de enero a diciembre: sube de unos 180 mil dólares a unos 250 mil en noviembre y salta a 301 mil en diciembre." width="1050" height="660" loading="lazy" decoding="async"></div></div><figcaption>Tendencia creciente con un pico en diciembre: temporada navideña. Doce meses no bastan para separar tendencia de temporada.</figcaption></figure>
+</section>
+
+<section id="elegir">
+  <h2>Elegir el gráfico según la pregunta</h2>
+  <div class="box simple"><span class="box-title">En palabras simples</span>
+    <p>Elegir un gráfico es como elegir el <strong>indicador del tablero de control</strong>: primero la pregunta del gerente, después la forma. “¿Cuántos?” pide barras; “¿cómo se reparte?”, histograma; “¿qué grupo está mejor?”, boxplot; “¿se mueven juntas?”, dispersión; “¿cómo evolucionó?”, línea.</p>
+  </div>
+  <figure class="lamina media"><div class="placa"><div class="placa-core"><img src="../assets/img/s3-elegir.svg" alt="Tabla de decisión: para contar por categoría, geom_bar; para la distribución de un monto, geom_histogram; para comparar un monto entre grupos, geom_boxplot; para relacionar dos variables numéricas, geom_point; para la evolución en el tiempo, geom_line." width="760" height="330" loading="lazy" decoding="async"></div></div><figcaption>El tipo de las variables y la pregunta deciden la geom. Un gráfico equivocado no da error: da la respuesta a otra pregunta.</figcaption></figure>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Pregunta</th><th>Variables</th><th>Geom</th></tr></thead>
+    <tbody>
+      <tr><td>¿Cuántas observaciones hay por categoría?</td><td>1 categórica</td><td><code>geom_bar()</code></td></tr>
+      <tr><td>¿Cómo se distribuye un monto?</td><td>1 numérica</td><td><code>geom_histogram()</code>, <code>geom_freqpoly()</code></td></tr>
+      <tr><td>¿Cómo cambia un monto entre grupos?</td><td>1 numérica + 1 categórica</td><td><code>geom_boxplot()</code></td></tr>
+      <tr><td>¿Se relacionan dos montos?</td><td>2 numéricas</td><td><code>geom_point()</code> (+ <code>geom_smooth()</code>)</td></tr>
+      <tr><td>¿Cómo evolucionó en el tiempo?</td><td>tiempo + numérica</td><td><code>geom_line()</code></td></tr>
+    </tbody>
+  </table></div>
+  <div class="box nota"><span class="box-title">Lo que un gráfico no dice</span>
+    <p>Una relación positiva entre visitantes e ingreso no mide la <strong>conversión</strong> (compras entre visitantes): para eso hacen falta las dos variables y una división explícita. Un patrón visual sugiere dónde investigar; nunca sustituye la verificación con los números detrás del gráfico.</p>
+  </div>
+</section>
+
+<section id="trazas">
+  <h2>Traza · ¿Qué gráfico y con qué estéticas?</h2>
+  <p>Para cada pregunta sobre <code>salarios</code>, escribe la geom (por ejemplo <code>geom_bar</code>) y la variable del eje x. Usa los nombres de columna exactos.</p>
+  <div class="traza">
+    <div class="table-wrap"><table>
+      <thead><tr><th>Pregunta</th><th>Geom</th><th>Eje x</th></tr></thead>
+      <tbody>
+        <tr><td class="dado" style="text-align:left;white-space:normal">¿Cuántas mujeres y cuántos hombres hay en la muestra?</td><td><input data-a="geom_bar|geom_bar()" aria-label="geom 1"></td><td><input data-a="sexo" aria-label="eje x 1"></td></tr>
+        <tr><td class="dado" style="text-align:left;white-space:normal">¿Cómo se distribuye la edad de las personas?</td><td><input data-a="geom_histogram|geom_histogram()|geom_freqpoly|geom_freqpoly()" aria-label="geom 2"></td><td><input data-a="edad" aria-label="eje x 2"></td></tr>
+        <tr><td class="dado" style="text-align:left;white-space:normal">¿Ganan distinto mujeres y hombres?</td><td><input data-a="geom_boxplot|geom_boxplot()" aria-label="geom 3"></td><td><input data-a="sexo" aria-label="eje x 3"></td></tr>
+        <tr><td class="dado" style="text-align:left;white-space:normal">¿Las personas mayores ganan más?</td><td><input data-a="geom_point|geom_point()" aria-label="geom 4"></td><td><input data-a="edad" aria-label="eje x 4"></td></tr>
+      </tbody>
+    </table></div>
+    <div class="acciones"><button class="btn" type="button" data-comprobar>Comprobar</button><button class="btn sec" type="button" data-solucion>Ver solución</button><button class="btn sec" type="button" data-limpiar>Limpiar</button><span class="resultado" aria-live="polite"></span></div>
+  </div>
+  <details class="defensa"><summary>¿Por qué en la pregunta 3 el eje x es <code>sexo</code> y no <code>salario_mensual</code>?</summary><div><p>En un boxplot el grupo va en x y el monto en y: así cada caja es un grupo. Pon <code>aes(x = sexo, y = salario_mensual)</code>. Si pusieras el salario en x sin grupos, obtendrías una sola caja horizontal que no compara nada.</p></div></details>
+  <ul class="check"><li><input type="checkbox" id="s3-t1" data-track="s3-t1"><label for="s3-t1">Completé la traza y probé al menos dos de los gráficos con <strong>Editar</strong>.</label></li></ul>
+</section>
+
+<section id="ejercicios">
+  <h2>Ejercicios</h2>
+  <div class="ia-leyenda"><span class="ia sin">Sin IA</span><span class="ia permitida">IA permitida</span><span class="ia requerida">IA requerida</span></div>
+
+  <article class="ejercicio">
+    <header><h3>E1 · ¿Por qué no se ve nada?</h3><span class="nivel">gramática · ★</span><span class="ia sin">Sin IA</span></header>
+    <div class="cuerpo">
+      <p>Un compañero ejecuta esto y dice que “ggplot no funciona”, porque solo ve un rectángulo gris con ejes. Explica qué falta y por qué.</p>
+<pre data-file="e1_vacio.R" data-previo="s3-salarios"><code class="language-r">ggplot(salarios, aes(x = edad, y = salario_mensual))</code></pre>
+    </div>
+    <div class="respuesta"><label for="s3-e1">Tu explicación</label><textarea id="s3-e1" data-id="s3-e1" data-min="40" placeholder="Mínimo 40 caracteres…"></textarea><span class="cuenta"></span></div>
+    <details class="solucion"><summary>Respuesta</summary><div class="det"><p>Falta una <strong>geom</strong>. <code>ggplot()</code> con <code>aes()</code> define los datos y qué variable va en cada eje, pero no dibuja marcas: eso lo hace <code>geom_point()</code>. Se corrige sumando <code>+ geom_point()</code>. No es un error de R: es un gráfico incompleto.</p></div></details>
+    <ul class="check"><li><input type="checkbox" id="s3-e1c" data-track="s3-e1c"><label for="s3-e1c">Resuelto</label></li></ul>
+  </article>
+
+  <article class="ejercicio">
+    <header><h3>E2 · Los puntos rosados</h3><span class="nivel">estéticas · ★★</span><span class="ia sin">Sin IA</span></header>
+    <div class="cuerpo">
+      <p>Se quería pintar todos los puntos de azul, pero salen rosados y con una leyenda que dice “blue”. Ejecuta el bloque, explica qué pasó y corrígelo.</p>
+<pre data-file="e2_azul.R" data-previo="s3-salarios"><code class="language-r">ggplot(salarios, aes(x = educacion_anios, y = salario_mensual, color = "blue")) +
+  geom_point()</code></pre>
+    </div>
+    <div class="respuesta"><label for="s3-e2">Tu explicación y corrección</label><textarea id="s3-e2" data-id="s3-e2" data-min="50" placeholder="Mínimo 50 caracteres…"></textarea><span class="cuenta"></span></div>
+    <details class="solucion"><summary>Respuesta</summary><div class="det">
+      <p>Dentro de <code>aes()</code>, <code>color = "blue"</code> se interpreta como un <strong>mapeo</strong> a una “variable” constante con el valor “blue”: ggplot le asigna el primer color de su paleta (rosado) y crea una leyenda. Un color fijo va <strong>fuera</strong> de <code>aes()</code>:</p>
+<pre data-file="e2_corregido.R" data-previo="s3-salarios"><code class="language-r">ggplot(salarios, aes(x = educacion_anios, y = salario_mensual)) +
+  geom_point(color = "blue")</code></pre>
+    </div></details>
+    <ul class="check"><li><input type="checkbox" id="s3-e2c" data-track="s3-e2c"><label for="s3-e2c">Resuelto</label></li></ul>
+  </article>
+
+  <article class="ejercicio">
+    <header><h3>E3 · Construye: salarios de mujeres y hombres</h3><span class="nivel">boxplot · ★★</span><span class="ia permitida">IA permitida</span></header>
+    <div class="cuerpo">
+      <p>Construye un gráfico que compare el salario de mujeres y hombres, con título y etiquetas en español. Escribe una interpretación de dos líneas y una limitación.</p>
+    </div>
+    <div class="respuesta"><label for="s3-e3">Tu código, interpretación y limitación</label><textarea id="s3-e3" data-id="s3-e3" data-min="60" placeholder="Mínimo 60 caracteres…"></textarea><span class="cuenta"></span></div>
+    <details class="solucion"><summary>Solución de referencia</summary><div class="det">
+<pre data-file="e3_sexo.R" data-previo="s3-salarios"><code class="language-r">ggplot(salarios, aes(x = sexo, y = salario_mensual)) +
+  geom_boxplot() +
+  labs(title = "Salario mensual por sexo",
+       x = "Sexo", y = "Salario mensual (USD)")</code></pre>
+      <p><strong>Criterios:</strong> boxplot con el grupo en x; títulos legibles; la interpretación compara medianas y dispersión; la limitación reconoce que son 20 personas por grupo y que el sector y la educación pueden explicar parte de la diferencia (en estos datos simulados, el sexo se asignó alternando filas, así que cualquier diferencia es casual).</p>
+    </div></details>
+    <ul class="check"><li><input type="checkbox" id="s3-e3c" data-track="s3-e3c"><label for="s3-e3c">Resuelto</label></li></ul>
+  </article>
+
+  <article class="ejercicio">
+    <header><h3>E4 · Modifica: el ancho de los intervalos</h3><span class="nivel">histograma · ★★</span><span class="ia permitida">IA permitida</span></header>
+    <div class="cuerpo">
+      <p>Ejecuta el histograma con <code>binwidth = 20</code>, <code>100</code> y <code>300</code> (pulsa <strong>Editar</strong> en el bloque de la sección <a href="#una-variable">Una variable a la vez</a>). ¿Cuál elegirías para un informe y por qué?</p>
+    </div>
+    <div class="respuesta"><label for="s3-e4">Tu elección y justificación</label><textarea id="s3-e4" data-id="s3-e4" data-min="50" placeholder="Mínimo 50 caracteres…"></textarea><span class="cuenta"></span></div>
+    <details class="solucion"><summary>Criterios</summary><div class="det"><ul>
+      <li>Con 20, casi cada barra tiene 0, 1 o 2 personas: ruido que parece patrón.</li>
+      <li>Con 300, todo cae en 3 o 4 barras: se pierde la forma.</li>
+      <li>Un ancho intermedio (75 a 100) muestra dónde se concentran los salarios. No hay fórmula única: se prueba y se justifica con la pregunta.</li>
+    </ul></div></details>
+    <ul class="check"><li><input type="checkbox" id="s3-e4c" data-track="s3-e4c"><label for="s3-e4c">Resuelto</label></li></ul>
+  </article>
+
+  <article class="ejercicio">
+    <header><h3>E5 · Proyecto: primeras visualizaciones exploratorias</h3><span class="nivel">proyecto · ★★</span><span class="ia permitida">IA permitida</span></header>
+    <div class="cuerpo">
+      <p>Con la base de tu proyecto, haz <strong>tres gráficos</strong>, cada uno ligado a una pregunta secundaria: una distribución, una comparación entre grupos y una relación. Para cada uno escribe la pregunta, por qué elegiste esa geom y qué observas.</p>
+    </div>
+    <div class="respuesta"><label for="s3-e5">Pregunta, geom y observación de cada gráfico</label><textarea id="s3-e5" data-id="s3-e5" data-min="90" placeholder="Mínimo 90 caracteres…"></textarea><span class="cuenta"></span></div>
+    <details class="solucion"><summary>Criterios (rúbrica de visualizaciones del proyecto)</summary><div class="det"><ul>
+      <li>Cada gráfico responde una pregunta; se prefieren pocos gráficos con propósito a muchos sin él.</li>
+      <li>Variables apropiadas, títulos y etiquetas comprensibles, geom adecuada.</li>
+      <li>Cada gráfico está <strong>interpretado</strong>, no solo mostrado.</li>
+    </ul></div></details>
+    <ul class="check"><li><input type="checkbox" id="s3-e5c" data-track="s3-e5c"><label for="s3-e5c">Resuelto con mi equipo</label></li></ul>
+  </article>
+</section>
+
+<section id="practica">
+  <h2>Práctica intensiva</h2>
+  <h3>Ejercicios rápidos · ¿Qué geom uso?</h3>
+  <p>Escribe solo el nombre de la geom (por ejemplo <code>geom_bar</code>).</p>
+  <div class="traza taladro">
+    <div class="table-wrap"><table>
+      <thead><tr><th>Situación</th><th>Tu respuesta</th></tr></thead>
+      <tbody>
+        <tr><td class="dado" style="text-align:left;white-space:normal">Cuántas empresas hay en cada departamento</td><td><input data-a="geom_bar" aria-label="Respuesta"></td></tr>
+        <tr><td class="dado" style="text-align:left;white-space:normal">Cómo se reparte el precio del alquiler en una ciudad</td><td><input data-a="geom_histogram|geom_freqpoly" aria-label="Respuesta"></td></tr>
+        <tr><td class="dado" style="text-align:left;white-space:normal">La inflación mensual de los últimos 24 meses</td><td><input data-a="geom_line" aria-label="Respuesta"></td></tr>
+        <tr><td class="dado" style="text-align:left;white-space:normal">Si el gasto en publicidad se asocia con las ventas</td><td><input data-a="geom_point" aria-label="Respuesta"></td></tr>
+        <tr><td class="dado" style="text-align:left;white-space:normal">El ingreso de los hogares urbanos contra los rurales</td><td><input data-a="geom_boxplot" aria-label="Respuesta"></td></tr>
+        <tr><td class="dado" style="text-align:left;white-space:normal">Una recta de tendencia sobre una dispersión</td><td><input data-a="geom_smooth" aria-label="Respuesta"></td></tr>
+      </tbody>
+    </table></div>
+    <div class="acciones"><button class="btn" type="button" data-comprobar>Comprobar</button><button class="btn sec" type="button" data-solucion>Ver solución</button><button class="btn sec" type="button" data-limpiar>Limpiar</button><span class="resultado" aria-live="polite"></span></div>
+  </div>
+  <ul class="check"><li><input type="checkbox" id="s3-px" data-track="s3-px"><label for="s3-px">Completé los ejercicios rápidos.</label></li></ul>
+
+  <h3>Problemas tipo examen</h3>
+  <article class="ejercicio problema">
+    <header><h3>P1 · Leer una distribución</h3><span class="nivel">histograma e interpretación · ★★★</span><span class="ia sin">Sin IA</span></header>
+    <div class="cuerpo">
+      <p>Haz el histograma del salario con <code>binwidth = 100</code> y, con <code>summary()</code>, responde: ¿entre qué valores gana la mitad central de las personas?, ¿el salario promedio está por encima o por debajo de la mediana?, ¿qué sugiere eso sobre la forma de la distribución?</p>
+      <p><strong>Tu respuesta debe cumplir estos casos de prueba:</strong></p>
+      <div class="table-wrap"><table><thead><tr><th>Resultado</th><th>Esperado</th></tr></thead><tbody>
+        <tr><td>Mitad central (1.er a 3.er cuartil)</td><td>570 a 752.5</td></tr>
+        <tr><td>Mediana / media</td><td>675 / 660.2</td></tr>
+        <tr><td>Forma</td><td>media menor que mediana: una cola hacia los salarios bajos</td></tr>
+      </tbody></table></div>
+    </div>
+    <details><summary>Pista</summary><div class="det"><p><code>summary(salarios$salario_mensual)</code> da los cuartiles. Unos pocos salarios muy bajos jalan la media hacia abajo.</p></div></details>
+    <details class="solucion"><summary>Solución</summary><div class="det">
+<pre data-file="p1_resumen.R" data-previo="s3-salarios"><code class="language-r">summary(salarios$salario_mensual)</code></pre>
+<pre class="salida"><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  240.0   570.0   675.0   660.2   752.5   960.0 </code></pre>
+      <p>La mitad central gana entre $570 y $752.5. La media ($660.2) es un poco menor que la mediana ($675): unos pocos salarios bajos (los del agro, desde $240) forman una cola a la izquierda. En el histograma se ven como barras bajas a la izquierda.</p>
+      <p><strong>Verificación:</strong> el mínimo y el máximo del resumen deben coincidir con los bordes del histograma.</p>
+    </div></details>
+    <ul class="check"><li><input type="checkbox" id="s3-pr1" data-track="s3-pr1"><label for="s3-pr1">Resuelto y probado con todos los casos</label></li></ul>
+  </article>
+
+  <article class="ejercicio problema">
+    <header><h3>P2 · Una recta o cuatro</h3><span class="nivel">mapeo global y local · ★★★</span><span class="ia sin">Sin IA</span></header>
+    <div class="cuerpo">
+      <p>Escribe dos versiones del gráfico educación–salario: (a) puntos coloreados por sector con <strong>una sola</strong> recta negra y (b) puntos y <strong>una recta por sector</strong>. Explica qué cambia en el código.</p>
+      <p><strong>Tu código debe cumplir estos casos de prueba:</strong></p>
+      <div class="table-wrap"><table><thead><tr><th>Versión</th><th>Número de rectas</th><th>Dónde va <code>color = sector</code></th></tr></thead><tbody>
+        <tr><td>(a)</td><td>1</td><td>solo en <code>geom_point(aes(...))</code></td></tr>
+        <tr><td>(b)</td><td>4</td><td>en <code>ggplot(aes(...))</code>, global</td></tr>
+      </tbody></table></div>
+    </div>
+    <details><summary>Pista</summary><div class="det"><p>Todo lo que va en <code>ggplot(aes(...))</code> lo heredan todas las capas; lo que va en una geom, solo esa geom.</p></div></details>
+    <details class="solucion"><summary>Solución</summary><div class="det">
+      <p>La versión (a) es el bloque de la sección <a href="#relaciones">Relaciones y estéticas</a>. La versión (b):</p>
+<pre data-file="p2_cuatro_rectas.R" data-previo="s3-salarios"><code class="language-r">ggplot(salarios, aes(x = educacion_anios, y = salario_mensual, color = sector)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE)</code></pre>
+      <p><strong>Interpretación:</strong> en (b) las cuatro rectas son casi paralelas y la del agro está más abajo: la educación se asocia con más salario en todos los sectores, pero el nivel depende del sector.</p>
+    </div></details>
+    <ul class="check"><li><input type="checkbox" id="s3-pr2" data-track="s3-pr2"><label for="s3-pr2">Resuelto y probado con todos los casos</label></li></ul>
+  </article>
+
+  <article class="ejercicio problema">
+    <header><h3>P3 · Auditar una conclusión</h3><span class="nivel">interpretación · ★★★</span><span class="ia sin">Sin IA</span></header>
+    <div class="cuerpo">
+      <p>Un informe dice: <em>“El gráfico de barras muestra 10 personas por sector, así que los cuatro sectores pagan igual; y como la dispersión educación–salario sube, estudiar un año más aumenta el salario en $36.”</em> Señala los dos errores y reescribe las conclusiones de forma defendible.</p>
+      <p><strong>Tu respuesta debe cubrir:</strong></p>
+      <div class="table-wrap"><table><thead><tr><th>Afirmación</th><th>Lo que debes poder decir</th></tr></thead><tbody>
+        <tr><td>“pagan igual”</td><td>Las barras cuentan registros, no miden salarios</td></tr>
+        <tr><td>“estudiar aumenta $36”</td><td>Es una asociación en 40 personas, no un efecto causal</td></tr>
+      </tbody></table></div>
+    </div>
+    <details class="solucion"><summary>Solución</summary><div class="det">
+      <p><strong>Error 1:</strong> un <code>geom_bar()</code> con 10 por sector solo dice cuántos datos hay por grupo. Para comparar salarios se necesita el boxplot (o promedios por sector), que muestra diferencias claras: el agro está muy por debajo.</p>
+      <p><strong>Error 2:</strong> la dispersión muestra una asociación positiva, no un mecanismo causal: el sector, la edad o la experiencia pueden explicar parte de la relación, y la muestra es de 40 personas.</p>
+      <p><strong>Reescritura:</strong> “En esta muestra de 40 personas, el agro tiene el salario mediano más bajo (≈ $510) y la industria y los servicios los más altos (≈ $750). Las personas con más años de educación tienden a ganar más; esto es una asociación y no permite afirmar cuánto aumenta el salario por cada año de estudio.”</p>
+    </div></details>
+    <ul class="check"><li><input type="checkbox" id="s3-pr3" data-track="s3-pr3"><label for="s3-pr3">Resuelto</label></li></ul>
+  </article>
+</section>
+
+<section id="proyecto">
+  <h2>Proyecto grupal · Fases 3 y 4</h2>
+  <p><strong>Primeras visualizaciones exploratorias.</strong> El programa no pide un número de gráficos: pide que cada uno responda una pregunta, use variables apropiadas, sea legible, tenga títulos y etiquetas, use la representación adecuada y esté interpretado.</p>
+  <div class="card">
+    <h3>Entregables de esta fase</h3>
+    <ul class="check">
+      <li><input type="checkbox" id="s3-p1" data-track="s3-p1"><label for="s3-p1">Tres gráficos exploratorios (ejercicio E5), cada uno con su pregunta.</label></li>
+      <li><input type="checkbox" id="s3-p2" data-track="s3-p2"><label for="s3-p2">Títulos y ejes en español con unidades (USD, %, años).</label></li>
+      <li><input type="checkbox" id="s3-p3" data-track="s3-p3"><label for="s3-p3">Una interpretación escrita por gráfico, con al menos una limitación.</label></li>
+    </ul>
+  </div>
+  <h3>Preguntas de defensa</h3>
+  <details class="defensa"><summary>¿Por qué utilizaron este tipo de gráfico?</summary><div><p>Nombra el tipo de variables (categórica o numérica, una o dos) y la pregunta. “Usamos un boxplot porque comparamos un monto entre grupos” es una respuesta completa; “porque se veía bonito”, no.</p></div></details>
+  <details class="defensa"><summary>¿Qué representa la altura de esta barra?</summary><div><p>En <code>geom_bar()</code> y en un histograma, cuántas observaciones hay en esa categoría o intervalo; nunca una suma de dinero, a menos que se haya construido así explícitamente.</p></div></details>
+  <details class="defensa"><summary>¿Qué ocurriría si movemos <code>color</code> dentro de <code>ggplot(aes(...))</code>?</summary><div><p>El mapeo se volvería global y lo heredarían todas las capas: por ejemplo, <code>geom_smooth()</code> dibujaría una recta por grupo en lugar de una sola.</p></div></details>
+  <details class="defensa"><summary>¿El gráfico demuestra que una variable causa la otra?</summary><div><p>No. Muestra una asociación en estos datos. El proyecto no exige demostrar causalidad, pero sí reconocer esa diferencia al interpretar.</p></div></details>
+</section>
+
+<section id="evaluacion">
+  <h2>Rumbo al Control 01</h2>
+  <p>Esta es la última semana del temario del Control 01. Repásalo con la <a href="../control-01/guia/index.html">guía de lectura</a> y el <a href="../control-01/repaso/index.html">repaso con simulacro</a>, que tiene ejercicios de gráficos con R en vivo. Sin IA.</p>
+  <ul class="check">
+    <li><input type="checkbox" id="s3-v1" data-track="s3-v1"><label for="s3-v1">Puedo explicar el papel de <code>data</code>, <code>aes()</code> y la geom, y por qué <code>ggplot()</code> solo no dibuja.</label></li>
+    <li><input type="checkbox" id="s3-v2" data-track="s3-v2"><label for="s3-v2">Puedo elegir entre barras, histograma, boxplot, dispersión y línea según la pregunta.</label></li>
+    <li><input type="checkbox" id="s3-v3" data-track="s3-v3"><label for="s3-v3">Puedo explicar qué controla <code>binwidth</code> y leer las partes de un boxplot.</label></li>
+    <li><input type="checkbox" id="s3-v4" data-track="s3-v4"><label for="s3-v4">Puedo distinguir color dentro y fuera de <code>aes()</code>, y mapeo global contra local.</label></li>
+    <li><input type="checkbox" id="s3-v5" data-track="s3-v5"><label for="s3-v5">Puedo interpretar un gráfico sin confundir asociación con causalidad.</label></li>
+  </ul>
+</section>
+
+<section id="cheat">
+  <h2>Cheat Sheet · Semana 3</h2>
+  <ul class="vocab"><li>ggplot()</li><li>aes()</li><li>geom</li><li>mapeo global</li><li>mapeo local</li><li>binwidth</li><li>faceta</li><li>variable categórica</li><li>variable numérica</li><li>asociación</li></ul>
+  <div class="grid">
+    <div class="card"><h3>La plantilla</h3>
+<pre data-file="plantilla.R" data-norun><code class="language-r">ggplot(datos, aes(x = var1, y = var2)) +
+  geom_algo() +
+  labs(title = "…", x = "…", y = "…")</code></pre></div>
+    <div class="card"><h3>Geoms de la semana</h3><div class="table-wrap"><table><tbody>
+      <tr><td><code>geom_bar()</code></td><td>conteo por categoría</td></tr>
+      <tr><td><code>geom_histogram(binwidth =)</code></td><td>distribución de un monto</td></tr>
+      <tr><td><code>geom_freqpoly(binwidth =)</code></td><td>distribución, como línea</td></tr>
+      <tr><td><code>geom_boxplot()</code></td><td>monto por grupo</td></tr>
+      <tr><td><code>geom_point()</code></td><td>dos variables numéricas</td></tr>
+      <tr><td><code>geom_smooth(method = "lm", se = FALSE)</code></td><td>recta de tendencia</td></tr>
+      <tr><td><code>geom_line()</code></td><td>evolución en el tiempo</td></tr>
+    </tbody></table></div></div>
+    <div class="card"><h3>Estéticas y extras</h3><div class="table-wrap"><table><tbody>
+      <tr><td><code>aes(color = var)</code></td><td>color según los datos, con leyenda</td></tr>
+      <tr><td><code>geom_point(color = "black")</code></td><td>color fijo</td></tr>
+      <tr><td><code>aes(fill = var)</code></td><td>relleno de barras y cajas</td></tr>
+      <tr><td><code>facet_wrap(~var)</code></td><td>un panel por categoría</td></tr>
+      <tr><td><code>labs()</code></td><td>títulos y etiquetas</td></tr>
+    </tbody></table></div></div>
+  </div>
+</section>
+
+<section id="fuentes">
+  <h2>Fuentes</h2>
+  <ul>
+    <li><strong>[R4DS]</strong> Wickham, H., Çetinkaya-Rundel, M. y Grolemund, G. (2023). <em>R for Data Science</em>, 2.ª ed. Cap. 1 “Data visualization”. <a href="https://r4ds.hadley.nz/data-visualize.html" target="_blank" rel="noopener">r4ds.hadley.nz</a>.</li>
+    <li>Programa oficial del curso (ESEN, 2026): semana 3, “Visualizar antes de modelar”.</li>
+    <li><code>salarios.csv</code> y <code>ventas_mensuales.csv</code> son datos simulados para esta guía.</li>
+  </ul>
+  <nav class="nav-semanas" aria-label="Navegación entre semanas">
+    <a class="nav-prev" href="../semana-02/index.html"><span class="btn-ico" aria-hidden="true"></span><span>Semana 2: conjuntos de datos</span></a>
+    <a class="nav-next" href="../semana-04/index.html"><span>Semana 4: transformar datos</span><span class="btn-ico" aria-hidden="true"></span></a>
+  </nav>
+</section>
+
+<footer class="pie">Guía de estudio · Fundamentos de Programación para Economía y Negocios · ESEN · Ciclo III/2026 · Catedrático: Alvin Javier Portillo Tiliano. Material de apoyo no oficial: no sustituye la lectura ni la clase; ante cualquier diferencia, mandan el programa del curso y Moodle.</footer>
+</main>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-r.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+<script src="../assets/guia.js"></script>
+<script src="../assets/ejecutar-r.js"></script>
+</body>
+</html>

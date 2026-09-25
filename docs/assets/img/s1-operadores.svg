@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 260" width="760" height="260" role="img" aria-label="Arriba, aritmética: ingresos_enero 4200 menos costos_enero 3100 da utilidad 1100. Abajo, comparación: utilidad 1100 mayor que 0 da TRUE.">
+<title>Arriba, aritmética: ingresos_enero 4200 menos costos_enero 3100 da utilidad 1100. Abajo, comparación: utilidad 1100 mayor que 0 da TRUE.</title>
+<style>
+  text { font-family: 'Atkinson Hyperlegible Next', 'Atkinson Hyperlegible', Arial, sans-serif; font-size: 14px; fill: #111a30; }
+  .t { font-family: Fraunces, Georgia, 'Times New Roman', serif; font-weight: 700; font-size: 16px; }
+  .m { font-family: 'JetBrains Mono', Menlo, Consolas, monospace; font-size: 13px; font-variant-ligatures: none; font-feature-settings: "liga" 0, "calt" 0; }
+  .s { font-size: 12px; fill: #56607a; }
+  .b { font-weight: 700; }
+  .w { fill: #ffffff; }
+  .cw { fill: #edf1fa; }
+  .ln { stroke: #56607a; stroke-width: 1.6; fill: none; }
+</style>
+<defs><marker id="p" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#56607a"/></marker><marker id="pb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2f6fd6"/></marker><marker id="pg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#138a5e"/></marker><marker id="pa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#b86e00"/></marker><marker id="pc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#c9403f"/></marker><marker id="pt" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0f8f84"/></marker><marker id="pv" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#6b4fd1"/></marker></defs>
+<text x="20" y="28" class="t">Aritméticos: dos números entran, un número sale</text>
+<rect x="20" y="46" width="170" height="56" rx="8" fill="#eef2fb" stroke="#2b3a5c" stroke-width="1.5"/>
+<text x="105" y="71" class="m b" text-anchor="middle">4200</text>
+<text x="105" y="89" class="s" text-anchor="middle">ingresos_enero</text>
+<text x="212" y="81" class="t" text-anchor="middle" style="font-size:26px;">−</text>
+<rect x="234" y="46" width="170" height="56" rx="8" fill="#eef2fb" stroke="#2b3a5c" stroke-width="1.5"/>
+<text x="319" y="71" class="m b" text-anchor="middle">3100</text>
+<text x="319" y="89" class="s" text-anchor="middle">costos_enero</text>
+<path d="M414 74 H 500" fill="none" stroke="#56607a" stroke-width="2" marker-end="url(#p)"/>
+<rect x="510" y="46" width="170" height="56" rx="8" fill="#fff0d6" stroke="#f5a623" stroke-width="1.5"/>
+<text x="595" y="71" class="m b" text-anchor="middle">1100</text>
+<text x="595" y="89" class="s" text-anchor="middle">utilidad</text>
+<text x="20" y="150" class="t">De comparación: dos valores entran, un TRUE o FALSE sale</text>
+<rect x="20" y="168" width="170" height="56" rx="8" fill="#eef2fb" stroke="#2b3a5c" stroke-width="1.5"/>
+<text x="105" y="193" class="m b" text-anchor="middle">1100</text>
+<text x="105" y="211" class="s" text-anchor="middle">utilidad</text>
+<text x="212" y="204" class="t" text-anchor="middle" style="font-size:26px;">&gt;</text>
+<rect x="234" y="168" width="170" height="56" rx="8" fill="#eef2fb" stroke="#2b3a5c" stroke-width="1.5"/>
+<text x="319" y="201" class="m" text-anchor="middle">0</text>
+<path d="M414 196 H 500" fill="none" stroke="#138a5e" stroke-width="2" marker-end="url(#pg)"/>
+<rect x="510" y="176" width="110" height="40" rx="20" fill="#dcf5ea" stroke="#138a5e" stroke-width="1.6"/>
+<text x="565" y="202" class="m b" text-anchor="middle" style="fill:#138a5e;font-size:15px">TRUE</text>
+<text x="640" y="202" class="s">logical</text>
+</svg>

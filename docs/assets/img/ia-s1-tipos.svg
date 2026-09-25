@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 640" width="100%" height="100%" role="img" aria-labelledby="tdtitle tddesc">
+          <title id="tdtitle">Tipos de Datos en R — Valor con Etiqueta Física</title>
+          <desc id="tddesc">Tres valores distintos (número, texto, interruptor lógico) cada uno con su etiqueta de tipo pegada: numeric, character y logical.</desc>
+          <defs>
+            <pattern id="grid-pattern-td" width="40" height="40" patternUnits="userSpaceOnUse">
+              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#4c9aff" stroke-width="1" stroke-opacity="0.04" />
+            </pattern>
+            <linearGradient id="card-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#182645" stop-opacity="0.9" />
+              <stop offset="100%" stop-color="#111a30" stop-opacity="0.9" />
+            </linearGradient>
+            <radialGradient id="amber-glow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#f5a623" stop-opacity="0.25" />
+              <stop offset="100%" stop-color="#f5a623" stop-opacity="0" />
+            </radialGradient>
+            <radialGradient id="green-glow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#34d399" stop-opacity="0.25" />
+              <stop offset="100%" stop-color="#34d399" stop-opacity="0" />
+            </radialGradient>
+            <radialGradient id="violet-glow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#a78bfa" stop-opacity="0.25" />
+              <stop offset="100%" stop-color="#a78bfa" stop-opacity="0" />
+            </radialGradient>
+          </defs>
+          <rect width="960" height="640" fill="#0a0f1c" />
+          <rect width="960" height="640" fill="url(#grid-pattern-td)" />
+          <g fill="none" stroke-linecap="round">
+            <line x1="80" y1="320" x2="880" y2="320" stroke="#4c9aff" stroke-opacity="0.07" stroke-width="1" stroke-dasharray="4 8" />
+            <circle cx="200" cy="320" r="140" stroke="#f5a623" stroke-opacity="0.05" stroke-width="1.5" stroke-dasharray="4 12" />
+            <circle cx="480" cy="320" r="140" stroke="#34d399" stroke-opacity="0.05" stroke-width="1.5" stroke-dasharray="4 12" />
+            <circle cx="760" cy="320" r="140" stroke="#a78bfa" stroke-opacity="0.05" stroke-width="1.5" stroke-dasharray="4 12" />
+          </g>
+          <g transform="translate(90, 160)">
+            <circle cx="110" cy="160" r="120" fill="url(#amber-glow)" />
+            <rect width="220" height="320" rx="22" fill="url(#card-grad)" stroke="#f5a623" stroke-opacity="0.3" stroke-width="1.5" />
+            <rect x="2" y="2" width="216" height="5" rx="2.5" fill="#f5a623" />
+            <g transform="translate(110, 95)">
+              <circle cx="0" cy="0" r="48" fill="#111a30" stroke="#f5a623" stroke-width="3" />
+              <circle cx="0" cy="0" r="40" fill="#182645" stroke="#f5a623" stroke-opacity="0.4" stroke-width="1.5" stroke-dasharray="3 5" />
+              <text x="0" y="9" fill="#f5a623" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="26" font-weight="800" text-anchor="middle" letter-spacing="-1">42.5</text>
+              <circle cx="28" cy="-28" r="3" fill="#f5a623" />
+            </g>
+            <path d="M 138 128 C 150 160 140 180 125 195" fill="none" stroke="#f5a623" stroke-width="2" stroke-dasharray="4 3" stroke-linecap="round" />
+            <circle cx="138" cy="128" r="3.5" fill="#f5a623" />
+            <g transform="translate(38, 205)">
+              <path d="M 18 0 L 132 0 C 138 0 144 6 144 12 L 144 48 C 144 54 138 60 132 60 L 18 60 C 10 60 0 48 0 30 C 0 12 10 0 18 0 Z" fill="#0a0f1c" stroke="#f5a623" stroke-width="2" />
+              <circle cx="15" cy="30" r="5" fill="#111a30" stroke="#f5a623" stroke-width="1.5" />
+              <circle cx="15" cy="30" r="2" fill="#0a0f1c" />
+              <text x="80" y="36" fill="#f5a623" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="16" font-weight="700" text-anchor="middle" letter-spacing="1">numeric</text>
+            </g>
+          </g>
+          <g transform="translate(370, 160)">
+            <circle cx="110" cy="160" r="120" fill="url(#green-glow)" />
+            <rect width="220" height="320" rx="22" fill="url(#card-grad)" stroke="#34d399" stroke-opacity="0.3" stroke-width="1.5" />
+            <rect x="2" y="2" width="216" height="5" rx="2.5" fill="#34d399" />
+            <g transform="translate(110, 95)">
+              <rect x="-65" y="-36" width="130" height="72" rx="16" fill="#111a30" stroke="#34d399" stroke-width="3" />
+              <rect x="-57" y="-28" width="114" height="56" rx="10" fill="#182645" stroke="#34d399" stroke-opacity="0.3" stroke-width="1" />
+              <text x="0" y="9" fill="#edf1fa" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="21" font-weight="700" text-anchor="middle">
+                <tspan fill="#34d399" font-size="24">“</tspan>ESEN<tspan fill="#34d399" font-size="24">”</tspan>
+              </text>
+              <circle cx="50" cy="-20" r="3" fill="#34d399" />
+            </g>
+            <path d="M 148 120 C 158 155 145 178 128 195" fill="none" stroke="#34d399" stroke-width="2" stroke-dasharray="4 3" stroke-linecap="round" />
+            <circle cx="148" cy="120" r="3.5" fill="#34d399" />
+            <g transform="translate(38, 205)">
+              <path d="M 18 0 L 132 0 C 138 0 144 6 144 12 L 144 48 C 144 54 138 60 132 60 L 18 60 C 10 60 0 48 0 30 C 0 12 10 0 18 0 Z" fill="#0a0f1c" stroke="#34d399" stroke-width="2" />
+              <circle cx="15" cy="30" r="5" fill="#111a30" stroke="#34d399" stroke-width="1.5" />
+              <circle cx="15" cy="30" r="2" fill="#0a0f1c" />
+              <text x="80" y="36" fill="#34d399" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="14.5" font-weight="700" text-anchor="middle" letter-spacing="0.5">character</text>
+            </g>
+          </g>
+          <g transform="translate(650, 160)">
+            <circle cx="110" cy="160" r="120" fill="url(#violet-glow)" />
+            <rect width="220" height="320" rx="22" fill="url(#card-grad)" stroke="#a78bfa" stroke-opacity="0.3" stroke-width="1.5" />
+            <rect x="2" y="2" width="216" height="5" rx="2.5" fill="#a78bfa" />
+            <g transform="translate(110, 95)">
+              <rect x="-60" y="-30" width="120" height="60" rx="30" fill="#0a0f1c" stroke="#a78bfa" stroke-width="3" />
+              <circle cx="-32" cy="0" r="4" fill="#182645" stroke="#a78bfa" stroke-opacity="0.4" stroke-width="1.5" />
+              <circle cx="28" cy="0" r="22" fill="#a78bfa" />
+              <circle cx="28" cy="0" r="15" fill="#111a30" stroke="#a78bfa" stroke-width="2" />
+              <text x="28" y="6" fill="#a78bfa" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="16" font-weight="800" text-anchor="middle">T</text>
+              <circle cx="48" cy="-22" r="3" fill="#a78bfa" />
+            </g>
+            <path d="M 148 118 C 158 152 145 178 128 195" fill="none" stroke="#a78bfa" stroke-width="2" stroke-dasharray="4 3" stroke-linecap="round" />
+            <circle cx="148" cy="118" r="3.5" fill="#a78bfa" />
+            <g transform="translate(38, 205)">
+              <path d="M 18 0 L 132 0 C 138 0 144 6 144 12 L 144 48 C 144 54 138 60 132 60 L 18 60 C 10 60 0 48 0 30 C 0 12 10 0 18 0 Z" fill="#0a0f1c" stroke="#a78bfa" stroke-width="2" />
+              <circle cx="15" cy="30" r="5" fill="#111a30" stroke="#a78bfa" stroke-width="1.5" />
+              <circle cx="15" cy="30" r="2" fill="#0a0f1c" />
+              <text x="80" y="36" fill="#a78bfa" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="16" font-weight="700" text-anchor="middle" letter-spacing="1">logical</text>
+            </g>
+          </g>
+          <g transform="translate(90, 520)">
+            <line x1="0" y1="0" x2="780" y2="0" stroke="#4c9aff" stroke-opacity="0.2" stroke-width="1.5" stroke-dasharray="6 8" />
+            <circle cx="390" cy="0" r="4" fill="#4c9aff" fill-opacity="0.6" />
+          </g>
+        </svg>

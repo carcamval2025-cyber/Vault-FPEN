@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 280" width="760" height="280" role="img" aria-label="Tres capas que se suman con más: ggplot con los datos salarios da un lienzo vacío; aes con x igual a educación e y igual a salario agrega los ejes; geom_point dibuja un punto por persona.">
+<title>Tres capas que se suman con más: ggplot con los datos salarios da un lienzo vacío; aes con x igual a educación e y igual a salario agrega los ejes; geom_point dibuja un punto por persona.</title>
+<style>
+  text { font-family: 'Atkinson Hyperlegible Next', 'Atkinson Hyperlegible', Arial, sans-serif; font-size: 14px; fill: #111a30; }
+  .t { font-family: Fraunces, Georgia, 'Times New Roman', serif; font-weight: 700; font-size: 16px; }
+  .m { font-family: 'JetBrains Mono', Menlo, Consolas, monospace; font-size: 13px; font-variant-ligatures: none; font-feature-settings: "liga" 0, "calt" 0; }
+  .s { font-size: 12px; fill: #56607a; }
+  .b { font-weight: 700; }
+  .w { fill: #ffffff; }
+  .cw { fill: #edf1fa; }
+  .ln { stroke: #56607a; stroke-width: 1.6; fill: none; }
+</style>
+<defs><marker id="p" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#56607a"/></marker><marker id="pb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2f6fd6"/></marker><marker id="pg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#138a5e"/></marker><marker id="pa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#b86e00"/></marker><marker id="pc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#c9403f"/></marker><marker id="pt" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0f8f84"/></marker><marker id="pv" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#6b4fd1"/></marker></defs>
+<text x="20" y="28" class="m b" style="fill:#2f6fd6;font-size:13px">1 · ggplot(salarios)</text>
+<text x="20" y="46" class="s">datos: lienzo vacío</text>
+<rect x="20" y="58" width="220" height="180" rx="6" fill="#f3f3f3" stroke="#c9d1e3" stroke-width="1"/>
+<text x="253" y="92" class="t" text-anchor="middle" style="fill:#b86e00;font-size:26px">+</text>
+<text x="270" y="28" class="m b" style="fill:#2f6fd6;font-size:13px">2 · + aes(x, y)</text>
+<text x="270" y="46" class="s">estéticas: ejes</text>
+<rect x="270" y="58" width="220" height="180" rx="6" fill="#ebebeb" stroke="#c9d1e3" stroke-width="1"/>
+<path d="M325 58 V 238" fill="none" stroke="#ffffff" stroke-width="1.4"/>
+<path d="M270 103 H 490" fill="none" stroke="#ffffff" stroke-width="1.4"/>
+<path d="M380 58 V 238" fill="none" stroke="#ffffff" stroke-width="1.4"/>
+<path d="M270 148 H 490" fill="none" stroke="#ffffff" stroke-width="1.4"/>
+<path d="M435 58 V 238" fill="none" stroke="#ffffff" stroke-width="1.4"/>
+<path d="M270 193 H 490" fill="none" stroke="#ffffff" stroke-width="1.4"/>
+<text x="380" y="258" class="m" text-anchor="middle" style="fill:#56607a;font-size:11px">educacion_anios</text>
+<text x="262" y="148" class="m" text-anchor="middle" transform="rotate(-90 262 148)" style="fill:#56607a;font-size:11px">salario_mensual</text>
+<text x="503" y="92" class="t" text-anchor="middle" style="fill:#b86e00;font-size:26px">+</text>
+<text x="520" y="28" class="m b" style="fill:#2f6fd6;font-size:13px">3 · + geom_point()</text>
+<text x="520" y="46" class="s">geom: las marcas</text>
+<rect x="520" y="58" width="220" height="180" rx="6" fill="#ebebeb" stroke="#c9d1e3" stroke-width="1"/>
+<path d="M575 58 V 238" fill="none" stroke="#ffffff" stroke-width="1.4"/>
+<path d="M520 103 H 740" fill="none" stroke="#ffffff" stroke-width="1.4"/>
+<path d="M630 58 V 238" fill="none" stroke="#ffffff" stroke-width="1.4"/>
+<path d="M520 148 H 740" fill="none" stroke="#ffffff" stroke-width="1.4"/>
+<path d="M685 58 V 238" fill="none" stroke="#ffffff" stroke-width="1.4"/>
+<path d="M520 193 H 740" fill="none" stroke="#ffffff" stroke-width="1.4"/>
+<text x="630" y="258" class="m" text-anchor="middle" style="fill:#56607a;font-size:11px">educacion_anios</text>
+<text x="512" y="148" class="m" text-anchor="middle" transform="rotate(-90 512 148)" style="fill:#56607a;font-size:11px">salario_mensual</text>
+<circle cx="582.834" cy="167.94" r="4.2" fill="#111a30"/>
+<circle cx="637.961" cy="125.876" r="4.2" fill="#111a30"/>
+<circle cx="606.592" cy="159.996" r="4.2" fill="#111a30"/>
+<circle cx="648.706" cy="125.945" r="4.2" fill="#111a30"/>
+<circle cx="652.63" cy="127.1" r="4.2" fill="#111a30"/>
+<circle cx="551.795" cy="212.721" r="4.2" fill="#111a30"/>
+<circle cx="542.37" cy="184.678" r="4.2" fill="#111a30"/>
+<circle cx="690.744" cy="109.61" r="4.2" fill="#111a30"/>
+<circle cx="586.684" cy="181.796" r="4.2" fill="#111a30"/>
+<circle cx="582.18" cy="197.291" r="4.2" fill="#111a30"/>
+<circle cx="719.216" cy="80.4937" r="4.2" fill="#111a30"/>
+<circle cx="624.647" cy="152.305" r="4.2" fill="#111a30"/>
+<circle cx="690.563" cy="103.581" r="4.2" fill="#111a30"/>
+<circle cx="625.744" cy="132.201" r="4.2" fill="#111a30"/>
+<circle cx="655.032" cy="123.704" r="4.2" fill="#111a30"/>
+<circle cx="567.111" cy="163.005" r="4.2" fill="#111a30"/>
+</svg>

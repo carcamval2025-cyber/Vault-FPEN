@@ -17,6 +17,10 @@ Tabla de seguimiento de cada archivo `.html` generado para el curso (`FPEN_Seman
 | 01-02 (C1) | `FPEN_Control01_Guia_de_Lectura_y_Analisis.html` | 2026-09-16 | `aprobado` | [[2026-09-16 - Control 01 y Suite de SVGs]] | Aprobado con suite de diagramas SVG independientes |
 | 01-02 (C1) | `FPEN_Control01_Repaso_y_Simulacro.html` | 2026-09-16 | `aprobado` | [[2026-09-16 - Control 01 y Suite de SVGs]] | Aprobado con webR en vivo y dataset CSV descargable |
 | 05 (S1) | `FPEN_Semana05_Sesion01_Pipe_y_Verbos_de_Transformacion.html` | 2026-09-24 | `en uso en clase` | [[2026-09-24 - Semana 05 Sesión 01 - Pipe y Verbos de Transformación]] | Repaso de pipe nativo `\|>`, filter, arrange, select, rename y operadores lógicos |
+| 01–05, C1 | Sitio `docs/` rediseñado (Guía FPEN): `semana-01` a `semana-05`, `control-01/guia`, `control-01/repaso`, `index.html` | 2026-09-25 | `borrador` | [[2026-09-25 - Rediseño Guía FPEN y semanas 02 a 04]] | Pendiente de revisión de Carlos |
+| 02 | `docs/semana-02/index.html` (nueva) | 2026-09-25 | `borrador` | [[2026-09-25 - Rediseño Guía FPEN y semanas 02 a 04]] | Pendiente de revisión de Carlos |
+| 03 | `docs/semana-03/index.html` (nueva) | 2026-09-25 | `borrador` | [[2026-09-25 - Rediseño Guía FPEN y semanas 02 a 04]] | Pendiente de revisión de Carlos |
+| 04 | `docs/semana-04/index.html` (nueva) | 2026-09-25 | `borrador` | [[2026-09-25 - Rediseño Guía FPEN y semanas 02 a 04]] | Pendiente de revisión de Carlos |
 
 **Estado** usa siempre uno de: `borrador` · `revisado` · `aprobado` · `en uso en clase`.
 

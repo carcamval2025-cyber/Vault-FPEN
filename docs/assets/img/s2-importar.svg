@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 280" width="760" height="280" role="img" aria-label="El archivo datos/hogares.csv en el disco pasa por read_csv, que adivina el tipo de cada columna, y se guarda con la flecha de asignación en el objeto hogares dentro de la sesión de R. Después se audita con dim, names, head, glimpse y summary.">
+<title>El archivo datos/hogares.csv en el disco pasa por read_csv, que adivina el tipo de cada columna, y se guarda con la flecha de asignación en el objeto hogares dentro de la sesión de R. Después se audita con dim, names, head, glimpse y summary.</title>
+<style>
+  text { font-family: 'Atkinson Hyperlegible Next', 'Atkinson Hyperlegible', Arial, sans-serif; font-size: 14px; fill: #111a30; }
+  .t { font-family: Fraunces, Georgia, 'Times New Roman', serif; font-weight: 700; font-size: 16px; }
+  .m { font-family: 'JetBrains Mono', Menlo, Consolas, monospace; font-size: 13px; font-variant-ligatures: none; font-feature-settings: "liga" 0, "calt" 0; }
+  .s { font-size: 12px; fill: #56607a; }
+  .b { font-weight: 700; }
+  .w { fill: #ffffff; }
+  .cw { fill: #edf1fa; }
+  .ln { stroke: #56607a; stroke-width: 1.6; fill: none; }
+</style>
+<defs><marker id="p" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#56607a"/></marker><marker id="pb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2f6fd6"/></marker><marker id="pg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#138a5e"/></marker><marker id="pa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#b86e00"/></marker><marker id="pc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#c9403f"/></marker><marker id="pt" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0f8f84"/></marker><marker id="pv" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#6b4fd1"/></marker></defs>
+<text x="20" y="28" class="t">En el disco</text>
+<rect x="20" y="44" width="190" height="140" rx="8" fill="#ffffff" stroke="#2b3a5c" stroke-width="1.5"/>
+<rect x="20" y="44" width="190" height="26" rx="8" fill="#dcf5ea" stroke="#138a5e" stroke-width="1.2"/>
+<text x="115" y="62" class="m b" text-anchor="middle" style="fill:#138a5e;font-size:12px">datos/hogares.csv</text>
+<text x="30" y="92" class="m" style="fill:#56607a;font-size:10.5px">hogar,departamento,zona,…</text>
+<text x="30" y="114" class="m" style="fill:#56607a;font-size:10.5px">H01,San Salvador,urbana,…</text>
+<text x="30" y="136" class="m" style="fill:#56607a;font-size:10.5px">H02,San Salvador,urbana,…</text>
+<text x="30" y="158" class="m" style="fill:#56607a;font-size:10.5px">H03,La Libertad,urbana,…</text>
+<text x="115" y="206" class="s" text-anchor="middle">el archivo no cambia</text>
+<rect x="250" y="86" width="178" height="56" rx="10" fill="#111a30" stroke="#111a30" stroke-width="1.5"/>
+<text x="339" y="110" class="m b" text-anchor="middle" style="fill:#edf1fa;font-size:13px">read_csv()</text>
+<text x="339" y="128" class="s" text-anchor="middle" style="fill:#aab4cc;font-size:10px">adivina el tipo de cada columna</text>
+<path d="M212 114 H 246" fill="none" stroke="#56607a" stroke-width="2" marker-end="url(#p)"/>
+<path d="M430 114 H 470" fill="none" stroke="#b86e00" stroke-width="2.2" marker-end="url(#pa)"/>
+<text x="450" y="104" class="m b" text-anchor="middle" style="fill:#b86e00;font-size:13px">&lt;-</text>
+<text x="480" y="28" class="t">En la sesión de R</text>
+<rect x="480" y="44" width="260" height="140" rx="10" fill="#fff0d6" stroke="#f5a623" stroke-width="1.4"/>
+<text x="496" y="70" class="m b" style="font-size:14px;">hogares</text>
+<text x="724" y="70" class="s" text-anchor="end">tibble 12 × 7</text>
+<text x="496" y="98" class="m" style="font-size:11.5px;">hogar</text>
+<text x="724" y="98" class="m" text-anchor="end" style="fill:#b86e00;font-size:11.5px">&lt;chr&gt;</text>
+<text x="496" y="118" class="m" style="font-size:11.5px;">miembros</text>
+<text x="724" y="118" class="m" text-anchor="end" style="fill:#b86e00;font-size:11.5px">&lt;dbl&gt;</text>
+<text x="496" y="138" class="m" style="font-size:11.5px;">ingreso_mensual</text>
+<text x="724" y="138" class="m" text-anchor="end" style="fill:#b86e00;font-size:11.5px">&lt;dbl&gt;</text>
+<text x="496" y="158" class="m" style="font-size:11.5px;">internet</text>
+<text x="724" y="158" class="m" text-anchor="end" style="fill:#b86e00;font-size:11.5px">&lt;lgl&gt;</text>
+<text x="380" y="240" class="t" text-anchor="middle" style="font-size:14px;">Auditar antes de confiar:</text>
+<rect x="108" y="252" width="50.5" height="24" rx="12" fill="#e3edff" stroke="#2f6fd6" stroke-width="1.2"/>
+<text x="133.25" y="268.5" class="m b" text-anchor="middle" style="fill:#2f6fd6">dim()</text>
+<rect x="170.5" y="252" width="66.3" height="24" rx="12" fill="#e3edff" stroke="#2f6fd6" stroke-width="1.2"/>
+<text x="203.65" y="268.5" class="m b" text-anchor="middle" style="fill:#2f6fd6">names()</text>
+<rect x="248.8" y="252" width="58.4" height="24" rx="12" fill="#e3edff" stroke="#2f6fd6" stroke-width="1.2"/>
+<text x="278" y="268.5" class="m b" text-anchor="middle" style="fill:#2f6fd6">head()</text>
+<rect x="319.2" y="252" width="82.1" height="24" rx="12" fill="#e3edff" stroke="#2f6fd6" stroke-width="1.2"/>
+<text x="360.25" y="268.5" class="m b" text-anchor="middle" style="fill:#2f6fd6">glimpse()</text>
+<rect x="413.3" y="252" width="82.1" height="24" rx="12" fill="#e3edff" stroke="#2f6fd6" stroke-width="1.2"/>
+<text x="454.35" y="268.5" class="m b" text-anchor="middle" style="fill:#2f6fd6">summary()</text>
+</svg>

@@ -1,0 +1,13 @@
+hogar,departamento,zona,miembros,ingreso_mensual,gasto_alimentos,internet
+H01,San Salvador,urbana,4,1250,410,TRUE
+H02,San Salvador,urbana,3,980,350,TRUE
+H03,La Libertad,urbana,5,1420,520,TRUE
+H04,La Libertad,rural,6,610,330,FALSE
+H05,Santa Ana,urbana,2,860,240,TRUE
+H06,Santa Ana,rural,5,540,300,FALSE
+H07,San Miguel,urbana,4,920,380,TRUE
+H08,San Miguel,rural,7,480,310,FALSE
+H09,Sonsonate,rural,3,590,260,FALSE
+H10,Sonsonate,urbana,4,1010,390,TRUE
+H11,Usulután,rural,5,450,280,FALSE
+H12,Usulután,urbana,3,790,300,TRUE

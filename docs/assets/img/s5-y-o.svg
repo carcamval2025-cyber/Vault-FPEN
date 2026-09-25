@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 280" width="760" height="280" role="img" aria-label="Cinco vuelos con su mes. Con month igual a 1 Y month igual a 2 no pasa ninguna fila, porque cada fila tiene un solo mes. Con month igual a 1 O month igual a 2 pasan las filas de enero y de febrero.">
+<title>Cinco vuelos con su mes. Con month igual a 1 Y month igual a 2 no pasa ninguna fila, porque cada fila tiene un solo mes. Con month igual a 1 O month igual a 2 pasan las filas de enero y de febrero.</title>
+<style>
+  text { font-family: 'Atkinson Hyperlegible Next', 'Atkinson Hyperlegible', Arial, sans-serif; font-size: 14px; fill: #111a30; }
+  .t { font-family: Fraunces, Georgia, 'Times New Roman', serif; font-weight: 700; font-size: 16px; }
+  .m { font-family: 'JetBrains Mono', Menlo, Consolas, monospace; font-size: 13px; font-variant-ligatures: none; font-feature-settings: "liga" 0, "calt" 0; }
+  .s { font-size: 12px; fill: #56607a; }
+  .b { font-weight: 700; }
+  .w { fill: #ffffff; }
+  .cw { fill: #edf1fa; }
+  .ln { stroke: #56607a; stroke-width: 1.6; fill: none; }
+</style>
+<defs><marker id="p" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#56607a"/></marker><marker id="pb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2f6fd6"/></marker><marker id="pg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#138a5e"/></marker><marker id="pa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#b86e00"/></marker><marker id="pc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#c9403f"/></marker><marker id="pt" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0f8f84"/></marker><marker id="pv" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#6b4fd1"/></marker></defs>
+<text x="20" y="28" class="t">5 vuelos de ejemplo</text>
+<rect x="20" y="44" width="160" height="36" rx="8" fill="#eef2fb" stroke="#2b3a5c" stroke-width="1.5"/>
+<text x="100" y="67" class="m" text-anchor="middle">month = 1</text>
+<rect x="20" y="88" width="160" height="36" rx="8" fill="#eef2fb" stroke="#2b3a5c" stroke-width="1.5"/>
+<text x="100" y="111" class="m" text-anchor="middle">month = 2</text>
+<rect x="20" y="132" width="160" height="36" rx="8" fill="#eef2fb" stroke="#2b3a5c" stroke-width="1.5"/>
+<text x="100" y="155" class="m" text-anchor="middle">month = 1</text>
+<rect x="20" y="176" width="160" height="36" rx="8" fill="#eef2fb" stroke="#2b3a5c" stroke-width="1.5"/>
+<text x="100" y="199" class="m" text-anchor="middle">month = 3</text>
+<rect x="20" y="220" width="160" height="36" rx="8" fill="#eef2fb" stroke="#2b3a5c" stroke-width="1.5"/>
+<text x="100" y="243" class="m" text-anchor="middle">month = 2</text>
+<text x="300" y="28" class="m b" text-anchor="middle" style="fill:#c9403f;font-size:13px">month == 1 &amp; month == 2</text>
+<rect x="210" y="44" width="180" height="212" rx="10" fill="#ffe6e6" stroke="#c9403f" stroke-width="1.4"/>
+<text x="300" y="130" class="t" text-anchor="middle" style="fill:#c9403f;font-size:22px">0 filas</text>
+<text x="300" y="158" class="s" text-anchor="middle">ninguna fila tiene</text>
+<text x="300" y="176" class="s" text-anchor="middle">dos meses a la vez</text>
+<text x="560" y="28" class="m b" text-anchor="middle" style="fill:#138a5e;font-size:13px">month == 1 | month == 2</text>
+<rect x="420" y="44" width="320" height="212" rx="10" fill="#dcf5ea" stroke="#138a5e" stroke-width="1.4"/>
+<rect x="440" y="60" width="140" height="36" rx="8" fill="#ffffff" stroke="#138a5e" stroke-width="1.5"/>
+<text x="510" y="83" class="m" text-anchor="middle">month = 1</text>
+<rect x="590" y="60" width="140" height="36" rx="8" fill="#ffffff" stroke="#138a5e" stroke-width="1.5"/>
+<text x="660" y="83" class="m" text-anchor="middle">month = 2</text>
+<rect x="440" y="110" width="140" height="36" rx="8" fill="#ffffff" stroke="#138a5e" stroke-width="1.5"/>
+<text x="510" y="133" class="m" text-anchor="middle">month = 1</text>
+<rect x="590" y="110" width="140" height="36" rx="8" fill="#ffffff" stroke="#138a5e" stroke-width="1.5"/>
+<text x="660" y="133" class="m" text-anchor="middle">month = 2</text>
+<text x="580" y="200" class="s" text-anchor="middle">4 filas: basta con cumplir una</text>
+<text x="580" y="220" class="m" text-anchor="middle" style="fill:#138a5e;font-size:12px">%in% c(1, 2) da lo mismo</text>
+<path d="M182 62 H 206" fill="none" stroke="#c9403f" stroke-width="1.2" stroke-dasharray="5 4"/>
+<path d="M182 106 H 206" fill="none" stroke="#c9403f" stroke-width="1.2" stroke-dasharray="5 4"/>
+<path d="M182 150 H 206" fill="none" stroke="#c9403f" stroke-width="1.2" stroke-dasharray="5 4"/>
+<path d="M182 194 H 206" fill="none" stroke="#c9403f" stroke-width="1.2" stroke-dasharray="5 4"/>
+<path d="M182 238 H 206" fill="none" stroke="#c9403f" stroke-width="1.2" stroke-dasharray="5 4"/>
+</svg>

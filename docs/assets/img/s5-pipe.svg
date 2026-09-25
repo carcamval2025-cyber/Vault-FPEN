@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 300" width="760" height="300" role="img" aria-label="Arriba, la regla: x pipe f de y equivale a f de x coma y. Abajo, un pipeline: ventas entra a filter, el resultado entra a arrange y ese resultado entra a select; la misma operación anidada se lee de adentro hacia afuera.">
+<title>Arriba, la regla: x pipe f de y equivale a f de x coma y. Abajo, un pipeline: ventas entra a filter, el resultado entra a arrange y ese resultado entra a select; la misma operación anidada se lee de adentro hacia afuera.</title>
+<style>
+  text { font-family: 'Atkinson Hyperlegible Next', 'Atkinson Hyperlegible', Arial, sans-serif; font-size: 14px; fill: #111a30; }
+  .t { font-family: Fraunces, Georgia, 'Times New Roman', serif; font-weight: 700; font-size: 16px; }
+  .m { font-family: 'JetBrains Mono', Menlo, Consolas, monospace; font-size: 13px; font-variant-ligatures: none; font-feature-settings: "liga" 0, "calt" 0; }
+  .s { font-size: 12px; fill: #56607a; }
+  .b { font-weight: 700; }
+  .w { fill: #ffffff; }
+  .cw { fill: #edf1fa; }
+  .ln { stroke: #56607a; stroke-width: 1.6; fill: none; }
+</style>
+<defs><marker id="p" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#56607a"/></marker><marker id="pb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2f6fd6"/></marker><marker id="pg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#138a5e"/></marker><marker id="pa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#b86e00"/></marker><marker id="pc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#c9403f"/></marker><marker id="pt" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0f8f84"/></marker><marker id="pv" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#6b4fd1"/></marker></defs>
+<text x="20" y="28" class="t">La regla: lo de la izquierda entra como primer argumento</text>
+<rect x="20" y="44" width="70" height="44" rx="8" fill="#fff0d6" stroke="#f5a623" stroke-width="1.5"/>
+<text x="55" y="71" class="m" text-anchor="middle">x</text>
+<text x="112" y="72" class="m b" text-anchor="middle" style="fill:#2f6fd6;font-size:18px">|&gt;</text>
+<rect x="134" y="44" width="110" height="44" rx="8" fill="#eef2fb" stroke="#2b3a5c" stroke-width="1.5"/>
+<text x="189" y="71" class="m" text-anchor="middle">f(y)</text>
+<text x="274" y="72" class="t" text-anchor="middle" style="font-size:24px;">=</text>
+<rect x="304" y="44" width="150" height="44" rx="8" fill="#eef2fb" stroke="#2b3a5c" stroke-width="1.5"/>
+<text x="379" y="71" text-anchor="middle" class="m">f(<tspan style="fill:#b86e00;font-weight:700">x</tspan>, y)</text>
+<path d="M55 96 C 55 120, 350 124, 352 94" fill="none" stroke="#b86e00" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#pa)"/>
+<text x="20" y="162" class="t">Con pipe: cada paso en el orden en que ocurre</text>
+<rect x="20" y="178" width="140" height="56" rx="8" fill="#fff0d6" stroke="#f5a623" stroke-width="1.5"/>
+<text x="90" y="203" class="m b" text-anchor="middle">ventas</text>
+<text x="90" y="221" class="s" text-anchor="middle">8 × 6</text>
+<path d="M162 206 H 188" fill="none" stroke="#2f6fd6" stroke-width="2" marker-end="url(#pb)"/>
+<text x="175" y="198" class="m b" text-anchor="middle" style="fill:#2f6fd6;font-size:12px">|&gt;</text>
+<rect x="190" y="178" width="140" height="56" rx="8" fill="#eef2fb" stroke="#2b3a5c" stroke-width="1.5"/>
+<text x="260" y="203" class="m b" text-anchor="middle">filter()</text>
+<text x="260" y="221" class="s" text-anchor="middle">quita filas</text>
+<path d="M332 206 H 358" fill="none" stroke="#2f6fd6" stroke-width="2" marker-end="url(#pb)"/>
+<text x="345" y="198" class="m b" text-anchor="middle" style="fill:#2f6fd6;font-size:12px">|&gt;</text>
+<rect x="360" y="178" width="140" height="56" rx="8" fill="#eef2fb" stroke="#2b3a5c" stroke-width="1.5"/>
+<text x="430" y="203" class="m b" text-anchor="middle">arrange()</text>
+<text x="430" y="221" class="s" text-anchor="middle">ordena filas</text>
+<path d="M502 206 H 528" fill="none" stroke="#2f6fd6" stroke-width="2" marker-end="url(#pb)"/>
+<text x="515" y="198" class="m b" text-anchor="middle" style="fill:#2f6fd6;font-size:12px">|&gt;</text>
+<rect x="530" y="178" width="140" height="56" rx="8" fill="#eef2fb" stroke="#2b3a5c" stroke-width="1.5"/>
+<text x="600" y="203" class="m b" text-anchor="middle">select()</text>
+<text x="600" y="221" class="s" text-anchor="middle">elige columnas</text>
+<text x="20" y="270" class="s">Anidado: select(arrange(filter(ventas, …), …), …) se lee de adentro hacia afuera.</text>
+</svg>
