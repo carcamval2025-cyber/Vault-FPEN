@@ -4,7 +4,7 @@ tags: [programa, diseno, guia-fpen]
 
 # Sistema de Diseño — Guía FPEN, voz de tabloide económico (vigente desde el 25 de septiembre de 2026)
 
-> El nombre del archivo se conserva para no romper los enlaces del vault. Historia: el tema "R Notebook" (oscuro, Fraunces + Literata, 4 pestañas) fue reemplazado el 25/09 por un sistema derivado de la guía de IDS; ese mismo día Carlos pidió **una voz propia** y, con la skill de diseño `impeccable`, eligió entre tres prototipos la dirección **"Tabloide ámbar"**, con color por momento de estudio, portada con gráfico y lupa, cinta de semanas y número gigante. Las versiones anteriores de este archivo están en el historial de git.
+> El nombre del archivo se conserva para no romper los enlaces del vault. Historia: el tema "R Notebook" (oscuro, Fraunces + Literata, 4 pestañas) fue reemplazado el 25/09 por un sistema derivado de la guía de IDS; ese mismo día Carlos pidió **una voz propia** y, con la skill de diseño `impeccable`, eligió entre tres prototipos la dirección **"Tabloide ámbar"**, con color por momento de estudio, portada con gráfico y lupa, cinta de semanas y número gigante. Después eligió el logo **FPEN ▲** y el panel **Edición**, que reemplazó al menú de rayitas. Las versiones anteriores de este archivo están en el historial de git.
 
 ## La idea
 
@@ -36,7 +36,10 @@ Todo el diseño está en `docs/assets/` y lo comparten todas las páginas. Una p
 | Violeta | `--violet` | **IA requerida** y proyecto grupal |
 
 - Tipografías: **Schibsted Grotesk** (titulares, cifras, etiquetas y gráficos), **Source Serif 4** (lectura) y **JetBrains Mono** (código, sin ligaduras). Fraunces y Atkinson dejaron de usarse.
-- Logo y favicon FPEN en la barra.
+- **Logo FPEN ▲**: el nombre como símbolo bursátil, en Schibsted Grotesk Black convertida a trazos, con el triángulo de la cotización que sube.
+  - Versiones en `docs/assets/brand/`: `fpen-logo.svg` (tinta azul noche, triángulo ámbar, para fondos claros), `fpen-logo-blanco.svg` (para azul noche) y `fpen-logo-ambar.svg` (triángulo blanco, para fondos ámbar como la barra).
+  - Favicon: F blanca y triángulo ámbar en un cuadro azul noche (`fpen-favicon.svg` y `fpen-favicon-256.png`).
+  - Se generan con `herramientas/marca/logo.py`. El logo anterior (prompt, barras y órbita azul y teal) quedó retirado.
 - El fondo **no** es papel crema: es color de marca por tramo.
 
 ## Tramos (momentos de estudio)
@@ -54,11 +57,14 @@ Cada tramo abre con un rótulo grande ("Momento 2 de 4 · Aprender"). En el índ
 
 ## Componentes
 
-- **Barra** en azul noche:
-  - **cinta de semanas**: cada semana cotiza su avance ("S2 ▲ 42 %"). Corre despacio, se detiene con el cursor, con el foco o con el botón de pausa (que se recuerda), y queda quieta con "reducir movimiento";
-  - **índice de la página**: muestra la sección actual (§ n/total), su momento y el tiempo de lectura restante, y se despliega para saltar;
-  - **buscador Ctrl K**; tema claro u oscuro; menú a pantalla completa;
-  - **barra de lectura** ámbar.
+- **Barra** en azul noche, con solo cuatro piezas: logo, cinta, Buscar y Edición.
+  - **Cinta de semanas**: cada semana cotiza su avance ("S2 ▲ 42 %"). Corre despacio, se detiene con el cursor o el foco, se puede dejar quieta desde el panel Edición (se recuerda) y queda quieta con "reducir movimiento".
+  - **Buscador Ctrl K**.
+  - **Botón "Edición"**, ámbar y con el número de la semana. Reemplaza al botón de rayitas y al menú de pantalla completa, que venían de la guía de Python.
+    - Abre un panel que baja desde la barra, como la página de índice de un diario.
+    - El panel trae las doce ediciones con su avance, tu avance total y los ajustes: tema Claro, Oscuro o Sistema, y cinta Corre o Quieta.
+    - Se cierra con Esc, con el botón o al hacer clic fuera.
+  - Debajo, el **índice de la página** con la sección actual (§ n/total), su momento y el tiempo de lectura restante, y la **barra de lectura** ámbar.
 - **Portada**:
   - número de semana gigante, rótulo inclinado, titular y entrada;
   - **sello** circular con la evaluación;
@@ -110,7 +116,7 @@ Cada tramo abre con un rótulo grande ("Momento 2 de 4 · Aprender"). En el índ
    - sin scroll horizontal a 390 y 1280 px y sin errores de JavaScript;
    - quizzes y trazas dan "correcto" con las soluciones;
    - Ejecutar y Editar funcionan;
-   - el índice salta, Ctrl K encuentra y navega, la lupa responde a las flechas y la cinta se pausa.
+   - el índice salta, Ctrl K encuentra y navega, la lupa responde a las flechas, y el panel Edición abre, cambia el tema y la cinta, y se cierra con Esc.
 4. Progresión estricta: nada de una semana posterior, salvo marcado como adelanto opcional.
 5. Registrar el resultado en `Registro de Materiales.md` y en la bitácora.
 

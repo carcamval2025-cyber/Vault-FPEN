@@ -42,7 +42,8 @@ es mejor preguntar al usuario que inventar contenido nuevo.
    (`guia.css`, `guia.js`, `ejecutar-r.js`) y seguir
    `00 Programa/Sistema de Diseño - Tema R Notebook.md` (desde el 2026-09-25 describe el
    sistema vigente, "Guía FPEN" con voz de tabloide económico: color por momento de estudio,
-   portada con gráfico y lupa, cinta de semanas, índice y buscador Ctrl K; el tema
+   portada con gráfico y lupa, logo FPEN ▲, barra con cinta de semanas, buscador Ctrl K y panel
+   Edición, e índice de la página; el tema
    "R Notebook" quedó reemplazado). No inventar una
    paleta ni tipografía nueva ni copiar CSS suelto en una página: los cambios de diseño
    van en `docs/assets/`.

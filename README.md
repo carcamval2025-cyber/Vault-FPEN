@@ -58,22 +58,24 @@ Voz propia de **tabloide económico**: cada semana es una edición con portada, 
 - **Color por momento de estudio**:
   - ámbar para *Antes de clase*, blanco frío para *Aprender*, azul noche para *Practicar* y azul R intenso para *Proyecto y evaluación*;
   - detrás corre, tenue, la serie de datos de la semana.
-- **Barra interactiva**:
-  - **cinta de semanas** que cotiza tu avance ("S2 ▲ 42 %"): corre despacio y se pausa con el cursor, el foco o un botón;
-  - **índice de la página**, con la sección actual, su momento y el tiempo de lectura restante;
-  - **buscador Ctrl K** de semanas, secciones, ejercicios y funciones de R (cada función, en la semana que la enseña);
-  - **barra de lectura**, tema claro u oscuro y menú a pantalla completa.
+- **Logo FPEN ▲**: el nombre como símbolo bursátil, con el triángulo de la cotización que sube. Favicon: F y triángulo sobre azul noche.
+- **Barra limpia** con cuatro piezas:
+  - el logo;
+  - la **cinta de semanas**, que cotiza tu avance ("S2 ▲ 42 %");
+  - el **buscador Ctrl K** de semanas, secciones, ejercicios y funciones de R (cada función, en la semana que la enseña);
+  - el botón **Edición**, que abre un panel con las doce ediciones y su avance, tu avance total y los ajustes (tema claro, oscuro o del sistema; cinta que corre o quieta).
+- Debajo de la barra, el **índice de la página**, con la sección actual, su momento y el tiempo de lectura restante, y la **barra de lectura**.
 - **Papeles de imprenta** (marco de 2 px y sombra sólida desplazada) para cajas, ejercicios, quiz, tablas y código.
 - **Vidrio ahumado** azul noche con filo ámbar solo en "En palabras simples", la nota de la lupa, el índice y el buscador. Con "reducir transparencia" pasa a sólido; con "reducir movimiento" no hay animaciones y la cinta queda quieta.
 - **Código como en RStudio**: pestaña de script `.R`, etiqueta R, Editar, Ejecutar, Copiar y números de línea. Las salidas son el panel **Console**.
 - Tipografías **Schibsted Grotesk** (titulares, cifras, etiquetas y gráficos), **Source Serif 4** (lectura) y **JetBrains Mono** (código, sin ligaduras).
-- Logo y favicon FPEN. Colores semánticos del curso para las etiquetas de IA: coral, verde y violeta.
+- Colores semánticos del curso para las etiquetas de IA: coral, verde y violeta.
 - **Láminas SVG** en `docs/assets/img/`, numeradas en cada página; gráficos de resultado generados con R en `docs/assets/img/graficos/`.
 
 Archivos compartidos:
 
 - `docs/assets/guia.css`;
-- `docs/assets/guia.js`: progreso, quizzes, trazas, bloqueo de soluciones, simulacro, cinta, índice, buscador, lupa, menú y tema;
+- `docs/assets/guia.js`: progreso, quizzes, trazas, bloqueo de soluciones, simulacro, cinta, índice, buscador, lupa, panel Edición y tema;
 - `docs/assets/ejecutar-r.js`: webR;
 - `docs/assets/buscar.json`: índice del buscador.
 
@@ -87,7 +89,7 @@ El detalle completo está en `00 Programa/Sistema de Diseño - Tema R Notebook.m
   - sin scroll horizontal a 390 y 1280 px y sin errores de JavaScript;
   - quizzes y trazas dan “correcto” con las soluciones;
   - Ejecutar, Editar, bucle infinito, gráficos, CSV y simulacro funcionan en el navegador;
-  - el índice salta a cada sección, Ctrl K encuentra y navega, la lupa responde al teclado y la cinta se pausa.
+  - el índice salta a cada sección, Ctrl K encuentra y navega, la lupa responde al teclado y el panel Edición cambia el tema y la cinta.
 
 ## Publicar con GitHub Pages
 

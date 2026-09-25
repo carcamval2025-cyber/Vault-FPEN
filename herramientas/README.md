@@ -17,11 +17,12 @@ Todos los comandos se ejecutan **desde la raíz del repositorio**.
 | `gen.py` | Genera `docs/*/index.html`, `docs/assets/buscar.json` y las series de fondo (`docs/assets/img/serie-*.svg`) |
 | `portadas.R` → `portadas.json` | Calcula con R los datos de los gráficos de portada a partir de `docs/datos/` |
 | `portadas.py` | Dibuja los gráficos de portada (SVG con los datos que usa la lupa) |
+| `marca/logo.py` | Genera el logo FPEN ▲ y el favicon en `docs/assets/brand/` (convierte Schibsted Grotesk Black a trazos; la fuente va en `marca/`, licencia OFL). Requiere `fonttools` y `brotli` |
 | `laminas/` | Dibuja las láminas SVG de `docs/assets/img/` (`svg.py` tiene las ayudas y la paleta) |
 | `graficos.py` | Ejecuta en R los bloques con `ggplot()` y guarda los PNG de resultado en `docs/assets/img/graficos/` |
 | `verificar_r.py` + `prelude.R` | Ejecuta cada bloque de R de una página y compara con la salida que muestra la página. `prelude.R` es el mismo que usa webR en `ejecutar-r.js` |
 | `estatico.py` | Busca ids duplicados, anclas rotas, archivos inexistentes y SVG inválidos |
-| `pruebas_navegador.py` | Pruebas con Playwright: scroll horizontal, errores de JS, quizzes, trazas, candados, menú, tema, índice, Ctrl K, lupa y cinta |
+| `pruebas_navegador.py` | Pruebas con Playwright: scroll horizontal, errores de JS, quizzes, trazas, candados, panel Edición (tema y cinta), índice, Ctrl K y lupa |
 | `pruebas_webr.py` | Pruebas de R real en el navegador: bloques con previo, CSV, gráficos, `NA`, bucle infinito y simulacro |
 
 ## Flujo de trabajo

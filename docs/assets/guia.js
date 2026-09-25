@@ -32,21 +32,22 @@
   // clave del progreso: la semana, salvo en el Control 01, donde la guía (c1g) y el repaso (c1r) llevan cuentas separadas
   var claveProg = document.body.getAttribute("data-progreso") || semana;
 
-  /* ---------- Tema claro / oscuro ---------- */
+  /* ---------- Tema: claro, oscuro o el del sistema ---------- */
   function aplicarTema(t) {
     if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
     else document.documentElement.removeAttribute("data-theme");
   }
-  try { aplicarTema(window.localStorage.getItem(CLAVE + "-tema")); } catch (e) { /* nada */ }
-  function alternarTema() {
-    var actual = document.documentElement.getAttribute("data-theme");
-    var oscuroSistema = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
-    var esOscuro = actual ? actual === "dark" : oscuroSistema;
-    var nuevo = esOscuro ? "light" : "dark";
-    aplicarTema(nuevo);
-    try { window.localStorage.setItem(CLAVE + "-tema", nuevo); } catch (e) { /* nada */ }
+  function temaGuardado() {
+    try { var t = window.localStorage.getItem(CLAVE + "-tema"); return t === "light" || t === "dark" ? t : "system"; } catch (e) { return "system"; }
   }
-  document.querySelectorAll(".theme-btn").forEach(function (btn) { btn.addEventListener("click", alternarTema); });
+  function ponerTema(modo) {
+    aplicarTema(modo);
+    try {
+      if (modo === "light" || modo === "dark") window.localStorage.setItem(CLAVE + "-tema", modo);
+      else window.localStorage.removeItem(CLAVE + "-tema");
+    } catch (e) { /* nada */ }
+  }
+  aplicarTema(temaGuardado());
 
   /* ---------- Checklist de progreso ---------- */
   var checks = Array.prototype.slice.call(document.querySelectorAll("input[type=checkbox][data-track]"));
@@ -465,26 +466,15 @@
       pista.appendChild(copia);
       pista.style.setProperty("--dur-cinta", Math.max(40, Math.round(pista.scrollWidth / 45)) + "s");
     }
-    var pausa = document.querySelector(".cinta-pausa");
-    var pausada = false;
-    try { pausada = window.localStorage.getItem(CLAVE + "-cinta") === "pausa"; } catch (e) { /* nada */ }
-    function pintarPausa() {
-      if (barraEl) barraEl.classList.toggle("pausada", pausada);
-      if (pausa) {
-        pausa.setAttribute("aria-pressed", pausada ? "true" : "false");
-        pausa.setAttribute("aria-label", pausada ? "Reanudar la cinta de semanas" : "Pausar la cinta de semanas");
-      }
-    }
-    if (pausa) {
-      if (sinMovimiento) pausa.hidden = true;
-      pausa.addEventListener("click", function () {
-        pausada = !pausada;
-        try { window.localStorage.setItem(CLAVE + "-cinta", pausada ? "pausa" : "corre"); } catch (e) { /* nada */ }
-        pintarPausa();
-      });
-    }
-    pintarPausa();
   }
+  var pausada = false;
+  try { pausada = window.localStorage.getItem(CLAVE + "-cinta") === "pausa"; } catch (e) { /* nada */ }
+  function ponerCinta(pausar, guardar) {
+    pausada = !!pausar;
+    if (barraEl) barraEl.classList.toggle("pausada", pausada);
+    if (guardar) { try { window.localStorage.setItem(CLAVE + "-cinta", pausada ? "pausa" : "corre"); } catch (e) { /* nada */ } }
+  }
+  ponerCinta(pausada, false);
 
   /* ---------- Índice de la página, sección actual, lectura y tiempo restante ---------- */
   var indiceBtn = document.querySelector(".indice-btn");
@@ -768,59 +758,74 @@
     ir(actual, false);
   });
 
-  /* ---------- Menú de pantalla completa ---------- */
-  var menuBtn = document.querySelector(".menu-btn");
-  var menu = document.getElementById("menu-completo");
-  if (menuBtn && menu) {
-    var n = 0;
-    var entra = function (h) { return '<span class="entra" style="--i:' + (n++) + '">' + h + "</span>"; };
-    var html = '<div class="menu-in"><nav aria-label="Semanas de la guía"><h2>La edición completa</h2><ol class="menu-semanas">';
-    html += "<li>" + entra('<a href="' + RAIZ + 'index.html"><span class="n">↖</span><span class="tit">Inicio y temario</span><span class="pct"></span></a>') + "</li>";
-    document.querySelectorAll(".cinta-pista > .tk").forEach(function (el) {
+  /* ---------- Panel "Edición": las ediciones con su avance, tu avance total y los ajustes ----------
+     Reemplaza al menú de pantalla completa. Baja desde la barra; se cierra con Esc, con el botón o al hacer clic fuera. */
+  var edBtn = document.querySelector(".edicion-btn");
+  var ed = document.getElementById("edicion");
+  if (edBtn && ed) {
+    var filas = "", tHechos = 0, tTotal = 0, tQok = 0, tQtot = 0;
+    Array.prototype.forEach.call(document.querySelectorAll(".cinta-pista > .tk"), function (el) {
       var clave = el.getAttribute("data-tk");
       var numero = el.querySelector("b").textContent;
       if (!clave) {
         var k = Number(numero.slice(1)) - 1;
-        html += "<li>" + entra('<span class="futura-m"><span class="n">' + (k < 9 ? "0" : "") + (k + 1) + '</span><span class="tit">' + TITULOS[k] + '</span><span class="pct"></span></span>') + "</li>";
+        filas += '<li class="fut"><span class="n">' + numero + '</span><span class="t">' + TITULOS[k] + '</span><span class="b" aria-hidden="true"></span><span class="p">próximamente</span></li>';
         return;
       }
       var a = avance(clave);
-      var cur = el.getAttribute("aria-current") === "page" ? ' aria-current="page"' : "";
+      var total = a.total || Number(el.getAttribute("data-total") || 0);
+      tHechos += a.hechos; tTotal += total; tQok += a.quizOk; tQtot += a.quizTotal;
+      var aqui = el.getAttribute("aria-current") === "page";
       var tit = clave === "c1" ? el.getAttribute("data-control") : TITULOS[Number(clave.slice(1)) - 1];
-      var num = clave === "c1" ? "C1" : "0" + clave.slice(1);
-      html += "<li>" + entra('<a href="' + el.getAttribute("href") + '"' + cur + '><span class="n">' + num + '</span><span class="tit">' + tit + '</span><span class="pct">' + a.pct + " %</span></a>") + "</li>";
+      filas += '<li' + (aqui ? ' class="aqui"' : "") + '><a href="' + el.getAttribute("href") + '"' + (aqui ? ' aria-current="page"' : "") + ">" +
+        '<span class="n">' + numero + '</span><span class="t">' + tit + (aqui ? " <em>estás aquí</em>" : "") + "</span>" +
+        '<span class="b" aria-hidden="true"><i style="width:' + a.pct + '%"></i></span>' +
+        '<span class="p" data-estado="' + (a.pct > 0 ? "sube" : "cero") + '"><span class="sr">avance </span>' + (a.pct > 0 ? "▲ " : "■ ") + a.pct + " %</span></a></li>";
     });
-    html += "</ol></nav>";
-    if (indicePop) {
-      html += '<nav aria-label="En esta página"><h2>En esta página</h2><ol class="menu-secciones">';
-      indicePop.querySelectorAll("li").forEach(function (li) {
-        if (li.classList.contains("grupo")) html += '<li class="grupo">' + entra(li.textContent) + "</li>";
-        else { var a = li.querySelector("a"); html += "<li>" + entra('<a href="' + a.getAttribute("href") + '">' + etiquetaDe(a) + "</a>") + "</li>"; }
+    var tema = temaGuardado();
+    var seg = function (nombre, opciones, actual, desactivado) {
+      return '<div class="seg" role="group" aria-label="' + nombre + '">' + opciones.map(function (o) {
+        return '<button type="button" data-valor="' + o[0] + '" aria-pressed="' + (o[0] === actual) + '"' + (desactivado ? " disabled" : "") + ">" + o[1] + "</button>";
+      }).join("") + "</div>";
+    };
+    ed.innerHTML = '<div class="edicion-in">' +
+      '<section class="ed-lista" aria-labelledby="ed-t1"><h2 class="ed-tit" id="ed-t1">Las ediciones <small>tu avance en cada guía</small></h2><ol>' + filas + "</ol>" +
+      '<a class="ed-inicio" href="' + RAIZ + 'index.html">↖ Portada, temario y evaluación</a></section>' +
+      '<div class="ed-lado"><h2 class="ed-tit">Tu avance</h2><div class="ed-resumen"><b>' + tHechos + "</b> <small>de " + tTotal + "</small><p>actividades marcadas en todas las guías" + (tQtot ? " · quiz " + tQok + "/" + tQtot : "") + "</p></div>" +
+      '<h2 class="ed-tit">Ajustes</h2>' +
+      '<div class="ed-ajuste" data-ajuste="tema"><span>Tema</span>' + seg("Tema", [["light", "Claro"], ["dark", "Oscuro"], ["system", "Sistema"]], tema) + "</div>" +
+      '<div class="ed-ajuste" data-ajuste="cinta"><span>Cinta de semanas' + (sinMovimiento ? '<small>quieta: tu sistema pide menos movimiento</small>' : "") + "</span>" +
+      seg("Cinta de semanas", [["corre", "Corre"], ["quieta", "Quieta"]], sinMovimiento || pausada ? "quieta" : "corre", sinMovimiento) + "</div>" +
+      '<p class="ed-atajos"><kbd>Ctrl K</kbd> buscar · <kbd>←</kbd> <kbd>→</kbd> leer el gráfico · <kbd>Esc</kbd> cerrar</p></div></div>';
+    ed.querySelectorAll(".ed-ajuste").forEach(function (fila) {
+      fila.addEventListener("click", function (e) {
+        var b = e.target.closest("button[data-valor]");
+        if (!b || b.disabled) return;
+        fila.querySelectorAll("button").forEach(function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
+        var v = b.getAttribute("data-valor");
+        if (fila.getAttribute("data-ajuste") === "tema") ponerTema(v);
+        else ponerCinta(v === "quieta", true);
       });
-      html += "</ol>";
-    } else html += "<div>";
-    html += '<button class="menu-tema" type="button"><span>Cambiar a tema claro u oscuro</span></button>' + (indicePop ? "</nav>" : "</div>");
-    menu.innerHTML = html + "</div>";
-    menu.querySelector(".menu-tema").addEventListener("click", alternarTema);
-    var abrirMenu = function () {
-      menu.hidden = false;
-      void menu.offsetWidth;
-      menu.classList.add("abierto");
-      menuBtn.setAttribute("aria-expanded", "true");
-      document.body.classList.add("menu-activo");
-      var primero = menu.querySelector("a");
-      if (primero) primero.focus({ preventScroll: true });
+    });
+    var abrirEd = function (abrir, devolverFoco) {
+      ed.hidden = !abrir;
+      edBtn.setAttribute("aria-expanded", abrir ? "true" : "false");
+      if (abrir) {
+        if (indicePop && !indicePop.hidden) { indicePop.hidden = true; indiceBtn.setAttribute("aria-expanded", "false"); }
+        void ed.offsetWidth;
+        ed.classList.add("abierta");
+        var primero = ed.querySelector('a[aria-current="page"]') || ed.querySelector("a");
+        if (primero) primero.focus({ preventScroll: true });
+      } else {
+        ed.classList.remove("abierta");
+        if (devolverFoco) edBtn.focus();
+      }
     };
-    var cerrarMenu = function (devolverFoco) {
-      menu.classList.remove("abierto");
-      menuBtn.setAttribute("aria-expanded", "false");
-      document.body.classList.remove("menu-activo");
-      setTimeout(function () { if (!menu.classList.contains("abierto")) menu.hidden = true; }, 350);
-      if (devolverFoco) menuBtn.focus();
-    };
-    menuBtn.addEventListener("click", function () { if (menuBtn.getAttribute("aria-expanded") === "true") cerrarMenu(true); else abrirMenu(); });
-    menu.addEventListener("click", function (e) { if (e.target.closest("a")) cerrarMenu(false); });
-    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && menuBtn.getAttribute("aria-expanded") === "true") cerrarMenu(true); });
+    edBtn.addEventListener("click", function () { abrirEd(ed.hidden, false); });
+    ed.addEventListener("click", function (e) { if (e.target.closest("a")) abrirEd(false, false); });
+    document.addEventListener("click", function (e) { if (!ed.hidden && !e.target.closest(".edicion") && !e.target.closest(".edicion-btn")) abrirEd(false, false); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !ed.hidden) abrirEd(false, true); });
+    if (indiceBtn) indiceBtn.addEventListener("click", function () { if (!ed.hidden) abrirEd(false, false); });
   }
 
   /* ---------- Láminas: incrustar el SVG para que use las fuentes de la página ----------

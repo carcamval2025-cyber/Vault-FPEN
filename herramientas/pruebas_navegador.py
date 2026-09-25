@@ -19,7 +19,7 @@ async def main():
                     pg.on("console", lambda m: errs.append("console " + m.text) if m.type == "error" else None)
                     await pg.goto(SERVIDOR + ruta, wait_until="networkidle")
                     sw = await pg.evaluate("document.documentElement.scrollWidth")
-                    anchos = await pg.evaluate("""() => { const w = document.documentElement.clientWidth; return [...document.querySelectorAll('body *')].filter(e => { const r = e.getBoundingClientRect(); return r.width && r.right > w + 1 && !e.closest('pre, .table-wrap, .placa-core, .ventana, .menu-completo, .barra, .lupa, .lupa-nota') }).slice(0,5).map(e => e.tagName + '.' + e.className + ' ' + Math.round(e.getBoundingClientRect().right)) }""")
+                    anchos = await pg.evaluate("""() => { const w = document.documentElement.clientWidth; return [...document.querySelectorAll('body *')].filter(e => { const r = e.getBoundingClientRect(); return r.width && r.right > w + 1 && !e.closest('pre, .table-wrap, .placa-core, .ventana, .barra, .lupa, .lupa-nota') }).slice(0,5).map(e => e.tagName + '.' + e.className + ' ' + Math.round(e.getBoundingClientRect().right)) }""")
                     res = {"ancho": ancho, "pag": ruta, "scrollW": sw, "errores": errs}
                     if ancho == 1280:
                         res.update(await pg.evaluate("""() => {
@@ -39,14 +39,16 @@ async def main():
                           out.ventanas = document.querySelectorAll('.ventana:not(.terminal)').length + ' ventanas, ' + document.querySelectorAll('.btn-correr').length + ' con Ejecutar, ' + document.querySelectorAll('.ventana.terminal').length + ' consolas';
                           if (cb) cb.click();
                           return out; }"""))
-                        # menú y tema
-                        await pg.click(".menu-btn")
-                        await pg.wait_for_timeout(300)
-                        res["menu"] = await pg.evaluate("[document.getElementById('menu-completo').hidden, document.querySelectorAll('.menu-semanas li').length]")
-                        await pg.keyboard.press("Escape")
-                        await pg.click(".theme-btn")
+                        # panel Edición y tema
+                        await pg.click(".edicion-btn")
+                        await pg.wait_for_timeout(400)
+                        res["edicion"] = await pg.evaluate("[!document.getElementById('edicion').hidden, document.querySelectorAll('.ed-lista li').length, document.activeElement.textContent.slice(0,20)]")
+                        await pg.click(".ed-ajuste[data-ajuste='tema'] button[data-valor='dark']")
                         res["tema"] = await pg.evaluate("document.documentElement.getAttribute('data-theme')")
-                        await pg.click(".theme-btn")
+                        await pg.click(".ed-ajuste[data-ajuste='tema'] button[data-valor='system']")
+                        res["tema_sistema"] = await pg.evaluate("document.documentElement.getAttribute('data-theme')")
+                        await pg.keyboard.press("Escape")
+                        res["edicion_cerrada"] = await pg.evaluate("[document.getElementById('edicion').hidden, document.activeElement.className]")
                     if anchos: res["desbordan"] = anchos
                     if sw > ancho or errs: fallos += 1
                     print(json.dumps(res, ensure_ascii=False))
@@ -86,9 +88,12 @@ async def nuevo():
                 r["lupa"] = await pg.evaluate("document.querySelector('.graf-lectura').textContent")
                 r["lupa_nota"] = await pg.evaluate("document.querySelector('.lupa-nota').textContent")
                 # cinta
-                await pg.click(".cinta-pausa")
-                r["cinta_pausa"] = await pg.evaluate("[document.querySelector('.barra').classList.contains('pausada'), getComputedStyle(document.querySelector('.cinta-pista')).animationPlayState]")
-                await pg.click(".cinta-pausa")
+                await pg.click(".edicion-btn"); await pg.wait_for_timeout(300)
+                await pg.click(".ed-ajuste[data-ajuste='cinta'] button[data-valor='quieta']")
+                r["cinta_quieta"] = await pg.evaluate("[document.querySelector('.barra').classList.contains('pausada'), getComputedStyle(document.querySelector('.cinta-pista')).animationPlayState]")
+                await pg.click(".ed-ajuste[data-ajuste='cinta'] button[data-valor='corre']")
+                await pg.evaluate("document.getElementById('contenido').click()"); await pg.wait_for_timeout(200)
+                r["clic_fuera_cierra"] = await pg.evaluate("document.getElementById('edicion').hidden")
                 r["errores"] = errs
                 print(json.dumps(r, ensure_ascii=False))
                 await pg.close()

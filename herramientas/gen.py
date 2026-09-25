@@ -27,18 +27,22 @@ CICLO = ["importar", "ordenar", "transformar", "visualizar", "modelar", "comunic
 NOMBRES_TRAMO = {1: "Antes de clase", 2: "Aprender", 3: "Practicar", 4: "Proyecto y evaluación"}
 
 
+def _total(*fragmentos):
+    return sum(open(os.path.join(DIR_FUENTES, f + ".html"), encoding="utf-8").read().count("data-track=") for f in fragmentos)
+
+
 def cinta(raiz, actual):
     items = []
     for n in range(1, 13):
         if n in SEMANAS_CON_GUIA:
             cur = ' aria-current="page"' if actual == "s%d" % n else ""
-            items.append('<a class="tk" href="%s%s/index.html" data-tk="s%d"%s><b>S%d</b><span class="tk-tit">%s</span><span class="tk-pct" data-estado="cero">■ 0 %%</span></a>'
-                         % (raiz, SEMANAS_CON_GUIA[n], n, cur, n, CORTOS[n - 1]))
+            items.append('<a class="tk" href="%s%s/index.html" data-tk="s%d" data-total="%d"%s><b>S%d</b><span class="tk-tit">%s</span><span class="tk-pct" data-estado="cero">■ 0 %%</span></a>'
+                         % (raiz, SEMANAS_CON_GUIA[n], n, _total("s%d" % n), cur, n, CORTOS[n - 1]))
         else:
             items.append('<span class="tk futura" title="Semana %d: sin guía todavía"><b>S%d</b><span class="tk-tit">%s</span><span class="tk-pct">sin guía</span></span>' % (n, n, CORTOS[n - 1]))
         if n == 3:  # el Control 01 va después de la semana 3, como en el temario
             cur = ' aria-current="page"' if actual == "c1" else ""
-            items.append('<a class="tk" href="%scontrol-01/guia/index.html" data-tk="c1" data-control="Control 01: lectura, repaso y simulacro"%s><b>C1</b><span class="tk-tit">Control 01</span><span class="tk-pct" data-estado="cero">■ 0 %%</span></a>' % (raiz, cur))
+            items.append('<a class="tk" href="%scontrol-01/guia/index.html" data-tk="c1" data-total="%d" data-control="Control 01: lectura, repaso y simulacro"%s><b>C1</b><span class="tk-tit">Control 01</span><span class="tk-pct" data-estado="cero">■ 0 %%</span></a>' % (raiz, _total("c1g", "c1r"), cur))
     return "\n        ".join(items)
 
 
@@ -65,19 +69,19 @@ def indice(p):
 
 
 def barra(raiz, p):
+    sem = p.get("semana")
+    nro = ('<span class="nro" aria-hidden="true">%s</span>' % ("C1" if sem == "c1" else sem[1:].zfill(2))) if sem else ""
     return ('<a class="saltar" href="#contenido">Saltar al contenido</a>\n'
             '<header class="barra">\n'
             '  <div class="barra-fila">\n'
-            '    <a class="marca" href="%sindex.html"><img src="%sassets/brand/fpen-favicon.svg" alt="" width="26" height="26">FPEN<small>Guía de estudio</small></a>\n'
+            '    <a class="marca" href="%sindex.html"><img src="%sassets/brand/fpen-logo-ambar.svg" alt="FPEN, guía de estudio: inicio" width="93" height="21"></a>\n'
             '    <nav class="cinta" aria-label="Semanas del curso y tu avance">\n      <div class="cinta-pista">\n        %s\n      </div>\n    </nav>\n'
-            '    <button class="barra-btn cinta-pausa" type="button" aria-pressed="false" aria-label="Pausar la cinta de semanas"><span class="ico" aria-hidden="true"></span></button>\n'
-            '    <button class="barra-btn buscar-btn" type="button" aria-haspopup="dialog" aria-keyshortcuts="Control+K"><span class="ico" aria-hidden="true"></span><span>Buscar</span> <kbd>Ctrl K</kbd></button>\n'
-            '    <button class="barra-btn theme-btn" type="button" aria-label="Cambiar tema claro u oscuro"><span class="ico" aria-hidden="true"></span></button>\n'
-            '    <button class="barra-btn menu-btn" type="button" aria-expanded="false" aria-controls="menu-completo"><span class="hb" aria-hidden="true"></span><span class="hb" aria-hidden="true"></span><span class="sr">Menú</span></button>\n'
+            '    <button class="barra-btn buscar-btn" type="button" aria-haspopup="dialog" aria-keyshortcuts="Control+K"><span class="ico" aria-hidden="true"></span><span class="txt">Buscar</span> <kbd>Ctrl K</kbd></button>\n'
+            '    <button class="barra-btn edicion-btn" type="button" aria-expanded="false" aria-controls="edicion">%s<span class="txt">Edición</span><span class="flecha" aria-hidden="true"></span></button>\n'
             '  </div>\n%s'
             '  <div class="lectura" aria-hidden="true"><i></i></div>\n'
-            '</header>\n'
-            '<div class="menu-completo" id="menu-completo" hidden></div>\n') % (raiz, raiz, cinta(raiz, p.get("semana")), indice(p))
+            '  <div class="edicion" id="edicion" role="region" aria-label="Ediciones, avance y ajustes" hidden></div>\n'
+            '</header>\n') % (raiz, raiz, cinta(raiz, sem), nro, indice(p))
 
 
 def ciclo_fpen(aqui):
