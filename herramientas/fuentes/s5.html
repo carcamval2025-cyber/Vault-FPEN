@@ -1,0 +1,797 @@
+
+<section id="uso">
+  <h2>Cómo usar esta guía</h2>
+  <p>Esta página resume la <strong>Sesión 1 de la semana 5</strong> tal como se impartió en clase: repaso de <code>filter()</code>, <code>arrange()</code>, <code>select()</code> y <code>rename()</code> (vistos en la semana 4), ahora con la mecánica completa del pipe <code>|&gt;</code>, la diferencia entre <strong>Y</strong> y <strong>O</strong>, y <code>%in%</code>. Es el puente antes de <code>group_by()</code> y <code>summarise()</code>, que llegan en la Sesión 2.</p>
+  <div class="momentos">
+    <div><strong>Antes de clase</strong>Repasa R4DS cap. 3, secciones 3.2 a 3.4, y responde el <a href="#checkpoint">control de lectura</a>.</div>
+    <div><strong>Con RStudio abierto</strong>Los bloques de R se ejecutan en tu navegador; la primera vez se instalan <code>dplyr</code> y <code>nycflights13</code>, y tarda un poco.</div>
+    <div><strong>Después de clase</strong>Haz la <a href="#trazas">traza del pipeline</a> y los <a href="#ejercicios">ejercicios</a> con la base <code>ventas</code>.</div>
+    <div><strong>Antes del parcial</strong>La <a href="#practica">práctica intensiva</a> y la lista de <a href="#evaluacion">“puedo…”</a> preparan el Primer Parcial (semana 6).</div>
+  </div>
+  <ul class="ciclo-leyenda" aria-label="Ciclo de trabajo">
+    <li>Pregunta</li><li class="sep">→</li><li>Exploración</li><li class="sep">→</li><li>Implementación</li><li class="sep">→</li><li>Resultado</li><li class="sep">→</li><li>Interpretación</li><li class="sep">→</li><li class="v">Verificación</li>
+  </ul>
+  <div class="box nota"><span class="box-title">Sobre esta guía</span>
+    <p><code>summarise()</code> y <code>group_by()</code>, el resto de la semana 5, se cubren en la Sesión 2 del miércoles; no se adelantan aquí para no confundir el orden en que tu profesor los presentará.</p>
+  </div>
+</section>
+
+<section id="mapa">
+  <h2>Qué puedes usar en esta sesión</h2>
+  <div class="permisos">
+    <div class="si">
+      <h4>Sí (semanas 1 a 4)</h4>
+      <ul>
+        <li>R base: objetos, vectores, indexación, funciones</li>
+        <li>Data frames y tibbles, <code>read_csv()</code>, <code>glimpse()</code></li>
+        <li><code>ggplot2</code>: <code>ggplot()</code>, <code>aes()</code> y las geoms básicas</li>
+        <li><code>dplyr</code>: <code>filter()</code>, <code>arrange()</code>, <code>desc()</code>, <code>select()</code>, <code>rename()</code>, <code>mutate()</code></li>
+        <li>El pipe <code>|&gt;</code>, <code>&amp;</code>, <code>|</code>, <code>!</code>, <code>%in%</code>, <code>is.na()</code> y <code>na.rm</code></li>
+      </ul>
+    </div>
+    <div class="no">
+      <h4>Todavía no</h4>
+      <ul>
+        <li><code>group_by()</code>, <code>summarise()</code> y <code>slice_*()</code> → Sesión 2 de esta semana</li>
+        <li><code>pivot_longer()</code> y <code>pivot_wider()</code> → semana 7</li>
+        <li>Joins entre tablas → semana 8</li>
+        <li><code>if_else()</code> y funciones propias → semana 9</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="lecturas">
+  <h2>Lecturas</h2>
+  <ul class="check">
+    <li><input type="checkbox" id="s5-l1" data-track="s5-l1"><label for="s5-l1"><span class="ref">[R4DS] Cap. 3</span> “Data transformation”, secciones 3.2 a 3.4 (repaso): filas, columnas y el pipe. Enfócate en: la diferencia entre <code>&amp;</code> y <code>|</code>, y en qué hace cada verbo con filas o columnas.</label></li>
+    <li><input type="checkbox" id="s5-l2" data-track="s5-l2"><label for="s5-l2"><span class="ref">Próxima lectura</span> (Sesión 2, miércoles): cap. 3, sección 3.5 “Groups” (<code>group_by()</code>, <code>summarize()</code>, familia <code>slice_*()</code>) e inicio del cap. 10, “Exploratory data analysis”.</label></li>
+  </ul>
+  <div class="box nota"><span class="box-title">Dónde leer</span>
+    <ul>
+      <li><a href="https://r4ds.hadley.nz/data-transform.html" target="_blank" rel="noopener">R4DS (2.ª ed.), cap. 3: Data transformation</a>.</li>
+      <li><a href="https://r4ds.hadley.nz/EDA.html" target="_blank" rel="noopener">R4DS (2.ª ed.), cap. 10: Exploratory data analysis</a>.</li>
+      <li><a href="https://dplyr.tidyverse.org/" target="_blank" rel="noopener">Documentación de dplyr</a>.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="checkpoint">
+  <h2>Control de lectura</h2>
+  <p>Responde sin volver al libro. Cada respuesta explica por qué.</p>
+  <div class="quiz">
+    <div class="qq" data-q="s5-q1">
+      <p>¿A qué equivale <code>x |&gt; f(y)</code>?</p>
+      <div class="quiz-opts">
+        <button class="quiz-opt" data-ok><code>f(x, y)</code></button>
+        <button class="quiz-opt"><code>f(y, x)</code></button>
+        <button class="quiz-opt"><code>x(f(y))</code></button>
+        <button class="quiz-opt"><code>f(y)</code>, y <code>x</code> se ignora</button>
+      </div>
+      <p class="why">Lo de la izquierda del pipe entra como <strong>primer argumento</strong> de la función de la derecha; <code>y</code> pasa a ser el segundo.</p>
+    </div>
+    <div class="qq" data-q="s5-q2">
+      <p>¿Cuántas filas devuelve <code>flights |&gt; filter(month == 1 &amp; month == 2)</code>?</p>
+      <div class="quiz-opts">
+        <button class="quiz-opt" data-ok>0</button>
+        <button class="quiz-opt">Las de enero más las de febrero</button>
+        <button class="quiz-opt">Solo las de enero</button>
+        <button class="quiz-opt">Un error</button>
+      </div>
+      <p class="why">Cada vuelo tiene un solo mes: ninguna fila puede ser 1 y 2 a la vez. Para “enero o febrero” se usa <code>|</code> o <code>%in% c(1, 2)</code>.</p>
+    </div>
+    <div class="qq" data-q="s5-q3">
+      <p>¿Cuándo es correcto usar <code>&amp;</code> en un <code>filter()</code>?</p>
+      <div class="quiz-opts">
+        <button class="quiz-opt" data-ok>Cuando dos condiciones, normalmente sobre columnas distintas, deben cumplirse a la vez.</button>
+        <button class="quiz-opt">Cuando quiero varios valores de una misma columna.</button>
+        <button class="quiz-opt">Nunca: siempre se usan comas.</button>
+        <button class="quiz-opt">Solo con columnas de texto.</button>
+      </div>
+      <p class="why"><code>carrier == "UA" &amp; day == 1</code> tiene sentido: aerolínea UA <em>y</em> día 1. Separar condiciones con comas dentro de <code>filter()</code> equivale a <code>&amp;</code>.</p>
+    </div>
+    <div class="qq" data-q="s5-q4">
+      <p>¿Qué hace <code>arrange(desc(ingreso_total))</code>?</p>
+      <div class="quiz-opts">
+        <button class="quiz-opt" data-ok>Ordena las filas de mayor a menor ingreso.</button>
+        <button class="quiz-opt">Ordena de menor a mayor.</button>
+        <button class="quiz-opt">Borra las filas con ingreso bajo.</button>
+        <button class="quiz-opt">Ordena las columnas alfabéticamente.</button>
+      </div>
+      <p class="why"><code>arrange()</code> ordena filas y es ascendente por defecto; <code>desc()</code> invierte el orden. No existe <code>asc()</code> porque ascendente es lo implícito.</p>
+    </div>
+    <div class="qq" data-q="s5-q5">
+      <p>Necesitas <strong>todas</strong> las columnas, pero con <code>ingreso_total</code> llamada <code>ingreso_usd</code>. ¿Qué usas?</p>
+      <div class="quiz-opts">
+        <button class="quiz-opt" data-ok><code>rename(ingreso_usd = ingreso_total)</code></button>
+        <button class="quiz-opt"><code>select(ingreso_usd = ingreso_total)</code></button>
+        <button class="quiz-opt"><code>filter(ingreso_usd == ingreso_total)</code></button>
+        <button class="quiz-opt"><code>arrange(ingreso_usd)</code></button>
+      </div>
+      <p class="why"><code>select()</code> también renombra, pero conserva <strong>solo</strong> las columnas que listas. <code>rename()</code> cambia el nombre sin tocar las demás.</p>
+    </div>
+    <div class="qq" data-q="s5-q6">
+      <p>¿Qué ventaja tiene <code>mes %in% c("julio", "agosto", "diciembre")</code> sobre tres condiciones unidas con <code>|</code>?</p>
+      <div class="quiz-opts">
+        <button class="quiz-opt" data-ok>Es más corta y fácil de modificar si se agrega otro mes; el resultado es el mismo.</button>
+        <button class="quiz-opt">Es más rápida porque ordena los meses.</button>
+        <button class="quiz-opt">Devuelve un resultado distinto y más preciso.</button>
+        <button class="quiz-opt">Funciona solo con números.</button>
+      </div>
+      <p class="why">Ambas seleccionan las mismas filas. <code>%in%</code> escala mejor: agregar un cuarto mes es agregar un valor al vector.</p>
+    </div>
+    <div class="qq" data-q="s5-q7">
+      <p>¿Por qué el curso usa <code>|&gt;</code> y no <code>%&gt;%</code>?</p>
+      <div class="quiz-opts">
+        <button class="quiz-opt" data-ok>Porque <code>|&gt;</code> es parte de R base y no depende de cargar ningún paquete.</button>
+        <button class="quiz-opt">Porque <code>%&gt;%</code> ya no funciona.</button>
+        <button class="quiz-opt">Porque <code>|&gt;</code> ordena los datos automáticamente.</button>
+        <button class="quiz-opt">Porque <code>%&gt;%</code> solo sirve con ggplot2.</button>
+      </div>
+      <p class="why"><code>%&gt;%</code> viene del paquete magrittr y sigue funcionando; <code>|&gt;</code> es el pipe nativo de R desde la versión 4.1. Se activa en RStudio en <em>Tools → Global Options → Code → Use native pipe operator</em>.</p>
+    </div>
+    <div class="qq" data-q="s5-q8">
+      <p>Guardas <code>flights2 &lt;- flights |&gt; filter(...) |&gt; select(...)</code>. ¿Qué pasa con <code>flights</code>?</p>
+      <div class="quiz-opts">
+        <button class="quiz-opt" data-ok>No cambia: el resultado vive en el objeto nuevo <code>flights2</code>.</button>
+        <button class="quiz-opt">Queda filtrado igual que <code>flights2</code>.</button>
+        <button class="quiz-opt">Se borra para ahorrar memoria.</button>
+        <button class="quiz-opt">Pierde las columnas no seleccionadas.</button>
+      </div>
+      <p class="why">Los verbos de dplyr devuelven una tabla nueva; nunca modifican la original a menos que reasignes con el mismo nombre.</p>
+    </div>
+    <div class="quiz-score"><span data-score></span><button class="btn sec" type="button" data-reset>Reiniciar quiz</button></div>
+  </div>
+  <ul class="check"><li><input type="checkbox" id="s5-cp" data-track="s5-cp"><label for="s5-cp">Respondí el control de lectura y entiendo por qué fallé las que fallé.</label></li></ul>
+</section>
+
+<section id="por-que">
+  <h2>Los datos casi nunca llegan listos</h2>
+  <div class="box simple"><span class="box-title">En palabras simples</span>
+    <p>Transformar datos es como preparar el <strong>informe mensual para gerencia</strong>: de la hoja con todas las transacciones te quedas con las que importan (filtrar), las pones en el orden que el gerente quiere leer (ordenar) y dejas solo las columnas que va a mirar, con nombres que entienda (seleccionar y renombrar).</p>
+  </div>
+  <p>Hasta ahora hemos trabajado con datos que ya estaban ordenados. En la práctica, y en tu proyecto grupal, vas a recibir información que necesita transformación: separar una fecha en año, mes y día, crear una clasificación de clientes que se mantenga en el tiempo, o quedarte solo con las filas y columnas relevantes para una pregunta concreta. Esa es exactamente la lógica detrás de <code>filter()</code>, <code>arrange()</code>, <code>select()</code> y <code>rename()</code>: cada uno resuelve un tipo distinto de transformación, y encadenarlos con el pipe es lo que te permite construir un flujo de trabajo legible.</p>
+  <p>Los ejemplos de esta página usan dos bases. <code>flights</code> (paquete <code>nycflights13</code>) es la del libro; <code>ventas</code> es una base simulada de una cadena de tiendas salvadoreña. Estos dos bloques las preparan; los demás los ejecutan antes, automáticamente:</p>
+<pre data-file="preparar_flights.R" id="s5-flights"><code class="language-r">library(dplyr, warn.conflicts = FALSE)
+library(nycflights13)   # trae la tabla flights: 336,776 vuelos de 2013</code></pre>
+<pre data-file="preparar_ventas.R" id="s5-ventas"><code class="language-r">library(dplyr, warn.conflicts = FALSE)  # sin el aviso de funciones enmascaradas
+ventas &lt;- tibble(
+  tienda = c("San Salvador", "Santa Ana", "San Miguel", "Santa Tecla",
+             "Sonsonate", "San Miguel", "San Salvador", "Santa Ana"),
+  region = c("Central", "Occidente", "Oriente", "Central",
+             "Occidente", "Oriente", "Central", "Occidente"),
+  mes = c("julio", "julio", "julio", "agosto",
+          "agosto", "diciembre", "diciembre", "diciembre"),
+  unidades_vendidas = c(420, 310, 275, 390, 260, 510, 605, 340),
+  precio_unitario = c(8.50, 8.50, 8.20, 8.60, 8.30, 9.10, 9.10, 9.00),
+  ingreso_total = c(3570, 2635, 2255, 3354, 2158, 4641, 5505.5, 3060)
+)
+dim(ventas)</code></pre>
+<pre class="salida"><code>[1] 8 6</code></pre>
+  <div class="table-wrap"><table class="datos">
+    <caption><code>ventas</code>: una fila por tienda y mes. <code>ingreso_total</code> = unidades × precio.</caption>
+    <thead><tr><th>tienda</th><th>region</th><th>mes</th><th class="num">unidades_vendidas</th><th class="num">precio_unitario</th><th class="num">ingreso_total</th></tr></thead>
+    <tbody>
+      <tr><td>San Salvador</td><td>Central</td><td>julio</td><td class="num">420</td><td class="num">8.50</td><td class="num">3570.00</td></tr>
+      <tr><td>Santa Ana</td><td>Occidente</td><td>julio</td><td class="num">310</td><td class="num">8.50</td><td class="num">2635.00</td></tr>
+      <tr><td>San Miguel</td><td>Oriente</td><td>julio</td><td class="num">275</td><td class="num">8.20</td><td class="num">2255.00</td></tr>
+      <tr><td>Santa Tecla</td><td>Central</td><td>agosto</td><td class="num">390</td><td class="num">8.60</td><td class="num">3354.00</td></tr>
+      <tr><td>Sonsonate</td><td>Occidente</td><td>agosto</td><td class="num">260</td><td class="num">8.30</td><td class="num">2158.00</td></tr>
+      <tr><td>San Miguel</td><td>Oriente</td><td>diciembre</td><td class="num">510</td><td class="num">9.10</td><td class="num">4641.00</td></tr>
+      <tr><td>San Salvador</td><td>Central</td><td>diciembre</td><td class="num">605</td><td class="num">9.10</td><td class="num">5505.50</td></tr>
+      <tr><td>Santa Ana</td><td>Occidente</td><td>diciembre</td><td class="num">340</td><td class="num">9.00</td><td class="num">3060.00</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="funciones">
+  <h2>Funciones y argumentos: un repaso necesario</h2>
+  <div class="box simple"><span class="box-title">En palabras simples</span>
+    <p>Una función es una <strong>máquina de la línea de producción</strong>: recibe materia prima (el primer argumento) y ajustes (los demás argumentos). Si no mueves un ajuste, usa el de fábrica: <code>round()</code> viene de fábrica con 0 decimales.</p>
+  </div>
+  <p>Toda función en R recibe <strong>argumentos</strong> entre paréntesis, y puede requerir cero, uno o varios. <code>round()</code> es un buen ejemplo: su primer argumento (<code>x</code>) es el número a redondear y el segundo (<code>digits</code>) es la cantidad de decimales; si no lo especificas, R usa <code>0</code> por defecto.</p>
+<pre data-file="round.R"><code class="language-r">valor &lt;- 123.4567899
+round(valor)      # sin segundo argumento: 0 decimales por defecto
+round(valor, 2)   # dos decimales</code></pre>
+<pre class="salida"><code>[1] 123
+[1] 123.46</code></pre>
+  <p>Esta idea, <em>el primer argumento es lo que se transforma</em>, es la que hace funcionar el pipe.</p>
+</section>
+
+<section id="pipe">
+  <h2>El operador pipe nativo <code>|&gt;</code></h2>
+  <div class="box simple"><span class="box-title">En palabras simples</span>
+    <p>El pipe es la <strong>banda transportadora</strong> entre estaciones de trabajo: lo que sale de una estación entra a la siguiente. Se lee “y luego”: toma <code>ventas</code>, <em>y luego</em> filtra, <em>y luego</em> ordena.</p>
+  </div>
+  <p>El pipe toma lo que está a su <strong>izquierda</strong> y lo convierte en el <strong>primer argumento</strong> de la función que está a su derecha. No cambia lo que R puede hacer, pero sí cambia radicalmente qué tan legible es tu código cuando encadenas varias transformaciones.</p>
+  <figure class="lamina media"><div class="placa"><div class="placa-core"><img src="{RAIZ}assets/img/s5-pipe.svg" alt="Arriba, la regla: x pipe f de y equivale a f de x coma y. Abajo, un pipeline: ventas entra a filter, el resultado entra a arrange y ese resultado entra a select; la misma operación anidada se lee de adentro hacia afuera." width="760" height="300" loading="lazy" decoding="async"></div></div><figcaption>Con pipe, los pasos se leen de arriba hacia abajo, en el orden en que ocurren. Anidado, se leen de adentro hacia afuera.</figcaption></figure>
+  <div class="grid">
+    <div class="card"><h3>Cómo activarlo en RStudio</h3><p><em>Tools → Global Options → Code → Display</em>: marca <strong>“Use native pipe operator”</strong>. Con esto, el atajo <kbd>Ctrl</kbd>/<kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>M</kbd> inserta <code>|&gt;</code> en vez de <code>%&gt;%</code> (el pipe de magrittr). El curso usa <code>|&gt;</code> porque es parte de R base.</p></div>
+    <div class="card"><h3>La regla en una frase</h3><p><code>x |&gt; f()</code> equivale a <code>f(x)</code>. Lo de la izquierda entra como primer argumento.</p></div>
+    <div class="card"><h3>No es solo estilo</h3><p>Cuando encadenas 3 o 4 transformaciones, anidar funciones (<code>select(arrange(filter(...)))</code>) se vuelve difícil de leer. El pipe convierte eso en una secuencia de pasos, de arriba hacia abajo.</p></div>
+  </div>
+<pre data-file="sin_y_con_pipe.R"><code class="language-r"># Sin pipe: valor entra directo como primer argumento de round()
+valor &lt;- 123.4567899
+round(valor, 2)
+# Con pipe: "toma valor y pásalo como primer argumento de round()"
+valor |&gt; round(2)</code></pre>
+<pre class="salida"><code>[1] 123.46
+[1] 123.46</code></pre>
+  <p>El pipe también funciona con <code>ggplot()</code>: la tabla se convierte en su primer argumento. Este es el ejemplo que se vio en clase con los pingüinos del libro (un adelanto de uso, no de contenido: el gráfico es de la semana 3):</p>
+<pre data-file="pipe_ggplot.R"><code class="language-r">library(ggplot2)
+library(palmerpenguins)
+# penguins se convierte en el primer argumento de ggplot()
+penguins |&gt;
+  ggplot(aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point()</code></pre>
+  <div class="box ojo"><span class="box-title">Pipe y <code>+</code> no son lo mismo</span>
+    <p>Entre verbos de dplyr se encadena con <code>|&gt;</code>; entre capas de ggplot2 se suma con <code>+</code>. Si ejecutas el bloque verás también un aviso de filas eliminadas: son los dos pingüinos sin medidas (<code>NA</code>).</p>
+  </div>
+</section>
+
+<section id="filter">
+  <h2>Verbos de fila: <code>filter()</code></h2>
+  <div class="box simple"><span class="box-title">En palabras simples</span>
+    <p><code>filter()</code> es el <strong>colador de la auditoría</strong>: pasan solo las transacciones que cumplen la regla. “Y” es un colador doble (tienen que pasar los dos); “O” son dos coladores puestos lado a lado (basta con pasar uno).</p>
+  </div>
+  <p><code>filter()</code> conserva las filas que cumplen una condición. Su primer argumento es el data frame; el resto son las condiciones que deben ser verdaderas.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Operador</th><th>Significado</th><th>Ejemplo</th></tr></thead>
+    <tbody>
+      <tr><td><code>==</code></td><td>igual a</td><td><code>carrier == "UA"</code></td></tr>
+      <tr><td><code>!=</code></td><td>distinto de</td><td><code>month != 12</code></td></tr>
+      <tr><td><code>&gt; &lt; &gt;= &lt;=</code></td><td>comparación numérica</td><td><code>dep_delay &gt; 30</code></td></tr>
+      <tr><td><code>&amp;</code></td><td>Y: ambas condiciones a la vez</td><td><code>carrier == "UA" &amp; day == 1</code></td></tr>
+      <tr><td><code>|</code></td><td>O: al menos una condición</td><td><code>month == 1 | month == 2</code></td></tr>
+      <tr><td><code>%in%</code></td><td>coincide con algún valor de una lista</td><td><code>month %in% c(1, 4, 8, 11, 12)</code></td></tr>
+    </tbody>
+  </table></div>
+  <figure class="lamina media"><div class="placa"><div class="placa-core"><img src="{RAIZ}assets/img/s5-y-o.svg" alt="Cinco vuelos con su mes. Con month igual a 1 Y month igual a 2 no pasa ninguna fila, porque cada fila tiene un solo mes. Con month igual a 1 O month igual a 2 pasan las filas de enero y de febrero." width="760" height="280" loading="lazy" decoding="async"></div></div><figcaption>Una fila, un valor de <code>month</code>: pedir 1 <strong>y</strong> 2 a la vez deja la tabla vacía.</figcaption></figure>
+  <div class="box error"><span class="box-title">El error que casi todos cometen: Y contra O</span>
+    <p>Un vuelo no puede tener <code>month == 1</code> y <code>month == 2</code> al mismo tiempo: cada fila tiene un único valor de mes. Por eso <code>filter(flights, month == 1 &amp; month == 2)</code> devuelve <strong>0 filas</strong>. Cuando quieres “esta condición o esta otra, sobre la misma columna”, usa <code>|</code>: <code>filter(flights, month == 1 | month == 2)</code> sí devuelve los 51,955 vuelos de enero o febrero. Usa <code>&amp;</code> cuando las condiciones vienen de <strong>columnas distintas</strong> que deben cumplirse ambas (por ejemplo, <code>carrier == "UA" &amp; day == 1</code>).</p>
+  </div>
+  <div class="ciclo">
+    <h3>Caso: ¿cuántos vuelos cumplen cada condición?</h3>
+    <div class="paso"><div><span class="etq">Pregunta</span><p>¿Cuántos vuelos operó United (UA) en 2013? ¿Cuántos de UA salieron con exactamente 2 minutos de retraso el día 1 de algún mes? ¿Cuántos vuelos hubo en enero o febrero?</p></div></div>
+    <div class="paso"><div><span class="etq">Exploración</span><p>Son tres filtros distintos. El segundo combina tres condiciones de columnas distintas: se pueden encadenar tres <code>filter()</code> o separarlas con comas en uno solo. Como la tabla es enorme, en lugar de imprimirla contamos filas con <code>nrow()</code>.</p></div></div>
+    <div class="paso"><div><span class="etq">Implementación</span>
+<pre data-file="filter_flights.R" data-previo="s5-flights"><code class="language-r"># Forma 1: encadenando varios filter() (útil para explicar el proceso)
+flights |&gt;
+  filter(carrier == "UA") |&gt;
+  filter(dep_delay == 2) |&gt;
+  filter(day == 1) |&gt;
+  nrow()
+# Forma 2: un solo filter() con varios argumentos (más eficiente)
+flights |&gt; filter(carrier == "UA", dep_delay == 2, day == 1) |&gt; nrow()
+flights |&gt; filter(carrier == "UA") |&gt; nrow()
+flights |&gt; filter(month == 1 &amp; month == 2) |&gt; nrow()   # el error clásico
+flights |&gt; filter(month == 1 | month == 2) |&gt; nrow()</code></pre>
+    </div></div>
+    <div class="paso"><div><span class="etq">Resultado</span>
+<pre class="salida"><code>[1] 58
+[1] 58
+[1] 58665
+[1] 0
+[1] 51955</code></pre>
+    </div></div>
+    <div class="paso"><div><span class="etq">Interpretación</span><p>United operó 58,665 vuelos; solo 58 de ellos cumplen las tres condiciones a la vez. Las dos formas dan lo mismo: encadenar <code>filter()</code> es más didáctico, una sola llamada con comas es más directa.</p></div></div>
+    <div class="paso verif"><div><span class="etq">Verificación: ¿cómo sé que es correcto?</span><ul><li>Cada filtro adicional solo puede <strong>bajar</strong> (o mantener) el número de filas: 58,665 → 58 tiene sentido.</li><li>Las dos formas del mismo filtro deben coincidir.</li><li>Un 0 inesperado es una alarma: casi siempre es un <code>&amp;</code> que debía ser <code>|</code>.</li></ul></div></div>
+  </div>
+  <p>Y <code>%in%</code> para una lista de valores en una misma columna (aquí se imprime la tabla: verás el tamaño en la primera línea):</p>
+<pre data-file="filter_in.R" data-previo="s5-flights"><code class="language-r">flights |&gt;
+  filter(month %in% c(1, 4, 8, 11, 12)) |&gt;
+  nrow()</code></pre>
+<pre class="salida"><code>[1] 140064</code></pre>
+</section>
+
+<section id="arrange">
+  <h2>Verbos de fila: <code>arrange()</code></h2>
+  <div class="box simple"><span class="box-title">En palabras simples</span>
+    <p><code>arrange()</code> es <strong>ordenar la lista de clientes</strong>: por defecto de menor a mayor; con <code>desc()</code>, los que más compraron arriba. Si dos empatan, decides un segundo criterio, como en un ranking de ventas por monto y luego por nombre.</p>
+  </div>
+  <p><code>arrange()</code> ordena las filas según una o más columnas. Por defecto es <strong>ascendente</strong>; para descendente se envuelve la columna en <code>desc()</code>. No existe un “asc()” porque ascendente ya es el comportamiento implícito.</p>
+<pre data-file="arrange.R" data-previo="s5-ventas"><code class="language-r">ventas |&gt;
+  arrange(desc(ingreso_total))   # de mayor a menor ingreso</code></pre>
+<pre class="salida"><code># A tibble: 8 × 6
+  tienda       region    mes     unidades_vendidas precio_unitario ingreso_total
+  &lt;chr&gt;        &lt;chr&gt;     &lt;chr&gt;               &lt;dbl&gt;           &lt;dbl&gt;         &lt;dbl&gt;
+1 San Salvador Central   diciem…               605             9.1         5506.
+2 San Miguel   Oriente   diciem…               510             9.1         4641
+3 San Salvador Central   julio                 420             8.5         3570
+4 Santa Tecla  Central   agosto                390             8.6         3354
+5 Santa Ana    Occidente diciem…               340             9           3060
+6 Santa Ana    Occidente julio                 310             8.5         2635
+7 San Miguel   Oriente   julio                 275             8.2         2255
+8 Sonsonate    Occidente agosto                260             8.3         2158 </code></pre>
+  <div class="box nota"><span class="box-title">Cómo leer una tibble impresa</span>
+    <p>La primera línea dice el tamaño (8 filas × 6 columnas). Debajo de cada nombre va el tipo (<code>&lt;chr&gt;</code> texto, <code>&lt;dbl&gt;</code> número). Para caber en 80 caracteres, R abrevia: <code>diciem…</code> es “diciembre” recortado y <code>5506.</code> es 5505.5 mostrado con 4 cifras significativas. Los datos no cambian; solo la forma de imprimirlos.</p>
+  </div>
+  <p>Con varios criterios, si hay empate en el primero pasa al siguiente. En la clase se vio con <code>flights</code>:</p>
+<pre data-file="arrange_flights.R" data-previo="s5-flights"><code class="language-r">flights |&gt;
+  filter(month %in% c(1, 4, 8, 11, 12)) |&gt;
+  arrange(desc(dep_delay))              # descendente por retraso de salida
+flights |&gt;
+  arrange(desc(month), desc(dep_time), day)  # varios criterios: si empatan, pasa al siguiente</code></pre>
+</section>
+
+<section id="select">
+  <h2>Verbos de columna: <code>select()</code> y <code>rename()</code></h2>
+  <div class="box simple"><span class="box-title">En palabras simples</span>
+    <p><code>select()</code> es preparar la <strong>versión para el directorio</strong> del informe: solo las 5 columnas que importan, de 40. <code>rename()</code> es corregir los encabezados de la hoja completa: cambias “ing_tot” por “ingreso_usd” sin quitar nada.</p>
+  </div>
+  <div class="grid">
+    <div class="card"><h3><code>select()</code></h3><p>Se queda solo con las columnas que indiques, en el orden en que las escribas. De 19 columnas de <code>flights</code> puedes pasar a solo 6.</p></div>
+    <div class="card"><h3><code>rename()</code></h3><p>Cambia nombres de columnas <strong>sin eliminar</strong> las demás, a diferencia de <code>select()</code>, que solo conserva lo que listas explícitamente.</p></div>
+  </div>
+  <p>Un detalle práctico que se vio en clase: <code>select()</code> también puede renombrar al mismo tiempo que selecciona, con la sintaxis <code>nuevo_nombre = columna_original</code>.</p>
+<pre data-file="flights2.R" data-previo="s5-flights"><code class="language-r">flights2 &lt;- flights |&gt;
+  filter(month %in% c(1, 4, 8, 11, 12)) |&gt;
+  arrange(desc(dep_delay)) |&gt;
+  select(
+    año = year, mes = month, dia = day,
+    vuelo = flight, operador = carrier,
+    retraso_despegue = dep_delay
+  )
+flights2</code></pre>
+<pre class="salida"><code># A tibble: 140,064 × 6
+     año   mes   dia vuelo operador retraso_despegue
+   &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt;               &lt;dbl&gt;
+ 1  2013     1     9    51 HA                   1301
+ 2  2013     1    10  3695 MQ                   1126
+ 3  2013     4    10  2391 DL                    960
+ 4  2013    12     5   172 AA                    896
+ 5  2013     1     1  3944 MQ                    853
+ 6  2013    12    19  1223 DL                    849
+ 7  2013    12    17   172 AA                    845
+ 8  2013    12    14  2391 DL                    825
+ 9  2013     4    19  1435 DL                    812
+10  2013    11     3  2042 DL                    798
+# ℹ 140,054 more rows</code></pre>
+  <p>Guardar el resultado en <code>flights2 &lt;- ...</code> evita repetir todo el cálculo cada vez que lo necesites para un paso posterior, algo que vas a agradecer en la Sesión 2, cuando ese resultado filtrado y renombrado sea el punto de partida para <code>group_by()</code> y <code>summarize()</code>.</p>
+  <div class="antes-despues">
+    <div><span class="etq-tabla">Antes: <code>ventas</code> (6 columnas)</span><div class="table-wrap"><table class="datos"><thead><tr><th>tienda</th><th>region</th><th>mes</th><th>unidades…</th><th>precio…</th><th>ingreso_total</th></tr></thead><tbody><tr><td>San Salvador</td><td>Central</td><td>julio</td><td>420</td><td>8.5</td><td>3570</td></tr></tbody></table></div></div>
+    <span class="op">rename(ingreso_usd = ingreso_total)</span>
+    <div><span class="etq-tabla">Después: las mismas 6 columnas</span><div class="table-wrap"><table class="datos"><thead><tr><th>tienda</th><th>region</th><th>mes</th><th>unidades…</th><th>precio…</th><th class="nueva">ingreso_usd</th></tr></thead><tbody><tr><td>San Salvador</td><td>Central</td><td>julio</td><td>420</td><td>8.5</td><td class="nueva">3570</td></tr></tbody></table></div></div>
+  </div>
+</section>
+
+<section id="aplicacion">
+  <h2>Lo mismo, con datos de tu carrera</h2>
+  <div class="box simple"><span class="box-title">En palabras simples</span>
+    <p>La base del libro son vuelos, pero la receta <strong>filtrar → ordenar → seleccionar</strong> es la misma que usa un analista de un banco, de una alcaldía o de una cadena de tiendas.</p>
+  </div>
+  <div class="grid">
+    <div class="card"><h3>Salario real</h3><p><code>filter(sector == "Comercio")</code> antes de comparar salarios.</p></div>
+    <div class="card"><h3>Ventas por región</h3><p><code>arrange(desc(ingreso_total))</code> para ver qué región vende más.</p></div>
+    <div class="card"><h3>Clasificaciones</h3><p><code>select()</code> para quedarte solo con las columnas relevantes de una encuesta de 40 preguntas.</p></div>
+  </div>
+</section>
+
+<section id="trazas">
+  <h2>Tabla de traza</h2>
+  <p>Sigue este pipeline paso por paso sobre la base <code>ventas</code> (8 filas × 6 columnas) y anota el tamaño de la tabla después de cada verbo y la primera tienda que aparece.</p>
+<pre data-file="traza_pipeline.R" data-previo="s5-ventas"><code class="language-r">ventas |&gt;
+  filter(region != "Oriente") |&gt;
+  filter(ingreso_total &gt; 3000) |&gt;
+  arrange(ingreso_total) |&gt;
+  select(tienda, mes, ingreso_total)</code></pre>
+  <div class="traza">
+    <div class="table-wrap"><table>
+      <thead><tr><th>Después de…</th><th>filas</th><th>columnas</th><th>primera tienda</th></tr></thead>
+      <tbody>
+        <tr><td class="dado">ventas (inicio)</td><td class="dado">8</td><td class="dado">6</td><td class="dado">San Salvador</td></tr>
+        <tr><td class="dado">filter(region != "Oriente")</td><td><input data-a="6" aria-label="filas tras el primer filter"></td><td><input data-a="6" aria-label="columnas tras el primer filter"></td><td><input data-a="San Salvador" aria-label="primera tienda tras el primer filter"></td></tr>
+        <tr><td class="dado">filter(ingreso_total &gt; 3000)</td><td><input data-a="4" aria-label="filas tras el segundo filter"></td><td><input data-a="6" aria-label="columnas tras el segundo filter"></td><td><input data-a="San Salvador" aria-label="primera tienda tras el segundo filter"></td></tr>
+        <tr><td class="dado">arrange(ingreso_total)</td><td><input data-a="4" aria-label="filas tras arrange"></td><td><input data-a="6" aria-label="columnas tras arrange"></td><td><input data-a="Santa Ana" aria-label="primera tienda tras arrange"></td></tr>
+        <tr><td class="dado">select(tienda, mes, ingreso_total)</td><td><input data-a="4" aria-label="filas tras select"></td><td><input data-a="3" aria-label="columnas tras select"></td><td><input data-a="Santa Ana" aria-label="primera tienda tras select"></td></tr>
+      </tbody>
+    </table></div>
+    <div class="acciones"><button class="btn" type="button" data-comprobar>Comprobar</button><button class="btn sec" type="button" data-solucion>Ver solución</button><button class="btn sec" type="button" data-limpiar>Limpiar</button><span class="resultado" aria-live="polite"></span></div>
+  </div>
+  <details class="defensa"><summary>¿Por qué la primera tienda cambia recién en <code>arrange()</code>?</summary><div>
+    <p><code>filter()</code> quita filas pero respeta el orden original, así que San Salvador (julio, 3570) sigue primera. Tras los dos filtros quedan San Salvador julio (3570), Santa Tecla (3354), San Salvador diciembre (5505.5) y Santa Ana diciembre (3060). <code>arrange()</code> ascendente pone primero el menor: Santa Ana, con 3060. <code>select()</code> solo cambia columnas: nunca el número de filas.</p>
+  </div></details>
+  <ul class="check"><li><input type="checkbox" id="s5-t1" data-track="s5-t1"><label for="s5-t1">Completé la traza sin ejecutar el código y la comprobé después con <strong>Ejecutar</strong>.</label></li></ul>
+</section>
+
+<section id="ejercicios">
+  <h2>Ejercicios</h2>
+  <p>Contexto de los ejercicios: la base <code>ventas</code> de la cadena de tiendas, el mismo tipo de transformación que hiciste con <code>flights</code> en clase, aplicado a un caso de negocio. Escribe tu respuesta; la solución se abre al llegar al mínimo de caracteres.</p>
+  <div class="ia-leyenda"><span class="ia sin">Sin IA</span><span class="ia permitida">IA permitida</span><span class="ia requerida">IA requerida</span></div>
+
+  <h3>Repaso activo</h3>
+  <article class="ejercicio">
+    <header><h3>R1 · ¿Qué hace <code>x |&gt; f(y)</code>?</h3><span class="nivel">pipe · ★</span><span class="ia sin">Sin IA</span></header>
+    <div class="respuesta"><label for="s5-r1">Tu respuesta, en tus propias palabras</label><textarea id="s5-r1" data-id="s5-r1" data-min="40" placeholder="Mínimo 40 caracteres…"></textarea><span class="cuenta"></span></div>
+    <details class="solucion"><summary>Respuesta de referencia</summary><div class="det"><p>Equivale a <code>f(x, y)</code>: <code>x</code> se convierte en el <strong>primer argumento</strong> de <code>f()</code> y <code>y</code> pasa a ser el segundo. El pipe no ejecuta nada distinto de lo que harías sin él: solo cambia el orden en que lo escribes.</p></div></details>
+    <ul class="check"><li><input type="checkbox" id="s5-r1c" data-track="s5-r1c"><label for="s5-r1c">Resuelto</label></li></ul>
+  </article>
+  <article class="ejercicio">
+    <header><h3>R2 · ¿Por qué <code>filter(flights, month == 1 &amp; month == 2)</code> da 0 filas?</h3><span class="nivel">lógica · ★</span><span class="ia sin">Sin IA</span></header>
+    <div class="respuesta"><label for="s5-r2">Tu respuesta</label><textarea id="s5-r2" data-id="s5-r2" data-min="40" placeholder="Mínimo 40 caracteres…"></textarea><span class="cuenta"></span></div>
+    <details class="solucion"><summary>Respuesta de referencia</summary><div class="det"><p>Porque le pides a R filas donde <code>month</code> sea simultáneamente 1 y 2, y cada fila solo tiene un valor de mes. La condición correcta para “enero o febrero” usa <code>|</code> (o <code>%in% c(1, 2)</code>), no <code>&amp;</code>.</p></div></details>
+    <ul class="check"><li><input type="checkbox" id="s5-r2c" data-track="s5-r2c"><label for="s5-r2c">Resuelto</label></li></ul>
+  </article>
+
+  <h3>Laboratorio · Sesión 1</h3>
+  <article class="ejercicio">
+    <header><h3>E1 · Predice el resultado</h3><span class="nivel">filter · ★</span><span class="ia sin">Sin IA</span></header>
+    <div class="cuerpo">
+      <p>La base <code>ventas</code> tiene una fila por tienda y mes. Sin ejecutar nada, predice cuántas filas devuelve cada línea:</p>
+<pre data-file="e1_prediccion.R" data-previo="s5-ventas"><code class="language-r">ventas |&gt; filter(region == "Oriente" &amp; region == "Occidente") |&gt; nrow()
+ventas |&gt; filter(region == "Oriente" | region == "Occidente") |&gt; nrow()</code></pre>
+    </div>
+    <div class="respuesta"><label for="s5-e1">¿Cuántas filas en cada caso, y por qué?</label><textarea id="s5-e1" data-id="s5-e1" data-min="50" placeholder="Mínimo 50 caracteres…"></textarea><span class="cuenta"></span></div>
+    <details class="solucion"><summary>Revelar y verificar</summary><div class="det">
+<pre class="salida"><code>[1] 0
+[1] 5</code></pre>
+      <ul>
+        <li><strong>La primera línea devuelve 0 filas:</strong> ninguna fila puede pertenecer a dos regiones a la vez.</li>
+        <li><strong>La segunda devuelve 5:</strong> las 2 filas de Oriente más las 3 de Occidente; el <code>|</code> las combina.</li>
+        <li>Justificaste en términos de “una fila, un valor de región”, no solo con el número.</li>
+      </ul>
+    </div></details>
+    <ul class="check"><li><input type="checkbox" id="s5-e1c" data-track="s5-e1c"><label for="s5-e1c">Resuelto</label></li></ul>
+  </article>
+
+  <article class="ejercicio">
+    <header><h3>E2 · Encuentra el error</h3><span class="nivel">filter y arrange · ★★</span><span class="ia sin">Sin IA</span></header>
+    <div class="cuerpo">
+      <p>Un compañero escribió esto para quedarse con las tiendas de San Salvador o Santa Ana, ordenadas por mayor ingreso, pero el código tiene errores de lógica (no de sintaxis):</p>
+<pre data-file="e2_error.R" data-previo="s5-ventas"><code class="language-r">ventas |&gt;
+  filter(tienda == "San Salvador" &amp; tienda == "Santa Ana") |&gt;
+  arrange(ingreso_total)</code></pre>
+    </div>
+    <div class="respuesta"><label for="s5-e2">¿Cuáles son los dos errores y cómo los corriges?</label><textarea id="s5-e2" data-id="s5-e2" data-min="50" placeholder="Mínimo 50 caracteres…"></textarea><span class="cuenta"></span></div>
+    <details class="solucion"><summary>Revelar y verificar</summary><div class="det">
+      <ul>
+        <li><code>&amp;</code> debería ser <code>|</code> (o <code>%in% c("San Salvador", "Santa Ana")</code>).</li>
+        <li><code>arrange(ingreso_total)</code> ordena ascendente; para “mayor ingreso” primero se necesita <code>arrange(desc(ingreso_total))</code>.</li>
+        <li>Propusiste la línea corregida completa:</li>
+      </ul>
+<pre data-file="e2_corregido.R" data-previo="s5-ventas"><code class="language-r">ventas |&gt;
+  filter(tienda %in% c("San Salvador", "Santa Ana")) |&gt;
+  arrange(desc(ingreso_total))</code></pre>
+<pre class="salida"><code># A tibble: 4 × 6
+  tienda       region    mes     unidades_vendidas precio_unitario ingreso_total
+  &lt;chr&gt;        &lt;chr&gt;     &lt;chr&gt;               &lt;dbl&gt;           &lt;dbl&gt;         &lt;dbl&gt;
+1 San Salvador Central   diciem…               605             9.1         5506.
+2 San Salvador Central   julio                 420             8.5         3570
+3 Santa Ana    Occidente diciem…               340             9           3060
+4 Santa Ana    Occidente julio                 310             8.5         2635 </code></pre>
+    </div></details>
+    <ul class="check"><li><input type="checkbox" id="s5-e2c" data-track="s5-e2c"><label for="s5-e2c">Resuelto</label></li></ul>
+  </article>
+
+  <article class="ejercicio">
+    <header><h3>E3 · Construye el pipeline</h3><span class="nivel">pipe · ★★</span><span class="ia permitida">IA permitida</span></header>
+    <div class="cuerpo">
+      <p>Escribe un pipeline con <code>|&gt;</code> que, a partir de <code>ventas</code>: (1) se quede solo con los meses <code>"julio"</code>, <code>"agosto"</code> y <code>"diciembre"</code> usando <code>%in%</code>, (2) los ordene de mayor a menor <code>ingreso_total</code> y (3) seleccione solo <code>tienda</code>, <code>mes</code> e <code>ingreso_total</code>. Explica por qué usaste <code>%in%</code> en vez de encadenar tres <code>|</code>.</p>
+    </div>
+    <div class="respuesta"><label for="s5-e3">Tu código y tu justificación</label><textarea id="s5-e3" data-id="s5-e3" data-min="60" placeholder="Mínimo 60 caracteres…"></textarea><span class="cuenta"></span></div>
+    <details class="solucion"><summary>Revelar y verificar</summary><div class="det">
+<pre data-file="e3_pipeline.R" data-previo="s5-ventas"><code class="language-r">ventas |&gt;
+  filter(mes %in% c("julio", "agosto", "diciembre")) |&gt;
+  arrange(desc(ingreso_total)) |&gt;
+  select(tienda, mes, ingreso_total)</code></pre>
+<pre class="salida"><code># A tibble: 8 × 3
+  tienda       mes       ingreso_total
+  &lt;chr&gt;        &lt;chr&gt;             &lt;dbl&gt;
+1 San Salvador diciembre         5506.
+2 San Miguel   diciembre         4641
+3 San Salvador julio             3570
+4 Santa Tecla  agosto            3354
+5 Santa Ana    diciembre         3060
+6 Santa Ana    julio             2635
+7 San Miguel   julio             2255
+8 Sonsonate    agosto            2158 </code></pre>
+      <ul>
+        <li>El pipeline usa <code>|&gt;</code> entre los tres pasos, en el orden filter → arrange → select.</li>
+        <li><code>filter(mes %in% c("julio", "agosto", "diciembre"))</code>: ambas formas funcionan, pero <code>%in%</code> escala mejor con más valores.</li>
+        <li><code>arrange(desc(ingreso_total))</code> con <code>desc()</code> explícito.</li>
+        <li><strong>Verificación:</strong> la base solo tiene esos tres meses, así que deben quedar las 8 filas. Si te quedan menos, revisa cómo escribiste los meses.</li>
+      </ul>
+    </div></details>
+    <ul class="check"><li><input type="checkbox" id="s5-e3c" data-track="s5-e3c"><label for="s5-e3c">Resuelto</label></li></ul>
+  </article>
+
+  <article class="ejercicio">
+    <header><h3>E4 · <code>select()</code> contra <code>rename()</code></h3><span class="nivel">columnas · ★★</span><span class="ia permitida">IA permitida</span></header>
+    <div class="cuerpo">
+      <p><code>ventas</code> tiene 6 columnas. Necesitas un data frame llamado <code>ventas_reporte</code> con <strong>todas</strong> las columnas originales, pero con <code>ingreso_total</code> renombrada a <code>ingreso_usd</code>. Escribe el código y explica por qué <code>select()</code> no es la herramienta correcta para este caso.</p>
+    </div>
+    <div class="respuesta"><label for="s5-e4">Código y justificación</label><textarea id="s5-e4" data-id="s5-e4" data-min="50" placeholder="Mínimo 50 caracteres…"></textarea><span class="cuenta"></span></div>
+    <details class="solucion"><summary>Revelar y verificar</summary><div class="det">
+<pre data-file="e4_rename.R" data-previo="s5-ventas"><code class="language-r">ventas_reporte &lt;- ventas |&gt; rename(ingreso_usd = ingreso_total)
+names(ventas_reporte)</code></pre>
+<pre class="salida"><code>[1] "tienda"            "region"            "mes"
+[4] "unidades_vendidas" "precio_unitario"   "ingreso_usd"      </code></pre>
+      <p><code>select()</code> solo conserva las columnas que listas: tendrías que escribir las 6 solo para renombrar una. <code>rename()</code> cambia el nombre sin tocar las demás. <code>names()</code> es la verificación.</p>
+    </div></details>
+    <ul class="check"><li><input type="checkbox" id="s5-e4c" data-track="s5-e4c"><label for="s5-e4c">Resuelto</label></li></ul>
+  </article>
+
+  <article class="ejercicio">
+    <header><h3>E5 · Proyecto: dejar la base lista para agrupar</h3><span class="nivel">proyecto · ★★</span><span class="ia permitida">IA permitida</span></header>
+    <div class="cuerpo">
+      <div class="box nota"><span class="box-title">Conexión con tu proyecto grupal</span><p>Fase sugerida de la semana 5: preparar el data frame filtrado y con nombres claros que usarán en la Sesión 2 para construir los resúmenes descriptivos.</p></div>
+      <p>Sobre la base de tu proyecto: escribe un pipeline de <strong>filter → arrange → select/rename</strong> que deje tu base lista para responder una de tus preguntas secundarias. No necesitas <code>group_by()</code> ni <code>summarize()</code> todavía. Explica qué pregunta estás preparando.</p>
+    </div>
+    <div class="respuesta"><label for="s5-e5">Tu pipeline y la pregunta</label><textarea id="s5-e5" data-id="s5-e5" data-min="70" placeholder="Mínimo 70 caracteres…"></textarea><span class="cuenta"></span></div>
+    <details class="solucion"><summary>Criterios</summary><div class="det"><ul>
+      <li>El pipeline usa solo verbos ya vistos (<code>filter</code>, <code>arrange</code>, <code>select</code>, <code>rename</code>, <code>|&gt;</code>), nada de <code>group_by()</code>/<code>summarize()</code> todavía.</li>
+      <li>La pregunta secundaria está formulada de forma clara y es respondible con los datos del equipo.</li>
+      <li>Los nombres de columna finales están en <code>snake_case</code> y los entiende cualquier miembro del equipo.</li>
+    </ul></div></details>
+    <ul class="check"><li><input type="checkbox" id="s5-e5c" data-track="s5-e5c"><label for="s5-e5c">Resuelto con mi equipo</label></li></ul>
+  </article>
+
+  <div class="card">
+    <h3>¿Cómo sabemos que este resultado es correcto?</h3>
+    <p>Esta pregunta cierra cada laboratorio del curso. Marca lo que de verdad hiciste:</p>
+    <ul class="check">
+      <li><input type="checkbox" id="s5-v1" data-track="s5-v1"><label for="s5-v1">Comparé el número de filas antes y después de cada <code>filter()</code>: ¿tiene sentido que haya bajado esa cantidad?</label></li>
+      <li><input type="checkbox" id="s5-v2" data-track="s5-v2"><label for="s5-v2">Revisé si usé <code>&amp;</code> o <code>|</code> pensando en si las condiciones son de la misma columna o de columnas distintas.</label></li>
+      <li><input type="checkbox" id="s5-v3" data-track="s5-v3"><label for="s5-v3">Verifiqué que <code>arrange(desc(...))</code> realmente ordenó de mayor a menor mirando las primeras filas.</label></li>
+      <li><input type="checkbox" id="s5-v4" data-track="s5-v4"><label for="s5-v4">Confirmé con <code>names()</code> o <code>glimpse()</code> que <code>select()</code>/<code>rename()</code> dejaron los nombres que esperaba.</label></li>
+    </ul>
+  </div>
+</section>
+
+<section id="playground">
+  <h2>Playground</h2>
+  <p>Cuatro fragmentos progresivos usando <strong>solo</strong> lo visto hasta esta sesión: <code>filter()</code>, <code>arrange()</code>, <code>select()</code>, <code>rename()</code>, <code>%in%</code> y el pipe. Se ejecutan con R real; la base <code>ventas</code> se crea sola antes de cada uno.</p>
+  <h3>01 · Filtrar con un operador relacional</h3>
+<pre data-file="pg_01.R" data-previo="s5-ventas"><code class="language-r">ventas |&gt; filter(region == "Oriente")</code></pre>
+<pre class="salida"><code># A tibble: 2 × 6
+  tienda     region  mes       unidades_vendidas precio_unitario ingreso_total
+  &lt;chr&gt;      &lt;chr&gt;   &lt;chr&gt;                 &lt;dbl&gt;           &lt;dbl&gt;         &lt;dbl&gt;
+1 San Miguel Oriente julio                   275             8.2          2255
+2 San Miguel Oriente diciembre               510             9.1          4641</code></pre>
+  <h3>02 · <code>%in%</code> con varios valores</h3>
+<pre data-file="pg_02.R" data-previo="s5-ventas"><code class="language-r">ventas |&gt; filter(mes %in% c("julio", "diciembre"))</code></pre>
+<pre class="salida"><code># A tibble: 6 × 6
+  tienda       region    mes     unidades_vendidas precio_unitario ingreso_total
+  &lt;chr&gt;        &lt;chr&gt;     &lt;chr&gt;               &lt;dbl&gt;           &lt;dbl&gt;         &lt;dbl&gt;
+1 San Salvador Central   julio                 420             8.5         3570
+2 Santa Ana    Occidente julio                 310             8.5         2635
+3 San Miguel   Oriente   julio                 275             8.2         2255
+4 San Miguel   Oriente   diciem…               510             9.1         4641
+5 San Salvador Central   diciem…               605             9.1         5506.
+6 Santa Ana    Occidente diciem…               340             9           3060 </code></pre>
+  <h3>03 · Encadenar <code>filter()</code> + <code>arrange(desc())</code></h3>
+<pre data-file="pg_03.R" data-previo="s5-ventas"><code class="language-r">ventas |&gt;
+  filter(mes %in% c("julio", "diciembre")) |&gt;
+  arrange(desc(ingreso_total))</code></pre>
+<pre class="salida"><code># A tibble: 6 × 6
+  tienda       region    mes     unidades_vendidas precio_unitario ingreso_total
+  &lt;chr&gt;        &lt;chr&gt;     &lt;chr&gt;               &lt;dbl&gt;           &lt;dbl&gt;         &lt;dbl&gt;
+1 San Salvador Central   diciem…               605             9.1         5506.
+2 San Miguel   Oriente   diciem…               510             9.1         4641
+3 San Salvador Central   julio                 420             8.5         3570
+4 Santa Ana    Occidente diciem…               340             9           3060
+5 Santa Ana    Occidente julio                 310             8.5         2635
+6 San Miguel   Oriente   julio                 275             8.2         2255 </code></pre>
+  <h3>04 · <code>select()</code> con renombrado, guardando el resultado</h3>
+<pre data-file="pg_04.R" data-previo="s5-ventas"><code class="language-r">ventas_resumen &lt;- ventas |&gt;
+  filter(mes %in% c("julio", "diciembre")) |&gt;
+  arrange(desc(ingreso_total)) |&gt;
+  select(tienda, region, mes, ingreso_usd = ingreso_total)
+ventas_resumen</code></pre>
+<pre class="salida"><code># A tibble: 6 × 4
+  tienda       region    mes       ingreso_usd
+  &lt;chr&gt;        &lt;chr&gt;     &lt;chr&gt;           &lt;dbl&gt;
+1 San Salvador Central   diciembre       5506.
+2 San Miguel   Oriente   diciembre       4641
+3 San Salvador Central   julio           3570
+4 Santa Ana    Occidente diciembre       3060
+5 Santa Ana    Occidente julio           2635
+6 San Miguel   Oriente   julio           2255 </code></pre>
+</section>
+
+<section id="practica">
+  <h2>Práctica intensiva</h2>
+  <p>Primero ejercicios rápidos que se corrigen solos; luego problemas tipo examen como los del Primer Parcial.</p>
+  <h3>Ejercicios rápidos · ¿Qué imprime R?</h3>
+  <p>Escribe lo que va después de <code>[1]</code>, separando varios valores con comas.</p>
+  <div class="traza taladro">
+    <div class="table-wrap"><table>
+      <thead><tr><th>Código</th><th>Tu respuesta</th></tr></thead>
+      <tbody>
+        <tr><td class="dado codigo"><pre class="mini"><code class="language-r">c(4.567, 2.14) |&gt; round(1)</code></pre></td><td><input data-a="4.6, 2.1" aria-label="Respuesta"></td></tr>
+        <tr><td class="dado codigo"><pre class="mini"><code class="language-r">c(300, 150, 420) |&gt; mean()</code></pre></td><td><input data-a="290" aria-label="Respuesta"></td></tr>
+        <tr><td class="dado codigo"><pre class="mini"><code class="language-r">c(1, 4, 8) %in% c(4, 8, 12)</code></pre></td><td><input data-a="FALSE, TRUE, TRUE" aria-label="Respuesta"></td></tr>
+        <tr><td class="dado codigo"><pre class="mini"><code class="language-r">5 &gt; 3 &amp; 2 &gt; 4</code></pre></td><td><input data-a="FALSE" aria-label="Respuesta"></td></tr>
+        <tr><td class="dado codigo"><pre class="mini"><code class="language-r">5 &gt; 3 | 2 &gt; 4</code></pre></td><td><input data-a="TRUE" aria-label="Respuesta"></td></tr>
+        <tr><td class="dado codigo"><pre class="mini"><code class="language-r">!(10 == 10)</code></pre></td><td><input data-a="FALSE" aria-label="Respuesta"></td></tr>
+        <tr><td class="dado codigo"><pre class="mini"><code class="language-r">"agosto" %in% c("julio", "diciembre")</code></pre></td><td><input data-a="FALSE" aria-label="Respuesta"></td></tr>
+        <tr><td class="dado codigo"><pre class="mini"><code class="language-r">c(1200, 800, 1500) &gt;= 1000 &amp; c(1200, 800, 1500) &lt; 1400</code></pre></td><td><input data-a="TRUE, FALSE, FALSE" aria-label="Respuesta"></td></tr>
+      </tbody>
+    </table></div>
+    <div class="acciones"><button class="btn" type="button" data-comprobar>Comprobar</button><button class="btn sec" type="button" data-solucion>Ver solución</button><button class="btn sec" type="button" data-limpiar>Limpiar</button><span class="resultado" aria-live="polite"></span></div>
+  </div>
+  <ul class="check"><li><input type="checkbox" id="s5-px" data-track="s5-px"><label for="s5-px">Completé los ejercicios rápidos sin ejecutar el código.</label></li></ul>
+
+  <h3>Problemas tipo examen</h3>
+  <p>Los tres usan esta cartera de créditos de una cooperativa (datos ficticios). El bloque se ejecuta solo antes de cada solución.</p>
+<pre data-file="creditos.R" id="s5-creditos"><code class="language-r">library(dplyr, warn.conflicts = FALSE)
+creditos &lt;- tibble(
+  cliente = c("A01", "A02", "A03", "A04", "A05", "A06", "A07", "A08"),
+  sector = c("comercio", "agro", "servicios", "comercio",
+             "agro", "servicios", "comercio", "agro"),
+  monto_usd = c(1500, 800, 2400, 600, 3100, 1200, 950, 2000),
+  dias_mora = c(0, 45, 10, 0, 95, 30, 0, 60)
+)
+creditos</code></pre>
+<pre class="salida"><code># A tibble: 8 × 4
+  cliente sector    monto_usd dias_mora
+  &lt;chr&gt;   &lt;chr&gt;         &lt;dbl&gt;     &lt;dbl&gt;
+1 A01     comercio       1500         0
+2 A02     agro            800        45
+3 A03     servicios      2400        10
+4 A04     comercio        600         0
+5 A05     agro           3100        95
+6 A06     servicios      1200        30
+7 A07     comercio        950         0
+8 A08     agro           2000        60</code></pre>
+
+  <article class="ejercicio problema">
+    <header><h3>P1 · Cartera en riesgo</h3><span class="nivel">filter con &amp; · ★★★</span><span class="ia sin">Sin IA</span></header>
+    <div class="cuerpo">
+      <p>El comité de crédito define “cartera en riesgo” como los créditos con <strong>más de 30 días de mora</strong> y <strong>monto de al menos $1,000</strong>. Lista esos clientes con su monto y días de mora, del más atrasado al menos atrasado.</p>
+      <p><strong>Tu pipeline debe cumplir estos casos de prueba:</strong></p>
+      <div class="table-wrap"><table><thead><tr><th>Pregunta</th><th>Esperado</th></tr></thead><tbody>
+        <tr><td>¿Cuántos clientes quedan?</td><td>2</td></tr>
+        <tr><td>Primer cliente de la lista</td><td>A05 (95 días)</td></tr>
+        <tr><td>¿Entra A06 (30 días, $1,200)?</td><td>No: 30 no es más de 30</td></tr>
+        <tr><td>¿Entra A02 (45 días, $800)?</td><td>No: monto menor a $1,000</td></tr>
+      </tbody></table></div>
+    </div>
+    <details><summary>Pista</summary><div class="det"><p>Son dos condiciones sobre columnas distintas que deben cumplirse a la vez: <code>&amp;</code> (o coma). Ojo con las fronteras: “más de 30” es <code>&gt; 30</code>; “al menos 1000” es <code>&gt;= 1000</code>.</p></div></details>
+    <details class="solucion"><summary>Solución</summary><div class="det">
+<pre data-file="p1_riesgo.R" data-previo="s5-creditos"><code class="language-r">creditos |&gt;
+  filter(dias_mora &gt; 30 &amp; monto_usd &gt;= 1000) |&gt;
+  arrange(desc(dias_mora)) |&gt;
+  select(cliente, monto_usd, dias_mora)</code></pre>
+<pre class="salida"><code># A tibble: 2 × 3
+  cliente monto_usd dias_mora
+  &lt;chr&gt;       &lt;dbl&gt;     &lt;dbl&gt;
+1 A05          3100        95
+2 A08          2000        60</code></pre>
+      <p><strong>Verificación:</strong> los que tienen más de 30 días de mora son A02, A05 y A08; de ellos, A02 queda fuera por monto. Revisa las fronteras con A06 (30 días exactos): no debe entrar.</p>
+    </div></details>
+    <ul class="check"><li><input type="checkbox" id="s5-pr1" data-track="s5-pr1"><label for="s5-pr1">Resuelto y probado con todos los casos</label></li></ul>
+  </article>
+
+  <article class="ejercicio problema">
+    <header><h3>P2 · Informe por sectores con <code>%in%</code></h3><span class="nivel">filter, arrange y select · ★★★</span><span class="ia sin">Sin IA</span></header>
+    <div class="cuerpo">
+      <p>Gerencia quiere ver solo los créditos de <strong>comercio o servicios</strong>, ordenados por <strong>sector</strong> (alfabético) y, dentro de cada sector, por <strong>monto de mayor a menor</strong>, con las columnas renombradas a <code>codigo</code>, <code>sector</code> y <code>monto</code>.</p>
+      <p><strong>Tu pipeline debe cumplir estos casos de prueba:</strong></p>
+      <div class="table-wrap"><table><thead><tr><th>Pregunta</th><th>Esperado</th></tr></thead><tbody>
+        <tr><td>Filas y columnas</td><td>5 × 3</td></tr>
+        <tr><td>Orden de los códigos</td><td>A01, A07, A04, A03, A06</td></tr>
+        <tr><td>Nombres de columna</td><td>codigo, sector, monto</td></tr>
+      </tbody></table></div>
+    </div>
+    <details><summary>Pista</summary><div class="det"><p><code>arrange(sector, desc(monto_usd))</code>: el primer criterio decide, y el segundo solo desempata dentro de cada sector. <code>select()</code> puede renombrar mientras selecciona.</p></div></details>
+    <details class="solucion"><summary>Solución</summary><div class="det">
+<pre data-file="p2_sectores.R" data-previo="s5-creditos"><code class="language-r">creditos |&gt;
+  filter(sector %in% c("comercio", "servicios")) |&gt;
+  arrange(sector, desc(monto_usd)) |&gt;
+  select(codigo = cliente, sector, monto = monto_usd)</code></pre>
+<pre class="salida"><code># A tibble: 5 × 3
+  codigo sector    monto
+  &lt;chr&gt;  &lt;chr&gt;     &lt;dbl&gt;
+1 A01    comercio   1500
+2 A07    comercio    950
+3 A04    comercio    600
+4 A03    servicios  2400
+5 A06    servicios  1200</code></pre>
+      <p><strong>Verificación:</strong> hay 3 créditos de comercio y 2 de servicios: 5 filas. El orden alfabético pone “comercio” antes que “servicios” y, dentro de comercio, 1500 &gt; 950 &gt; 600.</p>
+    </div></details>
+    <ul class="check"><li><input type="checkbox" id="s5-pr2" data-track="s5-pr2"><label for="s5-pr2">Resuelto y probado con todos los casos</label></li></ul>
+  </article>
+
+  <article class="ejercicio problema">
+    <header><h3>P3 · Auditoría de un pipeline ajeno</h3><span class="nivel">lectura de código · ★★★</span><span class="ia sin">Sin IA</span></header>
+    <div class="cuerpo">
+      <p>Un analista afirma que este pipeline lista “los créditos del agro <em>o</em> con mora mayor a 50 días”. Predice cuántas filas devuelve, explica qué calcula en realidad y corrígelo para que haga lo que dice el analista.</p>
+<pre data-file="p3_ajeno.R" data-previo="s5-creditos"><code class="language-r">creditos |&gt;
+  filter(sector == "agro", dias_mora &gt; 50) |&gt;
+  nrow()</code></pre>
+      <p><strong>Tu corrección debe cumplir estos casos de prueba:</strong></p>
+      <div class="table-wrap"><table><thead><tr><th>Pregunta</th><th>Esperado</th></tr></thead><tbody>
+        <tr><td>Filas del código original</td><td>2 (A05, A08)</td></tr>
+        <tr><td>Filas del código corregido</td><td>3 (A02, A05, A08)</td></tr>
+      </tbody></table></div>
+    </div>
+    <details><summary>Pista</summary><div class="det"><p>Dentro de <code>filter()</code>, la coma significa <strong>Y</strong>. Para “o”, las dos condiciones se unen con <code>|</code> en un solo argumento.</p></div></details>
+    <details class="solucion"><summary>Solución</summary><div class="det">
+<pre class="salida"><code>[1] 2</code></pre>
+      <p>El original calcula “agro <strong>y</strong> más de 50 días”: A05 (95) y A08 (60). A02 es agro pero tiene 45 días. Corrección:</p>
+<pre data-file="p3_corregido.R" data-previo="s5-creditos"><code class="language-r">creditos |&gt;
+  filter(sector == "agro" | dias_mora &gt; 50) |&gt;
+  select(cliente, sector, dias_mora)</code></pre>
+<pre class="salida"><code># A tibble: 3 × 3
+  cliente sector dias_mora
+  &lt;chr&gt;   &lt;chr&gt;      &lt;dbl&gt;
+1 A02     agro          45
+2 A05     agro          95
+3 A08     agro          60</code></pre>
+      <p><strong>Interpretación:</strong> en estos datos, los tres créditos con más de 50 días de mora ya son del agro, por eso el <code>|</code> solo agrega a A02. Con otra cartera la diferencia podría ser mucho mayor: el código debe decir lo que la pregunta dice, no lo que “da igual” hoy.</p>
+    </div></details>
+    <ul class="check"><li><input type="checkbox" id="s5-pr3" data-track="s5-pr3"><label for="s5-pr3">Resuelto y probado con todos los casos</label></li></ul>
+  </article>
+</section>
+
+<section id="proyecto">
+  <h2>Proyecto grupal · Fase de la semana 5</h2>
+  <p><strong>Resúmenes descriptivos aplicados a las preguntas del proyecto.</strong> En esta Sesión 1 la meta es dejar la base filtrada y con nombres claros; los resúmenes por grupo llegan en la Sesión 2.</p>
+  <div class="card">
+    <h3>Entregables de esta fase</h3>
+    <ul class="check">
+      <li><input type="checkbox" id="s5-p1" data-track="s5-p1"><label for="s5-p1">Un pipeline <strong>filter → arrange → select/rename</strong> por cada pregunta secundaria que lo necesite.</label></li>
+      <li><input type="checkbox" id="s5-p2" data-track="s5-p2"><label for="s5-p2">El número de filas <strong>antes y después</strong> de cada filtro, anotado en un comentario del script.</label></li>
+      <li><input type="checkbox" id="s5-p3" data-track="s5-p3"><label for="s5-p3">Nombres de columna finales en <code>snake_case</code>, entendibles para todo el equipo.</label></li>
+    </ul>
+  </div>
+  <h3>Preguntas de defensa (del banco oficial del curso)</h3>
+  <details class="defensa"><summary>¿Qué hace este <code>filter()</code>?</summary><div><p>Dilo en lenguaje de negocio (“se queda con los créditos con más de 30 días de mora y al menos $1,000”), no leyendo el código. Luego di cuántas filas había antes y cuántas quedaron.</p></div></details>
+  <details class="defensa"><summary>¿Por qué usaron <code>&amp;</code> y no <code>|</code> (o al revés)?</summary><div><p><code>&amp;</code> exige ambas condiciones en la misma fila; <code>|</code> basta con una. Para varios valores de una misma columna, <code>|</code> o <code>%in%</code>; para condiciones de columnas distintas que deben cumplirse juntas, <code>&amp;</code>.</p></div></details>
+  <details class="defensa"><summary>¿Qué ocurriría si eliminamos esta línea?</summary><div><p>Recorre el pipeline sin ese paso: ¿cambia el número de filas, el orden o las columnas? Si quitas un <code>arrange()</code>, cambia solo el orden; si quitas un <code>filter()</code>, cambian las conclusiones.</p></div></details>
+  <details class="defensa"><summary>¿Cómo comprobaron este resultado?</summary><div><p>Contando filas antes y después de cada filtro, mirando las primeras filas tras <code>arrange()</code> y revisando <code>names()</code> tras <code>select()</code>/<code>rename()</code>. Que el código corra no demuestra que responda la pregunta.</p></div></details>
+</section>
+
+<section id="evaluacion">
+  <h2>Rumbo al Primer Parcial</h2>
+  <p>El Primer Parcial (semana 6) integra las semanas 1 a 5: interpretación de código, predicción de resultados, selección de herramientas, identificación de errores y construcción de soluciones breves. Sin IA.</p>
+  <ul class="check">
+    <li><input type="checkbox" id="s5-e-1" data-track="s5-e-1"><label for="s5-e-1">Puedo reescribir una llamada anidada con <code>|&gt;</code> y explicar qué entra como primer argumento.</label></li>
+    <li><input type="checkbox" id="s5-e-2" data-track="s5-e-2"><label for="s5-e-2">Puedo predecir cuántas filas deja un <code>filter()</code> con <code>&amp;</code>, <code>|</code> o <code>%in%</code>.</label></li>
+    <li><input type="checkbox" id="s5-e-3" data-track="s5-e-3"><label for="s5-e-3">Puedo ordenar por varios criterios con <code>arrange()</code> y <code>desc()</code>.</label></li>
+    <li><input type="checkbox" id="s5-e-4" data-track="s5-e-4"><label for="s5-e-4">Puedo elegir entre <code>select()</code> y <code>rename()</code> y justificarlo.</label></li>
+    <li><input type="checkbox" id="s5-e-5" data-track="s5-e-5"><label for="s5-e-5">Puedo leer la primera línea de una tibble impresa (filas × columnas) y los tipos de cada columna.</label></li>
+  </ul>
+</section>
+
+<section id="cheat">
+  <h2>Cheat Sheet · Sesión 1</h2>
+  <div class="grid">
+    <div class="card"><h3>El pipe, en una línea</h3><p><code>x |&gt; f()</code> = <code>f(x)</code>. Atajo: <kbd>Ctrl</kbd>/<kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>M</kbd> (activa “Use native pipe operator” en <em>Tools → Global Options → Code → Display</em>).</p></div>
+    <div class="card"><h3>Y (<code>&amp;</code>) contra O (<code>|</code>)</h3><div class="table-wrap"><table><tbody>
+      <tr><td><code>&amp;</code></td><td>ambas a la vez: columnas distintas</td></tr>
+      <tr><td><code>|</code></td><td>al menos una: misma columna, varios valores</td></tr>
+      <tr><td><code>%in%</code></td><td>atajo para varios <code>|</code></td></tr>
+    </tbody></table></div></div>
+    <div class="card"><h3>Verbos de fila</h3><div class="table-wrap"><table><tbody>
+      <tr><td><code>filter(df, cond)</code></td><td>conserva filas</td></tr>
+      <tr><td><code>arrange(df, col)</code></td><td>ascendente</td></tr>
+      <tr><td><code>arrange(df, desc(col))</code></td><td>descendente</td></tr>
+    </tbody></table></div></div>
+    <div class="card"><h3>Verbos de columna</h3><div class="table-wrap"><table><tbody>
+      <tr><td><code>select(df, a, b)</code></td><td>conserva solo a y b</td></tr>
+      <tr><td><code>select(df, x = a)</code></td><td>selecciona y renombra</td></tr>
+      <tr><td><code>rename(df, x = a)</code></td><td>renombra sin eliminar</td></tr>
+    </tbody></table></div></div>
+  </div>
+  <h3>Operadores relacionales</h3>
+  <div class="table-wrap"><table><tbody>
+    <tr><td><code>==</code></td><td>igual</td><td><code>!=</code></td><td>distinto</td></tr>
+    <tr><td><code>&gt;</code> / <code>&lt;</code></td><td>mayor / menor</td><td><code>&gt;=</code> / <code>&lt;=</code></td><td>mayor o igual / menor o igual</td></tr>
+  </tbody></table></div>
+  <div class="box ok"><span class="box-title">Regla central de la sesión</span><p>Encadena verbos con <code>|&gt;</code>: lo de la izquierda es el primer argumento de lo de la derecha. Guarda resultados intermedios con <code>&lt;-</code> cuando los vayas a reutilizar (por ejemplo, <code>flights2</code>).</p></div>
+</section>
+
+<section id="fuentes">
+  <h2>Fuentes</h2>
+  <ul>
+    <li><strong>[R4DS]</strong> Wickham, H., Çetinkaya-Rundel, M. y Grolemund, G. (2023). <em>R for Data Science</em>, 2.ª ed. Cap. 3 “Data transformation”, secciones 3.2 a 3.4 (repasadas en esta sesión). <a href="https://r4ds.hadley.nz/data-transform.html" target="_blank" rel="noopener">r4ds.hadley.nz</a>.</li>
+    <li>Próxima lectura (Sesión 2, miércoles): cap. 3, sección 3.5 “Groups” e inicio del cap. 10 “Exploratory data analysis”.</li>
+    <li>Datos: paquete <code>nycflights13</code> (vuelos de Nueva York, 2013) y <code>palmerpenguins</code>; <code>ventas</code> y <code>creditos</code> son datos simulados para esta guía.</li>
+  </ul>
+  <nav class="nav-semanas" aria-label="Navegación entre semanas">
+    <a class="nav-prev" href="{RAIZ}semana-04/index.html"><span class="btn-ico" aria-hidden="true"></span><span>Semana 4: transformar datos</span></a>
+    <a class="nav-next" href="{RAIZ}control-01/guia/index.html"><span>Control 01: lectura y repaso</span><span class="btn-ico" aria-hidden="true"></span></a>
+  </nav>
+</section>

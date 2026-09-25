@@ -1,0 +1,686 @@
+
+<section id="uso">
+  <h2>Cómo usar esta guía</h2>
+  <p>Hasta ahora recortabas tablas con corchetes y <code>$</code>. Esta semana llega <code>dplyr</code>: verbos con nombre (<code>select</code>, <code>filter</code>, <code>arrange</code>, <code>mutate</code>) que se encadenan con el pipe <code>|&gt;</code> y convierten una base original en <strong>la base que tu pregunta necesita</strong>. También aprendes a tratar los valores faltantes, <code>NA</code>, antes de que arruinen un promedio.</p>
+  <div class="momentos">
+    <div><strong>Antes de clase</strong>Lee R4DS cap. 3 (secciones 3.1 a 3.4) y la parte de valores faltantes del cap. 12; responde el <a href="#checkpoint">control de lectura</a>.</div>
+    <div><strong>Con RStudio abierto</strong>Descarga <a href="{RAIZ}datos/empresas.csv" download>empresas.csv</a> a tu carpeta <code>datos/</code>. En la página ya está cargado; la primera ejecución instala <code>dplyr</code>.</div>
+    <div><strong>Después de clase</strong>Haz la <a href="#trazas">traza de <code>NA</code></a> y los <a href="#ejercicios">ejercicios</a>.</div>
+    <div><strong>Antes del parcial</strong>La <a href="#practica">práctica intensiva</a> tiene tres problemas como los del Primer Parcial.</div>
+  </div>
+  <ul class="ciclo-leyenda" aria-label="Ciclo de trabajo">
+    <li>Pregunta</li><li class="sep">→</li><li>Exploración</li><li class="sep">→</li><li>Implementación</li><li class="sep">→</li><li>Resultado</li><li class="sep">→</li><li>Interpretación</li><li class="sep">→</li><li class="v">Verificación</li>
+  </ul>
+</section>
+
+<section id="mapa">
+  <h2>Qué puedes usar esta semana</h2>
+  <div class="permisos">
+    <div class="si">
+      <h4>Sí, desde ahora</h4>
+      <ul>
+        <li>Todo lo de las semanas 1 a 3</li>
+        <li><code>library(dplyr)</code>: <code>select()</code>, <code>rename()</code>, <code>filter()</code>, <code>arrange()</code>, <code>desc()</code>, <code>mutate()</code></li>
+        <li>El pipe nativo <code>|&gt;</code></li>
+        <li>Operadores relacionales <code>== != &lt; &gt; &lt;= &gt;=</code> y lógicos <code>&amp;</code>, <code>|</code>, <code>!</code>, además de <code>%in%</code></li>
+        <li><code>NA</code>, <code>is.na()</code> y el argumento <code>na.rm = TRUE</code></li>
+      </ul>
+    </div>
+    <div class="no">
+      <h4>Todavía no</h4>
+      <ul>
+        <li><code>group_by()</code> y <code>summarise()</code> → semana 5</li>
+        <li><code>if_else()</code> y variables dummy → semana 9 (esta semana, las clasificaciones se hacen con <code>filter()</code> o con una comparación que da <code>TRUE</code>/<code>FALSE</code>)</li>
+        <li><code>pivot_longer()</code> → semana 7; joins → semana 8</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="lecturas">
+  <h2>Lecturas de preparación</h2>
+  <ul class="check">
+    <li><input type="checkbox" id="s4-l1" data-track="s4-l1"><label for="s4-l1"><span class="ref">[R4DS] Cap. 3</span> “Data transformation”, secciones 3.1 a 3.4: filas, columnas y el pipe. Enfócate en: qué hace cada verbo, que el primer argumento siempre es el data frame y que el resultado es una tabla nueva.</label></li>
+    <li><input type="checkbox" id="s4-l2" data-track="s4-l2"><label for="s4-l2"><span class="ref">[R4DS] Cap. 12</span> “Logical vectors”, selecciones: comparaciones, <code>&amp;</code>, <code>|</code>, <code>!</code>, <code>%in%</code> y cómo se comporta <code>NA</code> en ellas.</label></li>
+  </ul>
+  <div class="box nota"><span class="box-title">Dónde leer</span>
+    <ul>
+      <li><a href="https://r4ds.hadley.nz/data-transform.html" target="_blank" rel="noopener">R4DS (2.ª ed.), cap. 3: Data transformation</a>.</li>
+      <li><a href="https://r4ds.hadley.nz/logicals.html" target="_blank" rel="noopener">R4DS (2.ª ed.), cap. 12: Logical vectors</a>.</li>
+      <li><a href="https://dplyr.tidyverse.org/" target="_blank" rel="noopener">Documentación de dplyr</a>.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="checkpoint">
+  <h2>Control de lectura</h2>
+  <div class="quiz">
+    <div class="qq" data-q="s4-q1">
+      <p>¿Qué tienen en común todos los verbos de dplyr?</p>
+      <div class="quiz-opts">
+        <button class="quiz-opt" data-ok>El primer argumento es un data frame y devuelven un data frame nuevo.</button>
+        <button class="quiz-opt">Modifican la tabla original.</button>
+        <button class="quiz-opt">Solo funcionan con columnas numéricas.</button>
+        <button class="quiz-opt">Necesitan el pipe para funcionar.</button>
+      </div>
+      <p class="why">Por eso se encadenan con <code>|&gt;</code>: la salida de un verbo es la entrada del siguiente. La tabla original solo cambia si reasignas.</p>
+    </div>
+    <div class="qq" data-q="s4-q2">
+      <p>¿Qué verbo crea una columna nueva a partir de otras?</p>
+      <div class="quiz-opts">
+        <button class="quiz-opt" data-ok><code>mutate()</code></button>
+        <button class="quiz-opt"><code>select()</code></button>
+        <button class="quiz-opt"><code>arrange()</code></button>
+        <button class="quiz-opt"><code>filter()</code></button>
+      </div>
+      <p class="why"><code>mutate(margen = (ventas - costos) / ventas * 100)</code> agrega <code>margen</code> al final y conserva las demás columnas.</p>
+    </div>
+    <div class="qq" data-q="s4-q3">
+      <p>¿Qué devuelve <code>mean(c(10, NA, 30))</code>?</p>
+      <div class="quiz-opts">
+        <button class="quiz-opt" data-ok><code>NA</code></button>
+        <button class="quiz-opt"><code>20</code></button>
+        <button class="quiz-opt"><code>13.33</code></button>
+        <button class="quiz-opt">Un error.</button>
+      </div>
+      <p class="why">Si falta un valor, R no puede saber el promedio: el resultado es <code>NA</code>. Con <code>na.rm = TRUE</code> promedia los valores conocidos y da 20.</p>
+    </div>
+    <div class="qq" data-q="s4-q4">
+      <p>¿Cómo se seleccionan las filas donde <code>ventas_2024</code> falta?</p>
+      <div class="quiz-opts">
+        <button class="quiz-opt" data-ok><code>filter(is.na(ventas_2024))</code></button>
+        <button class="quiz-opt"><code>filter(ventas_2024 == NA)</code></button>
+        <button class="quiz-opt"><code>filter(ventas_2024 = NA)</code></button>
+        <button class="quiz-opt"><code>filter(!ventas_2024)</code></button>
+      </div>
+      <p class="why"><code>x == NA</code> es <code>NA</code> para todas las filas (no se sabe si algo desconocido es igual a algo), así que no selecciona nada. Se pregunta con <code>is.na()</code>.</p>
+    </div>
+    <div class="qq" data-q="s4-q5">
+      <p>¿Qué hace <code>filter(!is.na(costos_2024))</code>?</p>
+      <div class="quiz-opts">
+        <button class="quiz-opt" data-ok>Conserva solo las filas que sí tienen costo.</button>
+        <button class="quiz-opt">Conserva solo las filas sin costo.</button>
+        <button class="quiz-opt">Reemplaza los faltantes por cero.</button>
+        <button class="quiz-opt">Borra la columna costos.</button>
+      </div>
+      <p class="why"><code>!</code> niega: <code>!is.na()</code> es “no falta”. Antes de quitar filas, cuenta cuántas son: podrías sesgar el análisis.</p>
+    </div>
+    <div class="qq" data-q="s4-q6">
+      <p>El salario nominal subió de $300 a $365 y el IPC de 100 a 120. ¿Qué pasó con el salario real?</p>
+      <div class="quiz-opts">
+        <button class="quiz-opt" data-ok>Subió poco: 365 / 120 × 100 ≈ 304.</button>
+        <button class="quiz-opt">Subió 21.7 %, igual que el nominal.</button>
+        <button class="quiz-opt">Bajó a 245.</button>
+        <button class="quiz-opt">No se puede saber sin el año base.</button>
+      </div>
+      <p class="why">El salario real descuenta la inflación: nominal / IPC × 100. Con el IPC en 120, $365 compran lo que $304 compraban en el año base.</p>
+    </div>
+    <div class="qq" data-q="s4-q7">
+      <p>¿Qué hace <code>select(-costos_2024)</code>?</p>
+      <div class="quiz-opts">
+        <button class="quiz-opt" data-ok>Conserva todas las columnas menos <code>costos_2024</code>.</button>
+        <button class="quiz-opt">Resta los costos a las ventas.</button>
+        <button class="quiz-opt">Ordena de mayor a menor costo.</button>
+        <button class="quiz-opt">Quita las filas con costos negativos.</button>
+      </div>
+      <p class="why">En <code>select()</code>, el signo menos excluye columnas, igual que un índice negativo excluye posiciones en un vector.</p>
+    </div>
+    <div class="qq" data-q="s4-q8">
+      <p>¿Qué filas conserva <code>filter(sector == "agro" | ventas_2024 &gt; 1000)</code>?</p>
+      <div class="quiz-opts">
+        <button class="quiz-opt" data-ok>Las del agro y también las de cualquier sector con ventas mayores a 1000.</button>
+        <button class="quiz-opt">Solo las del agro con ventas mayores a 1000.</button>
+        <button class="quiz-opt">Ninguna.</button>
+        <button class="quiz-opt">Todas.</button>
+      </div>
+      <p class="why">Con <code>|</code> basta con cumplir una condición. Con <code>&amp;</code> (o coma) habría que cumplir ambas.</p>
+    </div>
+    <div class="quiz-score"><span data-score></span><button class="btn sec" type="button" data-reset>Reiniciar quiz</button></div>
+  </div>
+  <ul class="check"><li><input type="checkbox" id="s4-cp" data-track="s4-cp"><label for="s4-cp">Respondí el control de lectura y entiendo por qué fallé las que fallé.</label></li></ul>
+</section>
+
+<section id="dplyr">
+  <h2>dplyr: verbos para transformar tablas</h2>
+  <div class="box simple"><span class="box-title">En palabras simples</span>
+    <p>dplyr es la <strong>caja de herramientas del analista de planilla</strong>: una herramienta para elegir columnas, otra para quedarte con ciertas filas, otra para ordenar y otra para calcular columnas nuevas. Cada una hace una sola cosa, y las usas en cadena, como una línea de ensamblaje.</p>
+  </div>
+  <p>Los ejemplos usan <code>empresas.csv</code>: 12 empresas salvadoreñas (datos simulados) con sector, departamento, empleados, ventas de 2023 y 2024 y costos de 2024, en miles de dólares. Tiene algunos valores faltantes a propósito. Este bloque la prepara; los demás lo ejecutan antes, solos:</p>
+<pre data-file="preparar.R" id="s4-empresas" data-archivos="../datos/empresas.csv"><code class="language-r">library(readr)
+library(dplyr, warn.conflicts = FALSE)
+empresas &lt;- read_csv("datos/empresas.csv", show_col_types = FALSE)
+empresas</code></pre>
+<pre class="salida"><code># A tibble: 12 × 7
+   empresa     sector departamento empleados ventas_2023 ventas_2024 costos_2024
+   &lt;chr&gt;       &lt;chr&gt;  &lt;chr&gt;            &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;
+ 1 Café Cumbre agro   Santa Ana           35         420         465         380
+ 2 Textiles d… indus… San Salvador       120        1850        1720        1610
+ 3 Ferretería… comer… San Miguel          18         610         690         540
+ 4 Agroexport… agro   Usulután            60         980          NA         870
+ 5 Software M… servi… La Libertad         25         300         410         260
+ 6 Panadería … comer… Sonsonate            9          95         104          88
+ 7 Plásticos … indus… La Libertad         80        1240        1310        1150
+ 8 Turismo Vo… servi… Santa Ana           14         150         185          NA
+ 9 Lácteos La… agro   San Miguel          NA         540         560         500
+10 Imprenta C… servi… San Salvador        22         210         198         205
+11 Distribuid… comer… San Miguel          40        1320        1450        1290
+12 Metalúrgic… indus… Sonsonate           95        1600        1540        1580</code></pre>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Verbo</th><th>Trabaja sobre</th><th>Qué hace</th></tr></thead>
+    <tbody>
+      <tr><td><code>select()</code></td><td>columnas</td><td>elige (o excluye con <code>-</code>) columnas</td></tr>
+      <tr><td><code>rename()</code></td><td>columnas</td><td>cambia nombres sin quitar columnas</td></tr>
+      <tr><td><code>mutate()</code></td><td>columnas</td><td>crea o modifica columnas a partir de otras</td></tr>
+      <tr><td><code>filter()</code></td><td>filas</td><td>conserva las filas que cumplen una condición</td></tr>
+      <tr><td><code>arrange()</code></td><td>filas</td><td>ordena filas (ascendente; <code>desc()</code> para descendente)</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="pipe">
+  <h2>El pipe <code>|&gt;</code></h2>
+  <div class="box simple"><span class="box-title">En palabras simples</span>
+    <p>El pipe se lee <strong>“y luego”</strong>: toma las empresas, <em>y luego</em> quédate con las del agro, <em>y luego</em> ordénalas por ventas. Es la receta escrita en el orden en que se cocina.</p>
+  </div>
+  <p><code>x |&gt; f(y)</code> equivale a <code>f(x, y)</code>: lo de la izquierda entra como primer argumento. Como todos los verbos reciben la tabla primero, el pipe los encadena de arriba hacia abajo. En RStudio, <kbd>Ctrl</kbd>/<kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>M</kbd> lo escribe (activa “Use native pipe operator” en <em>Tools → Global Options → Code</em>).</p>
+<pre data-file="pipe.R" data-previo="s4-empresas"><code class="language-r"># Anidado: se lee de adentro hacia afuera
+arrange(select(empresas, empresa, ventas_2024), desc(ventas_2024))
+# Con pipe: se lee en el orden en que ocurre
+empresas |&gt;
+  select(empresa, ventas_2024) |&gt;
+  arrange(desc(ventas_2024))</code></pre>
+  <p>Las dos formas dan la misma tabla. Ejecuta el bloque y compruébalo.</p>
+</section>
+
+<section id="filter">
+  <h2>Filtrar subpoblaciones con <code>filter()</code></h2>
+  <div class="box simple"><span class="box-title">En palabras simples</span>
+    <p>Filtrar es armar la <strong>lista de invitados</strong> a una reunión de gremio: “empresas del agro” (una condición), “del agro <em>y</em> con más de 50 empleados” (las dos), “del agro <em>o</em> de San Miguel” (cualquiera de las dos), “todas <em>menos</em> las de servicios” (negación).</p>
+  </div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Operador</th><th>Significado</th><th>Ejemplo con <code>empresas</code></th></tr></thead>
+    <tbody>
+      <tr><td><code>==</code>, <code>!=</code></td><td>igual, distinto</td><td><code>sector == "agro"</code>, <code>sector != "servicios"</code></td></tr>
+      <tr><td><code>&gt; &lt; &gt;= &lt;=</code></td><td>comparación numérica</td><td><code>empleados &gt;= 50</code></td></tr>
+      <tr><td><code>&amp;</code> (o coma)</td><td>Y: ambas a la vez</td><td><code>sector == "agro" &amp; empleados &gt;= 50</code></td></tr>
+      <tr><td><code>|</code></td><td>O: al menos una</td><td><code>sector == "agro" | departamento == "San Miguel"</code></td></tr>
+      <tr><td><code>!</code></td><td>NO: niega</td><td><code>!(sector %in% c("agro", "servicios"))</code></td></tr>
+      <tr><td><code>%in%</code></td><td>pertenece a una lista</td><td><code>departamento %in% c("Santa Ana", "Sonsonate")</code></td></tr>
+    </tbody>
+  </table></div>
+  <figure class="lamina media"><div class="placa"><div class="placa-core"><img src="{RAIZ}assets/img/s4-filter.svg" alt="Una tabla de seis empresas entra a filter con la condición sector igual a industria y empleados mayor o igual a 90; solo pasan Textiles del Norte y Metalúrgica Istmo, las demás filas quedan tachadas. Las columnas no cambian." width="760" height="300" loading="lazy" decoding="async"></div></div><figcaption><code>filter()</code> decide fila por fila: pasa si la condición es <code>TRUE</code>. Las columnas quedan intactas.</figcaption></figure>
+  <div class="ciclo">
+    <h3>Caso: las grandes del oriente y el occidente</h3>
+    <div class="paso"><div><span class="etq">Pregunta</span><p>Una cámara empresarial quiere invitar a las empresas de <strong>San Miguel o Sonsonate</strong> que tengan <strong>al menos 30 empleados</strong>. ¿Quiénes son?</p></div></div>
+    <div class="paso"><div><span class="etq">Exploración</span><p>Dos condiciones que deben cumplirse a la vez (departamento y tamaño): <code>&amp;</code>. La primera es “uno de dos departamentos”: <code>%in%</code>. Ojo: Lácteos La Vega (San Miguel) no tiene dato de empleados.</p></div></div>
+    <div class="paso"><div><span class="etq">Implementación</span>
+<pre data-file="filter_caso.R" data-previo="s4-empresas"><code class="language-r">empresas |&gt;
+  filter(departamento %in% c("San Miguel", "Sonsonate") &amp; empleados &gt;= 30) |&gt;
+  select(empresa, departamento, empleados)</code></pre>
+    </div></div>
+    <div class="paso"><div><span class="etq">Resultado</span>
+<pre class="salida"><code># A tibble: 2 × 3
+  empresa               departamento empleados
+  &lt;chr&gt;                 &lt;chr&gt;            &lt;dbl&gt;
+1 Distribuidora Oriente San Miguel          40
+2 Metalúrgica Istmo     Sonsonate           95</code></pre>
+    </div></div>
+    <div class="paso"><div><span class="etq">Interpretación</span><p>Dos empresas cumplen. Lácteos La Vega no aparece: como su número de empleados es desconocido, la condición <code>empleados &gt;= 30</code> es <code>NA</code> y <code>filter()</code> solo deja pasar <code>TRUE</code>. No es que sea pequeña: es que no sabemos.</p></div></div>
+    <div class="paso verif"><div><span class="etq">Verificación: ¿cómo sé que es correcto?</span><ul><li>Cuenta a mano las empresas de esos dos departamentos (5) y revisa por qué quedó fuera cada una.</li><li>Pregunta explícitamente por los faltantes: <code>filter(is.na(empleados))</code>. Si una empresa importante tiene <code>NA</code>, se reporta, no se esconde.</li></ul></div></div>
+  </div>
+</section>
+
+<section id="mutate">
+  <h2>Crear variables con <code>mutate()</code></h2>
+  <div class="box simple"><span class="box-title">En palabras simples</span>
+    <p><code>mutate()</code> es agregar una <strong>columna calculada a la hoja de cálculo</strong>: “margen = (ventas − costos) / ventas”. La diferencia con la hoja: la fórmula se aplica a todas las filas a la vez y queda escrita en el script, así cualquiera puede revisarla.</p>
+  </div>
+  <div class="ciclo">
+    <h3>Caso: ¿quién creció y quién gana dinero?</h3>
+    <div class="paso"><div><span class="etq">Pregunta</span><p>¿Cuánto crecieron las ventas de cada empresa entre 2023 y 2024, y qué margen de ganancia tuvo en 2024?</p></div></div>
+    <div class="paso"><div><span class="etq">Exploración</span><p>Crecimiento porcentual = (ventas 2024 − ventas 2023) / ventas 2023 × 100. Margen = (ventas 2024 − costos 2024) / ventas 2024 × 100. Ambas son operaciones vectorizadas sobre columnas.</p></div></div>
+    <div class="paso"><div><span class="etq">Implementación</span>
+<pre data-file="mutate.R" id="s4-indicadores" data-previo="s4-empresas"><code class="language-r">indicadores &lt;- empresas |&gt;
+  mutate(
+    crecimiento_pct = round((ventas_2024 - ventas_2023) / ventas_2023 * 100, 1),
+    margen_pct = round((ventas_2024 - costos_2024) / ventas_2024 * 100, 1)
+  ) |&gt;
+  select(empresa, sector, crecimiento_pct, margen_pct) |&gt;
+  arrange(desc(crecimiento_pct))
+indicadores</code></pre>
+    </div></div>
+    <div class="paso"><div><span class="etq">Resultado</span>
+<pre class="salida"><code># A tibble: 12 × 4
+   empresa               sector    crecimiento_pct margen_pct
+   &lt;chr&gt;                 &lt;chr&gt;               &lt;dbl&gt;      &lt;dbl&gt;
+ 1 Software Maya         servicios            36.7       36.6
+ 2 Turismo Volcanes      servicios            23.3       NA  
+ 3 Ferretería El Clavo   comercio             13.1       21.7
+ 4 Café Cumbre           agro                 10.7       18.3
+ 5 Distribuidora Oriente comercio              9.8       11  
+ 6 Panadería Doña Tere   comercio              9.5       15.4
+ 7 Plásticos Pacífico    industria             5.6       12.2
+ 8 Lácteos La Vega       agro                  3.7       10.7
+ 9 Metalúrgica Istmo     industria            -3.8       -2.6
+10 Imprenta Central      servicios            -5.7       -3.5
+11 Textiles del Norte    industria            -7          6.4
+12 Agroexport Lempa      agro                 NA         NA  </code></pre>
+    </div></div>
+    <div class="paso"><div><span class="etq">Interpretación</span><p>Software Maya crece más rápido y tiene el mejor margen. Tres empresas vendieron menos que en 2023 y dos operan con margen negativo (Imprenta Central y Metalúrgica Istmo: sus costos superan sus ventas). Agroexport Lempa queda al final con <code>NA</code>: sin ventas de 2024 no hay crecimiento ni margen; <code>arrange()</code> siempre deja los <code>NA</code> al final.</p></div></div>
+    <div class="paso verif"><div><span class="etq">Verificación: ¿cómo sé que es correcto?</span><ul><li>A mano, Software Maya: (410 − 300) / 300 × 100 = 36.7 %.</li><li>Un margen negativo debe corresponder a costos mayores que ventas: revísalo en la tabla original.</li><li>Cuenta los <code>NA</code>: cada uno debe tener una causa en los datos de origen.</li></ul></div></div>
+  </div>
+  <div class="antes-despues">
+    <div><span class="etq-tabla">Antes</span><div class="table-wrap"><table class="datos"><thead><tr><th>empresa</th><th class="num">ventas_2023</th><th class="num">ventas_2024</th></tr></thead><tbody><tr><td>Café Cumbre</td><td class="num">420</td><td class="num">465</td></tr><tr><td>Software Maya</td><td class="num">300</td><td class="num">410</td></tr></tbody></table></div></div>
+    <span class="op">mutate(crecimiento_pct = …)</span>
+    <div><span class="etq-tabla">Después: una columna más, mismas filas</span><div class="table-wrap"><table class="datos"><thead><tr><th>empresa</th><th class="num">ventas_2023</th><th class="num">ventas_2024</th><th class="num nueva">crecimiento_pct</th></tr></thead><tbody><tr><td>Café Cumbre</td><td class="num">420</td><td class="num">465</td><td class="num nueva">10.7</td></tr><tr><td>Software Maya</td><td class="num">300</td><td class="num">410</td><td class="num nueva">36.7</td></tr></tbody></table></div></div>
+  </div>
+  <h3>Salario real: descontar la inflación</h3>
+  <p>Un clásico de economía: el salario mínimo nominal sube, pero ¿alcanza para comprar más? Se divide entre el índice de precios (IPC, base 2019 = 100):</p>
+<pre data-file="salario_real.R"><code class="language-r">library(dplyr, warn.conflicts = FALSE)
+salarios &lt;- tibble(
+  anio = c(2019, 2020, 2021, 2022, 2023, 2024),
+  salario_nominal = c(304, 304, 365, 365, 365, 365),
+  ipc = c(100, 99.6, 103.1, 110.6, 115.1, 116.3)
+)
+salarios |&gt;
+  mutate(salario_real = round(salario_nominal / ipc * 100, 1))</code></pre>
+<pre class="salida"><code># A tibble: 6 × 4
+   anio salario_nominal   ipc salario_real
+  &lt;dbl&gt;           &lt;dbl&gt; &lt;dbl&gt;        &lt;dbl&gt;
+1  2019             304 100           304 
+2  2020             304  99.6         305.
+3  2021             365 103.          354 
+4  2022             365 111.          330 
+5  2023             365 115.          317.
+6  2024             365 116.          314.</code></pre>
+  <p>El salario nominal se mantuvo en $365 desde 2021, pero su poder de compra cayó cada año con la inflación: en 2024 equivale a unos $314 de 2019. Las cifras son ilustrativas; en tu proyecto usa la fuente oficial (BCR, DIGESTYC) y cítala.</p>
+</section>
+
+<section id="na">
+  <h2>Valores faltantes: <code>NA</code>, <code>is.na()</code> y <code>na.rm</code></h2>
+  <div class="box simple"><span class="box-title">En palabras simples</span>
+    <p>Un <code>NA</code> es una <strong>casilla del formulario que la empresa no llenó</strong>. No es cero: no sabemos el valor. Por eso, si preguntas “¿cuánto suman las ventas?” y una falta, la respuesta honesta es “no se sabe”, a menos que decidas explícitamente sumar solo las que sí reportaron.</p>
+  </div>
+  <figure class="lamina media"><div class="placa"><div class="placa-core"><img src="{RAIZ}assets/img/s4-na.svg" alt="Un vector de ventas con los valores 465, NA y 185. sum de ventas da NA porque el desconocido contagia el resultado. sum con na.rm igual a TRUE da 650, la suma de los valores conocidos. is.na de ventas da FALSE, TRUE, FALSE y sum de is.na da 1 faltante." width="760" height="300" loading="lazy" decoding="async"></div></div><figcaption>El <code>NA</code> “contagia” cualquier cálculo. <code>na.rm = TRUE</code> lo excluye; <code>is.na()</code> lo encuentra.</figcaption></figure>
+<pre data-file="na.R" data-previo="s4-empresas"><code class="language-r">sum(empresas$ventas_2024)                  # un faltante lo contagia todo
+sum(empresas$ventas_2024, na.rm = TRUE)    # suma de las que reportaron
+sum(is.na(empresas$ventas_2024))           # ¿cuántas faltan?
+mean(empresas$empleados, na.rm = TRUE)
+NA &gt; 5
+NA == NA</code></pre>
+<pre class="salida"><code>[1] NA
+[1] 8632
+[1] 1
+[1] 47.09091
+[1] NA
+[1] NA</code></pre>
+  <div class="box error"><span class="box-title">Por qué <code>x == NA</code> no funciona</span>
+    <p>Si no sabes cuánto vendió una empresa, tampoco sabes si vendió lo mismo que otra desconocida: <code>NA == NA</code> es <code>NA</code>, no <code>TRUE</code>. Para preguntar “¿falta?” existe <code>is.na()</code>.</p>
+  </div>
+  <p>Para ver qué filas tienen algún faltante y decidir qué hacer:</p>
+<pre data-file="auditar_na.R" data-previo="s4-empresas"><code class="language-r">empresas |&gt;
+  filter(is.na(empleados) | is.na(ventas_2024) | is.na(costos_2024)) |&gt;
+  select(empresa, empleados, ventas_2024, costos_2024)
+empresas |&gt;
+  filter(!is.na(ventas_2024)) |&gt;
+  nrow()</code></pre>
+<pre class="salida"><code># A tibble: 3 × 4
+  empresa          empleados ventas_2024 costos_2024
+  &lt;chr&gt;                &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;
+1 Agroexport Lempa        60          NA         870
+2 Turismo Volcanes        14         185          NA
+3 Lácteos La Vega         NA         560         500
+[1] 11</code></pre>
+  <div class="box ojo"><span class="box-title">Quitar filas es una decisión, no un reflejo</span>
+    <p>Eliminar las filas con <code>NA</code> cambia la población que analizas. Si las que no reportan son justo las que van mal, el promedio de las demás queda inflado. Siempre reporta cuántas quitaste y por qué.</p>
+  </div>
+</section>
+
+<section id="trazas">
+  <h2>Tablas de traza</h2>
+  <h3>Traza 1 · ¿Qué hace un <code>NA</code>?</h3>
+  <p>Con <code>v &lt;- c(12, NA, 8, 20)</code>, escribe el resultado de cada expresión (varios valores separados por comas).</p>
+  <div class="traza">
+    <div class="table-wrap"><table>
+      <thead><tr><th>Expresión</th><th>Resultado</th></tr></thead>
+      <tbody>
+        <tr><td class="dado"><code>v + 1</code></td><td><input data-a="13, NA, 9, 21" aria-label="v + 1"></td></tr>
+        <tr><td class="dado"><code>sum(v)</code></td><td><input data-a="NA" aria-label="sum(v)"></td></tr>
+        <tr><td class="dado"><code>sum(v, na.rm = TRUE)</code></td><td><input data-a="40" aria-label="sum(v, na.rm = TRUE)"></td></tr>
+        <tr><td class="dado"><code>is.na(v)</code></td><td><input data-a="FALSE, TRUE, FALSE, FALSE" aria-label="is.na(v)"></td></tr>
+        <tr><td class="dado"><code>v &gt; 10</code></td><td><input data-a="TRUE, NA, FALSE, TRUE" aria-label="v > 10"></td></tr>
+        <tr><td class="dado"><code>mean(v, na.rm = TRUE)</code></td><td><input data-a="13.33333|13.33|13.3" aria-label="mean(v, na.rm = TRUE)"></td></tr>
+      </tbody>
+    </table></div>
+    <div class="acciones"><button class="btn" type="button" data-comprobar>Comprobar</button><button class="btn sec" type="button" data-solucion>Ver solución</button><button class="btn sec" type="button" data-limpiar>Limpiar</button><span class="resultado" aria-live="polite"></span></div>
+  </div>
+  <h3>Traza 2 · Un pipeline paso a paso</h3>
+<pre data-file="traza_pipeline.R" data-previo="s4-empresas"><code class="language-r">empresas |&gt;
+  filter(sector == "industria" | sector == "comercio") |&gt;
+  filter(!is.na(costos_2024)) |&gt;
+  mutate(utilidad = ventas_2024 - costos_2024) |&gt;
+  filter(utilidad &gt; 100) |&gt;
+  select(empresa, utilidad)</code></pre>
+  <div class="traza">
+    <div class="table-wrap"><table>
+      <thead><tr><th>Después de…</th><th>filas</th><th>columnas</th></tr></thead>
+      <tbody>
+        <tr><td class="dado">empresas (inicio)</td><td class="dado">12</td><td class="dado">7</td></tr>
+        <tr><td class="dado">filter(industria | comercio)</td><td><input data-a="6" aria-label="filas paso 1"></td><td><input data-a="7" aria-label="columnas paso 1"></td></tr>
+        <tr><td class="dado">filter(!is.na(costos_2024))</td><td><input data-a="6" aria-label="filas paso 2"></td><td><input data-a="7" aria-label="columnas paso 2"></td></tr>
+        <tr><td class="dado">mutate(utilidad = …)</td><td><input data-a="6" aria-label="filas paso 3"></td><td><input data-a="8" aria-label="columnas paso 3"></td></tr>
+        <tr><td class="dado">filter(utilidad &gt; 100)</td><td><input data-a="4" aria-label="filas paso 4"></td><td><input data-a="8" aria-label="columnas paso 4"></td></tr>
+        <tr><td class="dado">select(empresa, utilidad)</td><td><input data-a="4" aria-label="filas paso 5"></td><td><input data-a="2" aria-label="columnas paso 5"></td></tr>
+      </tbody>
+    </table></div>
+    <div class="acciones"><button class="btn" type="button" data-comprobar>Comprobar</button><button class="btn sec" type="button" data-solucion>Ver solución</button><button class="btn sec" type="button" data-limpiar>Limpiar</button><span class="resultado" aria-live="polite"></span></div>
+  </div>
+  <details class="defensa"><summary>¿Por qué el segundo <code>filter()</code> no quita ninguna fila?</summary><div><p>Las dos empresas sin costos (Turismo Volcanes) o sin ventas (Agroexport Lempa) son de servicios y agro: ya habían salido en el primer filtro. Industria y comercio tienen todos sus costos. El paso sigue siendo buena práctica: protege el cálculo si mañana llega una fila incompleta.</p></div></details>
+  <ul class="check">
+    <li><input type="checkbox" id="s4-t1" data-track="s4-t1"><label for="s4-t1">Completé la traza 1 y puedo explicar por qué <code>v &gt; 10</code> tiene un <code>NA</code>.</label></li>
+    <li><input type="checkbox" id="s4-t2" data-track="s4-t2"><label for="s4-t2">Completé la traza 2 y la comprobé con <strong>Ejecutar</strong>.</label></li>
+  </ul>
+</section>
+
+<section id="ejercicios">
+  <h2>Ejercicios</h2>
+  <div class="ia-leyenda"><span class="ia sin">Sin IA</span><span class="ia permitida">IA permitida</span><span class="ia requerida">IA requerida</span></div>
+
+  <article class="ejercicio">
+    <header><h3>E1 · Predice las filas</h3><span class="nivel">filter · ★</span><span class="ia sin">Sin IA</span></header>
+    <div class="cuerpo">
+      <p>Sin ejecutar, predice cuántas filas devuelve cada línea (usa la tabla de <code>empresas</code> de arriba):</p>
+<pre data-file="e1_filas.R" data-previo="s4-empresas"><code class="language-r">empresas |&gt; filter(sector == "agro") |&gt; nrow()
+empresas |&gt; filter(sector == "agro", ventas_2023 &gt; 500) |&gt; nrow()
+empresas |&gt; filter(sector == "agro" | ventas_2023 &gt; 1500) |&gt; nrow()
+empresas |&gt; filter(!(sector %in% c("agro", "servicios"))) |&gt; nrow()</code></pre>
+    </div>
+    <div class="respuesta"><label for="s4-e1">Tus cuatro predicciones y por qué</label><textarea id="s4-e1" data-id="s4-e1" data-min="30" placeholder="Mínimo 30 caracteres…"></textarea><span class="cuenta"></span></div>
+    <details class="solucion"><summary>Respuesta</summary><div class="det">
+<pre class="salida"><code>[1] 3
+[1] 2
+[1] 5
+[1] 6</code></pre>
+      <ul><li>Agro: Café Cumbre, Agroexport Lempa, Lácteos La Vega.</li><li>Agro y ventas 2023 &gt; 500: Agroexport (980) y Lácteos (540).</li><li>Agro o ventas 2023 &gt; 1500: las 3 del agro más Textiles (1850) y Metalúrgica (1600).</li><li>Ni agro ni servicios: industria y comercio, 3 + 3.</li></ul>
+    </div></details>
+    <ul class="check"><li><input type="checkbox" id="s4-e1c" data-track="s4-e1c"><label for="s4-e1c">Resuelto</label></li></ul>
+  </article>
+
+  <article class="ejercicio">
+    <header><h3>E2 · El promedio que salió NA</h3><span class="nivel">NA · ★★</span><span class="ia sin">Sin IA</span></header>
+    <div class="cuerpo">
+      <p>Un compañero escribe esto para el informe y obtiene <code>NA</code>. Explica por qué, corrígelo y di qué debe decir el informe además del número.</p>
+<pre data-file="e2_na.R" data-previo="s4-empresas"><code class="language-r">mean(empresas$empleados)</code></pre>
+    </div>
+    <div class="respuesta"><label for="s4-e2">Tu explicación</label><textarea id="s4-e2" data-id="s4-e2" data-min="50" placeholder="Mínimo 50 caracteres…"></textarea><span class="cuenta"></span></div>
+    <details class="solucion"><summary>Respuesta</summary><div class="det">
+<pre class="salida"><code>[1] NA</code></pre>
+      <p>Lácteos La Vega no reportó empleados: el <code>NA</code> contagia el promedio. Corrección: <code>mean(empresas$empleados, na.rm = TRUE)</code>, que da 47.1. El informe debe decir que el promedio se calculó con <strong>11 de 12 empresas</strong> porque una no reportó.</p>
+    </div></details>
+    <ul class="check"><li><input type="checkbox" id="s4-e2c" data-track="s4-e2c"><label for="s4-e2c">Resuelto</label></li></ul>
+  </article>
+
+  <article class="ejercicio">
+    <header><h3>E3 · Construye: productividad por empleado</h3><span class="nivel">mutate · ★★</span><span class="ia permitida">IA permitida</span></header>
+    <div class="cuerpo">
+      <p>Crea una columna <code>ventas_por_empleado</code> (ventas 2024 en miles entre empleados, redondeada a 1 decimal), quédate con las empresas que tienen ese dato, ordénalas de mayor a menor y muestra solo empresa, sector y la nueva columna. ¿Qué sector aparece arriba y por qué podría ser?</p>
+    </div>
+    <div class="respuesta"><label for="s4-e3">Tu código e interpretación</label><textarea id="s4-e3" data-id="s4-e3" data-min="60" placeholder="Mínimo 60 caracteres…"></textarea><span class="cuenta"></span></div>
+    <details class="solucion"><summary>Solución de referencia</summary><div class="det">
+<pre data-file="e3_productividad.R" data-previo="s4-empresas"><code class="language-r">empresas |&gt;
+  mutate(ventas_por_empleado = round(ventas_2024 / empleados, 1)) |&gt;
+  filter(!is.na(ventas_por_empleado)) |&gt;
+  arrange(desc(ventas_por_empleado)) |&gt;
+  select(empresa, sector, ventas_por_empleado)</code></pre>
+<pre class="salida"><code># A tibble: 10 × 3
+   empresa               sector    ventas_por_empleado
+   &lt;chr&gt;                 &lt;chr&gt;                   &lt;dbl&gt;
+ 1 Ferretería El Clavo   comercio                 38.3
+ 2 Distribuidora Oriente comercio                 36.2
+ 3 Software Maya         servicios                16.4
+ 4 Plásticos Pacífico    industria                16.4
+ 5 Metalúrgica Istmo     industria                16.2
+ 6 Textiles del Norte    industria                14.3
+ 7 Café Cumbre           agro                     13.3
+ 8 Turismo Volcanes      servicios                13.2
+ 9 Panadería Doña Tere   comercio                 11.6
+10 Imprenta Central      servicios                 9  </code></pre>
+      <p><strong>Criterios:</strong> el <code>filter(!is.na())</code> va después del <code>mutate()</code> (quita tanto a quien no tiene empleados como a quien no tiene ventas); la interpretación nota que el comercio mayorista vende mucho por empleado porque revende, no porque sea más “eficiente”: el indicador depende del modelo de negocio.</p>
+    </div></details>
+    <ul class="check"><li><input type="checkbox" id="s4-e3c" data-track="s4-e3c"><label for="s4-e3c">Resuelto</label></li></ul>
+  </article>
+
+  <article class="ejercicio">
+    <header><h3>E4 · Modifica: de variación a clasificación</h3><span class="nivel">mutate lógico · ★★</span><span class="ia permitida">IA permitida</span></header>
+    <div class="cuerpo">
+      <p>Agrega a <code>indicadores</code> (el resultado del <a href="#mutate">caso de <code>mutate()</code></a>) una columna lógica <code>en_riesgo</code> que sea <code>TRUE</code> cuando la empresa decreció <strong>o</strong> tiene margen negativo. Luego muestra solo las empresas en riesgo.</p>
+    </div>
+    <div class="respuesta"><label for="s4-e4">Tu código</label><textarea id="s4-e4" data-id="s4-e4" data-min="50" placeholder="Mínimo 50 caracteres…"></textarea><span class="cuenta"></span></div>
+    <details class="solucion"><summary>Solución de referencia</summary><div class="det">
+<pre data-file="e4_riesgo.R" data-previo="s4-indicadores"><code class="language-r">indicadores |&gt;
+  mutate(en_riesgo = crecimiento_pct &lt; 0 | margen_pct &lt; 0) |&gt;
+  filter(en_riesgo)</code></pre>
+<pre class="salida"><code># A tibble: 3 × 5
+  empresa            sector    crecimiento_pct margen_pct en_riesgo
+  &lt;chr&gt;              &lt;chr&gt;               &lt;dbl&gt;      &lt;dbl&gt; &lt;lgl&gt;    
+1 Metalúrgica Istmo  industria            -3.8       -2.6 TRUE     
+2 Imprenta Central   servicios            -5.7       -3.5 TRUE     
+3 Textiles del Norte industria            -7          6.4 TRUE     </code></pre>
+      <p>Una comparación ya devuelve <code>TRUE</code>/<code>FALSE</code>: no hace falta <code>if_else()</code> (semana 9) para una clasificación de dos categorías. <code>filter(en_riesgo)</code> conserva las filas donde la columna es <code>TRUE</code>. Turismo Volcanes (margen <code>NA</code>, crecimiento positivo) queda fuera: <code>FALSE | NA</code> es <code>NA</code>.</p>
+    </div></details>
+    <ul class="check"><li><input type="checkbox" id="s4-e4c" data-track="s4-e4c"><label for="s4-e4c">Resuelto</label></li></ul>
+  </article>
+
+  <article class="ejercicio">
+    <header><h3>E5 · Proyecto: la base para tu pregunta</h3><span class="nivel">proyecto · ★★</span><span class="ia permitida">IA permitida</span></header>
+    <div class="cuerpo">
+      <p>Con la base de tu proyecto, escribe un pipeline que: filtre la subpoblación que te interesa, cree al menos una variable nueva con sentido económico (tasa, margen, valor real, variación) y seleccione solo las columnas necesarias. Reporta cuántas filas tenía la base, cuántas quedaron y cuántos <code>NA</code> hay en la variable nueva.</p>
+    </div>
+    <div class="respuesta"><label for="s4-e5">Tu pipeline y los conteos</label><textarea id="s4-e5" data-id="s4-e5" data-min="80" placeholder="Mínimo 80 caracteres…"></textarea><span class="cuenta"></span></div>
+    <details class="solucion"><summary>Criterios</summary><div class="det"><ul>
+      <li>Cada transformación tiene una razón ligada a una pregunta: no se usa una función solo para demostrar que se conoce.</li>
+      <li>Los conteos antes y después están anotados como comentarios.</li>
+      <li>Los <code>NA</code> de la variable nueva se explican y la decisión sobre ellos se justifica.</li>
+    </ul></div></details>
+    <ul class="check"><li><input type="checkbox" id="s4-e5c" data-track="s4-e5c"><label for="s4-e5c">Resuelto con mi equipo</label></li></ul>
+  </article>
+</section>
+
+<section id="practica">
+  <h2>Práctica intensiva</h2>
+  <h3>Ejercicios rápidos · ¿Qué imprime R?</h3>
+  <p>Escribe lo que va después de <code>[1]</code>; varios valores separados por comas.</p>
+  <div class="traza taladro">
+    <div class="table-wrap"><table>
+      <thead><tr><th>Código</th><th>Tu respuesta</th></tr></thead>
+      <tbody>
+        <tr><td class="dado codigo"><pre class="mini"><code class="language-r">c(5, NA, 7) * 2</code></pre></td><td><input data-a="10, NA, 14" aria-label="Respuesta"></td></tr>
+        <tr><td class="dado codigo"><pre class="mini"><code class="language-r">sum(c(5, NA, 7), na.rm = TRUE)</code></pre></td><td><input data-a="12" aria-label="Respuesta"></td></tr>
+        <tr><td class="dado codigo"><pre class="mini"><code class="language-r">sum(is.na(c(NA, 3, NA, 1)))</code></pre></td><td><input data-a="2" aria-label="Respuesta"></td></tr>
+        <tr><td class="dado codigo"><pre class="mini"><code class="language-r">!c(TRUE, FALSE, TRUE)</code></pre></td><td><input data-a="FALSE, TRUE, FALSE" aria-label="Respuesta"></td></tr>
+        <tr><td class="dado codigo"><pre class="mini"><code class="language-r">TRUE | NA</code></pre></td><td><input data-a="TRUE" aria-label="Respuesta"></td></tr>
+        <tr><td class="dado codigo"><pre class="mini"><code class="language-r">FALSE &amp; NA</code></pre></td><td><input data-a="FALSE" aria-label="Respuesta"></td></tr>
+        <tr><td class="dado codigo"><pre class="mini"><code class="language-r">c(120, 95, 180) &gt;= 100 &amp; c(120, 95, 180) != 180</code></pre></td><td><input data-a="TRUE, FALSE, FALSE" aria-label="Respuesta"></td></tr>
+        <tr><td class="dado codigo"><pre class="mini"><code class="language-r">round((550 - 500) / 500 * 100, 1)</code></pre></td><td><input data-a="10" aria-label="Respuesta"></td></tr>
+      </tbody>
+    </table></div>
+    <div class="acciones"><button class="btn" type="button" data-comprobar>Comprobar</button><button class="btn sec" type="button" data-solucion>Ver solución</button><button class="btn sec" type="button" data-limpiar>Limpiar</button><span class="resultado" aria-live="polite"></span></div>
+  </div>
+  <details class="defensa"><summary>¿Por qué <code>TRUE | NA</code> es <code>TRUE</code> y <code>FALSE &amp; NA</code> es <code>FALSE</code>?</summary><div><p>Porque el resultado ya está decidido sin conocer el <code>NA</code>: con <code>|</code> basta un <code>TRUE</code>, y con <code>&amp;</code> basta un <code>FALSE</code>. En cambio, <code>FALSE | NA</code> y <code>TRUE &amp; NA</code> dependen del valor desconocido y dan <code>NA</code>.</p></div></details>
+  <ul class="check"><li><input type="checkbox" id="s4-px" data-track="s4-px"><label for="s4-px">Completé los ejercicios rápidos sin ejecutar el código.</label></li></ul>
+
+  <h3>Problemas tipo examen</h3>
+  <article class="ejercicio problema">
+    <header><h3>P1 · El crecimiento real de las ventas</h3><span class="nivel">mutate · ★★★</span><span class="ia sin">Sin IA</span></header>
+    <div class="cuerpo">
+      <p>La inflación entre 2023 y 2024 fue de 1.0 % (IPC 115.1 → 116.3). Calcula para cada empresa del <strong>comercio</strong> las ventas de 2024 a precios de 2023 (<code>ventas_2024 / 1.01</code>) y el crecimiento real en porcentaje, con un decimal. Ordena de mayor a menor crecimiento real.</p>
+      <p><strong>Tu pipeline debe cumplir estos casos de prueba:</strong></p>
+      <div class="table-wrap"><table><thead><tr><th>Empresa</th><th class="num">Crecimiento real %</th></tr></thead><tbody>
+        <tr><td>Ferretería El Clavo</td><td class="num">12.0</td></tr>
+        <tr><td>Distribuidora Oriente</td><td class="num">8.8</td></tr>
+        <tr><td>Panadería Doña Tere</td><td class="num">8.4</td></tr>
+      </tbody></table></div>
+    </div>
+    <details><summary>Pista</summary><div class="det"><p>Primero <code>filter()</code>, después un <code>mutate()</code> con dos columnas (la segunda puede usar la primera, en el mismo <code>mutate()</code>), luego <code>arrange(desc())</code>.</p></div></details>
+    <details class="solucion"><summary>Solución</summary><div class="det">
+<pre data-file="p1_real.R" data-previo="s4-empresas"><code class="language-r">empresas |&gt;
+  filter(sector == "comercio") |&gt;
+  mutate(
+    ventas_2024_reales = ventas_2024 / 1.01,
+    crecimiento_real = round((ventas_2024_reales - ventas_2023) / ventas_2023 * 100, 1)
+  ) |&gt;
+  arrange(desc(crecimiento_real)) |&gt;
+  select(empresa, crecimiento_real)</code></pre>
+<pre class="salida"><code># A tibble: 3 × 2
+  empresa               crecimiento_real
+  &lt;chr&gt;                            &lt;dbl&gt;
+1 Ferretería El Clavo               12  
+2 Distribuidora Oriente              8.8
+3 Panadería Doña Tere                8.4</code></pre>
+      <p><strong>Verificación:</strong> el crecimiento real siempre es un poco menor que el nominal (Ferretería: 13.1 % nominal contra 12.0 % real), porque parte del aumento fue solo de precios.</p>
+    </div></details>
+    <ul class="check"><li><input type="checkbox" id="s4-pr1" data-track="s4-pr1"><label for="s4-pr1">Resuelto y probado con todos los casos</label></li></ul>
+  </article>
+
+  <article class="ejercicio problema">
+    <header><h3>P2 · Auditoría de faltantes</h3><span class="nivel">NA · ★★★</span><span class="ia sin">Sin IA</span></header>
+    <div class="cuerpo">
+      <p>Antes de un informe, la gerencia pide saber: cuántos valores faltan en cada una de las columnas <code>empleados</code>, <code>ventas_2024</code> y <code>costos_2024</code>; qué empresas tienen al menos un faltante; y el total de ventas 2024 de las que sí reportaron.</p>
+      <p><strong>Tu script debe cumplir estos casos de prueba:</strong></p>
+      <div class="table-wrap"><table><thead><tr><th>Resultado</th><th>Esperado</th></tr></thead><tbody>
+        <tr><td>Faltantes por columna</td><td>1, 1, 1</td></tr>
+        <tr><td>Empresas con algún faltante</td><td>Agroexport Lempa, Turismo Volcanes, Lácteos La Vega</td></tr>
+        <tr><td>Total ventas 2024 reportadas</td><td>8632</td></tr>
+      </tbody></table></div>
+    </div>
+    <details><summary>Pista</summary><div class="det"><p><code>sum(is.na(columna))</code> cuenta faltantes. Para “al menos uno”, une tres <code>is.na()</code> con <code>|</code> dentro de <code>filter()</code>.</p></div></details>
+    <details class="solucion"><summary>Solución</summary><div class="det">
+<pre data-file="p2_faltantes.R" data-previo="s4-empresas"><code class="language-r">sum(is.na(empresas$empleados))
+sum(is.na(empresas$ventas_2024))
+sum(is.na(empresas$costos_2024))
+empresas |&gt;
+  filter(is.na(empleados) | is.na(ventas_2024) | is.na(costos_2024)) |&gt;
+  select(empresa)
+sum(empresas$ventas_2024, na.rm = TRUE)</code></pre>
+<pre class="salida"><code>[1] 1
+[1] 1
+[1] 1
+# A tibble: 3 × 1
+  empresa         
+  &lt;chr&gt;           
+1 Agroexport Lempa
+2 Turismo Volcanes
+3 Lácteos La Vega 
+[1] 8632</code></pre>
+      <p><strong>Interpretación:</strong> el total de $8.6 millones corresponde a 11 de 12 empresas; Agroexport Lempa vendió $980 mil en 2023, así que el total real de 2024 es mayor. El informe lo dice explícitamente.</p>
+    </div></details>
+    <ul class="check"><li><input type="checkbox" id="s4-pr2" data-track="s4-pr2"><label for="s4-pr2">Resuelto y probado con todos los casos</label></li></ul>
+  </article>
+
+  <article class="ejercicio problema">
+    <header><h3>P3 · Encuentra los tres errores</h3><span class="nivel">lectura de código · ★★★</span><span class="ia sin">Sin IA</span></header>
+    <div class="cuerpo">
+      <p>Este pipeline debía listar las empresas de <strong>industria</strong> con <strong>margen positivo</strong>, de mayor a menor margen. Tiene tres errores. Encuéntralos, explica cada uno y escribe la versión corregida.</p>
+<pre data-file="p3_errores.R" data-norun><code class="language-r">empresas |&gt;
+  filter(sector = "industria") |&gt;
+  mutate(margen = ventas_2024 - costos_2024 / ventas_2024 * 100) |&gt;
+  filter(margen &gt; 0) |&gt;
+  arrange(margen)</code></pre>
+      <p><strong>Tu corrección debe cumplir estos casos de prueba:</strong></p>
+      <div class="table-wrap"><table><thead><tr><th>Empresa</th><th class="num">margen</th></tr></thead><tbody>
+        <tr><td>Plásticos Pacífico</td><td class="num">12.2</td></tr>
+        <tr><td>Textiles del Norte</td><td class="num">6.4</td></tr>
+      </tbody></table></div>
+    </div>
+    <details><summary>Pista</summary><div class="det"><p>Revisa el operador de comparación, la precedencia de <code>/</code> sobre <code>-</code> y la dirección del orden.</p></div></details>
+    <details class="solucion"><summary>Solución</summary><div class="det">
+      <ol>
+        <li><code>sector = "industria"</code> usa <code>=</code> (asignación de argumento): R da un error que sugiere <code>==</code>.</li>
+        <li>Sin paréntesis, R calcula <code>costos_2024 / ventas_2024 * 100</code> primero y lo resta a las ventas: el “margen” sale en miles, no en porcentaje.</li>
+        <li><code>arrange(margen)</code> ordena de menor a mayor; se pedía de mayor a menor.</li>
+      </ol>
+<pre data-file="p3_corregido.R" data-previo="s4-empresas"><code class="language-r">empresas |&gt;
+  filter(sector == "industria") |&gt;
+  mutate(margen = round((ventas_2024 - costos_2024) / ventas_2024 * 100, 1)) |&gt;
+  filter(margen &gt; 0) |&gt;
+  arrange(desc(margen)) |&gt;
+  select(empresa, margen)</code></pre>
+<pre class="salida"><code># A tibble: 2 × 2
+  empresa            margen
+  &lt;chr&gt;               &lt;dbl&gt;
+1 Plásticos Pacífico   12.2
+2 Textiles del Norte    6.4</code></pre>
+      <p><strong>Verificación:</strong> Metalúrgica Istmo es de industria pero queda fuera: sus costos (1580) superan sus ventas (1540), margen −2.6 %.</p>
+    </div></details>
+    <ul class="check"><li><input type="checkbox" id="s4-pr3" data-track="s4-pr3"><label for="s4-pr3">Resuelto y probado con todos los casos</label></li></ul>
+  </article>
+</section>
+
+<section id="proyecto">
+  <h2>Proyecto grupal · Preparación de los datos</h2>
+  <p><strong>Fases 3 y 4: preparación y primeras transformaciones.</strong> El programa es claro: no se otorgan puntos por usar una función solo para demostrar que se conoce; cada transformación debe tener una razón ligada al problema.</p>
+  <div class="card">
+    <h3>Entregables de esta fase</h3>
+    <ul class="check">
+      <li><input type="checkbox" id="s4-p1" data-track="s4-p1"><label for="s4-p1">Pipeline de preparación con <code>filter</code>, <code>mutate</code>, <code>select</code> y <code>arrange</code> justificado por las preguntas.</label></li>
+      <li><input type="checkbox" id="s4-p2" data-track="s4-p2"><label for="s4-p2">Conteo de <code>NA</code> por variable relevante y decisión documentada sobre ellos.</label></li>
+      <li><input type="checkbox" id="s4-p3" data-track="s4-p3"><label for="s4-p3">Filas antes y después de cada filtro, como comentario en el script.</label></li>
+    </ul>
+  </div>
+  <h3>Preguntas de defensa (banco oficial)</h3>
+  <details class="defensa"><summary>¿Qué hace este <code>filter()</code>?</summary><div><p>Dilo en términos del negocio y con números: “se queda con las empresas de comercio con costos reportados; pasamos de 12 a 3 filas”.</p></div></details>
+  <details class="defensa"><summary>¿Qué significa <code>na.rm = TRUE</code> aquí?</summary><div><p>Que el cálculo ignora los valores faltantes y usa solo los conocidos. Hay que decir cuántos se ignoraron y por qué eso no sesga (o sí sesga) la conclusión.</p></div></details>
+  <details class="defensa"><summary>¿Por qué crearon esta variable?</summary><div><p>Porque la pregunta la necesita: un salario real para comparar poder de compra entre años, un margen para comparar rentabilidad entre empresas de distinto tamaño. Si la variable no responde ninguna pregunta, sobra.</p></div></details>
+  <details class="defensa"><summary>¿Qué ocurriría si eliminamos esta línea?</summary><div><p>Recorre el pipeline sin ella: si es un <code>filter(!is.na())</code>, aparecerían <code>NA</code> en los cálculos siguientes; si es un <code>select()</code>, sobrarían columnas pero el resultado numérico no cambiaría.</p></div></details>
+</section>
+
+<section id="evaluacion">
+  <h2>Rumbo al Primer Parcial</h2>
+  <p>El Primer Parcial (semana 6) integra las semanas 1 a 5. Esta semana aporta lo que más se pregunta: leer y corregir pipelines.</p>
+  <ul class="check">
+    <li><input type="checkbox" id="s4-v1" data-track="s4-v1"><label for="s4-v1">Puedo decir qué hace cada verbo (<code>select</code>, <code>rename</code>, <code>filter</code>, <code>arrange</code>, <code>mutate</code>) y si trabaja sobre filas o columnas.</label></li>
+    <li><input type="checkbox" id="s4-v2" data-track="s4-v2"><label for="s4-v2">Puedo reescribir una llamada anidada con <code>|&gt;</code>.</label></li>
+    <li><input type="checkbox" id="s4-v3" data-track="s4-v3"><label for="s4-v3">Puedo combinar condiciones con <code>&amp;</code>, <code>|</code>, <code>!</code> y <code>%in%</code> y predecir cuántas filas quedan.</label></li>
+    <li><input type="checkbox" id="s4-v4" data-track="s4-v4"><label for="s4-v4">Puedo crear variables económicas (crecimiento, margen, salario real) con <code>mutate()</code> y verificarlas a mano.</label></li>
+    <li><input type="checkbox" id="s4-v5" data-track="s4-v5"><label for="s4-v5">Puedo detectar, contar y tratar <code>NA</code> con <code>is.na()</code> y <code>na.rm = TRUE</code>, y explicar por qué <code>x == NA</code> no sirve.</label></li>
+  </ul>
+</section>
+
+<section id="cheat">
+  <h2>Cheat Sheet · Semana 4</h2>
+  <ul class="vocab"><li>verbo</li><li>pipe</li><li>subpoblación</li><li>variable derivada</li><li>NA</li><li>na.rm</li><li>salario real</li><li>margen</li><li>crecimiento porcentual</li></ul>
+  <div class="grid">
+    <div class="card"><h3>Verbos</h3><div class="table-wrap"><table><tbody>
+      <tr><td><code>select(df, a, b)</code> / <code>select(df, -c)</code></td><td>elegir / excluir columnas</td></tr>
+      <tr><td><code>rename(df, nuevo = viejo)</code></td><td>renombrar</td></tr>
+      <tr><td><code>filter(df, cond)</code></td><td>filas que cumplen</td></tr>
+      <tr><td><code>arrange(df, col)</code> / <code>desc(col)</code></td><td>ordenar</td></tr>
+      <tr><td><code>mutate(df, nueva = expr)</code></td><td>crear columna</td></tr>
+    </tbody></table></div></div>
+    <div class="card"><h3>Lógica</h3><div class="table-wrap"><table><tbody>
+      <tr><td><code>== != &lt; &gt; &lt;= &gt;=</code></td><td>comparar</td></tr>
+      <tr><td><code>&amp;</code> / <code>|</code> / <code>!</code></td><td>y / o / no</td></tr>
+      <tr><td><code>%in% c(...)</code></td><td>pertenece a la lista</td></tr>
+      <tr><td><code>is.na(x)</code></td><td>¿falta?</td></tr>
+      <tr><td><code>sum(x, na.rm = TRUE)</code></td><td>ignorar faltantes</td></tr>
+    </tbody></table></div></div>
+    <div class="card"><h3>Fórmulas de negocio</h3><div class="table-wrap"><table><tbody>
+      <tr><td>Crecimiento %</td><td><code>(nuevo - viejo) / viejo * 100</code></td></tr>
+      <tr><td>Margen %</td><td><code>(ventas - costos) / ventas * 100</code></td></tr>
+      <tr><td>Valor real</td><td><code>nominal / ipc * 100</code></td></tr>
+    </tbody></table></div></div>
+  </div>
+</section>
+
+<section id="fuentes">
+  <h2>Fuentes</h2>
+  <ul>
+    <li><strong>[R4DS]</strong> Wickham, H., Çetinkaya-Rundel, M. y Grolemund, G. (2023). <em>R for Data Science</em>, 2.ª ed. Cap. 3 “Data transformation” y selecciones del cap. 12 “Logical vectors”. <a href="https://r4ds.hadley.nz/" target="_blank" rel="noopener">r4ds.hadley.nz</a>.</li>
+    <li>Programa oficial del curso (ESEN, 2026): semana 4, “Transformar datos para responder preguntas”.</li>
+    <li><code>empresas.csv</code> y la serie de salario e IPC son datos simulados con fines didácticos.</li>
+  </ul>
+  <nav class="nav-semanas" aria-label="Navegación entre semanas">
+    <a class="nav-prev" href="{RAIZ}semana-03/index.html"><span class="btn-ico" aria-hidden="true"></span><span>Semana 3: visualizar</span></a>
+    <a class="nav-next" href="{RAIZ}semana-05/index.html"><span>Semana 5: el pipe y los verbos</span><span class="btn-ico" aria-hidden="true"></span></a>
+  </nav>
+</section>

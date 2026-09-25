@@ -20,3 +20,6 @@
 .Rhistory
 *.Rhistory
 .RData
+
+# Caché de Python de las herramientas de construcción
+__pycache__/

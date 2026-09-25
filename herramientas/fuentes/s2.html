@@ -1,0 +1,743 @@
+
+<section id="uso">
+  <h2>Cómo usar esta guía</h2>
+  <p>La semana 1 te enseñó a hablarle a R con valores sueltos. Esta semana pasas de <strong>valores individuales a conjuntos de datos</strong>: series que se pueden recortar, tablas con filas y columnas, y archivos que se importan desde fuera de R.</p>
+  <div class="momentos">
+    <div><strong>Antes de clase</strong>Lee R4DS cap. 7, sección 7.2, y responde el <a href="#checkpoint">control de lectura</a>.</div>
+    <div><strong>Con RStudio abierto</strong>Descarga <a href="{RAIZ}datos/hogares.csv" download>hogares.csv</a> a una carpeta <code>datos/</code> de tu proyecto. En esta página ya está cargado para los bloques que lo usan.</div>
+    <div><strong>Después de clase</strong>Llena las <a href="#trazas">trazas</a> de indexación y resuelve los <a href="#ejercicios">ejercicios</a>.</div>
+    <div><strong>Antes del Control 01</strong>Haz la <a href="#practica">práctica intensiva</a> y la lista de <a href="#evaluacion">“puedo…”</a>.</div>
+  </div>
+  <ul class="ciclo-leyenda" aria-label="Ciclo de trabajo">
+    <li>Pregunta</li><li class="sep">→</li><li>Exploración</li><li class="sep">→</li><li>Implementación</li><li class="sep">→</li><li>Resultado</li><li class="sep">→</li><li>Interpretación</li><li class="sep">→</li><li class="v">Verificación</li>
+  </ul>
+</section>
+
+<section id="mapa">
+  <h2>Qué puedes usar esta semana</h2>
+  <div class="permisos">
+    <div class="si">
+      <h4>Sí, desde ahora</h4>
+      <ul>
+        <li>Todo lo de la semana 1</li>
+        <li>Indexar: <code>x[2]</code>, <code>x[c(1, 3)]</code>, <code>x[-2]</code>, <code>x[x &gt; 10]</code> y el rango <code>1:5</code></li>
+        <li>Vectores lógicos con <code>sum()</code>, <code>any()</code>, <code>all()</code> y el operador <code>&amp;</code></li>
+        <li><code>typeof()</code>, <code>matrix()</code>, <code>data.frame()</code>, <code>$</code>, <code>dim()</code>, <code>nrow()</code>, <code>ncol()</code>, <code>names()</code>, <code>head()</code>, <code>str()</code>, <code>summary()</code></li>
+        <li>Los primeros paquetes: <code>readr</code> (<code>read_csv()</code>, <code>parse_number()</code>) y <code>tibble</code> (<code>tibble()</code>, <code>glimpse()</code>)</li>
+      </ul>
+    </div>
+    <div class="no">
+      <h4>Todavía no</h4>
+      <ul>
+        <li>Gráficos con <code>ggplot2</code> → semana 3</li>
+        <li><code>filter()</code>, <code>mutate()</code> y el pipe <code>|&gt;</code> → semana 4</li>
+        <li>Valores faltantes <code>NA</code> y <code>na.rm</code> → semana 4</li>
+        <li>Resúmenes por grupo → semana 5</li>
+      </ul>
+      <p style="margin-top:.5rem;font-size:.9rem">Esta semana todo se hace con corchetes y <code>$</code>: es la base que después <code>dplyr</code> hará más cómoda.</p>
+    </div>
+  </div>
+</section>
+
+<section id="lecturas">
+  <h2>Lecturas de preparación</h2>
+  <ul class="check">
+    <li><input type="checkbox" id="s2-l1" data-track="s2-l1"><label for="s2-l1"><span class="ref">[R4DS] Cap. 7</span> “Data import”, sección 7.2 “Reading data from a file”. Enfócate en: el formato CSV, <code>read_csv()</code> con la ruta como primer argumento, el argumento <code>na</code> y cómo readr adivina el tipo de cada columna.</label></li>
+    <li><input type="checkbox" id="s2-l2" data-track="s2-l2"><label for="s2-l2"><span class="ref">[R4DS] Cap. 7</span> secciones 7.3 a 7.6 como referencia: tipos de columna, varios archivos, escribir a disco y <code>tribble()</code>. No son el foco evaluado de esta semana.</label></li>
+  </ul>
+  <div class="box nota"><span class="box-title">Dónde leer</span>
+    <ul>
+      <li><a href="https://r4ds.hadley.nz/data-import.html" target="_blank" rel="noopener">R4DS (2.ª ed.), cap. 7: Data import</a>.</li>
+      <li><a href="https://readr.tidyverse.org/" target="_blank" rel="noopener">Documentación de readr</a>.</li>
+    </ul>
+  </div>
+  <div class="box adelanto"><span class="box-title">Adelanto del libro, no de esta semana</span>
+    <p>El ejemplo de limpieza de la columna <code>age</code> del capítulo usa <code>mutate()</code> e <code>if_else()</code>, que el curso enseña en las semanas 4 y 9. Si lo ves en la lectura, es un adelanto: el laboratorio de esta semana se limita a importar e inspeccionar.</p>
+  </div>
+</section>
+
+<section id="checkpoint">
+  <h2>Control de lectura</h2>
+  <div class="quiz">
+    <div class="qq" data-q="s2-q1">
+      <p>Con <code>x &lt;- c(8, 14, 11, 7)</code>, ¿qué devuelve <code>x[-2]</code>?</p>
+      <div class="quiz-opts">
+        <button class="quiz-opt" data-ok><code>8 11 7</code></button>
+        <button class="quiz-opt"><code>14</code></button>
+        <button class="quiz-opt"><code>6 12 9 5</code></button>
+        <button class="quiz-opt">Un error: no hay posición −2.</button>
+      </div>
+      <p class="why">Un índice negativo <strong>excluye</strong> esa posición y conserva las demás. No resta nada a los valores.</p>
+    </div>
+    <div class="qq" data-q="s2-q2">
+      <p>¿Qué devuelve <code>typeof(c(1, "dos", 3))</code>?</p>
+      <div class="quiz-opts">
+        <button class="quiz-opt" data-ok><code>"character"</code></button>
+        <button class="quiz-opt"><code>"double"</code></button>
+        <button class="quiz-opt"><code>"mixed"</code></button>
+        <button class="quiz-opt">Un error por mezclar tipos.</button>
+      </div>
+      <p class="why">Un vector atómico tiene un solo tipo. Al mezclar números y texto, R convierte todo a texto sin avisar.</p>
+    </div>
+    <div class="qq" data-q="s2-q3">
+      <p><code>aprobados &lt;- c(TRUE, FALSE, TRUE, TRUE)</code>. ¿Qué devuelve <code>sum(aprobados)</code>?</p>
+      <div class="quiz-opts">
+        <button class="quiz-opt" data-ok><code>3</code></button>
+        <button class="quiz-opt"><code>TRUE</code></button>
+        <button class="quiz-opt"><code>4</code></button>
+        <button class="quiz-opt">Un error: no se pueden sumar lógicos.</button>
+      </div>
+      <p class="why">Al sumar, <code>TRUE</code> cuenta como 1 y <code>FALSE</code> como 0: <code>sum()</code> responde “¿cuántos cumplen?”.</p>
+    </div>
+    <div class="qq" data-q="s2-q4">
+      <p><code>dim(hogares)</code> devuelve <code>12 7</code>. ¿Qué significa?</p>
+      <div class="quiz-opts">
+        <button class="quiz-opt" data-ok>12 filas (observaciones) y 7 columnas (variables).</button>
+        <button class="quiz-opt">12 columnas y 7 filas.</button>
+        <button class="quiz-opt">12 hogares con 7 miembros cada uno.</button>
+        <button class="quiz-opt">84 valores faltantes.</button>
+      </div>
+      <p class="why">El primer número de <code>dim()</code> siempre son filas; el segundo, columnas.</p>
+    </div>
+    <div class="qq" data-q="s2-q5">
+      <p>¿Por qué un data frame puede tener una columna de texto y otra de números, y una matriz no?</p>
+      <div class="quiz-opts">
+        <button class="quiz-opt" data-ok>Porque cada columna de un data frame es un vector con su propio tipo; la matriz entera tiene un solo tipo.</button>
+        <button class="quiz-opt">Porque las matrices solo aceptan números.</button>
+        <button class="quiz-opt">Porque el data frame convierte todo a texto.</button>
+        <button class="quiz-opt">No hay diferencia.</button>
+      </div>
+      <p class="why">Una matriz se comporta como un vector con dimensiones: un tipo para todo. El data frame es una lista de vectores del mismo largo.</p>
+    </div>
+    <div class="qq" data-q="s2-q6">
+      <p>Tras importar, <code>ingreso_usd</code> aparece como <code>&lt;chr&gt;</code>. ¿Qué es lo más probable?</p>
+      <div class="quiz-opts">
+        <button class="quiz-opt" data-ok>Hay símbolos o texto mezclados con los números en el CSV (por ejemplo “$”).</button>
+        <button class="quiz-opt">R no sabe sumar dólares.</button>
+        <button class="quiz-opt">El archivo está vacío.</button>
+        <button class="quiz-opt">Es normal: los montos siempre se leen como texto.</button>
+      </div>
+      <p class="why">readr adivina el tipo con una muestra de valores; un “$” o una coma de miles basta para que la columna sea texto. Suspende sumas y promedios hasta arreglarlo.</p>
+    </div>
+    <div class="qq" data-q="s2-q7">
+      <p>¿Qué ruta viaja mejor con tu proyecto a otra computadora?</p>
+      <div class="quiz-opts">
+        <button class="quiz-opt" data-ok><code>"datos/hogares.csv"</code></button>
+        <button class="quiz-opt"><code>"C:/Users/carlos/Desktop/hogares.csv"</code></button>
+        <button class="quiz-opt"><code>"/Users/ana/Documents/hogares.csv"</code></button>
+        <button class="quiz-opt">Cualquiera: R las convierte solas.</button>
+      </div>
+      <p class="why">Una ruta relativa se interpreta desde la carpeta del proyecto; una absoluta con tu usuario deja de funcionar en otra máquina.</p>
+    </div>
+    <div class="qq" data-q="s2-q8">
+      <p>¿Qué pasa con <code>c(1, 2, 3, 4, 5) + c(10, 20)</code>?</p>
+      <div class="quiz-opts">
+        <button class="quiz-opt" data-ok>R recicla el vector corto, da un resultado de 5 valores y advierte que los largos no son múltiplos.</button>
+        <button class="quiz-opt">Error: los vectores deben medir lo mismo.</button>
+        <button class="quiz-opt">Devuelve 2 valores.</button>
+        <button class="quiz-opt">Suma todo en un solo número.</button>
+      </div>
+      <p class="why">El reciclaje repite el vector corto; si el largo no es múltiplo, hay advertencia. Por eso conviene revisar <code>length()</code> antes de operar.</p>
+    </div>
+    <div class="quiz-score"><span data-score></span><button class="btn sec" type="button" data-reset>Reiniciar quiz</button></div>
+  </div>
+  <ul class="check"><li><input type="checkbox" id="s2-cp" data-track="s2-cp"><label for="s2-cp">Respondí el control de lectura y entiendo por qué fallé las que fallé.</label></li></ul>
+</section>
+
+<section id="vectorizadas">
+  <h2>Operaciones vectorizadas y reciclaje</h2>
+  <div class="box simple"><span class="box-title">En palabras simples</span>
+    <p>Multiplicar dos vectores es como calcular la <strong>factura de cada cliente</strong>: la cantidad del cliente 1 por el precio del cliente 1, la del 2 por el precio del 2… Si una lista es más corta, R “recicla” la corta desde el inicio, como un cajero que vuelve a empezar la lista de precios sin avisar a nadie.</p>
+  </div>
+  <p>Cuando dos vectores del mismo largo se combinan, R opera <strong>posición a posición</strong>:</p>
+<pre data-file="vectorizada.R"><code class="language-r">cantidades &lt;- c(10, 15, 20)       # unidades vendidas por producto
+precios &lt;- c(2, 3, 4)              # precio de cada producto
+ingresos &lt;- cantidades * precios   # posición a posición
+ingresos
+sum(ingresos)                      # un solo total</code></pre>
+<pre class="salida"><code>[1] 20 45 80
+[1] 145</code></pre>
+  <p>El resultado no es un solo número porque cada posición se multiplica de forma independiente; para un único total se envuelve en <code>sum()</code>. El riesgo aparece cuando los largos <strong>no coinciden</strong>:</p>
+<pre data-file="reciclaje.R"><code class="language-r">c(1, 2, 3, 4, 5) + c(10, 20)
+length(c(1, 2, 3, 4, 5))
+length(c(10, 20))</code></pre>
+<pre class="salida"><code>[1] 11 22 13 24 15
+Warning message:
+In c(1, 2, 3, 4, 5) + c(10, 20) :
+  longer object length is not a multiple of shorter object length
+[1] 5
+[1] 2</code></pre>
+  <div class="box ojo"><span class="box-title">Reciclaje silencioso</span>
+    <p>Si los largos fueran 6 y 2, R reciclaría <strong>sin advertencia</strong> (6 es múltiplo de 2). Un emparejamiento no intencionado produce números válidos y conclusiones falsas. Antes de operar dos vectores, compara sus <code>length()</code>.</p>
+  </div>
+</section>
+
+<section id="indexar">
+  <h2>Indexar un vector</h2>
+  <div class="box simple"><span class="box-title">En palabras simples</span>
+    <p>Indexar es pedirle al <strong>archivista</strong> documentos de un expediente: “dame el 1 y el 3” (por posición), “dame todos menos el 2” (por exclusión) o “dame los que superan $10” (por condición). El expediente no cambia: solo recibes una copia de lo que pediste.</p>
+  </div>
+  <p>Con corchetes <code>[ ]</code> se extraen elementos de un vector. Hay tres criterios de selección, y confundirlos es un error frecuente al empezar:</p>
+  <figure class="lamina media"><div class="placa"><div class="placa-core"><img src="{RAIZ}assets/img/s2-indexar.svg" alt="El vector precios con los valores 10, 15, 20 y 35. Por posición, precios de c 1 y 3 da 10 y 20. Por exclusión, precios de menos 2 da 10, 20 y 35. Por condición, precios mayor que 15 produce la máscara FALSE, FALSE, TRUE, TRUE y solo pasan 20 y 35." width="760" height="330" loading="lazy" decoding="async"></div></div><figcaption>La condición crea un vector lógico paralelo (una “máscara”): solo cruzan las posiciones con <code>TRUE</code>. Es la base de todo filtro futuro con dplyr.</figcaption></figure>
+<pre data-file="indexar.R"><code class="language-r">precios &lt;- c(10, 15, 20, 35)
+precios[2]            # por posición: un elemento
+precios[c(1, 3)]      # por posición: varios
+precios[-2]           # por exclusión
+precios &gt; 15          # la máscara lógica
+precios[precios &gt; 15] # por condición
+precios[2:4]          # un rango de posiciones</code></pre>
+<pre class="salida"><code>[1] 15
+[1] 10 20
+[1] 10 20 35
+[1] FALSE FALSE  TRUE  TRUE
+[1] 20 35
+[1] 15 20 35</code></pre>
+  <div class="box nota"><span class="box-title"><code>c()</code> contra <code>:</code></span>
+    <p><code>c(5, 8, 11)</code> enumera exactamente esos 3 valores; <code>5:8</code> genera la secuencia de enteros 5, 6, 7, 8. Son mecanismos distintos que a veces se confunden al indexar.</p>
+  </div>
+</section>
+
+<section id="logicos">
+  <h2>Vectores lógicos: <code>sum()</code>, <code>any()</code> y <code>all()</code></h2>
+  <div class="box simple"><span class="box-title">En palabras simples</span>
+    <p>Un vector lógico es la <strong>columna de “cumple / no cumple”</strong> de una auditoría. <code>sum()</code> cuenta cuántos cumplen, <code>any()</code> pregunta si al menos uno cumple y <code>all()</code> pregunta si cumplen absolutamente todos: una sola excepción basta para que <code>all()</code> diga que no.</p>
+  </div>
+  <div class="ciclo">
+    <h3>Caso: ¿qué jornadas de capacitación se llenaron?</h3>
+    <div class="paso"><div><span class="etq">Pregunta</span><p>Una cámara de comercio organizó 5 jornadas. ¿En cuántas asistió al menos el 50 % de los inscritos? ¿Hubo alguna con menos de 20 asistentes? ¿Qué proporción del total de inscritos asistió?</p></div></div>
+    <div class="paso"><div><span class="etq">Exploración</span><p>Hay dos vectores del mismo largo: <code>inscritos</code> y <code>asistentes</code>. Cada pregunta es distinta: un conteo, una existencia y una tasa global. Para combinar condiciones sobre la misma jornada, <code>&amp;</code> exige que ambas sean <code>TRUE</code> en la misma posición.</p></div></div>
+    <div class="paso"><div><span class="etq">Implementación</span>
+<pre data-file="jornadas.R" id="s2-jornadas"><code class="language-r">inscritos &lt;- c(40, 60, 25, 80, 50)
+asistentes &lt;- c(30, 24, 20, 30, 45)
+llena &lt;- asistentes / inscritos &gt;= 0.5
+llena
+sum(llena)                                  # ¿cuántas?
+any(asistentes &lt; 20)                        # ¿alguna con menos de 20?
+all(asistentes &gt; 15)                        # ¿todas con más de 15?
+inscritos &gt;= 50 &amp; asistentes &lt; 35           # grandes y con poca asistencia
+sum(asistentes) / sum(inscritos)            # tasa global
+mean(asistentes / inscritos)                # promedio de tasas</code></pre>
+    </div></div>
+    <div class="paso"><div><span class="etq">Resultado</span>
+<pre class="salida"><code>[1]  TRUE FALSE  TRUE FALSE  TRUE
+[1] 3
+[1] FALSE
+[1] TRUE
+[1] FALSE  TRUE FALSE  TRUE FALSE
+[1] 0.5843137
+[1] 0.645</code></pre>
+    </div></div>
+    <div class="paso"><div><span class="etq">Interpretación</span><p>Tres de cinco jornadas se llenaron; ninguna bajó de 20 asistentes. Las jornadas 2 y 4 son grandes y con poca asistencia: ahí conviene investigar. Solo el <strong>58.4 %</strong> de todas las personas inscritas asistió, aunque el promedio de las tasas por jornada diga 64.5 %: las jornadas grandes (60 y 80 inscritos) tuvieron poca asistencia y pesan más en el total.</p></div></div>
+    <div class="paso verif"><div><span class="etq">Verificación: ¿cómo sé que es correcto?</span><ul><li>A mano: 30 + 24 + 20 + 30 + 45 = 149 asistentes y 40 + 60 + 25 + 80 + 50 = 255 inscritos; 149 / 255 = 0.584.</li><li><code>sum(llena)</code> debe coincidir con los <code>TRUE</code> que ves en <code>llena</code>.</li></ul></div></div>
+  </div>
+  <div class="box error"><span class="box-title">Tasa global contra promedio de tasas</span>
+    <p>La tasa global (<code>sum(asistentes) / sum(inscritos)</code>) pondera cada jornada según su tamaño; el promedio de tasas (<code>mean(asistentes / inscritos)</code>) le da el mismo peso a una jornada de 25 inscritos que a una de 80. Si la pregunta es “qué proporción del total de personas asistió”, la respuesta es la tasa global.</p>
+  </div>
+</section>
+
+<section id="tipos-vector">
+  <h2>Un vector, un solo tipo</h2>
+  <div class="box simple"><span class="box-title">En palabras simples</span>
+    <p>Un vector es una <strong>columna de Excel con formato fijo</strong>: si en una columna de montos alguien escribe “no aplica”, toda la columna pasa a ser texto y ya no suma. R hace lo mismo sin avisar: convierte al tipo más flexible.</p>
+  </div>
+  <figure class="lamina media"><div class="placa"><div class="placa-core"><img data-no-inline src="{RAIZ}assets/brand/fpen-coercion-tipos.svg" alt="Jerarquía de coerción de tipos en R: logical se convierte en integer, integer en double y double en character, del tipo menos flexible al más flexible." width="960" height="640" loading="lazy" decoding="async"></div></div><figcaption><strong>Jerarquía de coerción:</strong> al combinar tipos en un vector, R promueve en silencio hacia el más flexible (logical → integer → double → character).</figcaption></figure>
+<pre data-file="coercion.R"><code class="language-r">typeof(c(1, 2, 3))
+typeof(c(1, "dos", 3))
+c(1, "dos", 3)
+typeof(c(TRUE, 5))
+c(TRUE, 5)</code></pre>
+<pre class="salida"><code>[1] "double"
+[1] "character"
+[1] "1"   "dos" "3"  
+[1] "double"
+[1] 1 5</code></pre>
+  <p>Esta limitación es exactamente la razón por la que un economista no guarda una base completa en un solo vector: necesita una estructura que conserve columnas numéricas y de texto <strong>por separado</strong>. Esa estructura es el data frame.</p>
+</section>
+
+<section id="matrices">
+  <h2>Matrices</h2>
+  <div class="box simple"><span class="box-title">En palabras simples</span>
+    <p>Una matriz es el <strong>cuadro de inventario de las bodegas</strong>: una fila por bodega, una columna por día, todas las celdas del mismo tipo (números). Sirve para tablas homogéneas; para bases con texto y números mezclados, se usa un data frame.</p>
+  </div>
+  <p>Este es el ejemplo de la clase: el inventario de cuatro bodegas durante seis días. <code>matrix()</code> recibe los valores, el número de filas y el orden de llenado:</p>
+<pre data-file="bodegas.R" id="s2-bodegas"><code class="language-r">semana &lt;- c("lunes", "martes", "miercoles", "jueves", "viernes", "sabado")
+bodega1 &lt;- c(3, 19, 19, 19, 12, 10)
+bodega2 &lt;- c(9, 3, 17, 17, 14, 7)
+bodega3 &lt;- c(4, 6, 13, 14, 16, 11)
+bodega4 &lt;- c(5, 4, 11, 11, 5, 6)
+bodegas &lt;- matrix(c(bodega1, bodega2, bodega3, bodega4), nrow = 4, byrow = TRUE)
+rownames(bodegas) &lt;- c("Santa Tecla", "Sonsonate", "Soyapango", "San Salvador")
+colnames(bodegas) &lt;- semana
+bodegas
+dim(bodegas)</code></pre>
+<pre class="salida"><code>             lunes martes miercoles jueves viernes sabado
+Santa Tecla      3     19        19     19      12     10
+Sonsonate        9      3        17     17      14      7
+Soyapango        4      6        13     14      16     11
+San Salvador     5      4        11     11       5      6
+[1] 4 6</code></pre>
+  <p>Una matriz se indexa con <code>[fila, columna]</code>; dejar un lado vacío significa “todas”:</p>
+<pre data-file="bodegas_indexar.R" data-previo="s2-bodegas"><code class="language-r">bodegas[2, 3]              # Sonsonate el miércoles
+bodegas["Soyapango", ]     # toda la fila de Soyapango
+sum(bodegas[, "lunes"])    # inventario total del lunes</code></pre>
+<pre class="salida"><code>[1] 17
+    lunes    martes miercoles    jueves   viernes    sabado 
+        4         6        13        14        16        11 
+[1] 21</code></pre>
+  <div class="box ojo"><span class="box-title"><code>byrow = TRUE</code> importa</span>
+    <p>Sin <code>byrow = TRUE</code>, R llena la matriz <strong>por columnas</strong>: los 24 números quedarían en otro orden y cada fila ya no sería una bodega. Con 24 valores y <code>nrow = 4</code>, R calcula solo que hacen falta 6 columnas.</p>
+  </div>
+</section>
+
+<section id="data-frames">
+  <h2>De vectores a tablas: data frames</h2>
+  <div class="box simple"><span class="box-title">En palabras simples</span>
+    <p>Un data frame es la <strong>hoja de la encuesta de hogares</strong>: cada fila es un hogar encuestado (una observación), cada columna es una pregunta (una variable) y cada celda es la respuesta de ese hogar a esa pregunta (un valor).</p>
+  </div>
+  <p>Un <strong>data frame</strong> (o su versión moderna, la <em>tibble</em>) es una colección rectangular de variables (columnas) y observaciones (filas). Por dentro es un conjunto de vectores del <strong>mismo largo</strong> puestos lado a lado, cada uno con su nombre y su propio tipo:</p>
+  <figure class="lamina media"><div class="placa"><div class="placa-core"><img src="{RAIZ}assets/img/s2-data-frame.svg" alt="Tres vectores del mismo largo, sucursal de tipo character, ingresos de tipo double y meta_cumplida de tipo logical, se ponen lado a lado para formar un data frame de 3 filas y 3 columnas: cada fila es una observación y cada columna una variable." width="760" height="300" loading="lazy" decoding="async"></div></div><figcaption>Cada columna conserva su tipo: por eso un data frame puede mezclar texto, números y lógicos, y una matriz no.</figcaption></figure>
+<pre data-file="data_frame.R" id="s2-reporte"><code class="language-r">reporte &lt;- data.frame(
+  sucursal = c("Centro", "Norte", "Sur"),
+  ingresos = c(4200, 3100, 5600),
+  meta_cumplida = c(TRUE, FALSE, TRUE)
+)
+reporte
+dim(reporte)
+str(reporte)</code></pre>
+<pre class="salida"><code>  sucursal ingresos meta_cumplida
+1   Centro     4200          TRUE
+2    Norte     3100         FALSE
+3      Sur     5600          TRUE
+[1] 3 3
+'data.frame':	3 obs. of  3 variables:
+ $ sucursal     : chr  "Centro" "Norte" "Sur"
+ $ ingresos     : num  4200 3100 5600
+ $ meta_cumplida: logi  TRUE FALSE TRUE</code></pre>
+  <p>Con <code>$</code> se extrae una columna, que es un vector normal: todo lo que sabes de vectores vuelve a servir.</p>
+<pre data-file="columnas.R" data-previo="s2-reporte"><code class="language-r">reporte$ingresos
+mean(reporte$ingresos)
+reporte$sucursal[reporte$ingresos &gt; 4000]
+reporte[2, ]                 # la segunda fila (observación)</code></pre>
+<pre class="salida"><code>[1] 4200 3100 5600
+[1] 4300
+[1] "Centro" "Sur"   
+  sucursal ingresos meta_cumplida
+2    Norte     3100         FALSE</code></pre>
+  <div class="box nota"><span class="box-title">Vocabulario del libro</span>
+    <p>Una <strong>variable</strong> es una cantidad medible; un <strong>valor</strong> es su estado en una medición; una <strong>observación</strong> es el conjunto de valores medidos en condiciones comparables. Antes de calcular nada, la primera pregunta de todo análisis es: <strong>¿qué representa cada fila?</strong></p>
+  </div>
+</section>
+
+<section id="importar">
+  <h2>Importar un CSV con <code>read_csv()</code></h2>
+  <div class="box simple"><span class="box-title">En palabras simples</span>
+    <p>Importar es como recibir un <strong>reporte en papel</strong> y pasarlo al sistema: el papel (el archivo CSV) no cambia; lo que cambia es que ahora tienes una copia interpretada con la que puedes trabajar (el objeto en R). Si el sistema leyó mal una columna, se revisa antes de sacar cuentas.</p>
+  </div>
+  <figure class="lamina media"><div class="placa"><div class="placa-core"><img src="{RAIZ}assets/img/s2-importar.svg" alt="El archivo datos/hogares.csv en el disco pasa por read_csv, que adivina el tipo de cada columna, y se guarda con la flecha de asignación en el objeto hogares dentro de la sesión de R. Después se audita con dim, names, head, glimpse y summary." width="760" height="280" loading="lazy" decoding="async"></div></div><figcaption>El archivo y el objeto son dos cosas distintas. Auditar con <code>glimpse()</code> es lo que revela si una columna numérica llegó como texto.</figcaption></figure>
+  <div class="ciclo">
+    <h3>Caso: la encuesta de hogares</h3>
+    <div class="paso"><div><span class="etq">Pregunta</span><p>Recibiste <code>hogares.csv</code>, una muestra de 12 hogares de seis departamentos. Antes de calcular nada: ¿qué representa cada fila, qué variables hay y de qué tipo son?</p></div></div>
+    <div class="paso"><div><span class="etq">Exploración</span><p>Es un CSV: encabezados en la primera fila y valores separados por comas. Está en la carpeta <code>datos/</code> del proyecto, así que la ruta relativa es <code>"datos/hogares.csv"</code>. <code>read_csv()</code> es del paquete readr: primero se carga con <code>library()</code>.</p></div></div>
+    <div class="paso"><div><span class="etq">Implementación</span>
+<pre data-file="importar.R" data-archivos="../datos/hogares.csv"><code class="language-r">library(readr)
+hogares &lt;- read_csv("datos/hogares.csv")</code></pre>
+    </div></div>
+    <div class="paso"><div><span class="etq">Resultado</span>
+<pre class="salida"><code>Rows: 12 Columns: 7
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (3): hogar, departamento, zona
+dbl (3): miembros, ingreso_mensual, gasto_alimentos
+lgl (1): internet
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+    </div></div>
+    <div class="paso"><div><span class="etq">Interpretación</span><p>readr informa 12 filas y 7 columnas, y el tipo que adivinó para cada una: 3 de texto (<code>chr</code>), 3 numéricas (<code>dbl</code>) y 1 lógica (<code>lgl</code>). Cada fila es un hogar.</p></div></div>
+    <div class="paso verif"><div><span class="etq">Verificación: auditar antes de confiar</span>
+      <p>Ver la tabla en el panel Environment <strong>no</strong> es inspeccionarla. Cuatro funciones responden preguntas distintas:</p>
+<pre data-file="auditar.R" id="s2-hogares" data-archivos="../datos/hogares.csv"><code class="language-r">library(readr)
+library(tibble)
+hogares &lt;- read_csv("datos/hogares.csv", show_col_types = FALSE)
+dim(hogares)
+names(hogares)
+glimpse(hogares)
+summary(hogares$ingreso_mensual)</code></pre>
+<pre class="salida"><code>[1] 12  7
+[1] "hogar"           "departamento"    "zona"            "miembros"       
+[5] "ingreso_mensual" "gasto_alimentos" "internet"       
+Rows: 12
+Columns: 7
+$ hogar           &lt;chr&gt; "H01", "H02", "H03", "H04", "H05", "H06", "H07", "H08"…
+$ departamento    &lt;chr&gt; "San Salvador", "San Salvador", "La Libertad", "La Lib…
+$ zona            &lt;chr&gt; "urbana", "urbana", "urbana", "rural", "urbana", "rura…
+$ miembros        &lt;dbl&gt; 4, 3, 5, 6, 2, 5, 4, 7, 3, 4, 5, 3
+$ ingreso_mensual &lt;dbl&gt; 1250, 980, 1420, 610, 860, 540, 920, 480, 590, 1010, 4…
+$ gasto_alimentos &lt;dbl&gt; 410, 350, 520, 330, 240, 300, 380, 310, 260, 390, 280,…
+$ internet        &lt;lgl&gt; TRUE, TRUE, TRUE, FALSE, TRUE, FALSE, TRUE, FALSE, FAL…
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  450.0   577.5   825.0   825.0   987.5  1420.0 </code></pre>
+      <ul>
+        <li><code>dim()</code>: el tamaño bruto. <code>names()</code>: nombres exactos (útil para detectar uno mal escrito).</li>
+        <li><code>glimpse()</code>: el tipo de cada columna y sus primeros valores; es la que revela si un monto llegó como texto.</li>
+        <li><code>summary()</code>: mínimo, cuartiles, media y máximo; un mínimo negativo en ingresos sería una alarma.</li>
+      </ul>
+    </div></div>
+  </div>
+  <div class="grid">
+    <div class="card"><h3>Una sola columna</h3><p>Si el archivo aparece con <strong>una sola columna</strong> en vez de las esperadas, casi siempre es un problema de delimitador (un CSV separado por punto y coma, común en Excel en español, se lee con <code>read_csv2()</code>) o el archivo equivocado, no un error de R.</p></div>
+    <div class="card"><h3>Valores faltantes escritos como texto</h3><p>El argumento <code>na</code> declara qué texto debe leerse como faltante: <code>read_csv("datos/x.csv", na = c("N/A", ""))</code>. Sin eso, un “N/A” literal se cuela como dato. Cómo tratar los <code>NA</code> se ve en la semana 4.</p></div>
+  </div>
+</section>
+
+<section id="trazas">
+  <h2>Tablas de traza</h2>
+  <p>Escribe lo que devuelve cada expresión. Para varios valores, sepáralos con comas; para texto, sin comillas.</p>
+  <h3>Traza 1 · Indexación</h3>
+<pre data-file="traza_indexar.R" data-norun><code class="language-r">x &lt;- c(8, 14, 11, 7)</code></pre>
+  <div class="traza">
+    <div class="table-wrap"><table>
+      <thead><tr><th>Expresión</th><th>Resultado</th><th>length()</th></tr></thead>
+      <tbody>
+        <tr><td class="dado"><code>x[c(1, 3)]</code></td><td><input data-a="8, 11" aria-label="resultado de x[c(1, 3)]"></td><td><input data-a="2" aria-label="length de x[c(1, 3)]"></td></tr>
+        <tr><td class="dado"><code>x[-2]</code></td><td><input data-a="8, 11, 7" aria-label="resultado de x[-2]"></td><td><input data-a="3" aria-label="length de x[-2]"></td></tr>
+        <tr><td class="dado"><code>x &gt; 10</code></td><td><input data-a="FALSE, TRUE, TRUE, FALSE" aria-label="resultado de x > 10"></td><td><input data-a="4" aria-label="length de x > 10"></td></tr>
+        <tr><td class="dado"><code>x[x &gt; 10]</code></td><td><input data-a="14, 11" aria-label="resultado de x[x > 10]"></td><td><input data-a="2" aria-label="length de x[x > 10]"></td></tr>
+        <tr><td class="dado"><code>sum(x &gt; 10)</code></td><td><input data-a="2" aria-label="resultado de sum(x > 10)"></td><td><input data-a="1" aria-label="length de sum(x > 10)"></td></tr>
+        <tr><td class="dado"><code>x[2:3] * 2</code></td><td><input data-a="28, 22" aria-label="resultado de x[2:3] * 2"></td><td><input data-a="2" aria-label="length de x[2:3] * 2"></td></tr>
+      </tbody>
+    </table></div>
+    <div class="acciones"><button class="btn" type="button" data-comprobar>Comprobar</button><button class="btn sec" type="button" data-solucion>Ver solución</button><button class="btn sec" type="button" data-limpiar>Limpiar</button><span class="resultado" aria-live="polite"></span></div>
+  </div>
+  <h3>Traza 2 · La encuesta de hogares</h3>
+  <p>Usa la tabla de <code>hogares</code> (la ves con <code>glimpse()</code> arriba o abriendo el CSV).</p>
+  <div class="traza">
+    <div class="table-wrap"><table>
+      <thead><tr><th>Expresión</th><th>Resultado</th></tr></thead>
+      <tbody>
+        <tr><td class="dado"><code>nrow(hogares)</code></td><td><input data-a="12" aria-label="nrow(hogares)"></td></tr>
+        <tr><td class="dado"><code>hogares$miembros[4]</code></td><td><input data-a="6" aria-label="hogares$miembros[4]"></td></tr>
+        <tr><td class="dado"><code>sum(hogares$internet)</code></td><td><input data-a="7" aria-label="sum(hogares$internet)"></td></tr>
+        <tr><td class="dado"><code>hogares$hogar[hogares$ingreso_mensual &gt; 1000]</code></td><td><input data-a="H01, H03, H10" aria-label="hogares con ingreso mayor a 1000"></td></tr>
+        <tr><td class="dado"><code>any(hogares$gasto_alimentos &gt; hogares$ingreso_mensual)</code></td><td><input data-a="FALSE" aria-label="any gasto mayor que ingreso"></td></tr>
+      </tbody>
+    </table></div>
+    <div class="acciones"><button class="btn" type="button" data-comprobar>Comprobar</button><button class="btn sec" type="button" data-solucion>Ver solución</button><button class="btn sec" type="button" data-limpiar>Limpiar</button><span class="resultado" aria-live="polite"></span></div>
+  </div>
+  <p>Comprueba la traza 2 con R:</p>
+<pre data-file="comprobar_traza2.R" data-previo="s2-hogares"><code class="language-r">nrow(hogares)
+hogares$miembros[4]
+sum(hogares$internet)
+hogares$hogar[hogares$ingreso_mensual &gt; 1000]
+any(hogares$gasto_alimentos &gt; hogares$ingreso_mensual)</code></pre>
+<pre class="salida"><code>[1] 12
+[1] 6
+[1] 7
+[1] "H01" "H03" "H10"
+[1] FALSE</code></pre>
+  <ul class="check">
+    <li><input type="checkbox" id="s2-t1" data-track="s2-t1"><label for="s2-t1">Completé la traza 1 sin ejecutar nada.</label></li>
+    <li><input type="checkbox" id="s2-t2" data-track="s2-t2"><label for="s2-t2">Completé la traza 2 y la comprobé con R.</label></li>
+  </ul>
+</section>
+
+<section id="ejercicios">
+  <h2>Ejercicios</h2>
+  <p>Escribe tu respuesta; la solución se abre al llegar al mínimo de caracteres.</p>
+  <div class="ia-leyenda"><span class="ia sin">Sin IA</span><span class="ia permitida">IA permitida</span><span class="ia requerida">IA requerida</span></div>
+
+  <article class="ejercicio">
+    <header><h3>E1 · Predice la indexación</h3><span class="nivel">indexación · ★</span><span class="ia sin">Sin IA</span></header>
+    <div class="cuerpo">
+      <p>Sin ejecutar nada, predice las tres salidas:</p>
+<pre data-file="e1_ventas.R"><code class="language-r">ventas &lt;- c(1800, 2100, 1950, 2400)
+ventas[ventas &gt; 2000]
+ventas[-1]
+sum(ventas &gt; 2000)</code></pre>
+    </div>
+    <div class="respuesta"><label for="s2-e1">Tu predicción</label><textarea id="s2-e1" data-id="s2-e1" data-min="20" placeholder="Mínimo 20 caracteres…"></textarea><span class="cuenta"></span></div>
+    <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<pre class="salida"><code>[1] 2100 2400
+[1] 2100 1950 2400
+[1] 2</code></pre>
+      <ul><li><code>ventas[ventas &gt; 2000]</code>: solo los mayores a 2000 (1950 queda fuera).</li><li><code>ventas[-1]</code>: todo excepto la primera posición.</li><li><code>sum(ventas &gt; 2000)</code>: cuántos <code>TRUE</code> hay.</li></ul>
+    </div></details>
+    <ul class="check"><li><input type="checkbox" id="s2-e1c" data-track="s2-e1c"><label for="s2-e1c">Resuelto</label></li></ul>
+  </article>
+
+  <article class="ejercicio">
+    <header><h3>E2 · ¿Por qué no suma?</h3><span class="nivel">tipos · ★★</span><span class="ia sin">Sin IA</span></header>
+    <div class="cuerpo">
+      <p>Un compañero importó una lista de precios y escribió lo siguiente. Explica el error, qué te dice el tipo de las columnas y cómo lo arreglarías.</p>
+<pre data-file="e2_precios.R" id="s2-precios" data-archivos="../datos/precios_texto.csv"><code class="language-r">library(readr)
+precios &lt;- read_csv("datos/precios_texto.csv", show_col_types = FALSE)
+precios
+sum(precios$precio_2025)</code></pre>
+    </div>
+    <div class="respuesta"><label for="s2-e2">Tu diagnóstico</label><textarea id="s2-e2" data-id="s2-e2" data-min="50" placeholder="Mínimo 50 caracteres…"></textarea><span class="cuenta"></span></div>
+    <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<pre class="salida"><code># A tibble: 4 × 3
+  producto precio_2024 precio_2025
+  &lt;chr&gt;    &lt;chr&gt;       &lt;chr&gt;      
+1 arroz    $1.10       $1.20      
+2 frijol   $1.35       $1.50      
+3 aceite   $2.40       $2.40      
+4 azucar   $0.85       $0.90      
+Error in sum(precios$precio_2025) : invalid 'type' (character) of argument</code></pre>
+      <ul>
+        <li>Los precios traen el símbolo <code>$</code>: readr los leyó como texto (<code>&lt;chr&gt;</code>) y <code>sum()</code> no puede sumar texto.</li>
+        <li>Suspende cualquier suma, promedio o gráfico hasta arreglar el tipo. <code>parse_number()</code> de readr extrae el número de un texto:</li>
+      </ul>
+<pre data-file="e2_arreglo.R" data-previo="s2-precios"><code class="language-r">precios$precio_2025 &lt;- parse_number(precios$precio_2025)
+typeof(precios$precio_2025)
+sum(precios$precio_2025)</code></pre>
+<pre class="salida"><code>[1] "double"
+[1] 6</code></pre>
+    </div></details>
+    <ul class="check"><li><input type="checkbox" id="s2-e2c" data-track="s2-e2c"><label for="s2-e2c">Resuelto</label></li></ul>
+  </article>
+
+  <article class="ejercicio">
+    <header><h3>E3 · Construye: el gasto en alimentos</h3><span class="nivel">data frames · ★★</span><span class="ia permitida">IA permitida</span></header>
+    <div class="cuerpo">
+      <p>Con <code>hogares</code>, calcula (a) la proporción del ingreso que cada hogar gasta en alimentos, (b) cuántos hogares gastan más del 40 % y (c) cuáles son. Usa solo corchetes y <code>$</code>. Si usaste IA, ¿qué comprobaste?</p>
+    </div>
+    <div class="respuesta"><label for="s2-e3">Tu código y tu verificación</label><textarea id="s2-e3" data-id="s2-e3" data-min="50" placeholder="Mínimo 50 caracteres…"></textarea><span class="cuenta"></span></div>
+    <details class="solucion"><summary>Solución de referencia</summary><div class="det">
+<pre data-file="e3_alimentos.R" data-previo="s2-hogares"><code class="language-r">proporcion &lt;- hogares$gasto_alimentos / hogares$ingreso_mensual
+round(proporcion, 2)
+sum(proporcion &gt; 0.4)
+hogares$hogar[proporcion &gt; 0.4]</code></pre>
+<pre class="salida"><code> [1] 0.33 0.36 0.37 0.54 0.28 0.56 0.41 0.65 0.44 0.39 0.62 0.38
+[1] 6
+[1] "H04" "H06" "H07" "H08" "H09" "H11"</code></pre>
+      <p><strong>Interpretación:</strong> 6 de los 12 hogares dedican más del 40 % de su ingreso a alimentos; 5 de ellos son rurales y todos tienen ingresos menores a $1,000. Una proporción alta de gasto en alimentos es un indicador clásico de vulnerabilidad (ley de Engel).</p>
+      <p><strong>Verificación:</strong> H08: 310 / 480 = 0.646. Todas las proporciones deben estar entre 0 y 1.</p>
+    </div></details>
+    <ul class="check"><li><input type="checkbox" id="s2-e3c" data-track="s2-e3c"><label for="s2-e3c">Resuelto</label></li></ul>
+  </article>
+
+  <article class="ejercicio">
+    <header><h3>E4 · Matriz contra data frame</h3><span class="nivel">estructuras · ★★</span><span class="ia permitida">IA permitida</span></header>
+    <div class="cuerpo">
+      <p>Ejecuta este código y explica por qué los ingresos dejaron de ser números en la matriz pero no en el data frame.</p>
+<pre data-file="e4_estructuras.R"><code class="language-r">m &lt;- matrix(c("Centro", "Norte", 4200, 3100), nrow = 2)
+m
+typeof(m)
+d &lt;- data.frame(sucursal = c("Centro", "Norte"), ingresos = c(4200, 3100))
+typeof(d$ingresos)</code></pre>
+    </div>
+    <div class="respuesta"><label for="s2-e4">Tu explicación</label><textarea id="s2-e4" data-id="s2-e4" data-min="50" placeholder="Mínimo 50 caracteres…"></textarea><span class="cuenta"></span></div>
+    <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<pre class="salida"><code>     [,1]     [,2]  
+[1,] "Centro" "4200"
+[2,] "Norte"  "3100"
+[1] "character"
+[1] "double"</code></pre>
+      <p>La matriz, como un vector, admite un solo tipo: al mezclar texto y números, todo se volvió <code>character</code> (fíjate en las comillas de <code>"4200"</code>). El data frame guarda cada columna como un vector independiente, así que <code>ingresos</code> sigue siendo <code>double</code>.</p>
+    </div></details>
+    <ul class="check"><li><input type="checkbox" id="s2-e4c" data-track="s2-e4c"><label for="s2-e4c">Resuelto</label></li></ul>
+  </article>
+
+  <article class="ejercicio">
+    <header><h3>E5 · Proyecto: conocer la base</h3><span class="nivel">proyecto · ★★</span><span class="ia permitida">IA permitida</span></header>
+    <div class="cuerpo">
+      <p>Importa la base de tu proyecto (o la candidata) y responde en un párrafo: ¿qué representa cada fila (unidad de observación)?, ¿cuántas observaciones y variables hay?, ¿de qué tipo es cada variable relevante?, ¿hay columnas que llegaron con un tipo inesperado?, ¿cuál es la fuente y qué período cubre?</p>
+    </div>
+    <div class="respuesta"><label for="s2-e5">Ficha de la base</label><textarea id="s2-e5" data-id="s2-e5" data-min="80" placeholder="Mínimo 80 caracteres…"></textarea><span class="cuenta"></span></div>
+    <details class="solucion"><summary>Criterios</summary><div class="det"><ul>
+      <li>La unidad de observación está dicha con precisión (“un hogar encuestado en 2023”, no “datos de hogares”).</li>
+      <li>Los números salen de <code>dim()</code>/<code>glimpse()</code>, no de mirar el Environment.</li>
+      <li>Se nombra al menos una limitación: período corto, variables faltantes, tipos que hubo que corregir.</li>
+    </ul></div></details>
+    <ul class="check"><li><input type="checkbox" id="s2-e5c" data-track="s2-e5c"><label for="s2-e5c">Resuelto con mi equipo</label></li></ul>
+  </article>
+</section>
+
+<section id="practica">
+  <h2>Práctica intensiva</h2>
+  <h3>Ejercicios rápidos · ¿Qué imprime R?</h3>
+  <p>Escribe lo que va después de <code>[1]</code>; varios valores separados por comas; texto sin comillas.</p>
+  <div class="traza taladro">
+    <div class="table-wrap"><table>
+      <thead><tr><th>Código</th><th>Tu respuesta</th></tr></thead>
+      <tbody>
+        <tr><td class="dado codigo"><pre class="mini"><code class="language-r">c(5, 10, 15, 20)[c(2, 4)]</code></pre></td><td><input data-a="10, 20" aria-label="Respuesta"></td></tr>
+        <tr><td class="dado codigo"><pre class="mini"><code class="language-r">c(5, 10, 15, 20)[-c(1, 2)]</code></pre></td><td><input data-a="15, 20" aria-label="Respuesta"></td></tr>
+        <tr><td class="dado codigo"><pre class="mini"><code class="language-r">length(3:9)</code></pre></td><td><input data-a="7" aria-label="Respuesta"></td></tr>
+        <tr><td class="dado codigo"><pre class="mini"><code class="language-r">sum(c(3, 8, 12, 1) &gt; 5)</code></pre></td><td><input data-a="2" aria-label="Respuesta"></td></tr>
+        <tr><td class="dado codigo"><pre class="mini"><code class="language-r">all(c(3, 8, 12, 1) &gt; 0)</code></pre></td><td><input data-a="TRUE" aria-label="Respuesta"></td></tr>
+        <tr><td class="dado codigo"><pre class="mini"><code class="language-r">typeof(c(1.5, TRUE))</code></pre></td><td><input data-a="double" aria-label="Respuesta"></td></tr>
+        <tr><td class="dado codigo"><pre class="mini"><code class="language-r">c(2, 4, 6, 8) * c(1, 10)</code></pre></td><td><input data-a="2, 40, 6, 80" aria-label="Respuesta"></td></tr>
+        <tr><td class="dado codigo"><pre class="mini"><code class="language-r">dim(matrix(1:12, nrow = 3))</code></pre></td><td><input data-a="3, 4" aria-label="Respuesta"></td></tr>
+        <tr><td class="dado codigo"><pre class="mini"><code class="language-r">matrix(1:6, nrow = 2, byrow = TRUE)[2, 1]</code></pre></td><td><input data-a="4" aria-label="Respuesta"></td></tr>
+        <tr><td class="dado codigo"><pre class="mini"><code class="language-r">data.frame(a = c(1, 2, 3), b = c("x", "y", "z"))$b[2]</code></pre></td><td><input data-a="y" aria-label="Respuesta"></td></tr>
+      </tbody>
+    </table></div>
+    <div class="acciones"><button class="btn" type="button" data-comprobar>Comprobar</button><button class="btn sec" type="button" data-solucion>Ver solución</button><button class="btn sec" type="button" data-limpiar>Limpiar</button><span class="resultado" aria-live="polite"></span></div>
+  </div>
+  <ul class="check"><li><input type="checkbox" id="s2-px" data-track="s2-px"><label for="s2-px">Completé los ejercicios rápidos sin ejecutar el código.</label></li></ul>
+
+  <h3>Problemas tipo examen</h3>
+  <article class="ejercicio problema">
+    <header><h3>P1 · Tasa global de aprobación de créditos</h3><span class="nivel">vectores lógicos · ★★★</span><span class="ia sin">Sin IA</span></header>
+    <div class="cuerpo">
+      <p>Cuatro agencias de una financiera recibieron <code>c(120, 45, 300, 60)</code> solicitudes y aprobaron <code>c(84, 36, 150, 30)</code>. Calcula la tasa de aprobación de cada agencia, la <strong>tasa global</strong> de la financiera y el promedio simple de tasas. Indica cuántas agencias aprueban al menos el 60 % y si todas aprueban al menos el 50 %.</p>
+      <p><strong>Tu script debe cumplir estos casos de prueba:</strong></p>
+      <div class="table-wrap"><table><thead><tr><th>Resultado</th><th>Esperado</th></tr></thead><tbody>
+        <tr><td>Tasas por agencia (2 decimales)</td><td>0.70, 0.80, 0.50, 0.50</td></tr>
+        <tr><td>Tasa global (3 decimales)</td><td>0.571</td></tr>
+        <tr><td>Promedio de tasas</td><td>0.625</td></tr>
+        <tr><td>Agencias con al menos 60 %</td><td>2</td></tr>
+        <tr><td>¿Todas con al menos 50 %?</td><td>TRUE</td></tr>
+      </tbody></table></div>
+    </div>
+    <details><summary>Pista</summary><div class="det"><p>La tasa global suma primero y divide después. La agencia 3, con 300 solicitudes, pesa mucho en la global y nada extra en el promedio simple.</p></div></details>
+    <details class="solucion"><summary>Solución</summary><div class="det">
+<pre data-file="p1_aprobacion.R"><code class="language-r">solicitudes &lt;- c(120, 45, 300, 60)
+aprobadas &lt;- c(84, 36, 150, 30)
+tasa &lt;- aprobadas / solicitudes
+round(tasa, 2)
+round(sum(aprobadas) / sum(solicitudes), 3)
+mean(tasa)
+sum(tasa &gt;= 0.6)
+all(tasa &gt;= 0.5)</code></pre>
+<pre class="salida"><code>[1] 0.7 0.8 0.5 0.5
+[1] 0.571
+[1] 0.625
+[1] 2
+[1] TRUE</code></pre>
+      <p><strong>Interpretación:</strong> la financiera aprueba el 57.1 % de todas las solicitudes, no el 62.5 %: la agencia más grande aprueba solo la mitad y arrastra la tasa global.</p>
+      <p><strong>Verificación:</strong> 300 / 525 = 0.5714…; 84 + 36 + 150 + 30 = 300 aprobadas y 525 solicitudes.</p>
+    </div></details>
+    <ul class="check"><li><input type="checkbox" id="s2-pr1" data-track="s2-pr1"><label for="s2-pr1">Resuelto y probado con todos los casos</label></li></ul>
+  </article>
+
+  <article class="ejercicio problema">
+    <header><h3>P2 · Importar precios con símbolo de moneda</h3><span class="nivel">importación · ★★★</span><span class="ia sin">Sin IA</span></header>
+    <div class="cuerpo">
+      <p>Con <code>precios_texto.csv</code> (arroz, frijol, aceite y azúcar), convierte ambas columnas de precio a número, calcula la variación porcentual 2024 → 2025 de cada producto con un decimal e indica qué productos subieron más de 8 %.</p>
+      <p><strong>Tu script debe cumplir estos casos de prueba:</strong></p>
+      <div class="table-wrap"><table><thead><tr><th>Producto</th><th class="num">Variación %</th></tr></thead><tbody>
+        <tr><td>arroz</td><td class="num">9.1</td></tr><tr><td>frijol</td><td class="num">11.1</td></tr><tr><td>aceite</td><td class="num">0.0</td></tr><tr><td>azucar</td><td class="num">5.9</td></tr>
+      </tbody></table></div>
+      <p>Productos con más de 8 %: arroz y frijol.</p>
+    </div>
+    <details><summary>Pista</summary><div class="det"><p><code>parse_number()</code> quita el <code>$</code>. Reasigna cada columna con <code>$</code> y después todo es vectorizado.</p></div></details>
+    <details class="solucion"><summary>Solución</summary><div class="det">
+<pre data-file="p2_precios.R" data-archivos="../datos/precios_texto.csv"><code class="language-r">library(readr)
+precios &lt;- read_csv("datos/precios_texto.csv", show_col_types = FALSE)
+precios$precio_2024 &lt;- parse_number(precios$precio_2024)
+precios$precio_2025 &lt;- parse_number(precios$precio_2025)
+variacion &lt;- (precios$precio_2025 - precios$precio_2024) / precios$precio_2024 * 100
+round(variacion, 1)
+precios$producto[variacion &gt; 8]</code></pre>
+<pre class="salida"><code>[1]  9.1 11.1  0.0  5.9
+[1] "arroz"  "frijol"</code></pre>
+      <p><strong>Verificación:</strong> frijol: (1.50 − 1.35) / 1.35 = 0.111. Antes de calcular, <code>typeof()</code> de ambas columnas debe decir <code>"double"</code>.</p>
+    </div></details>
+    <ul class="check"><li><input type="checkbox" id="s2-pr2" data-track="s2-pr2"><label for="s2-pr2">Resuelto y probado con todos los casos</label></li></ul>
+  </article>
+
+  <article class="ejercicio problema">
+    <header><h3>P3 · El inventario de las bodegas</h3><span class="nivel">matrices · ★★★</span><span class="ia sin">Sin IA</span></header>
+    <div class="cuerpo">
+      <p>Con la matriz <code>bodegas</code> de la sección <a href="#matrices">Matrices</a>, calcula el inventario total de la semana en Santa Tecla, el de San Salvador, el inventario del sábado en las cuatro bodegas y cuántos días Soyapango tuvo más de 10 unidades.</p>
+      <p><strong>Tu script debe cumplir estos casos de prueba:</strong></p>
+      <div class="table-wrap"><table><thead><tr><th>Resultado</th><th class="num">Esperado</th></tr></thead><tbody>
+        <tr><td>Total semanal Santa Tecla</td><td class="num">82</td></tr>
+        <tr><td>Total semanal San Salvador</td><td class="num">42</td></tr>
+        <tr><td>Sábado, cuatro bodegas</td><td class="num">34</td></tr>
+        <tr><td>Días de Soyapango con más de 10</td><td class="num">4</td></tr>
+      </tbody></table></div>
+    </div>
+    <details><summary>Pista</summary><div class="det"><p>Una fila entera es <code>bodegas["Santa Tecla", ]</code>; una columna entera, <code>bodegas[, "sabado"]</code>. Después, <code>sum()</code>.</p></div></details>
+    <details class="solucion"><summary>Solución</summary><div class="det">
+<pre data-file="p3_bodegas.R" data-previo="s2-bodegas"><code class="language-r">sum(bodegas["Santa Tecla", ])
+sum(bodegas["San Salvador", ])
+sum(bodegas[, "sabado"])
+sum(bodegas["Soyapango", ] &gt; 10)</code></pre>
+<pre class="salida"><code>[1] 82
+[1] 42
+[1] 34
+[1] 4</code></pre>
+      <p><strong>Verificación:</strong> Santa Tecla: 3 + 19 + 19 + 19 + 12 + 10 = 82. El total de la matriz (<code>sum(bodegas)</code>) debe ser igual a la suma de los cuatro totales por bodega.</p>
+    </div></details>
+    <ul class="check"><li><input type="checkbox" id="s2-pr3" data-track="s2-pr3"><label for="s2-pr3">Resuelto y probado con todos los casos</label></li></ul>
+  </article>
+</section>
+
+<section id="proyecto">
+  <h2>Proyecto grupal · Fase 2</h2>
+  <p><strong>Conocimiento de la base:</strong> el programa exige que el equipo pueda explicar la fuente, la unidad de observación, el número de observaciones, las variables relevantes y su significado, sus tipos, el período cubierto, si hay valores faltantes y las limitaciones. No basta con descargar una base y empezar a graficar.</p>
+  <div class="card">
+    <h3>Entregables de esta fase</h3>
+    <ul class="check">
+      <li><input type="checkbox" id="s2-p1" data-track="s2-p1"><label for="s2-p1">Base importada con <code>read_csv()</code> desde una ruta relativa <code>datos/...</code>.</label></li>
+      <li><input type="checkbox" id="s2-p2" data-track="s2-p2"><label for="s2-p2">Ficha de la base (ejercicio E5): unidad de observación, filas, columnas, tipos, fuente y período.</label></li>
+      <li><input type="checkbox" id="s2-p3" data-track="s2-p3"><label for="s2-p3">Lista de columnas con tipo inesperado y cómo se corrigieron.</label></li>
+      <li><input type="checkbox" id="s2-p4" data-track="s2-p4"><label for="s2-p4">Las preguntas del proyecto revisadas: ¿se pueden responder con estas variables?</label></li>
+    </ul>
+  </div>
+  <h3>Preguntas de defensa</h3>
+  <details class="defensa"><summary>¿Qué representa cada fila de esta base?</summary><div><p>Es la primera pregunta del banco oficial. Responde con la unidad exacta (“un hogar encuestado”, “una empresa en un año”) y el número de filas que dio <code>dim()</code>.</p></div></details>
+  <details class="defensa"><summary>¿Cómo saben que la importación salió bien?</summary><div><p>Porque revisaron <code>dim()</code> contra lo que esperaban, <code>names()</code> contra el CSV y <code>glimpse()</code> para confirmar que los montos son <code>&lt;dbl&gt;</code>. Si una columna llegó como texto, dicen cómo la corrigieron.</p></div></details>
+  <details class="defensa"><summary>¿Por qué usan una ruta relativa?</summary><div><p>Porque el proyecto se abre en otras computadoras (las del equipo y la del docente): <code>"datos/base.csv"</code> funciona en todas; una ruta con el nombre de usuario, solo en una.</p></div></details>
+  <details class="defensa"><summary>¿Qué limitaciones tiene su base?</summary><div><p>Período corto, muestra pequeña o no representativa, variables que faltan para la pregunta, definiciones que cambian entre años. Reconocerlas es parte de la nota de “comprensión de los datos”.</p></div></details>
+</section>
+
+<section id="evaluacion">
+  <h2>Rumbo al Control 01</h2>
+  <p>El Control 01 cubre las semanas 1 a 3. Repásalo con la <a href="{RAIZ}control-01/guia/index.html">guía de lectura</a> y el <a href="{RAIZ}control-01/repaso/index.html">repaso con simulacro</a>. Sin IA.</p>
+  <ul class="check">
+    <li><input type="checkbox" id="s2-v1" data-track="s2-v1"><label for="s2-v1">Puedo indexar por posición, por exclusión y por condición, y predecir el resultado.</label></li>
+    <li><input type="checkbox" id="s2-v2" data-track="s2-v2"><label for="s2-v2">Puedo explicar el reciclaje y por qué comparar <code>length()</code> antes de operar.</label></li>
+    <li><input type="checkbox" id="s2-v3" data-track="s2-v3"><label for="s2-v3">Puedo contar con <code>sum()</code> sobre lógicos y distinguir <code>any()</code> de <code>all()</code>.</label></li>
+    <li><input type="checkbox" id="s2-v4" data-track="s2-v4"><label for="s2-v4">Puedo distinguir una tasa global de un promedio de tasas.</label></li>
+    <li><input type="checkbox" id="s2-v5" data-track="s2-v5"><label for="s2-v5">Puedo construir una matriz con <code>byrow</code> y explicar por qué un data frame conserva tipos por columna.</label></li>
+    <li><input type="checkbox" id="s2-v6" data-track="s2-v6"><label for="s2-v6">Puedo importar un CSV con ruta relativa y auditarlo con <code>dim()</code>, <code>names()</code>, <code>glimpse()</code> y <code>summary()</code>.</label></li>
+  </ul>
+</section>
+
+<section id="cheat">
+  <h2>Cheat Sheet · Semana 2</h2>
+  <ul class="vocab"><li>índice</li><li>vector lógico</li><li>reciclaje</li><li>coerción</li><li>matriz</li><li>data frame / tibble</li><li>observación</li><li>variable</li><li>CSV</li><li>delimitador</li><li>ruta relativa</li></ul>
+  <div class="grid">
+    <div class="card"><h3>Vectores</h3><div class="table-wrap"><table><tbody>
+      <tr><td><code>x[i]</code>, <code>x[c(i, j)]</code></td><td>por posición</td></tr>
+      <tr><td><code>x[-i]</code></td><td>por exclusión</td></tr>
+      <tr><td><code>x[cond]</code></td><td>por condición lógica</td></tr>
+      <tr><td><code>a:b</code></td><td>secuencia de enteros</td></tr>
+      <tr><td><code>sum(cond)</code> / <code>any()</code> / <code>all()</code></td><td>¿cuántos? / ¿alguno? / ¿todos?</td></tr>
+      <tr><td><code>typeof()</code></td><td>tipo interno</td></tr>
+    </tbody></table></div></div>
+    <div class="card"><h3>Tablas</h3><div class="table-wrap"><table><tbody>
+      <tr><td><code>matrix(v, nrow =, byrow =)</code></td><td>matriz de un tipo</td></tr>
+      <tr><td><code>m[fila, columna]</code></td><td>indexar una matriz o data frame</td></tr>
+      <tr><td><code>data.frame()</code> / <code>tibble()</code></td><td>tabla con tipos por columna</td></tr>
+      <tr><td><code>df$columna</code></td><td>una columna como vector</td></tr>
+      <tr><td><code>dim()</code>, <code>nrow()</code>, <code>ncol()</code>, <code>names()</code></td><td>tamaño y nombres</td></tr>
+      <tr><td><code>head()</code>, <code>str()</code>, <code>glimpse()</code>, <code>summary()</code></td><td>auditar</td></tr>
+    </tbody></table></div></div>
+    <div class="card"><h3>Importar</h3><div class="table-wrap"><table><tbody>
+      <tr><td><code>library(readr)</code></td><td>cargar el paquete (una vez por sesión)</td></tr>
+      <tr><td><code>read_csv("datos/x.csv")</code></td><td>importar un CSV con comas</td></tr>
+      <tr><td><code>read_csv2()</code></td><td>CSV con punto y coma</td></tr>
+      <tr><td><code>na = c("N/A", "")</code></td><td>qué texto es faltante</td></tr>
+      <tr><td><code>parse_number()</code></td><td>número desde un texto con símbolos</td></tr>
+    </tbody></table></div></div>
+  </div>
+</section>
+
+<section id="fuentes">
+  <h2>Fuentes</h2>
+  <ul>
+    <li><strong>[R4DS]</strong> Wickham, H., Çetinkaya-Rundel, M. y Grolemund, G. (2023). <em>R for Data Science</em>, 2.ª ed. Cap. 7 “Data import”, sección 7.2. <a href="https://r4ds.hadley.nz/data-import.html" target="_blank" rel="noopener">r4ds.hadley.nz</a>.</li>
+    <li>Programa oficial del curso (ESEN, 2026): semana 2, “De valores individuales a conjuntos de datos”.</li>
+    <li>Ejemplo de las bodegas: script de la clase 3 del curso. <code>hogares.csv</code> y <code>precios_texto.csv</code> son datos simulados para esta guía.</li>
+  </ul>
+  <nav class="nav-semanas" aria-label="Navegación entre semanas">
+    <a class="nav-prev" href="{RAIZ}semana-01/index.html"><span class="btn-ico" aria-hidden="true"></span><span>Semana 1: R como herramienta</span></a>
+    <a class="nav-next" href="{RAIZ}semana-03/index.html"><span>Semana 3: visualizar antes de modelar</span><span class="btn-ico" aria-hidden="true"></span></a>
+  </nav>
+</section>

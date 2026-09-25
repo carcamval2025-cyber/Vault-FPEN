@@ -2,10 +2,11 @@
 
 ESEN · Ciclo III/2026 · Secciones 1 y 2 · Catedrático: Alvin Javier Portillo Tiliano.
 
-Este repositorio tiene dos partes:
+Este repositorio tiene tres partes:
 
 - **El vault de Obsidian** (carpetas `00 Programa/` a `06 Código R/`, `Home.md`, `AGENTS.md`): la memoria del curso (programa, mapa curricular, política de IA, bitácora y código de clase). Empieza por `AGENTS.md`.
 - **El sitio web** en `docs/`: una guía de estudio interactiva que se publica con GitHub Pages desde esa carpeta.
+- **Las herramientas** en `herramientas/`: el contenido fuente de cada página y los scripts que generan `docs/`, calculan con R los gráficos de portada y verifican todo. Las páginas de `docs/` no se editan a mano; ver `herramientas/README.md`.
 
 ## El sitio (`docs/`)
 

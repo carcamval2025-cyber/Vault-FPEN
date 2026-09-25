@@ -1,0 +1,846 @@
+
+<section id="uso">
+  <h2>Cómo usar esta guía</h2>
+  <p>El curso es <strong>aula invertida</strong>: el libro es la primera fuente, la clase es laboratorio. Usa esta página en cuatro momentos:</p>
+  <div class="momentos">
+    <div><strong>Antes de clase</strong>Lee el capítulo 2 de R4DS y responde el <a href="#checkpoint">control de lectura</a> sin volver al libro.</div>
+    <div><strong>Con RStudio abierto</strong>Cada bloque de R de esta página tiene <strong>Ejecutar</strong> y <strong>Editar</strong>: corre R de verdad en tu navegador. Después copia el código a un script tuyo.</div>
+    <div><strong>Después de clase</strong>Llena las <a href="#trazas">trazas</a> a mano y resuelve los <a href="#ejercicios">ejercicios</a> antes de abrir la solución.</div>
+    <div><strong>Antes de evaluar</strong>Haz la <a href="#practica">práctica intensiva</a> y repasa la lista de <a href="#evaluacion">“puedo…”</a>.</div>
+  </div>
+  <p>Cada tema sigue el mismo ciclo del curso. Acostúmbrate a él: es la forma de resolver un problema real y la forma en que te van a preguntar en la defensa del proyecto.</p>
+  <ul class="ciclo-leyenda" aria-label="Ciclo de trabajo">
+    <li>Pregunta</li><li class="sep">→</li><li>Exploración</li><li class="sep">→</li><li>Implementación</li><li class="sep">→</li><li>Resultado</li><li class="sep">→</li><li>Interpretación</li><li class="sep">→</li><li class="v">Verificación</li>
+  </ul>
+  <div class="box nota">
+    <span class="box-title">El mapa de todo el curso</span>
+    <p>El ciclo <strong>importar → ordenar → transformar → visualizar → modelar → comunicar</strong> de la portada es el mapa de las 12 semanas, no solo de hoy. Esta semana construyes las piezas más básicas, el paso “0”: objetos, cálculos y funciones. Sin esto, ningún otro paso del ciclo es posible.</p>
+  </div>
+</section>
+
+<section id="mapa">
+  <h2>Qué puedes usar esta semana</h2>
+  <p>Regla de progresión: en esta guía nunca se usa algo que el curso enseña en una semana posterior. Si lo ves antes, está marcado como <em>adelanto opcional</em>.</p>
+  <div class="permisos">
+    <div class="si">
+      <h4>Sí, desde ahora (solo R base)</h4>
+      <ul>
+        <li>Consola y scripts de RStudio</li>
+        <li>Asignación con <code>&lt;-</code> y nombres en <code>snake_case</code></li>
+        <li>Tipos <code>numeric</code>, <code>character</code> y <code>logical</code></li>
+        <li>Operadores <code>+ - * / ^ %% %/%</code> y de comparación <code>== != &lt; &gt; &lt;= &gt;=</code></li>
+        <li><code>c()</code>, <code>class()</code>, <code>length()</code>, <code>sum()</code>, <code>mean()</code>, <code>round(x, digits = )</code> y <code>?nombre</code></li>
+      </ul>
+    </div>
+    <div class="no">
+      <h4>Todavía no</h4>
+      <ul>
+        <li>Extraer elementos de un vector (<code>ingresos[1]</code>) → semana 2</li>
+        <li>Data frames e importar un CSV → semana 2</li>
+        <li><code>library()</code> y <code>ggplot2</code> → semana 3</li>
+        <li><code>dplyr</code> y el pipe <code>|&gt;</code> → semana 4</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="lecturas">
+  <h2>Lecturas de preparación</h2>
+  <p>Marca cada lectura cuando la termines. Tu avance se guarda en este navegador.</p>
+  <ul class="check">
+    <li><input type="checkbox" id="s1-l1" data-track="s1-l1"><label for="s1-l1"><span class="ref">[R4DS] Cap. 2</span> “Workflow: basics” (Flujo de trabajo: conceptos básicos). Enfócate en: R como calculadora, crear objetos con <code>&lt;-</code>, comentarios que explican el porqué, nombres en <code>snake_case</code> y cómo se llama a una función.</label></li>
+    <li><input type="checkbox" id="s1-l2" data-track="s1-l2"><label for="s1-l2"><span class="ref">[R4DS] Cap. 4</span> “Workflow: code style” (solo como referencia de estilo). Enfócate en: espacios alrededor de operadores, <code>&lt;-</code> en lugar de <code>=</code> para asignar y nombres descriptivos.</label></li>
+    <li><input type="checkbox" id="s1-l3" data-track="s1-l3"><label for="s1-l3"><span class="ref">Instalación</span> R y RStudio instalados y funcionando: abre RStudio, crea un script nuevo (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>N</kbd>) y ejecuta una línea con <kbd>Ctrl</kbd>+<kbd>Enter</kbd>.</label></li>
+  </ul>
+  <div class="box nota">
+    <span class="box-title">Dónde leer</span>
+    <ul>
+      <li><a href="https://r4ds.hadley.nz/workflow-basics.html" target="_blank" rel="noopener">R for Data Science (2.ª ed.), cap. 2: Workflow: basics</a> (libre en línea, en inglés).</li>
+      <li><a href="https://r4ds.hadley.nz/workflow-style.html" target="_blank" rel="noopener">R for Data Science (2.ª ed.), cap. 4: Workflow: code style</a>.</li>
+      <li>La traducción libre al español <a href="https://es.r4ds.hadley.nz/" target="_blank" rel="noopener">es.r4ds.hadley.nz</a> corresponde a la 1.ª edición: sirve, pero sus capítulos tienen otra numeración.</li>
+      <li><a href="https://posit.co/download/rstudio-desktop/" target="_blank" rel="noopener">Descargar R y RStudio Desktop</a> (Posit).</li>
+    </ul>
+  </div>
+</section>
+
+<section id="checkpoint">
+  <h2>Control de lectura</h2>
+  <p>Responde <strong>después</strong> de leer y sin volver al libro. Cada respuesta muestra por qué es correcta o no.</p>
+  <div class="quiz">
+    <div class="qq" data-q="s1-q1">
+      <p>¿Cuál es la diferencia entre R y RStudio?</p>
+      <div class="quiz-opts">
+        <button class="quiz-opt" data-ok>R es el lenguaje que interpreta y ejecuta las instrucciones; RStudio es el entorno donde las escribes y organizas.</button>
+        <button class="quiz-opt">Son lo mismo: RStudio es el nombre nuevo de R.</button>
+        <button class="quiz-opt">RStudio ejecuta el código y R solo guarda los archivos.</button>
+        <button class="quiz-opt">R sirve para gráficos y RStudio para cálculos.</button>
+      </div>
+      <p class="why">R es el motor; RStudio es el tablero. Sin R instalado, RStudio no puede ejecutar ni una línea.</p>
+    </div>
+    <div class="qq" data-q="s1-q2">
+      <p>Escribes <code>ingresos_enero &lt;- 4200</code> y presionas <kbd>Ctrl</kbd>+<kbd>Enter</kbd>. ¿Qué muestra la consola?</p>
+      <div class="quiz-opts">
+        <button class="quiz-opt" data-ok>Nada: R guarda el valor en el objeto y no imprime.</button>
+        <button class="quiz-opt"><code>[1] 4200</code></button>
+        <button class="quiz-opt"><code>TRUE</code></button>
+        <button class="quiz-opt">Un error, porque falta imprimir.</button>
+      </div>
+      <p class="why">Una asignación no imprime. Para ver el valor escribes el nombre del objeto solo, en su propia línea.</p>
+    </div>
+    <div class="qq" data-q="s1-q3">
+      <p>¿Cuál es el nombre de objeto que sigue el estilo del curso?</p>
+      <div class="quiz-opts">
+        <button class="quiz-opt" data-ok><code>tasa_crecimiento</code></button>
+        <button class="quiz-opt"><code>TasaCrecimiento</code></button>
+        <button class="quiz-opt"><code>tasa.crecimiento</code></button>
+        <button class="quiz-opt"><code>2tasa</code></button>
+      </div>
+      <p class="why">El curso usa <code>snake_case</code>: minúsculas y guion bajo. <code>2tasa</code> ni siquiera es válido, porque un nombre no puede empezar con un dígito.</p>
+    </div>
+    <div class="qq" data-q="s1-q4">
+      <p>¿Qué tipo tiene el valor <code>"comercio"</code>?</p>
+      <div class="quiz-opts">
+        <button class="quiz-opt" data-ok><code>character</code></button>
+        <button class="quiz-opt"><code>numeric</code></button>
+        <button class="quiz-opt"><code>logical</code></button>
+        <button class="quiz-opt">No tiene tipo hasta que lo declares.</button>
+      </div>
+      <p class="why">El texto va entre comillas y es <code>character</code>. En R el tipo viaja pegado al valor: no se declara aparte.</p>
+    </div>
+    <div class="qq" data-q="s1-q5">
+      <p>¿Qué devuelve <code>1100 &gt; 0</code>?</p>
+      <div class="quiz-opts">
+        <button class="quiz-opt" data-ok><code>TRUE</code></button>
+        <button class="quiz-opt"><code>1100</code></button>
+        <button class="quiz-opt"><code>1</code></button>
+        <button class="quiz-opt"><code>"sí"</code></button>
+      </div>
+      <p class="why">Un operador de comparación recibe dos valores y devuelve un <code>logical</code>: <code>TRUE</code> o <code>FALSE</code>.</p>
+    </div>
+    <div class="qq" data-q="s1-q6">
+      <p>En <code>round(3.14159, digits = 2)</code>, ¿qué es <code>digits</code>?</p>
+      <div class="quiz-opts">
+        <button class="quiz-opt" data-ok>Un argumento con nombre que indica cuántos decimales conservar.</button>
+        <button class="quiz-opt">Otra función que se ejecuta antes de <code>round()</code>.</button>
+        <button class="quiz-opt">Un objeto que debe existir antes.</button>
+        <button class="quiz-opt">El resultado de la función.</button>
+      </div>
+      <p class="why"><code>round</code> es la función, <code>3.14159</code> y <code>digits = 2</code> son sus argumentos, y <code>3.14</code> es el resultado.</p>
+    </div>
+    <div class="qq" data-q="s1-q7">
+      <p><code>ingresos &lt;- c(4200, 4550, 4100, 4800)</code>. ¿Qué devuelve <code>ingresos * 1.05</code>?</p>
+      <div class="quiz-opts">
+        <button class="quiz-opt" data-ok>Cuatro valores: cada ingreso multiplicado por 1.05.</button>
+        <button class="quiz-opt">Un solo número: la suma multiplicada por 1.05.</button>
+        <button class="quiz-opt">Solo el primer ingreso multiplicado por 1.05.</button>
+        <button class="quiz-opt">Un error: hace falta un ciclo.</button>
+      </div>
+      <p class="why">La aritmética sobre un vector es <strong>vectorizada</strong>: se aplica a cada elemento y devuelve un vector del mismo largo.</p>
+    </div>
+    <div class="qq" data-q="s1-q8">
+      <p>La consola muestra <code>+</code> en lugar de <code>&gt;</code>. ¿Qué pasó?</p>
+      <div class="quiz-opts">
+        <button class="quiz-opt" data-ok>R espera que termines la instrucción: falta cerrar una comilla o un paréntesis.</button>
+        <button class="quiz-opt">R está sumando algo en segundo plano.</button>
+        <button class="quiz-opt">Se instaló un paquete nuevo.</button>
+        <button class="quiz-opt">El script se guardó.</button>
+      </div>
+      <p class="why">El <code>+</code> es el aviso de continuación. Presiona <kbd>Esc</kbd>, corrige la línea y vuelve a ejecutarla.</p>
+    </div>
+    <div class="quiz-score"><span data-score></span><button class="btn sec" type="button" data-reset>Reiniciar quiz</button></div>
+  </div>
+  <ul class="check">
+    <li><input type="checkbox" id="s1-cp" data-track="s1-cp"><label for="s1-cp">Respondí el control de lectura y entiendo por qué fallé las que fallé.</label></li>
+  </ul>
+</section>
+
+<section id="consola">
+  <h2>Consola y scripts</h2>
+  <div class="box simple"><span class="box-title">En palabras simples</span>
+    <p>La consola es la <strong>calculadora de escritorio</strong> del contador: sirve para verificar una tasa rápido, pero no deja rastro. El script es el <strong>libro de trabajo</strong>: cada cálculo queda escrito, en orden, y cualquiera del equipo puede repetirlo el próximo mes con datos nuevos.</p>
+  </div>
+  <p>En RStudio hay dos lugares donde puedes escribir código, y confundirlos es el primer error casi universal de quien empieza:</p>
+  <figure class="lamina media"><div class="placa"><div class="placa-core"><img src="{RAIZ}assets/img/s1-rstudio.svg" alt="Los cuatro paneles de RStudio: el editor de scripts arriba a la izquierda, la consola abajo a la izquierda, el panel Environment arriba a la derecha con los objetos creados, y el panel de archivos, gráficos y ayuda abajo a la derecha." width="760" height="400" loading="lazy" decoding="async"></div></div><figcaption>Escribes en el <strong>script</strong>, ejecutas con <kbd>Ctrl</kbd>+<kbd>Enter</kbd>, el resultado sale en la <strong>consola</strong> y los objetos creados aparecen en <strong>Environment</strong>.</figcaption></figure>
+  <div class="grid">
+    <div class="card">
+      <h3>Consola</h3>
+      <p>Escribes una instrucción, presionas <kbd>Enter</kbd>, R la ejecuta y la olvida. Útil para probar algo rápido o usarla como calculadora, igual que harías con una calculadora de escritorio para verificar una tasa de crecimiento a mano.</p>
+<pre data-file="consola.R"><code class="language-r">1 / 200 * 30</code></pre>
+<pre class="salida"><code>[1] 0.15</code></pre>
+    </div>
+    <div class="card">
+      <h3>Script (.R)</h3>
+      <p>Un archivo que guarda cada línea que escribes, en orden. Es tu registro reproducible: si vuelves mañana, o si tu equipo del proyecto grupal necesita repetir tu análisis, el script es lo que lo hace posible. Toda instrucción que quieras conservar va en un script, nunca solo en la consola.</p>
+    </div>
+  </div>
+  <div class="box ojo"><span class="box-title">Regla práctica del curso</span>
+    <p>Si el resultado te importa para tu proyecto o tu tarea, escríbelo en un script y ejecútalo desde ahí (<kbd>Ctrl</kbd>/<kbd>Cmd</kbd>+<kbd>Enter</kbd>). No lo dejes viviendo solo en la consola.</p>
+  </div>
+</section>
+
+<section id="objetos">
+  <h2>Objetos y asignación</h2>
+  <div class="box simple"><span class="box-title">En palabras simples</span>
+    <p>Un objeto es una <strong>celda con nombre</strong> en una hoja de cálculo: en vez de recordar “el 4200 de enero”, lo guardas en <code>ingresos_enero</code> y lo usas cuantas veces quieras. La diferencia con la hoja de cálculo: en R la celda no se recalcula sola; cada línea se ejecuta una vez, cuando tú la corres.</p>
+  </div>
+  <div class="ciclo">
+    <h3>Caso: guardar los ingresos de enero de un emprendimiento</h3>
+    <div class="paso"><div>
+      <span class="etq">Pregunta</span>
+      <p>Tu emprendimiento generó $4,200 en enero. Quieres usar ese número más adelante en el mismo script sin volver a escribirlo ni buscarlo. ¿Qué hace R exactamente cuando escribes <code>ingresos_enero &lt;- 4200</code>? La línea no imprime nada, pero algo sí pasó.</p>
+    </div></div>
+    <div class="paso"><div>
+      <span class="etq">Exploración</span>
+      <figure class="lamina media"><div class="placa"><div class="placa-core"><img src="{RAIZ}assets/img/s1-ambiente.svg" alt="Antes de ejecutar la línea, el ambiente de R (panel Environment) está vacío. Después de ejecutar ingresos_enero asignado a 4200, el ambiente contiene un objeto llamado ingresos_enero con el valor 4200." width="760" height="250" loading="lazy" decoding="async"></div></div><figcaption>R evalúa <code>4200</code>, lo guarda bajo el nombre <code>ingresos_enero</code> y se queda en silencio.</figcaption></figure>
+    </div></div>
+    <div class="paso"><div>
+      <span class="etq">Implementación</span>
+<pre data-file="objetos.R"><code class="language-r">ingresos_enero &lt;- 4200   # guarda el valor; no imprime nada
+ingresos_enero            # escribir el nombre solo muestra lo que hay adentro</code></pre>
+      <p>Pulsa <strong>Editar</strong>, cambia el 4200 por otro valor y vuelve a ejecutar: la primera línea sigue sin imprimir nada.</p>
+    </div></div>
+    <div class="paso"><div>
+      <span class="etq">Resultado</span>
+<pre class="salida"><code>[1] 4200</code></pre>
+    </div></div>
+    <div class="paso"><div>
+      <span class="etq">Interpretación</span>
+      <p>La primera línea <strong>no imprimió nada</strong>: R evaluó el número, lo guardó y se quedó en silencio, exactamente como en la lámina. Solo cuando escribes el nombre del objeto solo, en su propia línea, R busca esa caja y te muestra lo que hay adentro. El <code>[1]</code> dice que ese es el primer (y único) elemento.</p>
+    </div></div>
+    <div class="paso verif"><div>
+      <span class="etq">Verificación: ¿cómo sé que es correcto?</span>
+      <ul>
+        <li>En RStudio, el objeto aparece en el panel <strong>Environment</strong> con su valor.</li>
+        <li>Escribir su nombre en la consola muestra el mismo valor.</li>
+        <li>Si reasignas <code>ingresos_enero &lt;- 4600</code>, los objetos calculados antes con él <strong>no cambian</strong> hasta que vuelvas a ejecutar esas líneas (lo verás en la <a href="#trazas">traza 1</a>).</li>
+      </ul>
+    </div></div>
+  </div>
+  <div class="box nota"><span class="box-title">Hábito de estilo</span>
+    <p>Se asigna con el operador <code>&lt;-</code>, no con <code>=</code> (ver la <a href="#cheat">referencia de estilo</a>). Atajo en RStudio: <kbd>Alt</kbd>/<kbd>Option</kbd> + <kbd>-</kbd> escribe <code>&lt;-</code> con los espacios correctos. Úsalo desde ya: es el hábito que más tiempo te ahorra en todo el curso.</p>
+  </div>
+</section>
+
+<section id="tipos">
+  <h2>Tipos de datos</h2>
+  <div class="box simple"><span class="box-title">En palabras simples</span>
+    <p>Cada valor lleva una <strong>etiqueta de bodega</strong> pegada: “número”, “texto” o “sí/no”. R mira la etiqueta antes de operar: puede sumar dos precios, pero no puede sumar un precio con la palabra “comercio”.</p>
+  </div>
+  <p>No todos los valores son iguales para R. El tipo no es algo que tú declares aparte: viaja pegado al valor desde el momento en que lo creas, como una etiqueta. Los tres tipos que necesitas esta semana:</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Tipo</th><th>Qué guarda</th><th>Ejemplo económico</th></tr></thead>
+    <tbody>
+      <tr><td><code>numeric</code></td><td>Cualquier número, con o sin decimales.</td><td><code>precio_dolar &lt;- 3.75</code>: ingresos, precios, tasas, cantidades.</td></tr>
+      <tr><td><code>character</code></td><td>Texto, siempre entre comillas.</td><td><code>sector &lt;- "comercio"</code>: países, categorías, sectores.</td></tr>
+      <tr><td><code>logical</code></td><td>Solo <code>TRUE</code> o <code>FALSE</code>.</td><td><code>hubo_crecimiento &lt;- TRUE</code>: el resultado natural de una comparación.</td></tr>
+    </tbody>
+  </table></div>
+  <figure class="lamina media ia-ilustracion"><div class="placa"><div class="placa-core"><img data-no-inline src="{RAIZ}assets/img/ia-s1-tipos.svg" alt="Tres valores con su tipo pegado como etiqueta física: 3.75 con la etiqueta numeric, comercio con la etiqueta character y TRUE con la etiqueta logical." width="960" height="640" loading="lazy" decoding="async"></div></div><figcaption>Cada valor lleva su tipo pegado: <strong>numeric</strong>, <strong>character</strong> y <strong>logical</strong> son las tres etiquetas de esta semana.</figcaption></figure>
+  <p>¿Cómo saber el tipo de un objeto que ya creaste? <code>class()</code> te lo dice:</p>
+<pre data-file="tipos.R"><code class="language-r">precio_dolar &lt;- 3.75
+sector &lt;- "comercio"
+hubo_crecimiento &lt;- TRUE
+class(precio_dolar)
+class(sector)
+class(hubo_crecimiento)</code></pre>
+<pre class="salida"><code>[1] "numeric"
+[1] "character"
+[1] "logical"</code></pre>
+</section>
+
+<section id="operadores">
+  <h2>Operadores</h2>
+  <div class="box simple"><span class="box-title">En palabras simples</span>
+    <p>Los aritméticos son las <strong>teclas de la calculadora</strong>: entran dos números y sale un número. Los de comparación son las <strong>preguntas de sí o no</strong> que hace un gerente: “¿la utilidad fue mayor que cero?”. Entran dos valores y sale <code>TRUE</code> o <code>FALSE</code>.</p>
+  </div>
+  <figure class="lamina media"><div class="placa"><div class="placa-core"><img src="{RAIZ}assets/img/s1-operadores.svg" alt="Arriba, aritmética: ingresos_enero 4200 menos costos_enero 3100 da utilidad 1100. Abajo, comparación: utilidad 1100 mayor que 0 da TRUE." width="760" height="260" loading="lazy" decoding="async"></div></div><figcaption><strong>Aritmética</strong>: dos números entran, un número sale. <strong>Comparación</strong>: dos valores entran, un <code>TRUE</code>/<code>FALSE</code> sale.</figcaption></figure>
+  <div class="ciclo">
+    <h3>Caso: ¿tuvo utilidad el emprendimiento en enero?</h3>
+    <div class="paso"><div><span class="etq">Pregunta</span><p>En enero entraron $4,200 y los costos fueron $3,100. ¿Cuánto quedó y fue positivo?</p></div></div>
+    <div class="paso"><div><span class="etq">Exploración</span><p>Entradas: ingresos y costos. Salidas: la utilidad (un número) y la respuesta a “¿hubo ganancia?” (un sí/no). Necesitas un operador aritmético y uno de comparación.</p></div></div>
+    <div class="paso"><div><span class="etq">Implementación</span>
+<pre data-file="utilidad.R"><code class="language-r">ingresos_enero &lt;- 4200
+costos_enero &lt;- 3100
+utilidad &lt;- ingresos_enero - costos_enero
+utilidad
+utilidad &gt; 0          # ¿hubo ganancia?
+utilidad / ingresos_enero * 100   # margen en porcentaje</code></pre>
+    </div></div>
+    <div class="paso"><div><span class="etq">Resultado</span>
+<pre class="salida"><code>[1] 1100
+[1] TRUE
+[1] 26.19048</code></pre>
+    </div></div>
+    <div class="paso"><div><span class="etq">Interpretación</span><p>Quedaron $1,100 de utilidad, sí fue positiva, y de cada dólar vendido quedaron unos 26 centavos (margen de 26.2 %).</p></div></div>
+    <div class="paso verif"><div><span class="etq">Verificación: ¿cómo sé que es correcto?</span><ul><li>A mano: 4200 − 3100 = 1100 y 1100 / 4200 ≈ 0.262.</li><li>El margen debe estar entre 0 y 100 si la utilidad es positiva y menor que el ingreso.</li></ul></div></div>
+  </div>
+  <figure class="lamina media ia-ilustracion"><div class="placa"><div class="placa-core"><img data-no-inline src="{RAIZ}assets/img/ia-s1-operadores.svg" alt="A la izquierda, aritmética: dos números entran y sale un número. A la derecha, comparación: dos valores entran y sale TRUE o FALSE." width="960" height="640" loading="lazy" decoding="async"></div></div><figcaption>A la izquierda, aritmética (dos números entran, un número sale); a la derecha, comparación (dos valores entran, un <code>TRUE</code>/<code>FALSE</code> sale).</figcaption></figure>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Aritméticos</th><th>Significado</th><th>De comparación</th><th>Significado</th></tr></thead>
+    <tbody>
+      <tr><td><code>+ -</code></td><td>suma, resta</td><td><code>==</code></td><td>igual a (dos signos)</td></tr>
+      <tr><td><code>* /</code></td><td>multiplicación, división</td><td><code>!=</code></td><td>distinto de</td></tr>
+      <tr><td><code>^</code></td><td>potencia</td><td><code>&lt; &gt;</code></td><td>menor, mayor</td></tr>
+      <tr><td><code>%%</code></td><td>residuo de la división</td><td><code>&lt;= &gt;=</code></td><td>menor o igual, mayor o igual</td></tr>
+      <tr><td><code>%/%</code></td><td>división entera</td><td></td><td></td></tr>
+    </tbody>
+  </table></div>
+  <p>Los de comparación son la base de cualquier filtro que harás desde la semana 4.</p>
+</section>
+
+<section id="funciones">
+  <h2>Funciones y argumentos</h2>
+  <div class="box simple"><span class="box-title">En palabras simples</span>
+    <p>Una función es una <strong>ventanilla de trámites</strong>: entregas los documentos que pide (los argumentos) y te devuelve un resultado. <code>round()</code> es la ventanilla que redondea; el argumento <code>digits</code> es la casilla del formulario donde dices cuántos decimales quieres.</p>
+  </div>
+  <p>Una función es una instrucción con nombre que recibe <strong>argumentos</strong> entre paréntesis y devuelve un resultado. Sintaxis general:</p>
+<pre data-file="sintaxis.R" data-norun><code class="language-r">nombre_funcion(argumento1 = valor1, argumento2 = valor2)</code></pre>
+  <p>Ejemplo con <code>round()</code>, que redondea un número; el argumento <code>digits</code> controla a cuántos decimales:</p>
+<pre data-file="redondeo.R"><code class="language-r">round(3.14159, digits = 2)
+round(3.14159, 2)      # mismo resultado: el segundo valor es digits
+round(3.14159)         # sin digits: 0 decimales por defecto</code></pre>
+<pre class="salida"><code>[1] 3.14
+[1] 3.14
+[1] 3</code></pre>
+  <p>No siempre hace falta escribir el nombre del argumento: <code>round(3.14159, 2)</code> funciona igual, porque R sabe que el segundo valor en esa posición es <code>digits</code>. Nombrarlo es más claro cuando la función tiene varios argumentos, un hábito que conviene practicar desde ya.</p>
+</section>
+
+<section id="vectores">
+  <h2>Vectores</h2>
+  <div class="box simple"><span class="box-title">En palabras simples</span>
+    <p>Un vector es una <strong>fila de la hoja de ventas</strong>: los ingresos de enero a abril viven juntos bajo un solo nombre. Si subes todos los precios 5 %, no lo haces celda por celda: aplicas la misma regla a toda la fila de una vez.</p>
+  </div>
+  <p>Un vector es una <strong>serie pequeña de observaciones</strong> del mismo tipo, guardadas en un solo objeto. Se construye con <code>c()</code> (de “combine”):</p>
+<pre data-file="vector.R" id="s1-ingresos"><code class="language-r"># ingresos de un pequeño negocio, cuatro meses
+ingresos &lt;- c(4200, 4550, 4100, 4800)
+ingresos</code></pre>
+<pre class="salida"><code>[1] 4200 4550 4100 4800</code></pre>
+  <figure class="lamina media"><div class="placa"><div class="placa-core"><img src="{RAIZ}assets/img/s1-vector.svg" alt="Arriba, las cuatro cajas 4200, 4550, 4100 y 4800 forman un solo objeto llamado ingresos. Abajo, la misma operación por 1.05 se aplica a las cuatro posiciones a la vez y da 4410, 4777.5, 4305 y 5040." width="760" height="300" loading="lazy" decoding="async"></div></div><figcaption>Las cuatro cajas son <strong>un solo objeto</strong>. La operación <code>× 1.05</code> ocurre en las cuatro posiciones a la vez, no una por una.</figcaption></figure>
+  <p>La aritmética sobre un vector se aplica a <strong>cada elemento a la vez</strong>: no necesitas un ciclo para esto (los ciclos llegan en la semana 9):</p>
+<pre data-file="proyeccion.R" data-previo="s1-ingresos"><code class="language-r">ingresos * 1.05   # proyección con 5 % de crecimiento
+length(ingresos)  # cuántas observaciones hay
+sum(ingresos)     # ingreso acumulado
+mean(ingresos)    # ingreso promedio</code></pre>
+<pre class="salida"><code>[1] 4410.0 4777.5 4305.0 5040.0
+[1] 4
+[1] 17650
+[1] 4412.5</code></pre>
+  <div class="grid">
+    <figure class="lamina ia-ilustracion" style="margin:0"><div class="placa"><div class="placa-core"><img data-no-inline src="{RAIZ}assets/img/ia-s1-vector.svg" alt="Cuatro cajas idénticas conectadas en una fila, con los subíndices 1 a 4, que forman un solo vector llamado ingresos." width="960" height="640" loading="lazy" decoding="async"></div></div><figcaption>Las cuatro cajas comparten el mismo tono porque son un solo objeto.</figcaption></figure>
+    <figure class="lamina ia-ilustracion" style="margin:0"><div class="placa"><div class="placa-core"><img data-no-inline src="{RAIZ}assets/img/ia-s1-vectorizada.svg" alt="Cuatro flechas paralelas aplican la misma operación por 1.05 a las cuatro posiciones del vector al mismo tiempo." width="960" height="640" loading="lazy" decoding="async"></div></div><figcaption>Cuatro flechas paralelas, no una detrás de otra.</figcaption></figure>
+  </div>
+  <div class="box adelanto"><span class="box-title">Todavía no</span>
+    <p>Extraer un elemento individual de un vector (<code>ingresos[1]</code>) es contenido de la semana 2, junto con más operaciones vectorizadas.</p>
+  </div>
+</section>
+
+<section id="ayuda">
+  <h2>Uso de ayuda y lectura de errores</h2>
+  <div class="box simple"><span class="box-title">En palabras simples</span>
+    <p>Un mensaje de error es un <strong>rechazo de la ventanilla con el motivo escrito</strong>: “falta la firma”, “el nombre no coincide”. No es un regaño: te dice exactamente qué corregir. Leerlo completo ahorra más tiempo que adivinar.</p>
+  </div>
+  <p>Vas a cometer errores de tipeo constantemente: es normal, y R te lo va a decir. Aprender a leer esos mensajes es tan importante como aprender la sintaxis.</p>
+  <div class="grid">
+    <div class="card">
+      <h3>Pedir ayuda</h3>
+      <p>Antepón <code>?</code> al nombre de cualquier función para abrir su documentación oficial en el panel Help de RStudio:</p>
+<pre data-file="ayuda.R" data-norun><code class="language-r">?round</code></pre>
+    </div>
+    <div class="card">
+      <h3>Objeto no encontrado</h3>
+      <p>R distingue mayúsculas de minúsculas y cada letra cuenta. Un nombre mal escrito no existe para R, aunque exista uno casi igual:</p>
+<pre data-file="error.R"><code class="language-r">r_rocks &lt;- 8
+r_rock</code></pre>
+<pre class="salida"><code>Error: object 'r_rock' not found</code></pre>
+    </div>
+    <div class="card">
+      <h3>La consola espera algo (<code>+</code>)</h3>
+      <p>Si tu consola muestra <code>+</code> en vez de <code>&gt;</code>, R piensa que tu instrucción sigue incompleta: casi siempre falta cerrar una comilla o un paréntesis. Presiona <kbd>Esc</kbd> y vuelve a intentarlo.</p>
+<pre class="salida" data-file="Console"><code>&gt; mensaje &lt;- "Hola
++</code></pre>
+    </div>
+  </div>
+</section>
+
+<section id="trazas">
+  <h2>Tablas de traza</h2>
+  <p>Una traza es ejecutar el código <em>tú</em>, línea por línea, anotando el valor de cada objeto. Llena las celdas, pulsa <strong>Comprobar</strong> y solo al final mira la solución. Si un objeto todavía no existe, escribe <em>no existe</em>.</p>
+
+  <h3>Traza 1 · Un objeto no se recalcula solo</h3>
+<pre data-file="presupuesto.R"><code class="language-r">presupuesto &lt;- 2000
+gasto &lt;- presupuesto * 0.15
+saldo &lt;- presupuesto - gasto
+presupuesto &lt;- 3000
+saldo_nuevo &lt;- presupuesto - gasto</code></pre>
+  <div class="traza">
+    <div class="table-wrap"><table>
+      <thead><tr><th>Después de la línea</th><th>presupuesto</th><th>gasto</th><th>saldo</th><th>saldo_nuevo</th></tr></thead>
+      <tbody>
+        <tr><td class="dado">1</td><td><input data-a="2000" aria-label="presupuesto tras la línea 1"></td><td><input data-a="no existe" aria-label="gasto tras la línea 1"></td><td><input data-a="no existe" aria-label="saldo tras la línea 1"></td><td><input data-a="no existe" aria-label="saldo_nuevo tras la línea 1"></td></tr>
+        <tr><td class="dado">2</td><td><input data-a="2000" aria-label="presupuesto tras la línea 2"></td><td><input data-a="300" aria-label="gasto tras la línea 2"></td><td><input data-a="no existe" aria-label="saldo tras la línea 2"></td><td><input data-a="no existe" aria-label="saldo_nuevo tras la línea 2"></td></tr>
+        <tr><td class="dado">3</td><td><input data-a="2000" aria-label="presupuesto tras la línea 3"></td><td><input data-a="300" aria-label="gasto tras la línea 3"></td><td><input data-a="1700" aria-label="saldo tras la línea 3"></td><td><input data-a="no existe" aria-label="saldo_nuevo tras la línea 3"></td></tr>
+        <tr><td class="dado">4</td><td><input data-a="3000" aria-label="presupuesto tras la línea 4"></td><td><input data-a="300" aria-label="gasto tras la línea 4"></td><td><input data-a="1700" aria-label="saldo tras la línea 4"></td><td><input data-a="no existe" aria-label="saldo_nuevo tras la línea 4"></td></tr>
+        <tr><td class="dado">5</td><td><input data-a="3000" aria-label="presupuesto tras la línea 5"></td><td><input data-a="300" aria-label="gasto tras la línea 5"></td><td><input data-a="1700" aria-label="saldo tras la línea 5"></td><td><input data-a="2700" aria-label="saldo_nuevo tras la línea 5"></td></tr>
+      </tbody>
+    </table></div>
+    <div class="acciones"><button class="btn" type="button" data-comprobar>Comprobar</button><button class="btn sec" type="button" data-solucion>Ver solución</button><button class="btn sec" type="button" data-limpiar>Limpiar</button><span class="resultado" aria-live="polite"></span></div>
+  </div>
+  <details class="defensa"><summary>¿Por qué <code>gasto</code> sigue en 300 después de la línea 4?</summary><div>
+    <p>R no es una hoja de cálculo con fórmulas vivas: la línea 2 se ejecutó una vez, cuando <code>presupuesto</code> valía 2000, y guardó el número 300. Reasignar <code>presupuesto</code> no vuelve a ejecutar la línea 2. Por eso <code>saldo_nuevo</code> mezcla el presupuesto nuevo con un gasto viejo: 3000 − 300 = 2700, no 2550. Para actualizarlo hay que volver a correr la línea del gasto.</p>
+  </div></details>
+
+  <h3>Traza 2 · Operaciones sobre vectores</h3>
+<pre data-file="tienda.R"><code class="language-r">ingresos &lt;- c(3200, 3450, 2980, 3600)
+costos &lt;- c(2100, 2200, 2050, 2300)
+utilidad &lt;- ingresos - costos
+positivo &lt;- utilidad &gt; 1000</code></pre>
+  <p>Escribe los vectores separados por comas (por ejemplo <code>1, 2, 3</code>).</p>
+  <div class="traza">
+    <div class="table-wrap"><table>
+      <thead><tr><th>Objeto</th><th>Valor</th><th>Tipo (class)</th><th>length()</th></tr></thead>
+      <tbody>
+        <tr><td class="dado">utilidad</td><td><input data-a="1100, 1250, 930, 1300" aria-label="valor de utilidad"></td><td><input data-a="numeric" aria-label="tipo de utilidad"></td><td><input data-a="4" aria-label="length de utilidad"></td></tr>
+        <tr><td class="dado">positivo</td><td><input data-a="TRUE, TRUE, FALSE, TRUE" aria-label="valor de positivo"></td><td><input data-a="logical" aria-label="tipo de positivo"></td><td><input data-a="4" aria-label="length de positivo"></td></tr>
+        <tr><td class="dado">sum(utilidad)</td><td><input data-a="4580" aria-label="valor de sum(utilidad)"></td><td><input data-a="numeric" aria-label="tipo de sum(utilidad)"></td><td><input data-a="1" aria-label="length de sum(utilidad)"></td></tr>
+        <tr><td class="dado">mean(utilidad)</td><td><input data-a="1145" aria-label="valor de mean(utilidad)"></td><td><input data-a="numeric" aria-label="tipo de mean(utilidad)"></td><td><input data-a="1" aria-label="length de mean(utilidad)"></td></tr>
+      </tbody>
+    </table></div>
+    <div class="acciones"><button class="btn" type="button" data-comprobar>Comprobar</button><button class="btn sec" type="button" data-solucion>Ver solución</button><button class="btn sec" type="button" data-limpiar>Limpiar</button><span class="resultado" aria-live="polite"></span></div>
+  </div>
+  <ul class="check">
+    <li><input type="checkbox" id="s1-t1" data-track="s1-t1"><label for="s1-t1">Completé la traza 1 sin ver la solución y puedo explicar por qué <code>gasto</code> no cambió.</label></li>
+    <li><input type="checkbox" id="s1-t2" data-track="s1-t2"><label for="s1-t2">Completé la traza 2 y distingo un resultado de largo 4 de uno de largo 1.</label></li>
+  </ul>
+</section>
+
+<section id="ejercicios">
+  <h2>Ejercicios</h2>
+  <p>Cada ejercicio parte de una pregunta de negocio, nunca de “escriba el siguiente comando”. Escribe tu respuesta en el cuadro: la solución se abre cuando llegas al mínimo de caracteres. Lo que escribes se guarda solo en este navegador. Cada ejercicio declara su nivel de IA, según la política del curso:</p>
+  <div class="ia-leyenda"><span class="ia sin">Sin IA</span><span class="ia permitida">IA permitida</span><span class="ia requerida">IA requerida</span></div>
+
+  <h3>Repaso activo</h3>
+  <article class="ejercicio">
+    <header><h3>R-1 · ¿Por qué un objeto?</h3><span class="nivel">objetos · ★</span><span class="ia sin">Sin IA</span></header>
+    <div class="cuerpo">
+      <p>Un compañero de equipo escribe <code>4200 - 3100</code> directo en la consola cada vez que necesita la utilidad de enero. ¿Qué problema tiene eso frente a usar <code>utilidad_enero &lt;- 4200 - 3100</code>, pensando en el proyecto grupal?</p>
+    </div>
+    <div class="respuesta"><label for="s1-r1">Tu respuesta</label><textarea id="s1-r1" data-id="s1-r1" data-min="40" placeholder="Escribe tu respuesta aquí (mínimo 40 caracteres)…"></textarea><span class="cuenta"></span></div>
+    <details class="solucion"><summary>Qué debería incluir una buena respuesta</summary><div class="det">
+      <ul>
+        <li><strong>Reutilización:</strong> el objeto se puede usar después sin recalcular ni volver a escribir.</li>
+        <li><strong>Trazabilidad:</strong> el nombre <code>utilidad_enero</code> documenta qué representa el número; <code>1100</code> solo, no.</li>
+        <li><strong>Trabajo en equipo:</strong> un script con objetos con nombre lo puede leer otra persona del equipo; una consola llena de cálculos sueltos, no.</li>
+      </ul>
+    </div></details>
+    <ul class="check"><li><input type="checkbox" id="s1-r1c" data-track="s1-r1c"><label for="s1-r1c">Resuelto</label></li></ul>
+  </article>
+
+  <article class="ejercicio">
+    <header><h3>R-2 · Predice el error</h3><span class="nivel">lectura de errores · ★</span><span class="ia sin">Sin IA</span></header>
+    <div class="cuerpo">
+      <p>Este código se ejecuta línea por línea. ¿Qué error exacto muestra R y por qué?</p>
+<pre data-file="predice_error.R"><code class="language-r">Tasa_Crecimiento &lt;- 0.05
+tasa_crecimiento * 100</code></pre>
+    </div>
+    <div class="respuesta"><label for="s1-r2">Tu respuesta</label><textarea id="s1-r2" data-id="s1-r2" data-min="30" placeholder="Escribe el mensaje de error que esperas y por qué…"></textarea><span class="cuenta"></span></div>
+    <details class="solucion"><summary>Qué debería incluir una buena respuesta</summary><div class="det">
+<pre class="salida"><code>Error: object 'tasa_crecimiento' not found</code></pre>
+      <ul>
+        <li><strong>Por qué:</strong> el objeto se creó como <code>Tasa_Crecimiento</code>, con mayúsculas. R distingue mayúsculas de minúsculas: son dos nombres distintos.</li>
+        <li><strong>Conexión con estilo:</strong> esto es exactamente lo que evita la regla de usar siempre <code>snake_case</code> en minúsculas: consistencia, no solo estética.</li>
+      </ul>
+    </div></details>
+    <ul class="check"><li><input type="checkbox" id="s1-r2c" data-track="s1-r2c"><label for="s1-r2c">Resuelto</label></li></ul>
+  </article>
+
+  <h3>Laboratorio</h3>
+  <p>Los dos primeros son diagnósticos (sin apoyo de IA) para ver qué entendiste sin ayuda externa.</p>
+  <article class="ejercicio">
+    <header><h3>E1 · Predice el resultado</h3><span class="nivel">vectores · ★</span><span class="ia sin">Sin IA</span></header>
+    <div class="cuerpo">
+      <p>Una tienda registra sus ingresos y costos de cuatro meses. Sin ejecutar nada, escribe exactamente qué imprime R en la última línea.</p>
+<pre data-file="e1.R"><code class="language-r">ingresos &lt;- c(3200, 3450, 2980, 3600)
+costos   &lt;- c(2100, 2200, 2050, 2300)
+utilidad &lt;- ingresos - costos
+utilidad</code></pre>
+    </div>
+    <div class="respuesta"><label for="s1-e1">Tu predicción</label><textarea id="s1-e1" data-id="s1-e1" data-min="15" placeholder="Escribe el resultado exacto que esperas ver…"></textarea><span class="cuenta"></span></div>
+    <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<pre class="salida"><code>[1] 1100 1250  930 1300</code></pre>
+      <ul>
+        <li>Resta elemento por elemento, en el mismo orden: <code>3200 − 2100</code>, <code>3450 − 2200</code>, etc.</li>
+        <li><strong>Si escribiste un solo número:</strong> repasa <a href="#vectores">Vectores</a>: la resta se aplica a los cuatro pares, no se “colapsa” en un total.</li>
+        <li>R alinea los números a la derecha: por eso aparece un espacio extra antes de <code>930</code>.</li>
+      </ul>
+      <div class="quiz">
+        <div class="qq" data-q="s1-e1-auto">
+          <p>Autoevaluación: ¿cuál afirmación es correcta?</p>
+          <div class="quiz-opts">
+            <button class="quiz-opt" data-ok>R restó los vectores elemento por elemento, sin que yo escribiera un ciclo.</button>
+            <button class="quiz-opt">R suma automáticamente los cuatro resultados en un solo número.</button>
+          </div>
+          <p class="why">La operación es vectorizada y conserva el largo. Para un total habría que escribir <code>sum(utilidad)</code>.</p>
+        </div>
+      </div>
+    </div></details>
+    <ul class="check"><li><input type="checkbox" id="s1-e1c" data-track="s1-e1c"><label for="s1-e1c">Resuelto</label></li></ul>
+  </article>
+
+  <article class="ejercicio">
+    <header><h3>E2 · Encuentra el error</h3><span class="nivel">lectura de errores · ★</span><span class="ia sin">Sin IA</span></header>
+    <div class="cuerpo">
+      <p>Tu compañero de equipo escribió esto para ver el crecimiento proyectado de ventas y R marcó un error. Explica exactamente cuál es el error y cómo lo corregirías.</p>
+<pre data-file="e2.R"><code class="language-r">ventas_2025 &lt;- c(1200, 1450, 1300)
+crecimiento &lt;- ventas_2025 * 1.08
+Crecimiento</code></pre>
+    </div>
+    <div class="respuesta"><label for="s1-e2">Tu respuesta</label><textarea id="s1-e2" data-id="s1-e2" data-min="30" placeholder="¿Cuál es el error exacto y cómo lo corriges?"></textarea><span class="cuenta"></span></div>
+    <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<pre class="salida"><code>Error: object 'Crecimiento' not found</code></pre>
+      <ul>
+        <li><strong>Causa:</strong> el objeto se creó como <code>crecimiento</code>, en minúscula. Para R son dos nombres distintos, aunque a nosotros nos parezcan “el mismo”.</li>
+        <li><strong>Corrección:</strong> escribir <code>crecimiento</code> en la última línea, tal como se creó.</li>
+      </ul>
+      <div class="quiz">
+        <div class="qq" data-q="s1-e2-auto">
+          <p>Autoevaluación: ¿cuál afirmación es correcta?</p>
+          <div class="quiz-opts">
+            <button class="quiz-opt" data-ok>Usar siempre <code>snake_case</code> en minúsculas evita este tipo de error.</button>
+            <button class="quiz-opt">R ignora mayúsculas y minúsculas al buscar un objeto.</button>
+          </div>
+          <p class="why">R es sensible a mayúsculas. Una convención única de nombres elimina la duda de cómo se escribió cada objeto.</p>
+        </div>
+      </div>
+    </div></details>
+    <ul class="check"><li><input type="checkbox" id="s1-e2c" data-track="s1-e2c"><label for="s1-e2c">Resuelto</label></li></ul>
+  </article>
+
+  <article class="ejercicio">
+    <header><h3>E3 · Construye: utilidad promedio</h3><span class="nivel">vectores y funciones · ★★</span><span class="ia permitida">IA permitida</span></header>
+    <div class="cuerpo">
+      <p>Una tienda tiene ingresos <code>c(5000, 5400, 4900, 6100)</code> y costos <code>c(3200, 3300, 3100, 3500)</code>. Escribe el código para calcular (a) la utilidad de cada mes y (b) la utilidad promedio del periodo. Luego justifica: si usaste IA para esto, ¿qué verificaste antes de confiar en su respuesta?</p>
+    </div>
+    <div class="respuesta"><label for="s1-e3">Tu código y tu justificación</label><textarea id="s1-e3" data-id="s1-e3" data-min="50" placeholder="Pega o escribe tu código, y tu justificación…"></textarea><span class="cuenta"></span></div>
+    <details class="solucion"><summary>Solución de referencia y criterios</summary><div class="det">
+<pre data-file="e3.R"><code class="language-r">ingresos &lt;- c(5000, 5400, 4900, 6100)
+costos   &lt;- c(3200, 3300, 3100, 3500)
+utilidad &lt;- ingresos - costos  # vectorizado, no mes por mes
+utilidad_promedio &lt;- mean(utilidad)
+utilidad_promedio</code></pre>
+<pre class="salida"><code>[1] 2075</code></pre>
+      <ul>
+        <li><strong>Nombres con sentido:</strong> <code>utilidad</code>, <code>utilidad_promedio</code>, no <code>x</code>, <code>y</code>.</li>
+        <li><strong>Vectorizado, no manual:</strong> una resta de vectores, no cuatro restas escritas a mano.</li>
+        <li><code>mean()</code> aplicado al vector <code>utilidad</code>, no a <code>ingresos</code> y <code>costos</code> por separado.</li>
+        <li><strong>Verificación (con o sin IA):</strong> un cálculo mental rápido: las utilidades son 1800, 2100, 1800 y 2600; su suma es 8300 y 8300 / 4 = 2075.</li>
+      </ul>
+    </div></details>
+    <ul class="check"><li><input type="checkbox" id="s1-e3c" data-track="s1-e3c"><label for="s1-e3c">Resuelto</label></li></ul>
+  </article>
+
+  <article class="ejercicio">
+    <header><h3>E4 · Modifica: de variación a índice</h3><span class="nivel">funciones · ★★</span><span class="ia permitida">IA permitida</span></header>
+    <div class="cuerpo">
+      <p>Este código ya calcula la variación absoluta de un precio entre dos años. Modifícalo para agregar también un <strong>número índice</strong> (2024 = 100) y explica, en tus palabras, qué te dice el índice que la variación absoluta no dice.</p>
+<pre data-file="e4.R" id="s1-precios"><code class="language-r">precio_2024 &lt;- 12.50
+precio_2025 &lt;- 13.90
+variacion &lt;- precio_2025 - precio_2024
+variacion</code></pre>
+    </div>
+    <div class="respuesta"><label for="s1-e4">La línea que agregarías y tu explicación</label><textarea id="s1-e4" data-id="s1-e4" data-min="50" placeholder="Escribe la línea que agregarías y tu explicación…"></textarea><span class="cuenta"></span></div>
+    <details class="solucion"><summary>Solución de referencia y criterios</summary><div class="det">
+<pre data-file="e4_indice.R" data-previo="s1-precios"><code class="language-r">indice_precio &lt;- round(precio_2025 / precio_2024 * 100, digits = 1)
+indice_precio</code></pre>
+<pre class="salida"><code>[1] 111.2</code></pre>
+      <ul>
+        <li><strong>Fórmula del índice:</strong> (valor nuevo / valor base) × 100, con el año base como referencia = 100.</li>
+        <li><code>round(..., digits = 1)</code> usado con argumento nombrado, como en la guía.</li>
+        <li><strong>Explicación esperada:</strong> la variación absoluta (1.40) depende de la unidad (dólares); el índice (111.2) dice directamente “11.2 % más que la base” y es comparable entre productos con precios muy distintos. Por eso los índices se usan tanto en economía.</li>
+      </ul>
+    </div></details>
+    <ul class="check"><li><input type="checkbox" id="s1-e4c" data-track="s1-e4c"><label for="s1-e4c">Resuelto</label></li></ul>
+  </article>
+
+  <article class="ejercicio">
+    <header><h3>E5 · Proyecto: primer contacto con los datos de tu equipo</h3><span class="nivel">proyecto · ★★</span><span class="ia permitida">IA permitida</span></header>
+    <div class="cuerpo">
+      <p>Fase de esta semana en el proyecto grupal: formación de equipos y elección de tema. Con tu equipo (aunque el tema todavía pueda cambiar), anoten 4 valores ficticios que esperarían encontrar en una base real de ese tema, créenlos como un vector con <code>c()</code> y un nombre en <code>snake_case</code> que describa qué representan, y apliquen una función que ya conozcan (<code>mean()</code>, <code>sum()</code>, <code>length()</code> o <code>round()</code>) que tenga sentido para esos datos.</p>
+    </div>
+    <div class="respuesta"><label for="s1-e5">Tema, vector y función</label><textarea id="s1-e5" data-id="s1-e5" data-min="60" placeholder="Tema del equipo, el vector en R, y qué función aplicaron y por qué…"></textarea><span class="cuenta"></span></div>
+    <details class="solucion"><summary>Criterios (no hay una única respuesta correcta)</summary><div class="det">
+      <ul>
+        <li><strong>El nombre del vector responde</strong> a la pregunta “¿qué representa cada valor?”: una pregunta de defensa que reaparecerá en las semanas 9 y 11.</li>
+        <li><strong>La función elegida tiene sentido</strong> para ese tipo de dato (¿tiene sentido un promedio? ¿un total? ¿solo contar cuántos hay?).</li>
+        <li><strong>Los valores son plausibles</strong> para el tema, aunque sean ficticios, no números al azar sin relación con la idea del equipo.</li>
+        <li>Guarda esta respuesta: la retomarás en la semana 2 cuando busquen la base de datos real.</li>
+      </ul>
+    </div></details>
+    <ul class="check"><li><input type="checkbox" id="s1-e5c" data-track="s1-e5c"><label for="s1-e5c">Resuelto con mi equipo</label></li></ul>
+  </article>
+
+  <div class="box ok"><span class="box-title">¿Cómo sabemos que este resultado es correcto?</span>
+    <p>En cada ejercicio la verificación fue la misma idea aplicada de distintas formas: comparar el resultado de R con un cálculo hecho a mano o mental (E1, E3), leer el mensaje de error completo en vez de adivinar (E2) y preguntar qué información nueva aporta un resultado frente a otro ya conocido (E4). Esta pregunta cierra cada laboratorio del curso: hazla incluso cuando el código “corre sin error”. Que no falle no significa que responda la pregunta correcta.</p>
+  </div>
+</section>
+
+<section id="playground">
+  <h2>Playground</h2>
+  <p>Cuatro fragmentos progresivos, usando solo lo que ya viste esta semana. Cada uno se ejecuta con R real en tu navegador: modifícalos y compara con la salida de referencia. Después cópialos a tu propio RStudio.</p>
+  <div class="table-wrap"><table class="datos">
+    <caption>Dataset de referencia: ingresos de un emprendimiento (US$), una serie pequeña de observaciones.</caption>
+    <thead><tr><th>Mes</th><th class="num">Enero</th><th class="num">Febrero</th><th class="num">Marzo</th><th class="num">Abril</th></tr></thead>
+    <tbody><tr><td>Ingresos</td><td class="num">4200</td><td class="num">4550</td><td class="num">4100</td><td class="num">4800</td></tr></tbody>
+  </table></div>
+  <h3>01 · Crear e imprimir el vector</h3>
+<pre data-file="playground_01.R" id="s1-pg1"><code class="language-r">ingresos &lt;- c(4200, 4550, 4100, 4800)
+ingresos</code></pre>
+<pre class="salida"><code>[1] 4200 4550 4100 4800</code></pre>
+  <h3>02 · Inspeccionarlo con funciones</h3>
+<pre data-file="playground_02.R" data-previo="s1-pg1"><code class="language-r">length(ingresos)  # cuántas observaciones tiene
+class(ingresos)   # qué tipo de dato es
+sum(ingresos)     # ingreso acumulado del periodo</code></pre>
+<pre class="salida"><code>[1] 4
+[1] "numeric"
+[1] 17650</code></pre>
+  <h3>03 · Operación vectorizada: proyección con crecimiento</h3>
+<pre data-file="playground_03.R" data-previo="s1-pg1"><code class="language-r">tasa_crecimiento &lt;- 0.05  # 5 % mensual esperado
+proyeccion &lt;- ingresos * (1 + tasa_crecimiento)
+proyeccion</code></pre>
+<pre class="salida"><code>[1] 4410.0 4777.5 4305.0 5040.0</code></pre>
+  <h3>04 · <code>mean()</code> + <code>round()</code> con argumento nombrado</h3>
+<pre data-file="playground_04.R" data-previo="s1-pg1"><code class="language-r">ingreso_promedio &lt;- mean(ingresos)
+round(ingreso_promedio, digits = 0)</code></pre>
+<pre class="salida"><code>[1] 4412</code></pre>
+  <div class="box nota"><span class="box-title">¿Por qué 4412 y no 4413?</span>
+    <p>El promedio exacto es 4412.5. R redondea los .5 al número <strong>par</strong> más cercano (norma IEC 60559), así que 4412.5 queda en 4412. En contabilidad a veces se pide redondear siempre hacia arriba; si tu caso lo exige, dilo y verifícalo.</p>
+  </div>
+  <div class="table-wrap"><table>
+    <caption style="caption-side:top;text-align:left;padding:.6rem .8rem;font-weight:700">Funciones usadas en este Playground</caption>
+    <tbody>
+      <tr><td><code>c()</code></td><td>Combina valores en un vector.</td></tr>
+      <tr><td><code>length()</code></td><td>Cuenta cuántos elementos tiene un vector.</td></tr>
+      <tr><td><code>class()</code></td><td>Muestra el tipo de dato de un objeto.</td></tr>
+      <tr><td><code>sum()</code></td><td>Suma todos los elementos de un vector.</td></tr>
+      <tr><td><code>mean()</code></td><td>Calcula el promedio de un vector.</td></tr>
+      <tr><td><code>round(x, digits = )</code></td><td>Redondea al número de decimales indicado.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="practica">
+  <h2>Práctica intensiva</h2>
+  <p>Más práctica para asegurar lo básico: primero ejercicios rápidos que se corrigen solos, luego problemas tipo examen con casos de prueba. Resuélvelos en papel antes de abrir la solución.</p>
+  <h3>Ejercicios rápidos · ¿Qué imprime R?</h3>
+  <p>Escribe solo lo que va después de <code>[1]</code>. Para varios valores, sepáralos con comas; para texto, sin comillas.</p>
+  <div class="traza taladro">
+    <div class="table-wrap"><table>
+      <thead><tr><th>Código</th><th>Tu respuesta</th></tr></thead>
+      <tbody>
+        <tr><td class="dado codigo"><pre class="mini"><code class="language-r">17 %/% 5</code></pre></td><td><input data-a="3" aria-label="Respuesta"></td></tr>
+        <tr><td class="dado codigo"><pre class="mini"><code class="language-r">17 %% 5</code></pre></td><td><input data-a="2" aria-label="Respuesta"></td></tr>
+        <tr><td class="dado codigo"><pre class="mini"><code class="language-r">2 ^ 3 * 10</code></pre></td><td><input data-a="80" aria-label="Respuesta"></td></tr>
+        <tr><td class="dado codigo"><pre class="mini"><code class="language-r">(1 + 0.1) * 200</code></pre></td><td><input data-a="220" aria-label="Respuesta"></td></tr>
+        <tr><td class="dado codigo"><pre class="mini"><code class="language-r">class("7")</code></pre></td><td><input data-a="character" aria-label="Respuesta"></td></tr>
+        <tr><td class="dado codigo"><pre class="mini"><code class="language-r">1500 &gt;= 1500</code></pre></td><td><input data-a="TRUE" aria-label="Respuesta"></td></tr>
+        <tr><td class="dado codigo"><pre class="mini"><code class="language-r">c(10, 20, 30) / 10</code></pre></td><td><input data-a="1, 2, 3" aria-label="Respuesta"></td></tr>
+        <tr><td class="dado codigo"><pre class="mini"><code class="language-r">round(2.675, digits = 1)</code></pre></td><td><input data-a="2.7" aria-label="Respuesta"></td></tr>
+        <tr><td class="dado codigo"><pre class="mini"><code class="language-r">length(c(120, 80, 95))</code></pre></td><td><input data-a="3" aria-label="Respuesta"></td></tr>
+        <tr><td class="dado codigo"><pre class="mini"><code class="language-r">"Comercio" == "comercio"</code></pre></td><td><input data-a="FALSE" aria-label="Respuesta"></td></tr>
+      </tbody>
+    </table></div>
+    <div class="acciones"><button class="btn" type="button" data-comprobar>Comprobar</button><button class="btn sec" type="button" data-solucion>Ver solución</button><button class="btn sec" type="button" data-limpiar>Limpiar</button><span class="resultado" aria-live="polite"></span></div>
+  </div>
+  <ul class="check"><li><input type="checkbox" id="s1-px" data-track="s1-px"><label for="s1-px">Completé los ejercicios rápidos sin ejecutar el código.</label></li></ul>
+
+  <h3>Problemas tipo examen</h3>
+  <article class="ejercicio problema">
+    <header><h3>P1 · Margen y punto de equilibrio</h3><span class="nivel">objetos y operadores · ★★★</span><span class="ia sin">Sin IA</span></header>
+    <div class="cuerpo">
+      <p>Una panadería vende cada pan dulce a <strong>$0.35</strong>; cada uno le cuesta <strong>$0.20</strong> en ingredientes, y sus costos fijos del mes (alquiler y luz) son <strong>$450</strong>. Escribe un script que calcule, para una cantidad vendida en el mes: el ingreso, el costo total (fijo + variable), la utilidad, si hubo ganancia (<code>TRUE</code>/<code>FALSE</code>) y el punto de equilibrio (cuántos panes hay que vender para que la utilidad sea 0).</p>
+      <p><strong>Tu script debe cumplir estos casos de prueba:</strong></p>
+      <div class="table-wrap"><table><thead><tr><th class="num">Panes vendidos</th><th class="num">Ingreso</th><th class="num">Costo total</th><th class="num">Utilidad</th><th>¿Ganancia?</th></tr></thead><tbody>
+        <tr><td class="num">2000</td><td class="num">700</td><td class="num">850</td><td class="num">−150</td><td>FALSE</td></tr>
+        <tr><td class="num">3000</td><td class="num">1050</td><td class="num">1050</td><td class="num">0</td><td>FALSE</td></tr>
+        <tr><td class="num">4000</td><td class="num">1400</td><td class="num">1250</td><td class="num">150</td><td>TRUE</td></tr>
+      </tbody></table></div>
+      <p>Punto de equilibrio esperado: <strong>3000 panes</strong>.</p>
+    </div>
+    <details><summary>Pista</summary><div class="det"><p>Cada pan deja un <em>margen de contribución</em> de 0.35 − 0.20. El punto de equilibrio es cuántos de esos márgenes hacen falta para cubrir los $450 fijos. Cuidado: con utilidad exactamente 0, “¿hubo ganancia?” es <code>FALSE</code> si usas <code>&gt;</code>.</p></div></details>
+    <details class="solucion"><summary>Solución</summary><div class="det">
+<pre data-file="panaderia.R"><code class="language-r">precio &lt;- 0.35
+costo_unitario &lt;- 0.20
+costo_fijo &lt;- 450
+panes &lt;- c(2000, 3000, 4000)   # los tres casos a la vez
+
+ingreso &lt;- precio * panes
+costo_total &lt;- costo_fijo + costo_unitario * panes
+utilidad &lt;- ingreso - costo_total
+ingreso
+costo_total
+utilidad
+utilidad &gt; 0
+punto_equilibrio &lt;- costo_fijo / (precio - costo_unitario)
+punto_equilibrio</code></pre>
+<pre class="salida"><code>[1]  700 1050 1400
+[1]  850 1050 1250
+[1] -150    0  150
+[1] FALSE FALSE  TRUE
+[1] 3000</code></pre>
+      <p><strong>Verificación:</strong> con 3000 panes la utilidad es exactamente 0, que es la definición del punto de equilibrio: los dos resultados se confirman entre sí. Usar un vector con los tres casos prueba todo de una vez.</p>
+      <div class="box ojo"><span class="box-title">Si en tu RStudio ves -1.136868e-13</span><p>Puede pasar si calculas en otro orden: 0.35 y 0.20 no se guardan exactos en binario. Es un error de redondeo de la máquina, no de lógica; <code>round(utilidad, 2)</code> lo muestra como 0.</p></div>
+    </div></details>
+    <ul class="check"><li><input type="checkbox" id="s1-pr1" data-track="s1-pr1"><label for="s1-pr1">Resuelto y probado con todos los casos</label></li></ul>
+  </article>
+
+  <article class="ejercicio problema">
+    <header><h3>P2 · Índice de precios de una canasta</h3><span class="nivel">vectores y funciones · ★★★</span><span class="ia sin">Sin IA</span></header>
+    <div class="cuerpo">
+      <p>Una canasta tiene 4 productos. Sus precios en 2024 fueron <code>c(1.10, 0.85, 2.40, 3.00)</code> y en 2025 <code>c(1.20, 0.90, 2.40, 3.30)</code>. Calcula: (a) el costo de la canasta en cada año, (b) el índice de la canasta (2024 = 100) con un decimal, (c) la variación porcentual de cada producto con un decimal y (d) si todos los productos subieron o se mantuvieron (una sola respuesta <code>TRUE</code>/<code>FALSE</code> no es necesaria todavía: basta un vector lógico).</p>
+      <p><strong>Tu script debe cumplir estos casos de prueba:</strong></p>
+      <div class="table-wrap"><table><thead><tr><th>Resultado</th><th>Valor esperado</th></tr></thead><tbody>
+        <tr><td>Costo canasta 2024 / 2025</td><td>7.35 / 7.80</td></tr>
+        <tr><td>Índice 2025</td><td>106.1</td></tr>
+        <tr><td>Variación % por producto</td><td>9.1, 5.9, 0.0, 10.0</td></tr>
+        <tr><td><code>precios_2025 &gt;= precios_2024</code></td><td>TRUE TRUE TRUE TRUE</td></tr>
+      </tbody></table></div>
+    </div>
+    <details><summary>Pista</summary><div class="det"><p>El costo de la canasta es <code>sum()</code> de los precios. La variación porcentual de cada producto es vectorizada: <code>(nuevo - viejo) / viejo * 100</code>, sin ciclos.</p></div></details>
+    <details class="solucion"><summary>Solución</summary><div class="det">
+<pre data-file="canasta.R"><code class="language-r">precios_2024 &lt;- c(1.10, 0.85, 2.40, 3.00)
+precios_2025 &lt;- c(1.20, 0.90, 2.40, 3.30)
+canasta_2024 &lt;- sum(precios_2024)
+canasta_2025 &lt;- sum(precios_2025)
+canasta_2024
+canasta_2025
+round(canasta_2025 / canasta_2024 * 100, digits = 1)
+round((precios_2025 - precios_2024) / precios_2024 * 100, digits = 1)
+precios_2025 &gt;= precios_2024</code></pre>
+<pre class="salida"><code>[1] 7.35
+[1] 7.8
+[1] 106.1
+[1]  9.1  5.9  0.0 10.0
+[1] TRUE TRUE TRUE TRUE</code></pre>
+      <p><strong>Interpretación:</strong> la canasta cuesta 6.1 % más, aunque un producto no subió y otro subió 10 %. El índice resume, pero esconde la dispersión: por eso conviene mirar ambos.</p>
+      <p><strong>Verificación:</strong> 7.80 / 7.35 = 1.0612…, que coincide con 106.1. R imprime <code>7.8</code> sin el cero final: es el mismo número.</p>
+    </div></details>
+    <ul class="check"><li><input type="checkbox" id="s1-pr2" data-track="s1-pr2"><label for="s1-pr2">Resuelto y probado con todos los casos</label></li></ul>
+  </article>
+
+  <article class="ejercicio problema">
+    <header><h3>P3 · Proyección con crecimiento compuesto</h3><span class="nivel">operadores y vectores · ★★★</span><span class="ia sin">Sin IA</span></header>
+    <div class="cuerpo">
+      <p>Una cooperativa vende $12,000 al mes y espera crecer 3 % mensual. Proyecta las ventas de los próximos 3 meses con crecimiento <strong>compuesto</strong> (cada mes crece sobre el anterior), redondeadas a dos decimales, y el total de los 3 meses. Compara con un crecimiento <strong>simple</strong> (siempre 3 % sobre los $12,000 iniciales).</p>
+      <p><strong>Tu script debe cumplir estos casos de prueba:</strong></p>
+      <div class="table-wrap"><table><thead><tr><th>Mes</th><th class="num">Compuesto</th><th class="num">Simple</th></tr></thead><tbody>
+        <tr><td>1</td><td class="num">12360.00</td><td class="num">12360</td></tr>
+        <tr><td>2</td><td class="num">12730.80</td><td class="num">12720</td></tr>
+        <tr><td>3</td><td class="num">13112.72</td><td class="num">13080</td></tr>
+        <tr><td>Total</td><td class="num">38203.52</td><td class="num">38160</td></tr>
+      </tbody></table></div>
+    </div>
+    <details><summary>Pista</summary><div class="det"><p>Compuesto: <code>ventas * (1 + tasa) ^ mes</code>. Simple: <code>ventas * (1 + tasa * mes)</code>. Si <code>meses &lt;- c(1, 2, 3)</code>, ambas fórmulas son vectorizadas.</p></div></details>
+    <details class="solucion"><summary>Solución</summary><div class="det">
+<pre data-file="proyeccion_compuesta.R"><code class="language-r">ventas &lt;- 12000
+tasa &lt;- 0.03
+meses &lt;- c(1, 2, 3)
+compuesto &lt;- round(ventas * (1 + tasa) ^ meses, digits = 2)
+simple &lt;- ventas * (1 + tasa * meses)
+compuesto
+simple
+sum(compuesto)
+sum(simple)</code></pre>
+<pre class="salida"><code>[1] 12360.00 12730.80 13112.72
+[1] 12360 12720 13080
+[1] 38203.52
+[1] 38160</code></pre>
+      <p><strong>Interpretación:</strong> la diferencia en tres meses es de $43.52; parece poco, pero crece con el tiempo porque el compuesto aplica el 3 % también a lo que ya creció.</p>
+      <p><strong>Verificación:</strong> mes 1: 12000 × 1.03 = 12360 en ambos (deben coincidir). Mes 2 compuesto: 12360 × 1.03 = 12730.80.</p>
+    </div></details>
+    <ul class="check"><li><input type="checkbox" id="s1-pr3" data-track="s1-pr3"><label for="s1-pr3">Resuelto y probado con todos los casos</label></li></ul>
+  </article>
+</section>
+
+<section id="proyecto">
+  <h2>Proyecto grupal · Fase 1</h2>
+  <p><strong>Semana 1 · Formación de equipos, elección de tema y datos.</strong> El proyecto vale el 20 % de la nota, se hace en equipos de 4 y se construye durante todo el ciclo. Debe empezar con <strong>preguntas</strong>, no con gráficos.</p>
+  <div class="card">
+    <h3>Entregables de esta fase</h3>
+    <ul class="check">
+      <li><input type="checkbox" id="s1-p1" data-track="s1-p1"><label for="s1-p1"><strong>Equipo de 4</strong> formado (se permiten equipos mixtos entre secciones).</label></li>
+      <li><input type="checkbox" id="s1-p2" data-track="s1-p2"><label for="s1-p2"><strong>Tema</strong> dentro de economía, negocios, finanzas o fenómenos sociales (precios, empleo, ventas, desigualdad, comercio…).</label></li>
+      <li><input type="checkbox" id="s1-p3" data-track="s1-p3"><label for="s1-p3"><strong>Una pregunta principal</strong> tentativa y 3 a 5 secundarias, concretas y respondibles con datos.</label></li>
+      <li><input type="checkbox" id="s1-p4" data-track="s1-p4"><label for="s1-p4"><strong>Fuente de datos candidata</strong> (del docente o pública y confiable).</label></li>
+      <li><input type="checkbox" id="s1-p5" data-track="s1-p5"><label for="s1-p5">Un <strong>script</strong> del equipo con el vector del ejercicio E5.</label></li>
+    </ul>
+  </div>
+  <p>Ejemplo de preguntas que da el programa: <em>¿Cómo se relacionan las características educativas y laborales con los ingresos de las personas de la muestra?</em> (principal) y <em>¿Cómo se distribuyen los ingresos? ¿Existen diferencias de ingreso entre niveles educativos?</em> (secundarias).</p>
+  <h3>Preguntas de defensa (practica en voz alta)</h3>
+  <p>El docente puede preguntar a cualquier integrante sobre cualquier parte del trabajo. Empieza a practicar desde ya:</p>
+  <details class="defensa"><summary>¿Qué problema quieren entender y quién tomaría decisiones con su análisis?</summary><div><p>Responde con un usuario concreto (“la alcaldía”, “una cadena de tiendas”), una decisión concreta (“dónde abrir una sucursal”) y la pregunta principal. Un proyecto que solo “analiza una base” sin preguntas queda en el nivel insuficiente de la rúbrica.</p></div></details>
+  <details class="defensa"><summary>¿Por qué trabajan en un script y no en la consola?</summary><div><p>Porque el script conserva cada paso en orden y se puede volver a ejecutar completo cuando cambian los datos; así otro integrante puede reproducir y revisar el análisis. La consola no deja un procedimiento reproducible.</p></div></details>
+  <details class="defensa"><summary>¿Qué hace exactamente <code>&lt;-</code> en <code>ingresos &lt;- c(...)</code>?</summary><div><p>Evalúa lo de la derecha y lo guarda en un objeto con el nombre de la izquierda. No imprime nada y no crea una fórmula viva: si los datos cambian, hay que volver a ejecutar las líneas que dependen de ese objeto.</p></div></details>
+  <details class="defensa"><summary>¿Por qué sus objetos se llaman como se llaman?</summary><div><p>Porque el nombre documenta qué representa cada valor (<code>ingreso_mensual_usd</code>, no <code>x</code>) y el <code>snake_case</code> en minúsculas evita errores de “objeto no encontrado” por mayúsculas.</p></div></details>
+  <details class="defensa"><summary>¿Cómo sabrían que un cálculo del script es correcto?</summary><div><p>Comprobándolo a mano con un caso pequeño, comparando con un resultado que ya conocen y revisando que el orden de magnitud tenga sentido (un margen no puede ser 260 %). Que el código corra sin errores no demuestra que el análisis sea correcto.</p></div></details>
+</section>
+
+<section id="evaluacion">
+  <h2>Rumbo al Control 01</h2>
+  <p>El Control 01 cubre las semanas 1 a 3. Su material de repaso está en la <a href="{RAIZ}control-01/guia/index.html">guía de lectura</a> y en el <a href="{RAIZ}control-01/repaso/index.html">repaso con simulacro</a>. En controles y exámenes <strong>no se permite IA</strong>. Esta lista cubre lo de la semana 1:</p>
+  <ul class="check">
+    <li><input type="checkbox" id="s1-v1" data-track="s1-v1"><label for="s1-v1">Puedo explicar la diferencia entre R y RStudio, y entre consola y script.</label></li>
+    <li><input type="checkbox" id="s1-v2" data-track="s1-v2"><label for="s1-v2">Puedo crear objetos con <code>&lt;-</code> y predecir qué pasa si reasigno uno sin volver a ejecutar lo que depende de él.</label></li>
+    <li><input type="checkbox" id="s1-v3" data-track="s1-v3"><label for="s1-v3">Puedo reconocer los tipos <code>numeric</code>, <code>character</code> y <code>logical</code> y comprobarlos con <code>class()</code>.</label></li>
+    <li><input type="checkbox" id="s1-v4" data-track="s1-v4"><label for="s1-v4">Puedo identificar función, argumentos y resultado en una llamada como <code>round(x, digits = 2)</code>.</label></li>
+    <li><input type="checkbox" id="s1-v5" data-track="s1-v5"><label for="s1-v5">Puedo predecir el resultado de una operación vectorizada y resumir un vector con <code>sum()</code>, <code>mean()</code> y <code>length()</code>.</label></li>
+    <li><input type="checkbox" id="s1-v6" data-track="s1-v6"><label for="s1-v6">Puedo leer un mensaje <code>object not found</code> y corregirlo.</label></li>
+  </ul>
+</section>
+
+<section id="cheat">
+  <h2>Cheat Sheet · Semana 1</h2>
+  <h3>Vocabulario</h3>
+  <ul class="vocab"><li>objeto</li><li>asignación</li><li>vector</li><li>función</li><li>argumento</li><li>numeric</li><li>character</li><li>logical</li><li>snake_case</li></ul>
+  <div class="grid">
+    <div class="card">
+      <h3>Funciones y operadores</h3>
+      <div class="table-wrap"><table><tbody>
+        <tr><td><code>&lt;-</code></td><td>Asignar. Siempre con espacios: <code>x &lt;- 5</code>, nunca <code>x&lt;-5</code>.</td></tr>
+        <tr><td><code>c()</code></td><td>Crear un vector combinando valores.</td></tr>
+        <tr><td><code>class()</code></td><td>Ver el tipo de un objeto.</td></tr>
+        <tr><td><code>length()</code></td><td>Contar elementos.</td></tr>
+        <tr><td><code>sum()</code> / <code>mean()</code></td><td>Total / promedio.</td></tr>
+        <tr><td><code>round(x, digits = )</code></td><td>Redondear a <code>digits</code> decimales.</td></tr>
+        <tr><td><code>?nombre</code></td><td>Abrir la documentación oficial de una función.</td></tr>
+        <tr><td><code>#</code></td><td>Comentario: explica el <em>por qué</em>, no el <em>qué</em>.</td></tr>
+      </tbody></table></div>
+    </div>
+    <div class="card">
+      <h3>Operadores</h3>
+      <div class="table-wrap"><table><tbody>
+        <tr><td><code>+ - * /</code></td><td>Aritméticos</td></tr>
+        <tr><td><code>^</code></td><td>Potencia</td></tr>
+        <tr><td><code>%% %/%</code></td><td>Residuo / división entera</td></tr>
+        <tr><td><code>== != &lt; &gt; &lt;= &gt;=</code></td><td>Comparación → <code>TRUE</code>/<code>FALSE</code></td></tr>
+      </tbody></table></div>
+    </div>
+  </div>
+  <h3>La regla del curso</h3>
+  <ul class="ciclo-leyenda" aria-label="Ciclo de trabajo">
+    <li>Pregunta</li><li class="sep">→</li><li>Exploración</li><li class="sep">→</li><li>Implementación</li><li class="sep">→</li><li>Resultado</li><li class="sep">→</li><li>Interpretación</li><li class="sep">→</li><li class="v">Verificación</li>
+  </ul>
+  <p>Cierra siempre con: <strong>¿Cómo sabemos que este resultado es correcto?</strong></p>
+</section>
+
+<section id="fuentes">
+  <h2>Fuentes</h2>
+  <ul>
+    <li><strong>[R4DS]</strong> Wickham, H., Çetinkaya-Rundel, M. y Grolemund, G. (2023). <em>R for Data Science</em>, 2.ª ed. O’Reilly. Cap. 2 “Workflow: basics” (lectura de esta semana) y cap. 4 “Workflow: code style”. Libre en <a href="https://r4ds.hadley.nz/" target="_blank" rel="noopener">r4ds.hadley.nz</a>.</li>
+    <li>Programa oficial del curso (ESEN, 2026): semana 1, “R como herramienta para pensar con datos”.</li>
+    <li>Próxima lectura (semana 2): R4DS cap. 7, “Data import”.</li>
+  </ul>
+  <p style="font-size:.9rem;color:var(--ink-3)">Esta guía resume los temas asignados por el programa del curso; no reproduce el contenido del libro ni cita páginas.</p>
+  <nav class="nav-semanas" aria-label="Navegación entre semanas">
+    <a class="nav-prev" href="{RAIZ}index.html"><span class="btn-ico" aria-hidden="true"></span><span>Inicio</span></a>
+    <a class="nav-next" href="{RAIZ}semana-02/index.html"><span>Semana 2: de valores a conjuntos de datos</span><span class="btn-ico" aria-hidden="true"></span></a>
+  </nav>
+</section>

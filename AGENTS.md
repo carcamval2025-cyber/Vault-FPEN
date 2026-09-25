@@ -72,7 +72,12 @@ es mejor preguntar al usuario que inventar contenido nuevo.
   por semana disponible + `control-01/guia/` y `control-01/repaso/`). `docs/assets/` tiene
   el CSS, el JS, los íconos, las láminas SVG (`img/`) y los gráficos (`img/graficos/`);
   `docs/datos/` tiene los CSV de práctica. Repo: `github.com/carcamval2025-cyber/Vault-FPEN`
-  (público), Pages sirve desde `/docs`. Descripción completa en `README.md`.
+  (público), Pages sirve desde `main`, carpeta `/docs`. Descripción completa en `README.md`.
+- `herramientas/` — de dónde sale `docs/`: `fuentes/` (contenido de cada página),
+  `paginas.py` (portada e índice de cada página), `gen.py` (genera las páginas),
+  `portadas.R` (datos de los gráficos de portada), láminas y verificadores. **No editar
+  `docs/*/index.html` a mano**: se cambia la fuente y se regenera. Ver
+  `herramientas/README.md`.
 
 ## Formato del material de cada sesión (resumen — la fuente completa es el Claude Project)
 
@@ -101,7 +106,9 @@ anteriores (tema R Notebook) y se conservan como archivo.
 3. Después de generar: registrar el resultado en `Registro de Materiales.md` y una
    nueva entrada en `03 Aprendizaje del Agente/Bitácora/` (misma plantilla que las
    existentes).
-4. Si el material incluye HTML, verificar contra el checklist de
+4. Para cambiar o crear páginas de la guía, editar `herramientas/fuentes/` y
+   `herramientas/paginas.py`, y regenerar con `python3 herramientas/gen.py`.
+5. Si el material incluye HTML, verificar contra el checklist de
    `00 Programa/Sistema de Diseño - Tema R Notebook.md` antes de darlo por terminado:
    salidas de R comparadas con R real, ids y anclas, SVG válidos, sin scroll horizontal
    a 390 y 1280 px y sin errores de JavaScript.

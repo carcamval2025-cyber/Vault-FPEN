@@ -40,7 +40,7 @@ SORT fecha DESC
 
 ## Estado actual
 
-Ya existe feedback directo. Entrada más reciente: [[2026-08-26 - Aprobación de identidad visual FPEN]]. El historial completo se mantiene en `03 Aprendizaje del Agente/Feedback/`.
+Ya existe feedback directo. Entrada más reciente: [[2026-09-25 - Voz propia del diseño aprobada]] (la guía con voz de tabloide económico quedó aprobada: "Está a otro nivel ahora"). Anterior: [[2026-08-26 - Aprobación de identidad visual FPEN]]. El historial completo se mantiene en `03 Aprendizaje del Agente/Feedback/`.
 
 ## Notas relacionadas
 
