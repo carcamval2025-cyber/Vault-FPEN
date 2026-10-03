@@ -59,3 +59,7 @@ Cada semana nueva se agrega igual: su carpeta `docs/semana-NN/` + una tarjeta nu
 ## Notas relacionadas
 
 [[Home]] · [[Mapa Curricular]] · [[Bitácora de Aprendizaje]] · [[Plantilla - Revisión de Material]]
+
+## 2026-10-02 · Parcial I integrado
+
+`docs/parcial-01/index.html`: 30 ejercicios animados integrados al diseño vigente, portada calculada con R, enlace S6 y temario. Fuentes: `herramientas/fuentes/s6.html` y `s6.json`. Plan previo obligatorio. CSV y código descargables. Estado: verificado localmente; publicación pendiente.

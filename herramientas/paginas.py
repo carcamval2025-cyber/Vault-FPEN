@@ -133,3 +133,18 @@ PAGINAS["index"] = dict(
     title="Guía de estudio FPEN",
     description="Guía de estudio interactiva de Fundamentos de Programación para Economía y Negocios (ESEN, ciclo III/2026): R y el Tidyverse semana a semana, con R ejecutable en la página, quizzes, trazas y práctica tipo examen.",
 )
+
+PAGINAS["s6"] = dict(
+ ruta="parcial-01/index.html",fragmento="s6.html",raiz="../",semana="s6",
+ title="Parcial I · Repaso con resoluciones animadas",
+ description="30 ejercicios de R con pedidos comerciales, plan previo, resoluciones animadas y verificaciones.",
+ num="P1",sr="Parcial I",mod="Semanas 1 a 5 · Repaso integrador",
+ h1="De un pedido a una decisión: resuelve, compara y verifica",
+ lead="Treinta ejercicios sobre tus 180 pedidos: selección, condiciones, medidas, resúmenes, gráficos y auditoría. Escribe tu estrategia antes de abrir cada resolución.",
+ pregunta="¿Puedo justificar cada transformación y comprobar el resultado con mis datos?",
+ meta=[("Datos","180 pedidos comerciales"),("Práctica","30 resoluciones animadas"),("!Evaluación","Parcial I · Semana 6")],
+ ciclo=["importar","ordenar","transformar","visualizar"],toc_titulo="Parcial I",
+ toc=["Empezar",("uso","Cómo usar el repaso"),"Método",("metodo","Pensar antes de programar"),
+ "Practicar",('bloque1', 'Reconocimiento y selección'), ('bloque2', 'Condiciones y ordenamiento'), ('bloque3', 'Construcción de medidas'), ('bloque4', 'Resúmenes y cambios de unidad de análisis'), ('bloque5', 'Visualizaciones'), ('bloque6', 'Auditoría'), ('bloque7', 'Desafíos de transferencia'),
+ "Verificar y cerrar",("ambig","Ambigüedades"),("cheat","Cheat sheet"),("fuentes","Fuentes y límites")],
+)

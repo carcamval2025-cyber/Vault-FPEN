@@ -16,4 +16,6 @@ out$s5 <- list(etq = c("ene","feb","mar","abr","may","jun","jul","ago","sep","oc
 c1 <- read_csv("datos/ventas_campus.csv", show_col_types = FALSE) |> group_by(punto) |>
   summarise(ingreso = sum(ingreso_usd), costo = sum(costo_usd), utilidad = ingreso - costo)
 out$c1 <- list(etq = c1$punto, val = c1$utilidad, ingreso = c1$ingreso, costo = c1$costo)
+p1 <- read_csv("datos/pedidos_comercio.csv", show_col_types = FALSE) |> count(canal)
+out$s6 <- list(etq = p1$canal, val = p1$n)
 write_json(out, "../herramientas/portadas.json", auto_unbox = FALSE, na = "null", digits = NA)

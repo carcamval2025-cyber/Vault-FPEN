@@ -3,7 +3,7 @@ tags: [semana, semana-06, examen]
 numero: 6
 r4ds_cap: "—"
 fase_proyecto: "No aplica — semana de examen"
-estado: "material no creado"
+estado: "repaso integrado, publicación pendiente"
 ---
 
 # Semana 06 — Primer Examen Parcial
@@ -20,7 +20,8 @@ No es una semana de contenido nuevo — el documento maestro no define un format
 
 ## Estado del material
 
-- [ ] Definir formato con Carlos antes de construir nada
+- [x] Repaso integrador animado solicitado por Carlos: 30 ejercicios en `docs/parcial-01/`.
+- [ ] Publicar el parche de integración.
 
 ## Notas relacionadas
 

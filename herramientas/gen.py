@@ -20,7 +20,7 @@ PRISM = ('<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism
          '<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-r.min.js"></script>\n'
          '<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>')
 
-SEMANAS_CON_GUIA = {1: "semana-01", 2: "semana-02", 3: "semana-03", 4: "semana-04", 5: "semana-05"}
+SEMANAS_CON_GUIA = {1: "semana-01", 2: "semana-02", 3: "semana-03", 4: "semana-04", 5: "semana-05", 6: "parcial-01"}
 CORTOS = ["R para pensar", "Valores a datos", "Visualizar", "Transformar", "Pipe y verbos", "Parcial I",
           "Datos tidy", "Combinar tablas", "Automatizar", "Explorar", "R con IA", "Parcial II"]
 CICLO = ["importar", "ordenar", "transformar", "visualizar", "modelar", "comunicar"]
@@ -169,6 +169,9 @@ def pagina(p):
     raiz = p["raiz"]
     cuerpo = open(os.path.join(DIR_FUENTES, p["fragmento"]), encoding="utf-8").read()
     cuerpo = ids_ejercicios(cuerpo.replace("{RAIZ}", raiz))
+    if p.get("semana") == "s6":
+        datos = open(os.path.join(DIR_FUENTES, "s6.json"), encoding="utf-8").read()
+        cuerpo += '<script type="application/json" id="parcial-datos">' + datos.replace("<", "\\u003c") + '</script>'
     clave = p.get("semana") or "inicio"
     estilo = ""
     partes = ['<!doctype html>\n<html lang="es">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1">\n',
@@ -196,7 +199,7 @@ def pagina(p):
 
 
 def series():
-    for clave in ["s1", "s2", "s3", "s4", "s5", "c1"]:
+    for clave in ["s1", "s2", "s3", "s4", "s5", "s6", "c1"]:
         _, serie = grafico(clave)
         open(os.path.join(DOCS, "assets/img/serie-%s.svg" % clave), "w", encoding="utf-8").write(serie_svg(serie))
     _, serie = grafico("s2")
@@ -207,7 +210,7 @@ def buscador():
     """assets/buscar.json: semanas, secciones, ejercicios y funciones de R (cada función, en la semana que la enseña)."""
     from bs4 import BeautifulSoup
     entradas, vistas = [], set()
-    orden = ["s1", "s2", "s3", "c1g", "c1r", "s4", "s5"]
+    orden = ["s1", "s2", "s3", "c1g", "c1r", "s4", "s5", "s6"]
     NO_FUNC = {"geom_algo()", "f()"}
     for n in orden:
         p = PAGINAS[n]

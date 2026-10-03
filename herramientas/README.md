@@ -63,3 +63,9 @@ python3 herramientas/pruebas_webr.py
 - **R** con `readr`, `dplyr`, `ggplot2`, `jsonlite`, `nycflights13` y `palmerpenguins`.
 - **Python 3** con `beautifulsoup4` y `playwright`. Chromium se toma de `PW_CHROMIUM` o de `/opt/pw-browsers/chromium`; si no existe, se usa el de Playwright.
 - Si hay un proxy en `HTTPS_PROXY`, las pruebas lo usan para cargar las fuentes y webR, pero no para el servidor local.
+
+## Parcial I
+
+`s6.html` contiene los enunciados e índice; `s6.json` conserva el contenido de las 30 resoluciones. `gen.py` incorpora los datos a la página y los reproductores usan los componentes compartidos de `guia.css` y `guia.js`. El CSV y el código reproducible están en `docs/datos/`. Las animaciones usan resultados precomputados; ejecuta `parcial-01.R` desde la carpeta del CSV para comprobarlos.
+
+Prueba de los 30 reproductores: con `docs/` servido en localhost:8765, ejecutar `python3 herramientas/pruebas_parcial.py`. Incluye todos los pasos, candados y anchos de 390 y 1280 px. Las pruebas locales bloquean recursos HTTPS externos y usan movimiento reducido.

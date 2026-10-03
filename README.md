@@ -20,8 +20,9 @@ Este repositorio tiene tres partes:
 | `semana-05/` | Sesión 1: el pipe en acción, Y contra O, `%in%`, `arrange()`, `select()` y `rename()` con `nycflights13` |
 | `control-01/guia/` | Control 01: lectura profunda de las semanas 1 a 3, 36 preguntas para analizar, R4DS en contexto, mapa y cierre |
 | `control-01/repaso/` | Control 01: 30 preguntas de teoría, práctica con R real, simulacro cronometrado de 45 minutos y cheat sheet |
+| `parcial-01/` | Semana 6: 30 resoluciones animadas con pedidos comerciales, plan previo, método, ambigüedades y cheat sheet |
 
-Las semanas 6 a 12 aparecen en el temario como “sin guía todavía”.
+Las semanas 7 a 12 aparecen en el temario como “sin guía todavía”.
 
 Cada semana incluye:
 

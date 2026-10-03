@@ -156,6 +156,13 @@ def grafico(semana):
         cab = ("Gráfico C1", "Edificio A deja la mayor utilidad; Polideportivo, la menor", "Utilidad por punto de venta en 6 días (ingreso menos costo), USD")
         fuente = "Fuente: <code>datos/ventas_campus.csv</code>; sumas por punto calculadas con R."
         ini = v.index(max(v))
+    elif semana == "s6":
+        e, v = d["etq"], d["val"]
+        notas = ["%s · %d pedidos del CSV de práctica" % (e[i], v[i]) for i in range(len(v))]
+        svg, serie = barras(e, v, 100, 20, notas, v.index(max(v)))
+        cab = ("Gráfico P1", "Pedidos por canal: el punto de partida del repaso", "Número de pedidos por canal comercial")
+        fuente = "Fuente: <code>datos/pedidos_comercio.csv</code>; conteos calculados con R."
+        ini = v.index(max(v))
     elif semana == "inicio":
         e = ["S1", "S2", "S3", "S4", "S5", "C1"]
         frag = {"S1": ["s1"], "S2": ["s2"], "S3": ["s3"], "S4": ["s4"], "S5": ["s5"], "C1": ["c1g", "c1r"]}
