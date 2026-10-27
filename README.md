@@ -21,8 +21,9 @@ Este repositorio tiene tres partes:
 | `control-01/guia/` | Control 01: lectura profunda de las semanas 1 a 3, 36 preguntas para analizar, R4DS en contexto, mapa y cierre |
 | `control-01/repaso/` | Control 01: 30 preguntas de teoría, práctica con R real, simulacro cronometrado de 45 minutos y cheat sheet |
 | `parcial-01/` | Semana 6: 30 resoluciones animadas con pedidos comerciales, plan previo, método, ambigüedades y cheat sheet |
+| `control-02/` | Control 02: `dplyr`, EDA, factores y fechas; 39 preguntas, 18 ejercicios con R real sobre una microfinanciera simulada, simulacro de 60 minutos, cheat sheet y guía en Word |
 
-Las semanas 7 a 12 aparecen en el temario como “sin guía todavía”.
+Las semanas 7 a 12 aparecen en el temario como “sin guía todavía”. El Control 02 va en la cinta después de la semana 8.
 
 Cada semana incluye:
 

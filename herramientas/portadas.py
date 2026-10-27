@@ -156,6 +156,13 @@ def grafico(semana):
         cab = ("Gráfico C1", "Edificio A deja la mayor utilidad; Polideportivo, la menor", "Utilidad por punto de venta en 6 días (ingreso menos costo), USD")
         fuente = "Fuente: <code>datos/ventas_campus.csv</code>; sumas por punto calculadas con R."
         ini = v.index(max(v))
+    elif semana == "c2":
+        e, v = d["etq"], [round(x) for x in d["val"]]
+        notas = ["%s · mediana de %d días en %d desembolsos válidos" % (e[i], v[i], d["n"][i]) for i in range(len(v))]
+        svg, serie = barras(e, v, 10, 2, notas, v.index(max(v)))
+        cab = ("Gráfico C2", "San Miguel tarda el triple que San Salvador en desembolsar", "Mediana de días entre solicitud y desembolso, por sucursal")
+        fuente = "Fuente: <code>datos/creditos_crece_practica.csv</code> (simulado); solo desembolsos con duración válida, calculado con R."
+        ini = v.index(max(v))
     elif semana == "s6":
         e, v = d["etq"], d["val"]
         notas = ["%s · %d pedidos del CSV de práctica" % (e[i], v[i]) for i in range(len(v))]

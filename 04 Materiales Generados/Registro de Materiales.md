@@ -22,6 +22,7 @@ Tabla de seguimiento de cada archivo `.html` generado para el curso (`FPEN_Seman
 | 01–05, C1 | Logo FPEN ▲, favicon y barra con panel Edición (reemplaza al menú de rayitas) | 2026-09-25 | `aprobado` | [[2026-09-25 - Logo FPEN y panel Edición]] | Carlos eligió el logo A y aprobó el panel tal como se prototipó |
 | 02 | `docs/semana-02/index.html` (nueva) | 2026-09-25 | `borrador` | [[2026-09-25 - Rediseño Guía FPEN y semanas 02 a 04]] | Pendiente de revisión de Carlos |
 | 03 | `docs/semana-03/index.html` (nueva) | 2026-09-25 | `borrador` | [[2026-09-25 - Rediseño Guía FPEN y semanas 02 a 04]] | Pendiente de revisión de Carlos |
+| C2 | `docs/control-02/index.html` (nueva), `datos/creditos_crece_practica.csv`, `datos/control-02-plantilla.R`, `control-02/guia-repaso-control-02.docx` | 2026-10-26 | `borrador` | [[2026-10-26 - Control 02 - Guía de repaso y simulacro]] | Carlos pidió publicarlo; revisión del contenido pendiente |
 | 04 | `docs/semana-04/index.html` (nueva) | 2026-09-25 | `borrador` | [[2026-09-25 - Rediseño Guía FPEN y semanas 02 a 04]] | Pendiente de revisión de Carlos |
 
 **Estado** usa siempre uno de: `borrador` · `revisado` · `aprobado` · `en uso en clase`.

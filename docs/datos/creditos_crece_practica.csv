@@ -1,0 +1,650 @@
+prestamo_id,fecha_solicitud,fecha_desembolso,sucursal,sector,estado,monto_usd,plazo_meses,tasa_anual,calificacion
+CR0430,16/2/2025,26/02/2025,San Salvador,Comercio,Desembolsado,1150,12,19.3,A
+CR0263,13/8/2025,,Santa Ana,Servicios,Rechazado,2960,6,26.6,D
+CR0353,25/11/2024,29/11/2024,San Miguel,Agropecuario,Desembolsado,680,12,31.9,A
+CR0245,07/02/2025,8/2/2025,San Salvador,Artesanía,Desembolsado,2100,18,27.8,C
+CR0459,2/4/2025,,Santa Ana,Comercio,Rechazado,870,6,18.1,B
+CR0559,05/03/2025,10/3/2025,San Salvador,Comercio,Desembolsado,610,36,30.1,C
+CR0141,11/12/2025,13/12/2025,Santa Ana,Agropecuario,Desembolsado,990,12,30.7,C
+CR0511,28/7/2025,31/07/2025,Santa Ana,Agropecuario,Desembolsado,4020,12,29.9,b
+CR0463,28/12/2024,29/12/2024,Santa Ana,Agropecuario,Desembolsado,650,24,25,B
+CR0601,12/04/2025,16/04/2025,Santa Ana,Agropecuario,Desembolsado,1650,24,23.6,B
+CR0175,01/02/2025,,San Miguel,Transporte,Rechazado,1180,36,30.6,A
+CR0468,29/10/2023,7/11/2023,San Miguel,Comercio,Desembolsado,1960,12,28.7,B
+CR0277,12/12/2025,,San Miguel,Agropecuario,Rechazado,1360,6,21.9,D
+CR0158,5/9/2025,09/09/2025,San Salvador,Turismo,Desembolsado,2040,36,26.5,B
+CR0240,15/4/2024,24/4/2024,San Miguel,Agropecuario,Desembolsado,280,12,21.5,C
+CR0473,26/4/2023,,San Salvador,Turismo,Rechazado,2190,18,23.1,C
+CR0078,11/2/2023,15/02/2023,San Salvador,Servicios,Desembolsado,2700,36,24.3,B
+CR0356,16/5/2024,19/5/2024,San Salvador,Manufactura,Desembolsado,1490,24,29.6,B
+CR0458,27/06/2024,12/07/2024,San Miguel,Artesanía,Desembolsado,940,6,21.9,E
+CR0236,11/04/2024,25/4/2024,Santa Ana,Servicios,Desembolsado,2240,18,20.5,A
+CR0352,27/05/2023,,san salvador,Comercio,Rechazado,1010,6,29.8,B
+CR0199,15/04/2024,17/5/2024,San Miguel,Manufactura,Desembolsado,7340,12,27.6,B
+CR0477,04/11/2023,,Santa Ana,Artesanía,En_evaluacion,890,24,21.6,Sin calificar
+CR0340,08/09/2023,28/09/2023,San Miguel,Comercio,Desembolsado,2330,6,20.9,B
+CR0322,05/03/2024,,San Salvador,Comercio,Desembolsado,730,12,26.1,C
+CR0040,8/6/2024,,San Miguel,Agropecuario,En_evaluacion,680,18,22.4,Sin calificar
+CR0289,30/1/2023,,Santa Ana,Artesanía,Rechazado,4940,18,26.6,C
+CR0166,27/01/2025,,San Salvador,Comercio,Rechazado,2230,12,29.5,A
+CR0318,7/1/2025,18/1/2025,San Miguel,Comercio,Desembolsado,2520,12,29,A
+CR0513,27/08/2024,28/08/2024,Santa Ana,Comercio,Desembolsado,1730,18,23.7,B
+CR0618,7/10/2025,25/10/2025,San Miguel,Manufactura,Desembolsado,1820,36,33.2,B
+CR0475,20/6/2025,24/6/2025,San Salvador,Comercio,Desembolsado,800,24,30.9,A
+CR0443,27/01/2025,30/1/2025,San Salvador,Turismo,Desembolsado,2070,12,25,D
+CR0569,18/5/2025,19/5/2025,San Salvador,Servicios,Desembolsado,1570,18,26.5,B
+CR0215,14/11/2023,,Santa Ana,Transporte,Rechazado,5270,24,21,E
+CR0069,09/12/2025,,San Salvador,Comercio,En_evaluacion,370,6,24.8,Sin calificar
+CR0624,30/11/2024,,San Salvador,Servicios,Rechazado,2350,12,27.7,C
+CR0242,14/3/2025,22/3/2025,Santa Ana,Comercio,Desembolsado,1140,12,19.2,A
+CR0074,27/12/2024,2/1/2025,Santa Ana,Transporte,Desembolsado,1820,24,20.7,B
+CR0083,18/10/2025,01/11/2025,San Miguel,Turismo,Desembolsado,430,18,21.8,A
+CR0010,11/06/2024,18/6/2024,San Salvador,Agropecuario,Desembolsado,1680,12,27.2,C
+CR0023,08/11/2025,,San Salvador,Comercio,En_evaluacion,4070,18,26.2,Sin calificar
+CR0110,20/10/2024,21/10/2024,San Salvador,Comercio,Desembolsado,1910,18,24.8,B
+CR0395,22/1/2023,31/1/2023,San Salvador,Comercio,Desembolsado,810,36,32.5,C
+CR0346,26/7/2025,05/08/2025,San Miguel,Agropecuario,Desembolsado,620,24,33.2,C
+CR0282,27/09/2023,,San Salvador,Manufactura,En_evaluacion,570,18,28.1,Sin calificar
+CR0115,27/11/2023,4/12/2023,Santa Ana,Agropecuario,Desembolsado,370,12,31,A
+CR0138,26/11/2024,29/11/2024,San Salvador,Comercio,Desembolsado,1300,36,24.5,A
+CR0164,17/03/2025,20/03/2025,Santa Ana,Agropecuario,Desembolsado,1390,24,33,C
+CR0177,09/07/2025,20/7/2025,San Miguel,Comercio,Desembolsado,750,12,30.5,A
+CR0462,09/10/2024,10/10/2024,San Salvador,Transporte,Desembolsado,1600,18,29.5,B
+CR0509,1/7/2024,07/07/2024,Santa Ana,Comercio,Desembolsado,1120,18,19.1,D
+CR0045,26/12/2024,01/01/2025,San Salvador,Comercio,Desembolsado,790,12,30.9,D
+CR0323,23/10/2024,,Santa Ana,Manufactura,Rechazado,2310,12,26.7,D
+CR0626,15/1/2023,20/01/2023,San Salvador,Comercio,Desembolsado,1280,12,23.2,C
+CR0077,7/10/2024,17/10/2024,San Miguel,Comercio,Desembolsado,1450,24,20.9,C
+CR0393,8/10/2024,9/10/2024,San Salvador,Comercio,Desembolsado,4000,24,30.9,C
+CR0347,14/07/2023,,Santa Ana,Comercio,Rechazado,410,6,22.9,A
+CR0062,24/7/2024,26/07/2024,San Miguel,Comercio,Desembolsado,280,36,20.9,C
+CR0032,19/08/2025,22/08/2025,Santa Ana,Agropecuario,Desembolsado,1390,12,18.2,D
+CR0531,12/03/2023,,Santa Ana,Comercio,Rechazado,220,24,25.8,C
+CR0523,26/1/2023,02/02/2023,Santa Ana,Servicios,Desembolsado,2870,12,25.1,B
+CR0324,14/08/2025,23/8/2025,San Miguel,Servicios,Desembolsado,1580,18,31.8,D
+CR0355,22/08/2025,26/8/2025,San Miguel,Comercio,Desembolsado,1300,12,24.1,B
+CR0212,28/10/2023,31/10/2023,San Salvador,Comercio,Desembolsado,1320,12,19.4,a
+CR0605,12/03/2024,17/03/2024,San Salvador,Turismo,Desembolsado,2720,12,25.7,D
+CR0028,12/01/2023,13/01/2023,S. Salvador,Manufactura,Desembolsado,,24,23,D
+CR0571,04/11/2025,,Santa Ana,Servicios,Rechazado,2140,36,22.1,B
+CR0286,19/4/2023,22/04/2023,San Salvador,Agropecuario,Desembolsado,5070,12,26.4,C
+CR0602,01/11/2024,02/11/2024,S. Salvador,Transporte,Desembolsado,2720,18,27.1,A
+CR0583,7/8/2025,08/08/2025,San Salvador,Comercio,Desembolsado,630,18,21.4,C
+CR0213,02/12/2024,06/12/2024,San Miguel,Comercio,Desembolsado,1000,6,25.3,C
+CR0086,17/2/2023,12/02/2023,San Miguel,Artesanía,Desembolsado,3680,12,27.9,C
+CR0502,30/3/2025,,San Miguel,Comercio,Rechazado,1770,12,24.2,C
+CR0016,04/01/2025,16/01/2025,Santa Ana,Comercio,Desembolsado,620,18,25.4,B
+CR0153,25/01/2025,22/01/2025,San Salvador,Comercio,Desembolsado,1740,12,25.7,D
+CR0604,04/06/2025,08/06/2025,San Miguel,Turismo,Desembolsado,690,12,24.2,D
+CR0441,28/11/2023,,SantaAna,Turismo,En_evaluacion,930,6,25.2,Sin calificar
+CR0065,27/3/2023,28/3/2023,San Salvador,Servicios,Desembolsado,1560,24,32.4,C
+CR0375,05/04/2024,15/04/2024,San Miguel,Artesanía,Desembolsado,1000,12,25.4,D
+CR0113,30/07/2025,31/07/2025,San Salvador,Servicios,Desembolsado,920,12,22.3,D
+CR0127,08/07/2025,10/07/2025,Santa Ana,Comercio,Desembolsado,1090,18,21.6,C
+CR0044,08/12/2023,18/12/2023,Santa Ana,Comercio,Desembolsado,2930,24,24.7,B
+CR0537,19/7/2025,24/7/2025,San Salvador,Servicios,Desembolsado,1330,12,24,B
+CR0622,14/10/2025,18/10/2025,San Salvador,Servicios,Desembolsado,1660,24,30.1,E
+CR0359,14/12/2024,,San Salvador,Comercio,En_evaluacion,890,24,31.2,Sin calificar
+CR0046,16/10/2025,,San Miguel,Comercio,Rechazado,1140,12,26.3,B
+CR0097,6/11/2025,16/11/2025,San Miguel,Agropecuario,Desembolsado,880,18,23.1,A
+CR0541,23/3/2025,,San Salvador,Servicios,Rechazado,2820,18,20.2,C
+CR0082,26/2/2025,05/03/2025,San Salvador,Servicios,Desembolsado,1080,12,26.7,A
+CR0454,14/01/2025,26/1/2025,San Miguel,Agropecuario,Desembolsado,820,12,25.5,A
+CR0205,4/4/2025,09/04/2025,San Salvador,Comercio,Desembolsado,710,18,27.2,D
+CR0396,25/03/2025,,San miguel,Manufactura,En_evaluacion,2620,18,26.2,Sin calificar
+CR0303,26/04/2024,27/04/2024,SantaAna,Turismo,Desembolsado,2780,24,21.4,A
+CR0562,12/06/2023,16/6/2023,San Miguel,Manufactura,Desembolsado,3390,12,29,B
+CR0442,23/5/2023,24/05/2023,San Salvador,Comercio,Desembolsado,3570,36,22.8,B
+CR0357,24/08/2024,30/8/2024,San Miguel,Comercio,Desembolsado,450,12,19.4,A
+CR0306,24/01/2024,26/1/2024,San Salvador,Comercio,Desembolsado,730,18,31.1,B
+CR0613,03/04/2025,6/4/2025,San Salvador,Manufactura,Desembolsado,1630,12,31.8,A
+CR0179,23/12/2024,29/12/2024,San Miguel,Comercio,Desembolsado,1130,24,26,C
+CR0136,15/07/2025,,Santa Ana,Agropecuario,Rechazado,1180,18,25.8,B
+CR0202,25/7/2023,,San Salvador,Comercio,En_evaluacion,1070,12,31.4,Sin calificar
+CR0290,02/06/2025,10/6/2025,San Miguel,Servicios,Desembolsado,830,18,25.8,B
+CR0543,07/10/2024,,San Salvador,Manufactura,Rechazado,3150,12,22.4,B
+CR0424,22/05/2023,25/05/2023,San Salvador,Artesanía,Desembolsado,4470,24,26.2,C
+CR0510,21/11/2023,2/12/2023,San Miguel,Agropecuario,Desembolsado,330,36,33.6,D
+CR0224,01/03/2024,11/03/2024,Santa Ana,Comercio,Desembolsado,460,12,20.2,A
+CR0108,15/08/2024,,San Miguel,Transporte,En_evaluacion,9390,12,26.1,Sin calificar
+CR0358,07/04/2023,,San Miguel,Turismo,Rechazado,1530,12,18.2,A
+CR0192,12/7/2023,14/7/2023,San Salvador,Agropecuario,Desembolsado,900,6,25.9,B
+CR0351,18/6/2023,20/06/2023,San Salvador,Manufactura,Desembolsado,1380,24,27.3,B
+CR0301,23/9/2025,28/09/2025,San Salvador,Manufactura,Desembolsado,1410,24,21.1,D
+CR0064,19/09/2024,07/09/2024,San Miguel,Servicios,Desembolsado,1680,6,25.8,B
+CR0020,06/11/2025,29/11/2025,Santa Ana,Servicios,Desembolsado,2580,12,23.9,A
+CR0399,14/7/2024,16/07/2024,San Salvador,Agropecuario,Desembolsado,950,12,21.3,A
+CR0457,2/9/2024,5/9/2024,San Salvador,Manufactura,Desembolsado,2660,6,29,E
+CR0105,21/02/2025,26/02/2025,San Salvador,Manufactura,Desembolsado,1260,24,30.6,A
+CR0485,26/2/2025,15/03/2025,San Miguel,Comercio,Desembolsado,390,36,26.7,B
+CR0052,28/02/2023,,San Miguel,Agropecuario,En_evaluacion,710,12,18.3,Sin calificar
+CR0100,29/10/2024,04/11/2024,Santa Ana,Comercio,Desembolsado,1680,6,29.2,B
+CR0307,17/10/2024,24/10/2024,Santa Ana,Servicios,Desembolsado,550,36,21.5,C
+CR0532,14/6/2025,16/6/2025,San Miguel,Comercio,Desembolsado,4390,36,29.5,B
+CR0335,10/5/2023,11/5/2023,San Salvador,Agropecuario,Desembolsado,810,12,31.9,A
+CR0037,31/02/2024,06/07/2024,San Salvador,Artesanía,Desembolsado,2550,18,18.1,B
+CR0386,03/10/2024,16/10/2024,San Salvador,Comercio,Desembolsado,1030,24,32.8,B
+CR0576,02/02/2025,11/2/2025,Santa Ana,Turismo,Desembolsado,3050,12,27.9,C
+CR0081,18/8/2023,,San Salvador,Artesanía,Rechazado,1380,12,28.9,B
+CR0156,17/06/2024,18/06/2024,San Salvador,Servicios,Desembolsado,1890,18,27.9,B
+CR0151,14/09/2024,20/09/2024,Santa Ana,Manufactura,Desembolsado,2200,6,24.5,A
+CR0410,13/12/2023,,Santa Ana,Comercio,Rechazado,1430,24,31.7,B
+CR0479,12/12/2025,26/12/2025,Santa Ana,Servicios,Desembolsado,890,6,31.9,A
+CR0251,03/05/2025,14/05/2025,Santa Ana,Transporte,Desembolsado,1700,6,22.1,D
+CR0438,9/12/2023,21/12/2023,San Miguel,Transporte,Desembolsado,2210,12,23.9,C
+CR0363,03/12/2025,07/12/2025,San Salvador,Comercio,Desembolsado,1850,24,30.4,C
+CR0262,10/07/2023,14/07/2023,Santa Ana,Transporte,Desembolsado,1710,18,26.4,B
+CR0373,29/5/2025,02/06/2025,Santa Ana,Comercio,Desembolsado,1820,18,28.9,A
+CR0187,17/10/2025,,San Miguel,Comercio,Rechazado,1870,12,29.4,C
+CR0384,12/09/2023,13/09/2023,San Salvador,Manufactura,Desembolsado,2490,24,29.4,E
+CR0450,9/11/2025,,San Miguel,Manufactura,Rechazado,1470,24,26.4,B
+CR0481,10/06/2025,15/06/2025,Santa Ana,Manufactura,Desembolsado,1670,12,22.1,C
+CR0570,18/01/2024,22/01/2024,San Salvador,Transporte,Desembolsado,4750,12,24.3,A
+CR0617,12/9/2024,,San Salvador,Manufactura,En_evaluacion,2160,12,26.2,Sin calificar
+CR0022,10/10/2024,13/10/2024,San Salvador,Comercio,Desembolsado,320,24,26,A
+CR0144,03/10/2024,,San Miguel,Comercio,Rechazado,2770,12,23.6,D
+CR0387,25/12/2023,15/01/2024,San Miguel,Turismo,Desembolsado,5610,18,31.6,A
+CR0500,29/11/2024,03/12/2024,San Salvador,Comercio,Desembolsado,1690,12,20.9,A
+CR0388,28/10/2023,31/10/2023,San Salvador,Transporte,Desembolsado,2380,18,20.3,A
+CR0094,27/1/2024,02/02/2024,SantaAna,Comercio,Desembolsado,3270,36,26.8,C
+CR0630,15/2/2025,,Santa Ana,Manufactura,En_evaluacion,1830,6,23.9,Sin calificar
+CR0200,22/02/2023,25/2/2023,San Salvador,Comercio,Desembolsado,600,24,26.6,E
+CR0244,27/11/2023,01/12/2023,san salvador,Turismo,Desembolsado,540,24,29,B
+CR0253,16/07/2025,29/7/2025,SantaAna,Comercio,Desembolsado,560,12,19.1,A
+CR0254,30/05/2024,31/5/2024,San Salvador,Agropecuario,Desembolsado,1410,36,24.5,A
+CR0024,18/11/2023,27/11/2023,San Miguel,Comercio,Desembolsado,3560,6,31.9,E
+CR0426,24/7/2024,,S. Salvador,Agropecuario,Rechazado,990,18,28.3,B
+CR0237,4/11/2024,07/11/2024,San Salvador,Comercio,Desembolsado,850,6,21,C
+CR0616,09/08/2025,,San Salvador,Servicios,Rechazado,880,36,32.6,C
+CR0392,21/04/2023,01/05/2023,Santa Ana,Comercio,Desembolsado,890,24,25.8,B
+CR0233,15/6/2025,,San Salvador,Comercio,En_evaluacion,1240,12,25.5,Sin calificar
+CR0407,18/09/2024,,San Miguel,Comercio,Rechazado,3080,6,24.9,D
+CR0342,10/04/2024,17/4/2024,San Miguel,Agropecuario,Desembolsado,5170,24,27.4,C
+CR0232,05/01/2024,,Santa Ana,Servicios,Rechazado,710,36,28.3,C
+CR0029,03/08/2025,,San Miguel,Servicios,Rechazado,260,18,27.9,B
+CR0573,18/12/2024,19/12/2024,San Salvador,Turismo,Desembolsado,3080,12,30.8,D
+CR0394,13/04/2024,16/04/2024,San Salvador,Artesanía,Desembolsado,860,6,23.7,A
+CR0482,7/11/2024,09/11/2024,San Miguel,Comercio,Desembolsado,1680,12,18.9,E
+CR0367,21/3/2025,,San Salvador,Agropecuario,Rechazado,1240,18,19.1,A
+CR0159,21/05/2024,,San Salvador,Servicios,En_evaluacion,730,12,18.3,Sin calificar
+CR0073,06/12/2024,,San Salvador,Servicios,En_evaluacion,1220,6,27.6,Sin calificar
+CR0491,11/09/2024,19/09/2024,San Miguel,Comercio,Desembolsado,460,12,20.3,A
+CR0049,11/8/2024,,Santa Ana,Servicios,En_evaluacion,1130,12,31.6,Sin calificar
+CR0207,23/10/2025,16/11/2025,San Miguel,Servicios,Desembolsado,1220,18,30.1,A
+CR0198,22/11/2025,23/11/2025,San Salvador,Agropecuario,Desembolsado,1160,36,24.1,B
+CR0088,4/2/2024,07/02/2024,Santa Ana,Comercio,Desembolsado,800,24,25,C
+CR0071,08/06/2025,14/6/2025,San Salvador,Servicios,Desembolsado,4020,12,30.2,D
+CR0058,28/11/2025,,San Salvador,Manufactura,En_evaluacion,11880,12,29.2,Sin calificar
+CR0493,17/08/2025,29/08/2025,San Miguel,Comercio,Desembolsado,1160,24,22.6,C
+CR0609,15/1/2023,20/1/2023,Santa Ana,Servicios,Desembolsado,650,24,33.6,B
+CR0470,24/2/2023,,San Miguel,Comercio,Rechazado,1620,24,27.9,E
+CR0494,14/01/2025,21/01/2025,San Miguel,Agropecuario,Desembolsado,590,12,26,B
+CR0328,26/7/2024,29/07/2024,San Salvador,Comercio,Desembolsado,530,18,26.1,C
+CR0061,15/09/2025,22/09/2025,San Miguel,Manufactura,Desembolsado,7030,18,19.3,A
+CR0579,03/04/2024,05/04/2024,Santa Ana,Agropecuario,Desembolsado,2250,12,31.9,B
+CR0184,11/3/2025,14/3/2025,Santa Ana,Comercio,Desembolsado,1790,36,21.9,B
+CR0391,28/9/2024,11/10/2024,San Miguel,Manufactura,Desembolsado,2440,18,29.7,C
+CR0476,06/10/2025,07/10/2025,San Salvador,Comercio,Desembolsado,2420,24,32.8,C
+CR0122,24/7/2025,,Santa Ana,Transporte,Rechazado,3310,18,21.4,A
+CR0488,05/07/2025,11/07/2025,Santa Ana,Manufactura,Desembolsado,840,24,24.1,A
+CR0503,23/06/2025,25/6/2025,San Salvador,Comercio,Desembolsado,1240,18,18.6,D
+CR0406,16/4/2025,30/4/2025,San Miguel,Turismo,Desembolsado,2070,12,24.2,B
+CR0325,18/06/2025,24/06/2025,Santa Ana,Comercio,Desembolsado,1340,18,26.5,B
+CR0154,11/12/2024,,Santa Ana,Agropecuario,En_evaluacion,770,6,30.8,Sin calificar
+CR0319,10/11/2025,,Santa Ana,Artesanía,En_evaluacion,2740,24,30.3,Sin calificar
+CR0581,27/03/2024,06/04/2024,San Miguel,Comercio,Desembolsado,160,24,24.9,A
+CR0194,01/04/2025,,San Salvador,Servicios,En_evaluacion,3670,36,31.6,Sin calificar
+CR0631,08/06/2025,11/06/2025,Santa Ana,Comercio,Desembolsado,1490,24,22.7,A
+CR0611,25/1/2024,28/01/2024,San Salvador,Comercio,Desembolsado,620,24,23.6,C
+CR0327,31/07/2024,03/08/2024,San Salvador,Comercio,Desembolsado,,18,27.6,A
+CR0157,28/11/2023,02/12/2023,Santa Ana,Agropecuario,Desembolsado,640,12,19.9,B
+CR0568,4/7/2023,10/7/2023,Santa Ana,Servicios,Desembolsado,2100,6,28.9,C
+CR0085,19/12/2024,23/12/2024,San Salvador,Manufactura,Desembolsado,3640,18,18.8,D
+CR0428,21/1/2024,22/1/2024,San Salvador,Transporte,Desembolsado,3600,36,24.9,E
+CR0536,29/08/2024,31/08/2024,San Salvador,Manufactura,Desembolsado,2250,18,29.6,C
+CR0565,3/9/2024,5/9/2024,San Miguel,Manufactura,Desembolsado,22000,36,20.4,B
+CR0219,16/02/2023,18/2/2023,San Salvador,Transporte,Desembolsado,4760,36,33.6,D
+CR0129,15/6/2024,,San Salvador,Transporte,En_evaluacion,1110,36,30.8,Sin calificar
+CR0261,28/6/2023,17/07/2023,San miguel,Artesanía,Desembolsado,2660,6,24.8,C
+CR0516,23/6/2023,27/06/2023,San Salvador,Transporte,Desembolsado,1400,12,18.8,E
+CR0095,27/5/2023,03/06/2023,San Miguel,Servicios,Desembolsado,1400,12,18.3,B
+CR0189,06/06/2024,13/06/2024,Santa Ana,Artesanía,Desembolsado,1550,12,31.2,A
+CR0221,26/05/2024,29/5/2024,S. Salvador,Comercio,Desembolsado,1110,6,27.9,A
+CR0534,20/09/2025,,Santa Ana,Manufactura,En_evaluacion,3510,18,29,Sin calificar
+CR0123,24/04/2024,,San Salvador,Manufactura,En_evaluacion,4650,36,32.3,Sin calificar
+CR0499,16/12/2025,19/12/2025,Santa Ana,Comercio,Desembolsado,770,6,18.3,E
+CR0518,01/08/2025,09/08/2025,Santa Ana,Comercio,Desembolsado,2220,24,21.7,A
+CR0309,13/10/2023,16/10/2023,San Salvador,Servicios,Desembolsado,2260,12,29.9,B
+CR0031,02/12/2024,,San Miguel,Turismo,En_evaluacion,700,18,31.3,Sin calificar
+CR0361,09/09/2025,13/09/2025,Santa Ana,Servicios,Desembolsado,1630,12,19.6,A
+CR0589,10/8/2023,,San Salvador,Agropecuario,Rechazado,1000,24,25.7,B
+CR0012,31/1/2025,04/02/2025,San Salvador,Comercio,Desembolsado,2120,36,23,A
+CR0131,3/9/2025,07/09/2025,Santa Ana,Turismo,Desembolsado,780,6,31.5,B
+CR0636,2/10/2025,,San Miguel,Agropecuario,Rechazado,3060,18,21.8,A
+CR0564,13/04/2025,17/04/2025,San Salvador,Agropecuario,Desembolsado,2700,12,20.4,A
+CR0456,05/03/2023,,San Salvador,Comercio,En_evaluacion,1310,12,20.6,Sin calificar
+CR0460,23/7/2025,25/7/2025,San Miguel,Comercio,Desembolsado,930,12,22.5,C
+CR0223,09/12/2023,11/12/2023,San Salvador,Agropecuario,Desembolsado,370,6,19.7,B
+CR0619,19/07/2025,23/7/2025,San Salvador,Comercio,Desembolsado,2040,18,27,C
+CR0039,04/12/2025,07/12/2025,San Salvador,Comercio,Desembolsado,770,18,31.2,D
+CR0172,17/5/2023,18/5/2023,Santa Ana,Servicios,Desembolsado,2370,12,31.5,B
+CR0147,08/08/2023,14/8/2023,San Salvador,Comercio,Desembolsado,630,24,32.8,E
+CR0284,02/09/2023,08/09/2023,Santa Ana,Comercio,Desembolsado,890,12,24.3,A
+CR0315,24/05/2025,,San Miguel,Comercio,En_evaluacion,1920,6,29.1,Sin calificar
+CR0539,8/3/2023,14/3/2023,San Salvador,Manufactura,Desembolsado,2000,12,19.4,B
+CR0490,07/09/2024,,San Miguel,Servicios,Rechazado,2610,6,26.3,A
+CR0161,22/8/2025,30/08/2025,San Miguel,Comercio,Desembolsado,1810,12,21,D
+CR0599,20/09/2025,22/9/2025,San Salvador,Comercio,Desembolsado,800,18,18.2,B
+CR0612,22/02/2025,24/2/2025,San Miguel,Servicios,Desembolsado,5080,36,25.5,A
+CR0597,1/12/2024,04/12/2024,San Salvador,Comercio,Desembolsado,2050,24,24.4,A
+CR0339,17/05/2025,18/05/2025,San Salvador,Agropecuario,Desembolsado,1080,24,26,D
+CR0414,28/12/2024,29/12/2024,San Miguel,Servicios,Desembolsado,1200,18,25.7,A
+CR0034,21/3/2023,22/3/2023,San Salvador,Comercio,Desembolsado,1260,24,20.9,E
+CR0498,23/12/2024,27/12/2024,San Salvador,Comercio,Desembolsado,840,6,25.3,B
+CR0304,14/8/2024,20/08/2024,san salvador,Turismo,Desembolsado,2760,18,31,B
+CR0585,10/11/2025,24/11/2025,San Salvador,Agropecuario,Desembolsado,2130,12,25.4,A
+CR0417,26/09/2025,29/09/2025,San Salvador,Comercio,Desembolsado,1000,6,20.3,B
+CR0133,02/07/2024,04/07/2024,Santa Ana,Comercio,Desembolsado,1040,6,24.3,A
+CR0063,02/09/2024,09/09/2024,Santa Ana,Comercio,Desembolsado,1650,12,22.8,C
+CR0126,06/04/2025,,San Miguel,Transporte,Rechazado,1920,6,29.9,C
+CR0621,2/7/2025,15/07/2025,San Miguel,Comercio,Desembolsado,390,24,21.9,B
+CR0139,22/11/2024,23/11/2024,San Salvador,Transporte,Desembolsado,1070,24,31.8,C
+CR0554,11/10/2024,,San Miguel,Manufactura,En_evaluacion,690,36,27.6,Sin calificar
+CR0048,08/06/2024,12/06/2024,San Salvador,Servicios,Desembolsado,1640,12,25,A
+CR0201,26/01/2025,27/01/2025,San Salvador,Manufactura,Desembolsado,1350,6,21.3,E
+CR0552,29/09/2024,05/10/2024,Santa Ana,Comercio,Desembolsado,240,24,23.8,A
+CR0486,17/03/2025,21/03/2025,San Salvador,Servicios,Desembolsado,1240,12,31.5,C
+CR0265,27/9/2023,29/09/2023,San Salvador,Agropecuario,Desembolsado,820,12,20.7,D
+CR0225,16/12/2024,17/12/2024,Santa Ana,Comercio,Desembolsado,410,18,26.1,C
+CR0418,30/1/2023,03/02/2023,San Salvador,Comercio,Desembolsado,640,12,23.9,A
+CR0535,11/2/2023,,San Salvador,Comercio,Rechazado,1650,6,30.5,B
+CR0234,17/07/2024,,San Miguel,Agropecuario,Rechazado,990,12,20.8,B
+CR0331,13/8/2025,20/08/2025,San Salvador,Servicios,Desembolsado,1130,24,24.3,D
+CR0637,27/12/2023,12/1/2024,San miguel,Artesanía,Desembolsado,270,24,31.6,B
+CR0206,21/12/2024,31/12/2024,San Miguel,Manufactura,Desembolsado,2780,18,19.8,A
+CR0435,20/10/2025,28/10/2025,San Miguel,Turismo,Desembolsado,1200,12,18.9,B
+CR0533,22/9/2024,,San Salvador,Artesanía,Rechazado,830,6,23.4,B
+CR0594,17/02/2024,20/2/2024,San Miguel,Manufactura,Desembolsado,1350,36,23.4,B
+CR0299,26/3/2024,,San Miguel,Manufactura,Rechazado,2280,24,20.7,A
+CR0547,3/11/2023,,San Miguel,Comercio,Rechazado,1550,18,24.1,B
+CR0592,14/12/2025,19/12/2025,San Miguel,Manufactura,Desembolsado,390,6,28.3,D
+CR0227,7/3/2025,11/03/2025,San Miguel,Agropecuario,Desembolsado,890,12,27,A
+CR0264,14/01/2023,18/01/2023,San Salvador,Comercio,Desembolsado,2980,12,27.6,C
+CR0020,06/11/2025,29/11/2025,Santa Ana,Servicios,Desembolsado,2580,12,23.9,A
+CR0015,17/08/2024,20/08/2024,San Salvador,Manufactura,Desembolsado,2030,12,24.2,B
+CR0461,24/11/2023,,San Salvador,Comercio,Desembolsado,2900,6,23.4,B
+CR0572,24/10/2025,29/10/2025,San Salvador,Comercio,Desembolsado,530,24,33.2,B
+CR0434,19/11/2023,21/11/2023,San Salvador,Comercio,Desembolsado,1700,12,29.9,A
+CR0451,27/3/2023,30/03/2023,San Salvador,Comercio,Desembolsado,1570,24,27,B
+CR0293,29/9/2024,30/09/2024,San Salvador,Transporte,Desembolsado,920,36,33.6,C
+CR0181,7/4/2024,16/04/2024,Santa Ana,Manufactura,Desembolsado,4750,24,25.7,B
+CR0203,24/2/2025,25/02/2025,San Salvador,Agropecuario,Desembolsado,1180,6,20.8,C
+CR0638,8/12/2024,,San Miguel,Agropecuario,Rechazado,810,24,27.7,C
+CR0336,21/5/2025,26/05/2025,San Salvador,Turismo,Desembolsado,3560,6,24.5,E
+CR0383,14/08/2024,,Santa Ana,Servicios,En_evaluacion,1840,6,30.7,Sin calificar
+CR0143,16/07/2023,,Santa Ana,Manufactura,Desembolsado,2590,36,26.1,B
+CR0033,21/08/2025,,San Miguel,Comercio,Rechazado,2240,12,32,A
+CR0496,16/5/2025,22/5/2025,San Miguel,Comercio,Desembolsado,780,6,31.9,A
+CR0273,03/12/2023,,Santa Ana,Comercio,Rechazado,910,12,20,B
+CR0311,27/02/2024,01/03/2024,San Salvador,Comercio,Desembolsado,1770,6,25.6,A
+CR0252,29/4/2023,6/5/2023,Santa Ana,Comercio,Desembolsado,3550,12,27.8,A
+CR0009,26/8/2025,27/08/2025,San Salvador,Agropecuario,Desembolsado,330,12,18.9,A
+CR0214,10/04/2025,16/04/2025,San Salvador,Manufactura,Desembolsado,2520,6,21.1,D
+CR0544,14/11/2024,,san salvador,Servicios,En_evaluacion,1020,12,25.6,Sin calificar
+CR0259,28/07/2023,31/7/2023,San Salvador,Transporte,Desembolsado,1320,24,29.9,A
+CR0174,29/4/2025,01/05/2025,San Salvador,Comercio,Desembolsado,2080,6,21.3,B
+CR0220,17/07/2024,,Santa Ana,Comercio,Rechazado,2050,18,27.4,A
+CR0338,28/08/2024,30/8/2024,San Salvador,Transporte,Desembolsado,2680,6,19.2,A
+CR0003,04/09/2025,,Santa Ana,Comercio,Rechazado,1650,18,26.9,C
+CR0250,02/08/2025,17/8/2025,San Miguel,Transporte,Desembolsado,4210,12,21.3,C
+CR0296,20/1/2025,21/01/2025,San Salvador,Manufactura,Desembolsado,1660,24,31.1,B
+CR0152,10/03/2023,15/3/2023,Santa Ana,Manufactura,Desembolsado,2290,12,18.2,A
+CR0291,17/12/2025,,Santa Ana,Transporte,Rechazado,1900,36,32.7,A
+CR0326,09/02/2024,,San Miguel,Servicios,Rechazado,700,24,21.8,B
+CR0548,1/9/2024,4/9/2024,San Salvador,Comercio,Desembolsado,260,6,28.3,B
+CR0419,15/2/2025,20/2/2025,San Salvador,Transporte,Desembolsado,6010,12,28.6,B
+CR0370,22/1/2024,26/01/2024,San Salvador,Turismo,Desembolsado,2500,24,22.4,D
+CR0170,3/11/2024,9/11/2024,San Miguel,Comercio,Desembolsado,1850,12,28.8,C
+CR0146,25/10/2024,11/11/2024,San Miguel,Agropecuario,Desembolsado,2210,18,22.7,E
+CR0222,20/11/2025,22/11/2025,San Salvador,Comercio,Desembolsado,2500,12,18.4,B
+CR0578,27/5/2025,,Santa Ana,Comercio,Rechazado,2320,6,23.2,B
+CR0292,26/10/2025,,San Salvador,Servicios,Rechazado,2210,18,24.3,C
+CR0446,25/6/2023,,Santa Ana,Artesanía,Rechazado,1290,18,27.2,B
+CR0368,04/08/2023,11/08/2023,Santa Ana,Artesanía,Desembolsado,,12,30.4,B
+CR0379,11/10/2023,,Santa Ana,Manufactura,En_evaluacion,2820,24,26.1,Sin calificar
+CR0249,09/08/2024,16/08/2024,San Salvador,Servicios,Desembolsado,750,24,33,B
+CR0165,5/6/2024,,San Miguel,Agropecuario,En_evaluacion,2400,18,26.8,Sin calificar
+CR0364,9/8/2024,,Santa Ana,Artesanía,Rechazado,790,24,20.2,B
+CR0433,30/1/2025,31/1/2025,San Salvador,Agropecuario,Desembolsado,1400,18,30.6,A
+CR0068,16/09/2024,21/9/2024,Santa Ana,Artesanía,Desembolsado,1130,12,25.8,E
+CR0385,17/11/2024,23/11/2024,San Salvador,Artesanía,Desembolsado,2030,18,31.1,B
+CR0238,24/12/2024,30/12/2024,Santa Ana,Turismo,Desembolsado,710,12,27.1,C
+CR0280,13/9/2024,17/09/2024,San Salvador,Transporte,Desembolsado,25000,36,27.8,D
+CR0093,14/6/2024,,San Salvador,Comercio,Rechazado,590,24,28.5,B
+CR0635,11/08/2024,19/8/2024,Santa Ana,Transporte,Desembolsado,820,12,20.2,A
+CR0096,14/11/2023,17/11/2023,San Salvador,Comercio,Desembolsado,1100,18,31.7,A
+CR0405,29/03/2025,31/03/2025,San Salvador,Transporte,Desembolsado,1680,18,23.4,E
+CR0099,18/07/2025,,San Salvador,Comercio,En_evaluacion,4850,6,27.7,Sin calificar
+CR0606,13/1/2025,12/01/2025,Santa Ana,Servicios,Desembolsado,2170,12,23.3,B
+CR0180,25/08/2024,30/08/2024,San Miguel,Manufactura,Desembolsado,2070,12,25.4,B
+CR0465,5/11/2023,,San Salvador,Manufactura,Rechazado,1510,36,23.3,B
+CR0566,6/8/2024,09/08/2024,San Miguel,Artesanía,Desembolsado,920,6,22.3,C
+CR0517,08/01/2025,,San Salvador,Manufactura,Rechazado,1800,12,26.8,E
+CR0620,31/10/2025,05/11/2025,San Salvador,Artesanía,Desembolsado,1500,18,24.1,C
+CR0431,26/03/2025,,San Salvador,Turismo,Rechazado,1200,6,29.3,B
+CR0060,3/12/2023,08/12/2023,Santa Ana,Comercio,Desembolsado,1280,18,21.7,A
+CR0209,01/04/2025,07/04/2025,San Miguel,Comercio,Desembolsado,470,12,30,D
+CR0603,15/10/2025,20/10/2025,Santa Ana,Servicios,Desembolsado,3770,24,28.3,B
+CR0574,18/09/2025,26/9/2025,San Salvador,Comercio,Desembolsado,1560,12,18.7,B
+CR0043,21/02/2023,,San Salvador,Comercio,Rechazado,1460,12,29.7,B
+CR0125,10/02/2025,20/02/2025,Santa Ana,Servicios,Desembolsado,1520,24,24.8,C
+CR0053,14/4/2024,,San Miguel,Transporte,Rechazado,1250,24,32.1,B
+CR0091,18/8/2025,03/09/2025,San Miguel,Manufactura,Desembolsado,5760,12,19.5,B
+CR0598,09/04/2025,14/4/2025,Santa Ana,Transporte,Desembolsado,5230,12,31.6,B
+CR0217,02/05/2025,03/05/2025,San Salvador,Transporte,Desembolsado,1320,36,25.9,A
+CR0230,19/6/2023,29/6/2023,San Miguel,Turismo,Desembolsado,1000,36,30.5,A
+CR0308,02/03/2025,14/03/2025,Santa Ana,Comercio,Desembolsado,2780,24,25.7,E
+CR0247,26/10/2025,28/10/2025,San Salvador,Servicios,Desembolsado,1390,24,29.6,C
+CR0124,02/09/2024,,San Salvador,Transporte,Rechazado,880,18,31.5,D
+CR0557,14/01/2025,16/01/2025,San Salvador,Manufactura,Desembolsado,1710,12,26.4,A
+CR0344,11/12/2024,13/12/2024,Santa Ana,Servicios,Desembolsado,2510,24,24.3,C
+CR0011,23/06/2024,25/6/2024,San Salvador,Turismo,Desembolsado,5580,12,19.4,C
+CR0228,27/11/2024,30/11/2024,San Salvador,Artesanía,Desembolsado,2490,12,25.9,C
+CR0567,18/11/2024,07/12/2024,Santa Ana,Servicios,Desembolsado,2420,18,23.9,B
+CR0542,30/04/2025,02/05/2025,San Salvador,Agropecuario,Desembolsado,980,6,24.9,A
+CR0505,01/07/2024,03/07/2024,San Miguel,Comercio,Desembolsado,1660,18,29.3,D
+CR0002,12/10/2025,15/10/2025,Santa Ana,Comercio,Desembolsado,2300,12,30.9,A
+CR0193,15/09/2023,,Santa Ana,Transporte,En_evaluacion,1090,24,27.6,Sin calificar
+CR0313,16/10/2024,18/10/2024,San Salvador,Manufactura,Desembolsado,840,36,28.1,A
+CR0560,17/04/2025,,San Salvador,Comercio,Rechazado,1330,12,21.9,B
+CR0218,18/09/2024,20/9/2024,San Salvador,Comercio,Desembolsado,2260,12,25.1,C
+CR0413,09/10/2024,10/10/2024,San Salvador,Agropecuario,Desembolsado,1690,6,18.4,B
+CR0538,13/11/2025,17/11/2025,San Salvador,Agropecuario,Desembolsado,1560,24,30.7,B
+CR0075,15/12/2024,,Santa Ana,Transporte,En_evaluacion,5120,12,29,Sin calificar
+CR0586,30/11/2025,,Santa Ana,Artesanía,Rechazado,1160,6,21.5,C
+CR0084,13/06/2024,21/6/2024,San Miguel,Agropecuario,Desembolsado,2340,18,29.2,A
+CR0421,11/12/2025,20/12/2025,San Miguel,Turismo,Desembolsado,500,24,33.9,C
+CR0546,04/01/2025,17/1/2025,San Miguel,Transporte,Desembolsado,3600,12,30,C
+CR0440,11/12/2023,18/12/2023,Santa Ana,Manufactura,Desembolsado,2800,12,23.8,B
+CR0600,3/2/2025,13/2/2025,San Salvador,Agropecuario,Desembolsado,680,12,26.3,A
+CR0216,20/1/2023,23/1/2023,San Miguel,Comercio,Desembolsado,1970,12,22.5,B
+CR0553,08/12/2025,21/12/2025,San Miguel,Agropecuario,Desembolsado,760,24,28.7,C
+CR0195,01/08/2025,06/08/2025,San Salvador,Comercio,Desembolsado,480,18,31.6,B
+CR0295,19/9/2025,,San Miguel,Manufactura,En_evaluacion,3340,24,32,Sin calificar
+CR0025,5/6/2025,12/6/2025,Santa Ana,Servicios,Desembolsado,1260,12,29.7,A
+CR0427,04/09/2025,,San Salvador,Transporte,Rechazado,3850,24,20.9,B
+CR0429,4/12/2025,05/12/2025,Santa Ana,Agropecuario,Desembolsado,1470,12,26.5,A
+CR0415,14/11/2025,,San Salvador,Comercio,Rechazado,1770,18,28,A
+CR0294,13/10/2024,18/10/2024,San Salvador,Servicios,Desembolsado,570,24,26.6,B
+CR0334,1/10/2024,,San Salvador,Manufactura,En_evaluacion,880,24,24.3,Sin calificar
+CR0551,14/01/2025,18/1/2025,SantaAna,Comercio,Desembolsado,1390,24,32.4,C
+CR0316,18/10/2024,20/10/2024,Santa Ana,Comercio,Desembolsado,1770,12,19.3,B
+CR0556,3/2/2025,10/02/2025,Santa Ana,Servicios,Desembolsado,2360,36,33.6,B
+CR0226,11/12/2025,,San Salvador,Agropecuario,Rechazado,3470,36,28,E
+CR0474,03/03/2025,7/3/2025,San Salvador,Comercio,Desembolsado,1700,24,29.2,D
+CR0128,28/09/2023,,San Salvador,Servicios,Rechazado,2250,18,21.4,A
+CR0178,19/3/2025,30/03/2025,Santa Ana,Servicios,Desembolsado,590,12,26.6,B
+CR0596,19/09/2025,26/09/2025,Santa Ana,Servicios,Desembolsado,1780,12,28.9,B
+CR0595,21/12/2024,27/12/2024,San Salvador,Servicios,Desembolsado,1600,24,20.5,A
+CR0587,15/06/2024,16/6/2024,San Salvador,Comercio,Desembolsado,2220,36,33.1,E
+CR0398,04/10/2024,07/10/2024,Santa Ana,Comercio,Desembolsado,1320,6,27.4,C
+CR0188,25/2/2024,28/02/2024,San Salvador,Comercio,Desembolsado,1860,12,19.1,A
+CR0444,4/9/2024,13/09/2024,Santa Ana,Agropecuario,Desembolsado,830,12,21.7,A
+CR0001,27/7/2023,,San Miguel,Servicios,En_evaluacion,4700,12,27.5,Sin calificar
+CR0312,25/06/2025,28/06/2025,Santa Ana,Comercio,Desembolsado,1330,12,25.3,A
+CR0549,28/01/2023,10/02/2023,San Miguel,Transporte,Desembolsado,7770,6,21.5,A
+CR0522,19/5/2025,22/05/2025,San Salvador,Servicios,Desembolsado,4310,18,18.3,A
+CR0495,07/11/2024,08/11/2024,San Salvador,Comercio,Desembolsado,3180,6,18.1,D
+CR0098,17/04/2025,23/04/2025,Santa Ana,Artesanía,Desembolsado,680,12,21.4,D
+CR0432,27/10/2025,,san salvador,Comercio,En_evaluacion,3040,6,31.1,Sin calificar
+CR0390,04/06/2024,11/06/2024,San Salvador,Agropecuario,Desembolsado,860,12,20.8,D
+CR0615,20/8/2024,,Santa Ana,Comercio,En_evaluacion,590,24,22.8,Sin calificar
+CR0360,2/11/2024,,San Salvador,Comercio,Rechazado,590,12,24.8,C
+CR0169,05/01/2024,10/01/2024,San Salvador,Servicios,Desembolsado,440,12,24.2,A
+CR0455,29/5/2025,,San Salvador,Transporte,En_evaluacion,3540,24,28.2,Sin calificar
+CR0524,30/07/2025,01/08/2025,San Salvador,Artesanía,Desembolsado,790,12,25.5,C
+CR0423,4/2/2025,08/02/2025,San Salvador,Comercio,Desembolsado,880,12,21,A
+CR0005,17/01/2025,,San Miguel,Comercio,Rechazado,1760,24,26.7,C
+CR0119,11/01/2024,20/01/2024,San Miguel,Servicios,Desembolsado,2420,12,22.9,E
+CR0403,25/7/2024,,Santa Ana,Manufactura,En_evaluacion,1170,36,29.9,Sin calificar
+CR0508,14/9/2025,23/09/2025,San Salvador,Comercio,Desembolsado,4160,24,28.8,A
+CR0275,16/3/2024,20/03/2024,San Salvador,Servicios,Desembolsado,570,18,18.6,B
+CR0310,18/6/2025,25/06/2025,San Miguel,Manufactura,Desembolsado,1930,18,26.1,B
+CR0378,04/10/2025,19/10/2025,San Miguel,Agropecuario,Desembolsado,910,36,28.4,C
+CR0087,28/10/2024,29/10/2024,San Salvador,Agropecuario,Desembolsado,930,36,22.2,A
+CR0047,26/07/2025,31/07/2025,San Salvador,Comercio,Desembolsado,1520,6,28.8,C
+CR0382,1/1/2024,8/1/2024,Santa Ana,Servicios,Desembolsado,1250,24,21,B
+CR0272,27/01/2025,,San Salvador,Servicios,Rechazado,2010,36,21.8,A
+CR0026,26/10/2024,,Santa Ana,Servicios,Rechazado,1350,12,28,A
+CR0137,25/02/2025,26/02/2025,Santa Ana,Manufactura,Desembolsado,3460,24,20.7,C
+CR0039,04/12/2025,07/12/2025,San Salvador,Comercio,Desembolsado,770,18,31.2,D
+CR0007,31/07/2023,5/8/2023,Santa Ana,Transporte,Desembolsado,1360,6,31.8,B
+CR0416,01/10/2024,4/10/2024,Santa Ana,Turismo,Desembolsado,990,18,25.5,B
+CR0183,03/07/2023,,San Salvador,Manufactura,En_evaluacion,4500,24,26.3,Sin calificar
+CR0515,18/5/2025,21/5/2025,San Salvador,Servicios,Desembolsado,1640,36,28,C
+CR0248,25/2/2024,26/02/2024,Santa Ana,Comercio,Desembolsado,560,12,30.8,D
+CR0204,13/9/2025,25/09/2025,Santa Ana,Servicios,Desembolsado,1990,18,30.5,B
+CR0019,22/12/2023,1/1/2024,San Salvador,Transporte,Desembolsado,360,36,30.8,A
+CR0258,12/12/2025,,San Salvador,Agropecuario,Rechazado,1040,24,29.1,A
+CR0269,24/02/2025,02/03/2025,San Salvador,Transporte,Desembolsado,,12,21.6,A
+CR0445,22/10/2023,28/10/2023,San Salvador,Turismo,Desembolsado,1670,12,25,C
+CR0090,3/2/2025,21/2/2025,San Miguel,Servicios,Desembolsado,770,12,18.3,D
+CR0632,25/01/2024,,Santa Ana,Artesanía,Rechazado,810,36,32.9,A
+CR0268,24/10/2024,04/11/2024,Santa Ana,Artesanía,Desembolsado,3550,6,27.7,B
+CR0381,27/11/2025,,San Salvador,Servicios,Desembolsado,810,18,28.8,A
+CR0142,29/11/2023,12/12/2023,Santa Ana,Comercio,Desembolsado,1520,24,33.3,A
+CR0080,03/10/2024,,San miguel,Servicios,Rechazado,1580,6,27.7,B
+CR0333,26/01/2024,,San Miguel,Agropecuario,Rechazado,720,12,20.9,B
+CR0397,27/10/2024,,San Salvador,Comercio,Rechazado,1690,36,24.5,B
+CR0591,20/10/2024,8/11/2024,Santa Ana,Agropecuario,Desembolsado,1130,6,25.8,B
+CR0374,16/12/2025,20/12/2025,San Salvador,Comercio,Desembolsado,2120,6,18.2,A
+CR0404,05/04/2025,09/04/2025,San Miguel,Agropecuario,Desembolsado,1330,12,29.5,C
+CR0453,17/3/2024,19/03/2024,Santa Ana,Transporte,Desembolsado,730,12,19,A
+CR0021,6/3/2025,,San Salvador,Transporte,En_evaluacion,590,18,29.4,Sin calificar
+CR0628,29/10/2025,1/11/2025,Santa Ana,Comercio,Desembolsado,3000,18,22.6,E
+CR0117,08/03/2024,10/03/2024,San Salvador,Comercio,Desembolsado,920,12,28.9,A
+CR0467,12/9/2025,,Santa Ana,Servicios,En_evaluacion,3880,6,26.1,Sin calificar
+CR0380,08/08/2025,14/08/2025,Santa Ana,Agropecuario,Desembolsado,440,6,20.2,E
+CR0484,08/01/2023,,San Miguel,Servicios,En_evaluacion,770,12,24.5,Sin calificar
+CR0055,26/09/2024,28/09/2024,San Salvador,Agropecuario,Desembolsado,3510,24,23,A
+CR0341,02/05/2023,05/05/2023,Santa Ana,Comercio,Desembolsado,1000,36,28,D
+CR0035,28/10/2025,,Santa Ana,Servicios,En_evaluacion,880,24,28.1,Sin calificar
+CR0106,24/04/2025,29/04/2025,San Salvador,Transporte,Desembolsado,1270,18,27,B
+CR0255,20/05/2023,21/5/2023,San Salvador,Servicios,Desembolsado,1740,18,24.8,B
+CR0302,07/08/2025,09/08/2025,San Miguel,Servicios,Desembolsado,220,36,28.2,B
+CR0480,11/4/2023,,Santa Ana,Transporte,Rechazado,2050,12,29.1,C
+CR0070,3/11/2025,5/11/2025,San Miguel,Agropecuario,Desembolsado,2300,36,27.8,B
+CR0558,14/1/2025,22/1/2025,San Salvador,Turismo,Desembolsado,1020,12,19.4,A
+CR0140,06/11/2025,,Santa Ana,Comercio,Rechazado,1100,18,19.4,A
+CR0150,27/02/2025,4/3/2025,San Salvador,Comercio,Desembolsado,1550,24,29.4,C
+CR0051,14/06/2025,15/06/2025,Santa Ana,Turismo,Desembolsado,1770,24,32.3,A
+CR0425,09/02/2023,15/2/2023,Santa Ana,Transporte,Desembolsado,3270,12,30,B
+CR0528,19/03/2025,24/03/2025,Santa Ana,Comercio,Desembolsado,750,12,27.2,B
+CR0377,30/08/2023,02/09/2023,Santa Ana,Artesanía,Desembolsado,2180,6,22.6,A
+CR0329,21/07/2025,8/8/2025,Santa Ana,Comercio,Desembolsado,4060,24,24,B
+CR0120,19/4/2025,,San Salvador,Artesanía,Rechazado,1190,18,30.4,A
+CR0614,26/11/2024,27/11/2024,San Salvador,Comercio,Desembolsado,1080,24,21.4,B
+CR0389,31/1/2024,,San Salvador,Manufactura,Desembolsado,2590,12,30.7,C
+CR0519,29/6/2025,09/07/2025,San Salvador,Artesanía,Desembolsado,1330,18,31.8,B
+CR0109,14/02/2024,17/02/2024,San Miguel,Transporte,Desembolsado,1370,6,31.9,E
+CR0362,12/05/2025,16/05/2025,San Salvador,Transporte,Desembolsado,2020,12,23.3,A
+CR0545,16/8/2025,27/8/2025,San Miguel,Comercio,Desembolsado,1430,12,30.6,B
+CR0343,30/10/2025,05/11/2025,Santa Ana,Comercio,Desembolsado,1530,24,20.2,C
+CR0116,21/03/2025,5/4/2025,San Miguel,Comercio,Desembolsado,2200,12,29.1,A
+CR0111,14/11/2025,23/11/2025,San Salvador,Comercio,Desembolsado,420,6,23.9,D
+CR0608,29/06/2024,04/07/2024,san salvador,Comercio,Desembolsado,1480,18,25.1,B
+CR0529,09/11/2024,25/11/2024,Santa Ana,Agropecuario,Desembolsado,1620,18,25.7,A
+CR0229,02/11/2024,15/11/2024,San Miguel,Servicios,Desembolsado,2550,12,30.3,E
+CR0287,09/04/2025,11/4/2025,San Salvador,Comercio,Desembolsado,1470,12,18.4,B
+CR0102,13/7/2024,15/07/2024,S. Salvador,Comercio,Desembolsado,660,12,28.8,C
+CR0050,1/9/2025,7/9/2025,San Miguel,Comercio,Desembolsado,920,12,25,B
+CR0521,19/9/2025,24/09/2025,San Salvador,Comercio,Desembolsado,380,18,24.2,C
+CR0256,06/12/2023,9/12/2023,San Salvador,Comercio,Desembolsado,,18,28.8,C
+CR0349,21/1/2024,24/01/2024,San Miguel,Manufactura,Desembolsado,5570,18,20.3,A
+CR0506,29/10/2024,,San Miguel,Agropecuario,En_evaluacion,660,18,30.4,Sin calificar
+CR0027,09/04/2024,14/04/2024,San Salvador,Servicios,Desembolsado,1310,12,25.7,A
+CR0114,02/09/2025,07/09/2025,San Miguel,Comercio,Desembolsado,1090,24,30,B
+CR0243,12/09/2024,15/9/2024,Santa Ana,Agropecuario,Desembolsado,710,12,25.1,C
+CR0332,07/06/2024,11/06/2024,San Salvador,Servicios,Desembolsado,1160,12,29.4,a
+CR0239,15/07/2024,24/7/2024,Santa Ana,Servicios,Desembolsado,5970,18,24.8,A
+CR0241,14/03/2025,18/3/2025,Santa Ana,Comercio,Desembolsado,1100,6,25.2,B
+CR0625,26/02/2025,,San Salvador,Manufactura,Rechazado,1160,24,27.3,A
+CR0411,30/9/2024,01/10/2024,Santa Ana,Turismo,Desembolsado,1210,6,18.6,C
+CR0203,24/2/2025,25/02/2025,San Salvador,Agropecuario,Desembolsado,1180,6,20.8,C
+CR0267,04/09/2024,6/9/2024,San Salvador,Agropecuario,Desembolsado,1060,12,26.1,C
+CR0168,03/03/2023,,San Miguel,Servicios,En_evaluacion,5170,36,24.3,Sin calificar
+CR0107,8/5/2025,10/05/2025,San Miguel,Agropecuario,Desembolsado,2120,6,26.9,A
+CR0104,01/09/2025,16/09/2025,San Miguel,Artesanía,Desembolsado,1030,12,31.2,E
+CR0278,16/08/2024,21/08/2024,San Salvador,Comercio,Desembolsado,2120,36,23.9,A
+CR0017,14/03/2023,,Santa Ana,Manufactura,Rechazado,1750,12,26.5,C
+CR0437,22/02/2025,28/2/2025,San Salvador,Agropecuario,Desembolsado,780,12,19.9,A
+CR0036,18/10/2024,,San Salvador,Manufactura,Rechazado,1920,36,32.3,B
+CR0305,27/09/2025,28/9/2025,San Salvador,Comercio,Desembolsado,2690,6,19.3,D
+CR0504,01/09/2023,,San Miguel,Comercio,Rechazado,1400,36,27.8,A
+CR0588,12/01/2025,5/2/2025,San Miguel,Servicios,Desembolsado,3190,24,31.3,B
+CR0402,15/13/2024,,Santa Ana,Turismo,En_evaluacion,400,12,23.5,Sin calificar
+CR0422,13/10/2025,,Santa Ana,Manufactura,Rechazado,1870,24,27.6,B
+CR0639,24/9/2024,,San Salvador,Comercio,Rechazado,940,18,23.3,B
+CR0135,18/1/2023,,Santa Ana,Transporte,Rechazado,870,36,23.3,B
+CR0018,19/10/2024,26/10/2024,Santa Ana,Servicios,Desembolsado,1110,18,25.3,A
+CR0054,13/9/2024,14/09/2024,Santa Ana,Comercio,Desembolsado,160,6,25.4,C
+CR0274,12/10/2025,,San Salvador,Transporte,En_evaluacion,1680,6,18.3,Sin calificar
+CR0155,18/04/2025,,Santa Ana,Agropecuario,En_evaluacion,1140,18,18.7,Sin calificar
+CR0590,26/11/2024,29/11/2024,Santa Ana,Comercio,Desembolsado,1470,6,20.1,A
+CR0072,01/05/2024,7/5/2024,San Miguel,Comercio,Desembolsado,4220,18,21.2,D
+CR0076,7/7/2025,,San Miguel,Servicios,En_evaluacion,770,24,25.7,Sin calificar
+CR0196,7/4/2025,10/4/2025,San Salvador,Comercio,Desembolsado,1250,18,29.7,C
+CR0130,10/05/2025,11/05/2025,Santa Ana,Artesanía,Desembolsado,1260,12,22.5,B
+CR0408,14/04/2025,26/4/2025,Santa Ana,Comercio,Desembolsado,1290,36,27.9,A
+CR0561,09/09/2025,10/09/2025,San Salvador,Comercio,Desembolsado,990,12,26.3,B
+CR0580,20/1/2025,21/01/2025,San Salvador,Servicios,Desembolsado,3000,12,22.4,A
+CR0409,06/09/2023,07/09/2023,Santa Ana,Agropecuario,Desembolsado,410,12,23.5,A
+CR0056,1/4/2025,02/04/2025,Santa Ana,Agropecuario,Desembolsado,2050,18,25.2,A
+CR0372,19/5/2025,,San Salvador,Servicios,Rechazado,1370,36,25.9,A
+CR0235,13/5/2024,19/5/2024,Santa Ana,Servicios,Desembolsado,1050,12,27.4,B
+CR0121,29/03/2023,6/4/2023,San Salvador,Agropecuario,Desembolsado,2930,6,18.2,D
+CR0163,28/09/2025,3/10/2025,San Salvador,Manufactura,Desembolsado,970,24,27.8,B
+CR0337,4/7/2025,22/07/2025,San Miguel,Servicios,Desembolsado,2320,36,22.6,A
+CR0345,27/6/2023,05/07/2023,San Salvador,Artesanía,Desembolsado,2750,12,31.8,B
+CR0623,7/8/2024,17/08/2024,San Miguel,Comercio,Desembolsado,1170,12,30.1,D
+CR0038,31/10/2024,6/11/2024,Santa Ana,Servicios,Desembolsado,1780,24,28.8,b
+CR0527,21/05/2025,06/06/2025,San Miguel,Comercio,Desembolsado,810,6,30.1,C
+CR0208,17/08/2025,,San Miguel,Comercio,En_evaluacion,3830,12,24.6,Sin calificar
+CR0582,09/11/2023,12/11/2023,San Salvador,Artesanía,Desembolsado,1300,12,27.7,B
+CR0627,17/05/2025,,Santa Ana,Agropecuario,Rechazado,210,6,31.3,B
+CR0008,17/3/2024,23/03/2024,san salvador,Turismo,Desembolsado,2300,12,21.4,A
+CR0550,06/05/2024,,San Miguel,Transporte,Rechazado,410,24,25.5,A
+CR0365,03/09/2024,4/9/2024,San Salvador,Agropecuario,Desembolsado,1570,36,30.8,C
+CR0497,30/8/2024,5/9/2024,Santa Ana,Comercio,Desembolsado,1480,12,24.8,B
+CR0112,08/02/2025,13/2/2025,Santa Ana,Comercio,Desembolsado,870,6,21.6,E
+CR0525,20/10/2024,21/10/2024,San Salvador,Artesanía,Desembolsado,1220,18,28.7,B
+CR0210,24/02/2024,04/03/2024,San Miguel,Artesanía,Desembolsado,1670,18,21,A
+CR0271,27/7/2025,3/8/2025,San Salvador,Transporte,Desembolsado,18500,36,30.7,E
+CR0014,29/6/2025,,San Salvador,Comercio,Rechazado,870,24,33.2,E
+CR0436,23/5/2025,,San Salvador,Comercio,En_evaluacion,1190,6,21.9,Sin calificar
+CR0160,22/04/2024,25/4/2024,San Salvador,Servicios,Desembolsado,,18,22.7,E
+CR0079,26/12/2024,,San Miguel,Comercio,Rechazado,1510,12,21.9,C
+CR0634,25/09/2024,,San Salvador,Servicios,Rechazado,2070,18,28.8,C
+CR0186,31/07/2024,01/08/2024,San Salvador,Manufactura,Desembolsado,2560,12,24.2,B
+CR0610,17/08/2024,21/08/2024,San Miguel,Comercio,Desembolsado,1060,18,19.8,B
+CR0279,18/09/2025,03/10/2025,San Miguel,Agropecuario,Desembolsado,1110,18,23.9,B
+CR0190,31/01/2024,7/2/2024,SantaAna,Turismo,Desembolsado,1940,24,22,B
+CR0323,23/10/2024,,Santa Ana,Manufactura,Rechazado,2310,12,26.7,D
+CR0469,24/04/2025,29/4/2025,San Salvador,Servicios,Desembolsado,1180,18,25.2,a
+CR0145,22/6/2025,,San Salvador,Comercio,Rechazado,360,18,22.7,A
+CR0512,31/10/2025,8/11/2025,Santa Ana,Comercio,Desembolsado,560,36,23.8,B
+CR0260,12/08/2025,16/8/2025,San Miguel,Comercio,Desembolsado,810,12,30.8,D
+CR0006,1/11/2024,03/11/2024,San Salvador,Transporte,Desembolsado,1240,18,23.4,D
+CR0555,03/10/2024,16/10/2024,Santa Ana,Comercio,Desembolsado,790,12,20,C
+CR0540,03/02/2024,,San Miguel,Agropecuario,Desembolsado,1130,36,31,A
+CR0059,23/08/2024,30/8/2024,San Miguel,Servicios,Desembolsado,1640,6,25,A
+CR0191,6/10/2025,07/10/2025,San Salvador,Artesanía,Desembolsado,980,18,27.9,D
+CR0283,23/04/2025,25/04/2025,San Salvador,Servicios,Desembolsado,3550,12,20.6,C
+CR0134,13/3/2025,15/03/2025,San Salvador,Servicios,Desembolsado,3020,18,28.2,A
+CR0530,,21/05/2025,San Salvador,Comercio,Desembolsado,1730,24,31.8,A
+CR0640,30/12/2023,,San Salvador,Artesanía,En_evaluacion,2150,12,26.5,Sin calificar
+CR0526,21/2/2023,5/3/2023,Santa Ana,Comercio,Desembolsado,4370,24,28.3,A
+CR0285,21/02/2024,24/2/2024,San Salvador,Comercio,Desembolsado,1810,12,19.8,B
+CR0149,17/5/2023,,San Salvador,Agropecuario,Rechazado,1550,12,26.3,B
+CR0089,13/06/2025,23/6/2025,San Miguel,Servicios,Desembolsado,2100,12,25.9,C
+CR0507,26/12/2023,31/12/2023,Santa Ana,Comercio,Desembolsado,1550,12,20.8,D
+CR0464,28/11/2024,,Santa Ana,Comercio,Rechazado,720,6,22.2,B
+CR0057,26/05/2025,06/06/2025,San Miguel,Artesanía,Desembolsado,1470,18,19.9,A
+CR0092,08/09/2025,15/9/2025,San Miguel,Comercio,Desembolsado,1580,12,24.2,A
+CR0297,4/9/2024,08/09/2024,San Salvador,Comercio,Desembolsado,1490,12,18.6,A
+CR0422,13/10/2025,,Santa Ana,Manufactura,Rechazado,1870,24,27.6,B
+CR0607,02/09/2023,,San Miguel,Artesanía,En_evaluacion,2200,24,23.6,Sin calificar
+CR0584,20/9/2024,22/09/2024,San Salvador,Artesanía,Desembolsado,1210,24,26.6,C
+CR0354,31/08/2025,11/09/2025,San Miguel,Comercio,Desembolsado,780,12,25.8,B
+CR0478,16/10/2024,19/10/2024,San Miguel,Comercio,Desembolsado,2780,6,20,C
+CR0588,12/01/2025,5/2/2025,San Miguel,Servicios,Desembolsado,3190,24,31.3,B
+CR0298,29/09/2025,,Santa Ana,Manufactura,Rechazado,1460,18,27.6,C
+CR0103,3/7/2024,,San Salvador,Comercio,En_evaluacion,2140,6,24.9,Sin calificar
+CR0171,24/10/2025,27/10/2025,San Salvador,Servicios,Desembolsado,4090,12,24.9,B
+CR0439,15/8/2025,,Santa Ana,Agropecuario,Rechazado,2800,6,30.8,A
+CR0400,1/8/2024,07/08/2024,Santa Ana,Comercio,Desembolsado,1040,12,22.3,D
+CR0514,25/06/2025,,San Salvador,Comercio,En_evaluacion,2350,6,25.7,Sin calificar
+CR0483,24/02/2025,26/02/2025,San Salvador,Comercio,Desembolsado,3390,24,25.5,C
+CR0371,17/11/2025,18/11/2025,San Salvador,Agropecuario,Desembolsado,1620,24,29.6,B
+CR0376,25/11/2025,2/12/2025,Santa Ana,Manufactura,Desembolsado,4620,24,30.3,A
+CR0167,21/12/2024,26/12/2024,San Salvador,Comercio,Desembolsado,1780,18,26.8,D
+CR0471,26/4/2024,13/5/2024,San Miguel,Comercio,Desembolsado,1050,12,25.5,B
+CR0314,29/05/2023,,San Salvador,Manufactura,Rechazado,3180,24,20.4,B
+CR0317,18/08/2025,,Santa Ana,Agropecuario,En_evaluacion,880,36,33.9,Sin calificar
+CR0176,20/03/2024,28/03/2024,Santa Ana,Transporte,Desembolsado,1010,18,27.4,E
+CR0246,9/10/2025,15/10/2025,Santa Ana,Comercio,Desembolsado,170,18,23.1,A
+CR0487,16/06/2025,24/6/2025,San Miguel,Agropecuario,Desembolsado,640,12,30.4,B
+CR0101,15/2/2025,17/02/2025,Santa Ana,Comercio,Desembolsado,2530,6,24.9,B
+CR0447,13/11/2024,18/11/2024,San Salvador,Comercio,Desembolsado,800,36,30.3,C
+CR0067,25/08/2025,27/08/2025,San Salvador,Servicios,Desembolsado,1030,12,19,B
+CR0369,26/11/2025,,Santa Ana,Comercio,Rechazado,2890,12,27.1,B
+CR0501,6/12/2024,,San Salvador,Servicios,En_evaluacion,2530,18,27.1,Sin calificar
+CR0162,13/12/2025,14/12/2025,San Miguel,Transporte,Desembolsado,2190,24,31.3,B
+CR0231,22/04/2025,,Santa Ana,Servicios,Rechazado,1120,24,27.7,B
+CR0042,9/8/2025,12/8/2025,San Miguel,Transporte,Desembolsado,,12,27.3,A
+CR0030,13/09/2025,,San Salvador,Comercio,En_evaluacion,560,6,29.6,Sin calificar
+CR0350,01/07/2023,,San Salvador,Artesanía,En_evaluacion,3200,18,21.5,Sin calificar
+CR0629,30/09/2025,5/10/2025,San Salvador,Artesanía,Desembolsado,1680,12,24,B
+CR0593,17/9/2025,19/09/2025,S. Salvador,Turismo,Desembolsado,1280,12,26.1,C
+CR0633,14/11/2025,,San Miguel,Manufactura,En_evaluacion,1020,12,24.1,Sin calificar
+CR0577,21/8/2024,26/08/2024,San Miguel,Transporte,Desembolsado,5090,36,21.4,D
+CR0300,09/01/2025,13/1/2025,San Salvador,Comercio,Desembolsado,1490,6,22.6,B
+CR0466,24/5/2024,2/6/2024,Santa Ana,Servicios,Desembolsado,,24,30.1,E
+CR0412,30/6/2024,4/7/2024,San Salvador,Agropecuario,Desembolsado,1570,6,19.8,A
+CR0148,11/10/2024,,Santa Ana,Comercio,Rechazado,1680,18,31.6,B
+CR0401,14/07/2023,21/7/2023,Santa Ana,Manufactura,Desembolsado,1740,12,22.9,A
+CR0420,24/11/2024,29/11/2024,Santa Ana,Turismo,Desembolsado,2530,6,19,B
+CR0238,24/12/2024,30/12/2024,Santa Ana,Turismo,Desembolsado,710,12,27.1,C
+CR0320,24/11/2024,26/11/2024,San Salvador,Agropecuario,Desembolsado,1840,12,22.6,B
+CR0492,26/4/2023,,San Salvador,Comercio,Rechazado,2710,36,26.3,C
+CR0276,15/11/2025,18/11/2025,San Salvador,Servicios,Desembolsado,3720,24,31.2,A
+CR0270,27/07/2025,,San Miguel,Servicios,Rechazado,800,12,29.5,B
+CR0266,16/1/2024,,Santa Ana,Comercio,Rechazado,1420,24,33.7,C
+CR0211,29/02/2023,21/11/2025,San Salvador,Agropecuario,Desembolsado,0,18,18.4,B
+CR0041,4/7/2024,5/7/2024,San Salvador,Agropecuario,Desembolsado,1660,6,22.4,D
+CR0575,16/11/2023,21/11/2023,San Miguel,Comercio,Desembolsado,850,18,21.7,B
+CR0366,28/03/2024,,San Salvador,Servicios,En_evaluacion,3630,12,29,Sin calificar
+CR0074,27/12/2024,2/1/2025,Santa Ana,Transporte,Desembolsado,1820,24,20.7,B
+CR0004,17/10/2024,26/10/2024,San Miguel,Transporte,Desembolsado,2650,12,22.5,A
+CR0197,1/10/2023,07/10/2023,Santa Ana,Comercio,Desembolsado,2080,6,26.9,A
+CR0348,4/6/2025,08/06/2025,San Salvador,Comercio,Desembolsado,860,12,28.2,D
+CR0013,11/04/2025,17/4/2025,San Salvador,Agropecuario,Desembolsado,,12,19,A
+CR0132,08/09/2024,,San Salvador,Comercio,Rechazado,7120,18,28.4,A
+CR0330,26/09/2024,,Santa Ana,Comercio,En_evaluacion,1500,6,27.6,Sin calificar
+CR0282,27/09/2023,,San Salvador,Manufactura,En_evaluacion,570,18,28.1,Sin calificar
+CR0173,19/11/2025,,San Miguel,Comercio,Rechazado,1360,18,20.8,A
+CR0472,15/11/2024,,San Miguel,Comercio,En_evaluacion,910,12,19.4,Sin calificar
+CR0452,24/07/2024,26/07/2024,San Salvador,Agropecuario,Desembolsado,1110,6,19.3,D
+CR0321,24/4/2025,07/05/2025,San Miguel,Comercio,Desembolsado,780,12,24.1,B
+CR0281,22/7/2023,03/08/2023,San Miguel,Agropecuario,Desembolsado,790,12,25.7,D
+CR0288,07/01/2023,09/01/2023,San Salvador,Manufactura,Desembolsado,1480,36,24.1,C
+CR0185,11/2/2024,12/2/2024,San Salvador,Turismo,Desembolsado,1030,6,30.4,D
+CR0489,24/01/2025,28/01/2025,San Salvador,Agropecuario,Desembolsado,1960,18,20.4,A
+CR0182,16/8/2025,21/8/2025,Santa Ana,Transporte,Desembolsado,1750,18,19.3,A
+CR0448,13/11/2025,22/11/2025,San Salvador,Manufactura,Desembolsado,3840,12,27.5,E
+CR0449,8/2/2024,10/2/2024,San Salvador,Comercio,Desembolsado,790,12,19.7,B
+CR0066,06/10/2024,,San Salvador,Servicios,En_evaluacion,1750,24,22.9,Sin calificar
+CR0520,27/4/2025,28/04/2025,San Salvador,Agropecuario,Desembolsado,660,18,29.9,B
+CR0118,,,S. Salvador,Comercio,Rechazado,3500,24,22.1,B
+CR0563,19/5/2025,22/05/2025,San Salvador,Servicios,Desembolsado,3440,6,26.7,B
+CR0257,18/03/2025,23/3/2025,San Salvador,Agropecuario,Desembolsado,890,18,25.5,A

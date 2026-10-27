@@ -1,0 +1,1106 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Control 02 · Repaso y simulacro</title>
+<meta name="description" content="Repaso del Control 02 de FPEN: dplyr, análisis exploratorio, factores con forcats y fechas con lubridate. 39 preguntas, 18 ejercicios con R en vivo sobre una microfinanciera simulada, simulacro de 60 minutos y cheat sheet.">
+<meta name="theme-color" content="#111a30">
+<link rel="icon" href="../assets/brand/fpen-favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Schibsted+Grotesk:wght@400..900&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..800;1,8..60,300..800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/guia.css">
+<script>try{var t=localStorage.getItem("fpen-guia-v1-tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body data-semana="c2" data-raiz="../">
+<a class="saltar" href="#contenido">Saltar al contenido</a>
+<header class="barra">
+  <div class="barra-fila">
+    <a class="marca" href="../index.html"><img src="../assets/brand/fpen-logo-ambar.svg" alt="FPEN, guía de estudio: inicio" width="93" height="21"></a>
+    <nav class="cinta" aria-label="Semanas del curso y tu avance">
+      <div class="cinta-pista">
+        <a class="tk" href="../semana-01/index.html" data-tk="s1" data-total="28"><b>S1</b><span class="tk-tit">R para pensar</span><span class="tk-pct" data-estado="cero">■ 0 %</span></a>
+        <a class="tk" href="../semana-02/index.html" data-tk="s2" data-total="24"><b>S2</b><span class="tk-tit">Valores a datos</span><span class="tk-pct" data-estado="cero">■ 0 %</span></a>
+        <a class="tk" href="../semana-03/index.html" data-tk="s3" data-total="20"><b>S3</b><span class="tk-tit">Visualizar</span><span class="tk-pct" data-estado="cero">■ 0 %</span></a>
+        <a class="tk" href="../control-01/guia/index.html" data-tk="c1" data-total="95" data-control="Control 01: lectura, repaso y simulacro"><b>C1</b><span class="tk-tit">Control 01</span><span class="tk-pct" data-estado="cero">■ 0 %</span></a>
+        <a class="tk" href="../semana-04/index.html" data-tk="s4" data-total="22"><b>S4</b><span class="tk-tit">Transformar</span><span class="tk-pct" data-estado="cero">■ 0 %</span></a>
+        <a class="tk" href="../semana-05/index.html" data-tk="s5" data-total="27"><b>S5</b><span class="tk-tit">Pipe y verbos</span><span class="tk-pct" data-estado="cero">■ 0 %</span></a>
+        <a class="tk" href="../parcial-01/index.html" data-tk="s6" data-total="30"><b>S6</b><span class="tk-tit">Parcial I</span><span class="tk-pct" data-estado="cero">■ 0 %</span></a>
+        <span class="tk futura" title="Semana 7: sin guía todavía"><b>S7</b><span class="tk-tit">Datos tidy</span><span class="tk-pct">sin guía</span></span>
+        <span class="tk futura" title="Semana 8: sin guía todavía"><b>S8</b><span class="tk-tit">Combinar tablas</span><span class="tk-pct">sin guía</span></span>
+        <a class="tk" href="../control-02/index.html" data-tk="c2" data-total="63" data-control="Control 02: repaso y simulacro" aria-current="page"><b>C2</b><span class="tk-tit">Control 02</span><span class="tk-pct" data-estado="cero">■ 0 %</span></a>
+        <span class="tk futura" title="Semana 9: sin guía todavía"><b>S9</b><span class="tk-tit">Automatizar</span><span class="tk-pct">sin guía</span></span>
+        <span class="tk futura" title="Semana 10: sin guía todavía"><b>S10</b><span class="tk-tit">Explorar</span><span class="tk-pct">sin guía</span></span>
+        <span class="tk futura" title="Semana 11: sin guía todavía"><b>S11</b><span class="tk-tit">R con IA</span><span class="tk-pct">sin guía</span></span>
+        <span class="tk futura" title="Semana 12: sin guía todavía"><b>S12</b><span class="tk-tit">Parcial II</span><span class="tk-pct">sin guía</span></span>
+      </div>
+    </nav>
+    <button class="barra-btn buscar-btn" type="button" aria-haspopup="dialog" aria-keyshortcuts="Control+K"><span class="ico" aria-hidden="true"></span><span class="txt">Buscar</span> <kbd>Ctrl K</kbd></button>
+    <button class="barra-btn edicion-btn" type="button" aria-expanded="false" aria-controls="edicion"><span class="nro" aria-hidden="true">C2</span><span class="txt">Edición</span><span class="flecha" aria-hidden="true"></span></button>
+  </div>
+  <div class="indice-fila">
+    <button class="indice-btn" type="button" aria-expanded="false" aria-controls="indice-pop"><span class="indice-num">§ 1/10</span><span class="indice-tit">Control 02</span><span class="indice-mom" data-mom="1"></span><span class="flecha" aria-hidden="true"></span></button>
+    <span class="indice-tiempo" aria-live="off"></span>
+    <nav class="indice-pop" id="indice-pop" aria-label="Índice de la página" hidden>
+    <ol>
+      <li class="grupo" data-mom="1">Empezar</li>
+      <li><a href="#uso" data-mom="1"><span class="n">1</span>Cómo usar el repaso</a></li>
+      <li class="grupo" data-mom="2">Teoría</li>
+      <li><a href="#t-dplyr" data-mom="2"><span class="n">2</span>01 · Transformar con dplyr</a></li>
+      <li><a href="#t-eda" data-mom="2"><span class="n">3</span>02 · Explorar (EDA)</a></li>
+      <li><a href="#t-factores" data-mom="2"><span class="n">4</span>03 · Factores</a></li>
+      <li><a href="#t-fechas" data-mom="2"><span class="n">5</span>04 · Fechas</a></li>
+      <li><a href="#t-poblaciones" data-mom="2"><span class="n">6</span>05 · Poblaciones y verificación</a></li>
+      <li class="grupo" data-mom="3">Practicar</li>
+      <li><a href="#practica-r" data-mom="3"><span class="n">7</span>Práctica con R</a></li>
+      <li><a href="#simulacro" data-mom="3"><span class="n">8</span>Simulacro (60 min)</a></li>
+      <li class="grupo" data-mom="4">Cierre</li>
+      <li><a href="#cheat" data-mom="4"><span class="n">9</span>Cheat sheet</a></li>
+      <li><a href="#fuentes" data-mom="4"><span class="n">10</span>Fuentes</a></li>
+    </ol>
+    </nav>
+  </div>
+  <div class="lectura" aria-hidden="true"><i></i></div>
+  <div class="edicion" id="edicion" role="region" aria-label="Ediciones, avance y ajustes" hidden></div>
+</header>
+
+<header class="portada-semana">
+  <div class="portada-in">
+    <p class="portada-num" aria-hidden="true">C2</p>
+    <div class="portada-txt">
+      <p class="portada-mod"><span class="sr">Control 02 · </span>Desde la semana 6 · Repaso integrador y simulacro</p>
+      <h1>Del registro desordenado a una conclusión que se sostiene</h1>
+      <p class="lead">Transformar con <code>dplyr</code>, explorar distribuciones, ordenar categorías con factores y trabajar con fechas: todo sobre 649 registros de microcréditos con duplicados, fechas imposibles y etiquetas inconsistentes, como en las guías de clase.</p>
+    </div>
+    <p class="sello" aria-label="Evaluación: Control 02 · Sin IA"><span class="sello-top">EVALÚA</span><b>Control 02</b><span>Sin IA</span></p>
+    <p class="pregunta"><span class="pregunta-lbl">Pregunta orientadora</span><mark>¿Qué filas necesita cada indicador, y cómo compruebo que mi resultado es correcto?</mark></p>
+    <div class="graf-fila">
+<figure class="graf-portada" data-lupa data-inicial="2">
+  <figcaption class="graf-cab"><b><span class="n">Gráfico C2</span> San Miguel tarda el triple que San Salvador en desembolsar</b><span>Mediana de días entre solicitud y desembolso, por sucursal</span></figcaption>
+  <div class="graf-lienzo" tabindex="0" role="group" aria-roledescription="gráfico interactivo" aria-label="San Miguel tarda el triple que San Salvador en desembolsar. Mediana de días entre solicitud y desembolso, por sucursal. Usa las flechas izquierda y derecha para recorrer los datos.">
+<svg viewBox="0 0 640 300" aria-hidden="true" focusable="false">
+<line class="rejilla" x1="58" x2="624" y1="266.0" y2="266.0"/>
+<text class="eje" x="50" y="270.5" text-anchor="end">0</text>
+<line class="rejilla" x1="58" x2="624" y1="218.0" y2="218.0"/>
+<text class="eje" x="50" y="222.5" text-anchor="end">2</text>
+<line class="rejilla" x1="58" x2="624" y1="170.0" y2="170.0"/>
+<text class="eje" x="50" y="174.5" text-anchor="end">4</text>
+<line class="rejilla" x1="58" x2="624" y1="122.0" y2="122.0"/>
+<text class="eje" x="50" y="126.5" text-anchor="end">6</text>
+<line class="rejilla" x1="58" x2="624" y1="74.0" y2="74.0"/>
+<text class="eje" x="50" y="78.5" text-anchor="end">8</text>
+<line class="rejilla" x1="58" x2="624" y1="26.0" y2="26.0"/>
+<text class="eje" x="50" y="30.5" text-anchor="end">10</text>
+<g class="dato" data-i="0" data-x="152.3" data-y="194.0" data-val="3" data-etq="San Salvador" data-nota="San Salvador · mediana de 3 días en 215 desembolsos válidos" style="--k:0"><rect class="barra-g crece" x="92.0" y="194.0" width="120.7" height="72.0"/><text class="valor" x="152.3" y="186.0" text-anchor="middle">3</text></g>
+<text class="eje-cat" x="152.3" y="290" text-anchor="middle">San Salvador</text>
+<g class="dato" data-i="1" data-x="341.0" data-y="122.0" data-val="6" data-etq="Santa Ana" data-nota="Santa Ana · mediana de 6 días en 128 desembolsos válidos" style="--k:1"><rect class="barra-g crece" x="280.6" y="122.0" width="120.7" height="144.0"/><text class="valor" x="341.0" y="114.0" text-anchor="middle">6</text></g>
+<text class="eje-cat" x="341.0" y="290" text-anchor="middle">Santa Ana</text>
+<g class="dato" data-i="2" data-x="529.7" data-y="50.0" data-val="9" data-etq="San Miguel" data-nota="San Miguel · mediana de 9 días en 110 desembolsos válidos" style="--k:2"><rect class="destacado crece" x="469.3" y="50.0" width="120.7" height="216.0"/><text class="valor" x="529.7" y="42.0" text-anchor="middle">9</text></g>
+<text class="eje-cat" x="529.7" y="290" text-anchor="middle">San Miguel</text>
+<line class="base" x1="58" x2="624" y1="266.0" y2="266.0"/>
+</svg>
+  </div>
+  <p class="graf-lectura sr" aria-live="polite"></p>
+  <p class="graf-fuente">Fuente: <code>datos/creditos_crece_practica.csv</code> (simulado); solo desembolsos con duración válida, calculado con R.</p>
+  <p class="graf-ayuda">Pasa el cursor, toca el gráfico o usa ← → para leer cada dato con la lupa.</p>
+</figure>
+      <aside class="ficha" aria-label="Ficha de la semana">
+        <h2>Ficha de la edición</h2>
+        <dl class="hero-meta"><div><dt>Clases</dt><dd>Presentaciones 06, 07 y 08 · fechas</dd></div><div><dt>Guías</dt><dd>Conecta SV · pedidos comerciales</dd></div><div class="eval"><dt>Evaluación</dt><dd>Control 02 · Sin IA</dd></div></dl>
+        <ul class="ciclo-fpen" aria-label="Ciclo de trabajo con datos del curso; resaltadas las etapas de esta semana"><li class="aqui">importar</li><li class="sep" aria-hidden="true">→</li><li class="aqui">ordenar</li><li class="sep" aria-hidden="true">→</li><li class="aqui">transformar</li><li class="sep" aria-hidden="true">→</li><li class="aqui">visualizar</li><li class="sep" aria-hidden="true">→</li><li>modelar</li><li class="sep" aria-hidden="true">→</li><li>comunicar</li></ul>
+        <div class="progress" data-progreso-pagina>
+          <div class="progress-bar"><span></span></div>
+          <div class="progress-label"></div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</header>
+<main id="contenido">
+<div class="tramo" data-tramo="1" data-mom="1" id="tramo-1">
+<div class="tramo-in">
+<header class="tramo-cab"><p class="tramo-n">Momento 1 de 4</p><p class="tramo-tit">Empezar</p></header>
+<section id="uso">
+  <h2>Cómo usar este repaso</h2>
+  <p>Material para los días previos al Control 02, con todo lo visto desde la semana 6: transformación con <code>dplyr</code>, análisis exploratorio, factores con <code>forcats</code> y fechas con <code>lubridate</code>. Integra las guías de clase «EDA y factores: Conecta SV» y «EDA y fechas en pedidos comerciales».</p>
+  <div class="momentos">
+    <div><strong>Teoría</strong>39 preguntas con respuesta escrita. Las que traen código se pueden ejecutar para comprobar tu predicción.</div>
+    <div><strong>Práctica con R</strong>18 ejercicios con <a href="../datos/creditos_crece_practica.csv" download>creditos_crece_practica.csv</a>, una microfinanciera con datos tan desordenados como los del control.</div>
+    <div><strong>Simulacro</strong>60 minutos, sin IA, con los criterios cerrados hasta que termines.</div>
+    <div><strong>Cheat sheet</strong>Las funciones y reglas del control en una pantalla.</div>
+  </div>
+  <ul class="ciclo-leyenda" aria-label="Ciclo de trabajo">
+    <li>Pregunta</li><li class="sep">→</li><li>Población</li><li class="sep">→</li><li>Transformación</li><li class="sep">→</li><li>Resultado</li><li class="sep">→</li><li>Interpretación</li><li class="sep">→</li><li class="v">Verificación</li>
+  </ul>
+  <div class="box ojo"><span class="box-title">Temario</span>
+    <p>Transformación de datos con dplyr (verbos de fila, columna y grupo, pipe <code>|&gt;</code>, <code>slice_*</code>, <code>distinct()</code>); análisis exploratorio de datos (resúmenes, distribuciones, sesgo, atípicos, zoom con <code>coord_cartesian()</code>, valores imposibles a <code>NA</code>, diagramas de caja, barras y dispersión); variables categóricas con factores y forcats (<code>factor()</code>, <code>fct()</code>, <code>levels()</code>, <code>fct_infreq()</code>, <code>fct_rev()</code>, <code>fct_reorder()</code>, <code>fct_relevel()</code>, <code>fct_recode()</code>, agrupación con <code>case_when()</code> y tramos con <code>cut()</code>); fechas con lubridate (<code>dmy()</code>, <code>mdy()</code>, <code>ymd()</code>, <code>make_date()</code>, <code>year()</code>, <code>month()</code>, <code>wday()</code>, <code>today()</code>, <code>floor_date()</code> y duraciones en días). Integra lo trabajado en las guías «EDA y factores: Conecta SV» y «EDA y fechas en pedidos comerciales».</p>
+  </div>
+  <div class="box nota"><span class="box-title">Para trabajar en RStudio</span>
+    <p>Descarga el <a href="../datos/creditos_crece_practica.csv" download>CSV de práctica</a>, la <a href="../datos/control-02-plantilla.R" download>plantilla del script</a> con los 18 ejercicios y la <a href="../control-02/guia-repaso-control-02.docx" download>guía en Word</a> con preguntas, práctica y respuestas. Todas las cifras de las respuestas se comprobaron ejecutando el código en R.</p>
+  </div>
+</section>
+
+</div>
+</div>
+<div class="tramo" data-tramo="2" data-mom="2" id="tramo-2">
+<div class="tramo-in">
+<header class="tramo-cab"><p class="tramo-n">Momento 2 de 4</p><p class="tramo-tit">Teoría</p></header>
+<section id="t-dplyr">
+  <h2>Teoría 01 · Transformar con dplyr</h2>
+<p>Los verbos que mueven filas, columnas y grupos. Varias preguntas usan una tabla mínima de ventas: predice el resultado antes de ejecutarlo.</p>
+<article id="ej-1" class="ejercicio">
+  <header><h3>Preg. 01 · Tres rasgos de los verbos</h3><span class="ia permitida">IA permitida</span></header>
+  <div class="cuerpo">
+<p>Los verbos de dplyr comparten tres rasgos. Nómbralos. Después explica por qué <code>creditos |&gt; filter(monto_usd &gt; 1000)</code> no cambia el objeto <code>creditos</code> y cómo conservarías el resultado.</p>  </div>
+  <div class="respuesta"><label for="c2-r1">Tu respuesta</label><textarea id="c2-r1" data-id="c2-r1" data-min="40" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 40 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<ul><li>El primer argumento siempre es un data frame; los siguientes nombran columnas sin comillas; la salida siempre es un data frame nuevo.</li><li>Por eso el original queda intacto: el resultado solo se imprime.</li><li>Para conservarlo hay que asignarlo, por ejemplo <code>creditos_grandes &lt;- creditos |&gt; filter(monto_usd &gt; 1000)</code>.</li><li>Conviene no sobrescribir la base original para poder volver a ella.</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c2" data-track="c2-c2"><label for="c2-c2">Analizada</label></li></ul>
+</article>
+
+<article id="ej-2" class="ejercicio">
+  <header><h3>Preg. 02 · Filtrar con «o» y NA</h3><span class="ia permitida">IA permitida</span></header>
+  <div class="cuerpo">
+<p>Usa la tabla <code>ventas</code>. Predice cuántas filas devuelve el código y en qué orden. ¿Por qué aparece la fila de Norte con ingreso faltante?</p><pre data-file="c2-b3.R" data-previo="c2-paquetes"><code class="language-r">ventas &lt;- tibble(
+  tienda  = c("Centro", "Centro", "Norte", "Norte", "Sur"),
+  mes     = c(1, 2, 1, 2, 1),
+  ingreso = c(120, 150, NA, 210, 90)
+)
+
+ventas |&gt;
+  filter(mes == 1 | ingreso &gt; 140) |&gt;
+  arrange(desc(ingreso))</code></pre>  </div>
+  <div class="respuesta"><label for="c2-r4">Tu respuesta</label><textarea id="c2-r4" data-id="c2-r4" data-min="40" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 40 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<ul><li>Devuelve las 5 filas:</li><li>Norte 210, Centro 150, Centro 120, Sur 90 y Norte con <code>NA</code> al final.</li><li>La fila de Norte en el mes 1 entra porque <code>mes == 1</code> es TRUE, y con <code>|</code> basta que una condición sea verdadera (TRUE | NA es TRUE).</li><li><code>arrange()</code> siempre coloca los <code>NA</code> al final, también con <code>desc()</code>.</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c5" data-track="c2-c5"><label for="c2-c5">Analizada</label></li></ul>
+</article>
+
+<article id="ej-3" class="ejercicio">
+  <header><h3>Preg. 03 · Coma, &amp; y |</h3><span class="ia permitida">IA permitida</span></header>
+  <div class="cuerpo">
+<p>Explica la diferencia entre <code>filter(estado == "Desembolsado", monto_usd &gt; 5000)</code>, la misma condición con <code>&amp;</code> y la versión con <code>|</code>. ¿Qué error tiene <code>filter(sucursal == "San Salvador" | "Santa Ana")</code> y cómo se corrige?</p>  </div>
+  <div class="respuesta"><label for="c2-r6">Tu respuesta</label><textarea id="c2-r6" data-id="c2-r6" data-min="40" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 40 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<ul><li>La coma y <code>&amp;</code> son equivalentes: ambas condiciones deben cumplirse en la misma fila.</li><li>Con <code>|</code> basta una.</li><li>La expresión con <code>"Santa Ana"</code> suelta compara una cadena sin columna, así que R da un error.</li><li>Se corrige con <code>sucursal == "San Salvador" | sucursal == "Santa Ana"</code> o, mejor, con <code>sucursal %in% c("San Salvador", "Santa Ana")</code>.</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c7" data-track="c2-c7"><label for="c2-c7">Analizada</label></li></ul>
+</article>
+
+<article id="ej-4" class="ejercicio">
+  <header><h3>Preg. 04 · Ordenar y desempatar</h3><span class="ia permitida">IA permitida</span></header>
+  <div class="cuerpo">
+<p>¿Qué hace <code>arrange(sucursal, desc(monto_usd))</code>? ¿Por qué no existe <code>asc()</code>?</p>  </div>
+  <div class="respuesta"><label for="c2-r8">Tu respuesta</label><textarea id="c2-r8" data-id="c2-r8" data-min="40" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 40 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<ul><li>Ordena primero por sucursal en orden alfabético y, dentro de cada sucursal, de mayor a menor monto: la segunda columna solo desempata.</li><li>No existe <code>asc()</code> porque el orden ascendente es el comportamiento por defecto.</li><li><code>arrange()</code> cambia el orden de las filas, pero no cuáles están.</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c9" data-track="c2-c9"><label for="c2-c9">Analizada</label></li></ul>
+</article>
+
+<article id="ej-5" class="ejercicio">
+  <header><h3>Preg. 05 · Elegir columnas</h3><span class="ia permitida">IA permitida</span></header>
+  <div class="cuerpo">
+<p>Describe qué columnas devuelve cada instrucción: <code>select(prestamo_id, fecha_solicitud:estado)</code>, <code>select(!(plazo_meses:calificacion))</code>, <code>select(where(is.character))</code> y <code>select(starts_with("fecha"))</code>.</p>  </div>
+  <div class="respuesta"><label for="c2-r10">Tu respuesta</label><textarea id="c2-r10" data-id="c2-r10" data-min="40" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 40 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<ul><li>La primera devuelve el identificador y todas las columnas entre <code>fecha_solicitud</code> y <code>estado</code>, ambas incluidas.</li><li>La segunda devuelve todas excepto el bloque de <code>plazo_meses</code> a <code>calificacion</code>.</li><li>La tercera devuelve solo las columnas de texto (útil para revisar categorías y fechas sin convertir).</li><li>La cuarta devuelve <code>fecha_solicitud</code> y <code>fecha_desembolso</code>.</li><li>Ninguna cambia el número de filas.</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c11" data-track="c2-c11"><label for="c2-c11">Analizada</label></li></ul>
+</article>
+
+<article id="ej-6" class="ejercicio">
+  <header><h3>Preg. 06 · .keep y .before</h3><span class="ia permitida">IA permitida</span></header>
+  <div class="cuerpo">
+<p>Predice qué columnas quedan. ¿Para qué sirven <code>.keep</code> y <code>.before</code> en <code>mutate()</code>?</p><pre data-file="c2-b12.R" data-previo="c2-paquetes"><code class="language-r">ventas &lt;- tibble(
+  tienda  = c("Centro", "Centro", "Norte", "Norte", "Sur"),
+  mes     = c(1, 2, 1, 2, 1),
+  ingreso = c(120, 150, NA, 210, 90)
+)
+
+ventas |&gt;
+  mutate(iva = ingreso * 0.13, .keep = "used")</code></pre>  </div>
+  <div class="respuesta"><label for="c2-r13">Tu respuesta</label><textarea id="c2-r13" data-id="c2-r13" data-min="40" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 40 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<ul><li>Quedan <code>ingreso</code> (la columna usada) e <code>iva</code> (la nueva), con 5 filas; la fila con <code>NA</code> produce <code>iva</code> = <code>NA</code>.</li><li><code>.keep</code> decide qué columnas se conservan: "all" por defecto, "used", "unused" o "none".</li><li><code>.before = 1</code> o <code>.after = columna</code> deciden dónde se inserta la columna nueva; sin ellos aparece a la derecha.</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c14" data-track="c2-c14"><label for="c2-c14">Analizada</label></li></ul>
+</article>
+
+<article id="ej-7" class="ejercicio">
+  <header><h3>Preg. 07 · Resumir con NA</h3><span class="ia permitida">IA permitida</span></header>
+  <div class="cuerpo">
+<p>Usa la tabla <code>ventas</code>. Predice el resultado y explica por qué <code>total</code> de Norte es <code>NA</code> mientras <code>prom</code> no lo es. ¿Qué diferencia hay entre <code>n()</code> y <code>sum(!is.na(ingreso))</code>?</p><pre data-file="c2-b15.R" data-previo="c2-paquetes"><code class="language-r">ventas &lt;- tibble(
+  tienda  = c("Centro", "Centro", "Norte", "Norte", "Sur"),
+  mes     = c(1, 2, 1, 2, 1),
+  ingreso = c(120, 150, NA, 210, 90)
+)
+
+ventas |&gt;
+  group_by(tienda) |&gt;
+  summarise(
+    n     = n(),
+    total = sum(ingreso),
+    prom  = mean(ingreso, na.rm = TRUE)
+  )</code></pre>  </div>
+  <div class="respuesta"><label for="c2-r16">Tu respuesta</label><textarea id="c2-r16" data-id="c2-r16" data-min="40" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 40 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<ul><li>Tres filas, una por tienda:</li><li>Centro 2, 270 y 135; Norte 2, <code>NA</code> y 210; Sur 1, 90 y 90.</li><li><code>sum()</code> sin <code>na.rm = TRUE</code> devuelve <code>NA</code> si falta un valor; <code>mean(..., na.rm = TRUE)</code> ignora el faltante y promedia solo 210.</li><li><code>n()</code> cuenta filas (2 en Norte) y <code>sum(!is.na(ingreso))</code> cuenta valores conocidos (1 en Norte).</li><li>Informar ambos muestra con cuántos datos se calculó cada promedio.</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c17" data-track="c2-c17"><label for="c2-c17">Analizada</label></li></ul>
+</article>
+
+<article id="ej-8" class="ejercicio">
+  <header><h3>Preg. 08 · slice_max por grupo</h3><span class="ia permitida">IA permitida</span></header>
+  <div class="cuerpo">
+<p>Después de <code>group_by(tienda)</code>, ¿cuántas filas devuelve <code>slice_max(ingreso, n = 1)</code> en la tabla <code>ventas</code>? ¿Para qué sirve <code>ungroup()</code>?</p><pre data-file="c2-b18.R" data-previo="c2-paquetes"><code class="language-r">ventas &lt;- tibble(
+  tienda  = c("Centro", "Centro", "Norte", "Norte", "Sur"),
+  mes     = c(1, 2, 1, 2, 1),
+  ingreso = c(120, 150, NA, 210, 90)
+)
+
+ventas |&gt;
+  group_by(tienda) |&gt;
+  slice_max(ingreso, n = 1)</code></pre>  </div>
+  <div class="respuesta"><label for="c2-r19">Tu respuesta</label><textarea id="c2-r19" data-id="c2-r19" data-min="40" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 40 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<ul><li>Una fila por tienda, tres en total:</li><li>Centro con 150, Norte con 210 y Sur con 90.</li><li>Las funciones <code>slice_*</code> actúan dentro de cada grupo; sin <code>group_by()</code> devolvería solo la fila de 210.</li><li>El resultado sigue agrupado ("Groups: tienda"), y <code>ungroup()</code> quita esa marca para que los cálculos siguientes usen toda la tabla.</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c20" data-track="c2-c20"><label for="c2-c20">Analizada</label></li></ul>
+</article>
+
+<article id="ej-9" class="ejercicio">
+  <header><h3>Preg. 09 · Duplicados exactos o por id</h3><span class="ia permitida">IA permitida</span></header>
+  <div class="cuerpo">
+<p>Compara <code>distinct(creditos)</code>, <code>distinct(creditos, prestamo_id, .keep_all = TRUE)</code> y <code>n_distinct(creditos$prestamo_id)</code>. ¿Cuándo es peligrosa la segunda forma?</p>  </div>
+  <div class="respuesta"><label for="c2-r21">Tu respuesta</label><textarea id="c2-r21" data-id="c2-r21" data-min="40" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 40 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<ul><li><code>distinct(creditos)</code> elimina filas idénticas en todas las columnas (duplicados exactos de una exportación).</li><li>La segunda conserva la primera fila de cada identificador aunque las repeticiones tengan datos distintos: si un mismo id tuviera montos contradictorios, descartaría información sin avisar.</li><li><code>n_distinct()</code> solo cuenta valores únicos y no cambia la tabla.</li><li>Antes de quitar duplicados conviene comparar <code>nrow()</code> con <code>n_distinct()</code> y revisar los ids repetidos.</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c22" data-track="c2-c22"><label for="c2-c22">Analizada</label></li></ul>
+</article>
+
+</section>
+
+<section id="t-eda">
+  <h2>Teoría 02 · Explorar como economista (EDA)</h2>
+<p>Pasar de una base a entenderla: forma de la distribución, atípicos, comparación entre grupos y el límite entre asociación y causa.</p>
+<article id="ej-10" class="ejercicio">
+  <header><h3>Preg. 10 · El ciclo del EDA</h3><span class="ia permitida">IA permitida</span></header>
+  <div class="cuerpo">
+<p>Describe el ciclo del EDA y las dos preguntas que siempre conviene hacerse. ¿Por qué el EDA no es una lista fija de pasos?</p>  </div>
+  <div class="respuesta"><label for="c2-r23">Tu respuesta</label><textarea id="c2-r23" data-id="c2-r23" data-min="40" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 40 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<ul><li>Es un ciclo iterativo: generar preguntas, buscar respuestas transformando, visualizando y resumiendo, y usar lo aprendido para refinar o crear preguntas nuevas.</li><li>Las dos preguntas son qué variación ocurre dentro de una variable y qué covariación ocurre entre variables.</li><li>No hay rutina fija porque cada hallazgo (un pico, un atípico, un grupo) cambia la siguiente pregunta.</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c24" data-track="c2-c24"><label for="c2-c24">Analizada</label></li></ul>
+</article>
+
+<article id="ej-11" class="ejercicio">
+  <header><h3>Preg. 11 · Leer un summary</h3><span class="ia permitida">IA permitida</span></header>
+  <div class="cuerpo">
+<p>Un <code>summary(monto_usd)</code> de préstamos desembolsados muestra Min 160, 1st Qu. 902.5, Median 1480, Mean 1886.9, 3rd Qu. 2235, Max 25000. Interpreta la forma de la distribución y qué medida de centro reportarías.</p>  </div>
+  <div class="respuesta"><label for="c2-r25">Tu respuesta</label><textarea id="c2-r25" data-id="c2-r25" data-min="40" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 40 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<ul><li>La media es mayor que la mediana y el máximo está muy lejos del tercer cuartil: hay sesgo a la derecha, con muchos préstamos pequeños y unos pocos muy grandes que suben el promedio.</li><li>Para un préstamo típico conviene reportar la mediana (1480), o una media recortada como <code>mean(monto_usd, trim = 0.1)</code>.</li><li>El total sí requiere todos los montos.</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c26" data-track="c2-c26"><label for="c2-c26">Analizada</label></li></ul>
+</article>
+
+<article id="ej-12" class="ejercicio">
+  <header><h3>Preg. 12 · Rango y cuartiles</h3><span class="ia permitida">IA permitida</span></header>
+  <div class="cuerpo">
+<p>¿Qué devuelven <code>range(x)</code>, <code>diff(range(x))</code> y <code>quantile(x)</code>? ¿Cómo se lee la distancia entre el primer y el tercer cuartil?</p>  </div>
+  <div class="respuesta"><label for="c2-r27">Tu respuesta</label><textarea id="c2-r27" data-id="c2-r27" data-min="40" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 40 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<ul><li><code>range()</code> devuelve mínimo y máximo; <code>diff(range())</code> es el rango, máximo menos mínimo; <code>quantile()</code> devuelve mínimo, Q1, mediana, Q3 y máximo.</li><li>Entre Q1 y Q3 está el 50 % central de las observaciones: esa distancia mide dispersión sin dejarse arrastrar por los extremos, a diferencia del rango.</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c28" data-track="c2-c28"><label for="c2-c28">Analizada</label></li></ul>
+</article>
+
+<article id="ej-13" class="ejercicio">
+  <header><h3>Preg. 13 · Ancho de las barras</h3><span class="ia permitida">IA permitida</span></header>
+  <div class="cuerpo">
+<p>En un histograma de <code>monto_usd</code>, ¿qué cambia si pasas de <code>binwidth = 500</code> a <code>binwidth = 100</code>? ¿Qué representa la altura de cada barra?</p>  </div>
+  <div class="respuesta"><label for="c2-r29">Tu respuesta</label><textarea id="c2-r29" data-id="c2-r29" data-min="40" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 40 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<ul><li>Con 100 cada intervalo es más angosto: aparecen más barras, más bajas, y se ven detalles como picos en montos redondos; con 500 la forma es más suave pero esconde esos detalles.</li><li>La altura es el número de préstamos cuyo monto cae en ese intervalo, no la suma de dinero.</li><li>Los datos no cambian, solo la agrupación.</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c30" data-track="c2-c30"><label for="c2-c30">Analizada</label></li></ul>
+</article>
+
+<article id="ej-14" class="ejercicio">
+  <header><h3>Preg. 14 · Zoom contra filtro</h3><span class="ia permitida">IA permitida</span></header>
+  <div class="cuerpo">
+<p>Compara <code>coord_cartesian(ylim = c(0, 50))</code> con <code>filter(y &lt;= 20)</code> antes de graficar. ¿Cuál elimina observaciones?</p>  </div>
+  <div class="respuesta"><label for="c2-r31">Tu respuesta</label><textarea id="c2-r31" data-id="c2-r31" data-min="40" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 40 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<ul><li><code>coord_cartesian()</code> solo hace zoom: todas las observaciones siguen en el gráfico y en los cálculos, pero se ve el rango pedido, lo que permite descubrir barras bajas de valores raros.</li><li><code>filter()</code> elimina filas antes de graficar: cambia los datos y el gráfico ya no muestra lo que quedó fuera.</li><li>Para buscar atípicos se usa el zoom.</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c32" data-track="c2-c32"><label for="c2-c32">Analizada</label></li></ul>
+</article>
+
+<article id="ej-15" class="ejercicio">
+  <header><h3>Preg. 15 · Valores imposibles</h3><span class="ia permitida">IA permitida</span></header>
+  <div class="cuerpo">
+<p>En diamonds había valores <code>y = 0</code> mm. ¿Por qué es mejor <code>mutate(y = if_else(y == 0, NA, y))</code> que borrar la fila? ¿Qué significa la advertencia «Removed rows containing missing values» de ggplot2?</p>  </div>
+  <div class="respuesta"><label for="c2-r33">Tu respuesta</label><textarea id="c2-r33" data-id="c2-r33" data-min="40" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 40 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<ul><li>Un ancho de 0 mm es imposible: es un dato faltante disfrazado.</li><li>Convertirlo en <code>NA</code> conserva el resto de la fila (precio, quilates, corte) para otros análisis; borrar la fila pierde información válida. ggplot2 no sabe dónde dibujar un <code>NA</code>, lo omite y avisa; <code>na.rm = TRUE</code> en el geom quita el aviso, no el problema.</li><li>Un valor extremo pero posible se conserva hasta tener evidencia de error.</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c34" data-track="c2-c34"><label for="c2-c34">Analizada</label></li></ul>
+</article>
+
+<article id="ej-16" class="ejercicio">
+  <header><h3>Preg. 16 · Leer un diagrama de caja</h3><span class="ia permitida">IA permitida</span></header>
+  <div class="cuerpo">
+<p>Lee un diagrama de caja de días de desembolso por sucursal. ¿Qué indican la línea central, la caja, los bigotes y los puntos sueltos? ¿Cómo decides qué sucursal tiene más dispersión?</p>  </div>
+  <div class="respuesta"><label for="c2-r35">Tu respuesta</label><textarea id="c2-r35" data-id="c2-r35" data-min="40" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 40 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<ul><li>La línea central es la mediana; la caja va de Q1 a Q3 (50 % central); los bigotes llegan a los valores no atípicos más lejanos; los puntos son atípicos.</li><li>Tiene más dispersión la sucursal con la caja más alta (mayor distancia Q3 menos Q1) o mayor desviación estándar <code>sd()</code>.</li><li>Hay que sustentarlo con una medida además del gráfico.</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c36" data-track="c2-c36"><label for="c2-c36">Analizada</label></li></ul>
+</article>
+
+<article id="ej-17" class="ejercicio">
+  <header><h3>Preg. 17 · Categorías en tablas</h3><span class="ia permitida">IA permitida</span></header>
+  <div class="cuerpo">
+<p>Para una variable categórica como <code>estado</code>, ¿por qué se usan tablas y no <code>mean()</code>? ¿Qué aportan <code>table()</code> y <code>prop.table(table())</code>?</p>  </div>
+  <div class="respuesta"><label for="c2-r37">Tu respuesta</label><textarea id="c2-r37" data-id="c2-r37" data-min="40" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 40 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<ul><li>Las categorías no tienen promedio: se describen con frecuencias.</li><li><code>table(estado)</code> cuenta préstamos por categoría y <code>prop.table(table(estado))</code> convierte esos conteos en proporciones que suman 1, útiles para comparar bases de distinto tamaño.</li><li>En ggplot2, <code>geom_bar()</code> cuenta por categoría por sí solo.</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c38" data-track="c2-c38"><label for="c2-c38">Analizada</label></li></ul>
+</article>
+
+<article id="ej-18" class="ejercicio">
+  <header><h3>Preg. 18 · Asociación no es causa</h3><span class="ia permitida">IA permitida</span></header>
+  <div class="cuerpo">
+<p>Un gráfico de dispersión muestra que los préstamos a 24 y 36 meses tienen tasas más altas. Un analista concluye: «alargar el plazo causa tasas más altas». ¿Qué está mal y cómo lo dirías?</p>  </div>
+  <div class="respuesta"><label for="c2-r39">Tu respuesta</label><textarea id="c2-r39" data-id="c2-r39" data-min="40" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 40 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<ul><li>El EDA describe asociaciones, no causas.</li><li>Puede haber otros factores: el tipo de cliente, el sector o una política de precios.</li><li>Una formulación defendible:</li><li>«en estos registros, los préstamos a mayor plazo se asocian con tasas promedio más altas».</li><li>Para hablar de causa haría falta conocer cómo se fija la tasa o un diseño que aísle el plazo.</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c40" data-track="c2-c40"><label for="c2-c40">Analizada</label></li></ul>
+</article>
+
+</section>
+
+<section id="t-factores">
+  <h2>Teoría 03 · Variables categóricas y factores</h2>
+<p>Cómo convertir texto desordenado en categorías confiables y ordenadas para tablas y gráficos.</p>
+<article id="ej-19" class="ejercicio">
+  <header><h3>Preg. 19 · Por qué un factor</h3><span class="ia permitida">IA permitida</span></header>
+  <div class="cuerpo">
+<p>¿Qué dos problemas tiene guardar los meses o las calificaciones como texto? ¿Cómo los resuelve un factor?</p>  </div>
+  <div class="respuesta"><label for="c2-r41">Tu respuesta</label><textarea id="c2-r41" data-id="c2-r41" data-min="40" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 40 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<ul><li>Primero, nada impide errores de escritura ("Dic" en vez de "Dec", "a" en vez de "A"), que crean categorías falsas.</li><li>Segundo, el texto se ordena alfabéticamente (Apr, Aug, Dec...), no en un orden útil.</li><li>Un factor fija una lista de niveles válidos y su orden: los gráficos, tablas y <code>sort()</code> respetan ese orden.</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c42" data-track="c2-c42"><label for="c2-c42">Analizada</label></li></ul>
+</article>
+
+<article id="ej-20" class="ejercicio">
+  <header><h3>Preg. 20 · factor() contra fct()</h3><span class="ia permitida">IA permitida</span></header>
+  <div class="cuerpo">
+<p>Predice la salida. Después explica qué haría <code>fct(x, levels = ...)</code> con el mismo vector y cuál de las dos funciones prefieres para verificar datos.</p><pre data-file="c2-b43.R" data-previo="c2-paquetes"><code class="language-r">x &lt;- c("Bajo", "Alto", "Medio", "Alto", "medio")
+factor(x, levels = c("Bajo", "Medio", "Alto"))</code></pre>  </div>
+  <div class="respuesta"><label for="c2-r44">Tu respuesta</label><textarea id="c2-r44" data-id="c2-r44" data-min="40" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 40 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<ul><li>Devuelve <code>Bajo Alto Medio Alto &lt;NA&gt;</code> con niveles Bajo Medio Alto: "medio" en minúscula no está en los niveles y <code>factor()</code> lo convierte en <code>NA</code> en silencio (los niveles distinguen mayúsculas).</li><li><code>fct()</code> se detiene con un error que dice qué valores faltan en los niveles.</li><li>Para verificar conviene <code>fct()</code>, porque no oculta el problema.</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c45" data-track="c2-c45"><label for="c2-c45">Analizada</label></li></ul>
+</article>
+
+<article id="ej-21" class="ejercicio">
+  <header><h3>Preg. 21 · Niveles y sort()</h3><span class="ia permitida">IA permitida</span></header>
+  <div class="cuerpo">
+<p>¿Qué devuelven <code>levels(f)</code> y <code>sort(f)</code> si <code>f &lt;- factor(c("Bajo", "Alto", "Medio", "Alto"), levels = c("Bajo", "Medio", "Alto"))</code>?</p>  </div>
+  <div class="respuesta"><label for="c2-r46">Tu respuesta</label><textarea id="c2-r46" data-id="c2-r46" data-min="40" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 40 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<ul><li><code>levels(f)</code> devuelve "Bajo" "Medio" "Alto", en el orden definido, no alfabético.</li><li><code>sort(f)</code> ordena según esos niveles:</li><li>Bajo Medio Alto Alto.</li><li>Con el vector de texto, <code>sort()</code> habría dado Alto Alto Bajo Medio.</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c47" data-track="c2-c47"><label for="c2-c47">Analizada</label></li></ul>
+</article>
+
+<article id="ej-22" class="ejercicio">
+  <header><h3>Preg. 22 · Ordenar por frecuencia</h3><span class="ia permitida">IA permitida</span></header>
+  <div class="cuerpo">
+<p>¿Qué hacen <code>fct_infreq()</code> y <code>fct_rev()</code> en un gráfico de barras de <code>sucursal_limpia</code>? ¿Cambian los datos?</p>  </div>
+  <div class="respuesta"><label for="c2-r48">Tu respuesta</label><textarea id="c2-r48" data-id="c2-r48" data-min="40" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 40 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<ul><li><code>fct_infreq()</code> reordena los niveles de mayor a menor frecuencia, así las barras quedan de la más alta a la más baja; <code>fct_rev()</code> invierte ese orden.</li><li>Solo cambia el orden de los niveles: los conteos de cada categoría y el número de filas son los mismos.</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c49" data-track="c2-c49"><label for="c2-c49">Analizada</label></li></ul>
+</article>
+
+<article id="ej-23" class="ejercicio">
+  <header><h3>Preg. 23 · fct_reorder()</h3><span class="ia permitida">IA permitida</span></header>
+  <div class="cuerpo">
+<p>Explica los argumentos de <code>fct_reorder(sucursal, media_dias)</code>. ¿Por qué se aplica sobre un resumen con <code>group_by()</code> y <code>summarise()</code>? ¿Dónde conviene escribir la transformación?</p>  </div>
+  <div class="respuesta"><label for="c2-r50">Tu respuesta</label><textarea id="c2-r50" data-id="c2-r50" data-min="40" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 40 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<ul><li>El primer argumento es el factor que se reordena; el segundo, el vector numérico que define el orden (de menor a mayor; con <code>desc(media_dias)</code> de mayor a menor).</li><li>Se usa sobre un resumen porque se necesita un valor por categoría.</li><li>Conviene hacerlo en un <code>mutate()</code> antes de <code>ggplot()</code>, no dentro de <code>aes()</code>, para que el código sea legible.</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c51" data-track="c2-c51"><label for="c2-c51">Analizada</label></li></ul>
+</article>
+
+<article id="ej-24" class="ejercicio">
+  <header><h3>Preg. 24 · fct_relevel()</h3><span class="ia permitida">IA permitida</span></header>
+  <div class="cuerpo">
+<p>¿Qué hace <code>fct_relevel(calificacion_f, "Sin calificar")</code>? Da un uso de negocio.</p>  </div>
+  <div class="respuesta"><label for="c2-r52">Tu respuesta</label><textarea id="c2-r52" data-id="c2-r52" data-min="40" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 40 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<ul><li>Mueve el nivel "Sin calificar" al inicio y deja los demás en el mismo orden.</li><li>Sirve para destacar una categoría especial (sin respuesta, no sabe, sin evaluación) y separarla visualmente de la escala A a E, sin mezclarla con una calificación real.</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c53" data-track="c2-c53"><label for="c2-c53">Analizada</label></li></ul>
+</article>
+
+<article id="ej-25" class="ejercicio">
+  <header><h3>Preg. 25 · fct_recode()</h3><span class="ia permitida">IA permitida</span></header>
+  <div class="cuerpo">
+<p>Predice la salida. ¿Qué regla de <code>fct_recode()</code> se suele invertir por error?</p><pre data-file="c2-b54.R" data-previo="c2-paquetes"><code class="language-r">fct_recode(factor(c("SS", "SA", "SS", "SM")),
+           "San Salvador" = "SS", "Santa Ana" = "SA")</code></pre>  </div>
+  <div class="respuesta"><label for="c2-r55">Tu respuesta</label><textarea id="c2-r55" data-id="c2-r55" data-min="40" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 40 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<ul><li>Devuelve San Salvador, Santa Ana, San Salvador, SM: "SM" no se mencionó y queda igual.</li><li>La regla es nombre <code>nuevo = viejo</code>; se suele escribir al revés.</li><li>Para unir dos etiquetas en una se repite el nombre nuevo:</li><li><code>"San Salvador" = "san salvador", "San Salvador" = "S</code></li><li>Salvador"`.</li><li>Después se comparan las frecuencias antes y después.</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c56" data-track="c2-c56"><label for="c2-c56">Analizada</label></li></ul>
+</article>
+
+<article id="ej-26" class="ejercicio">
+  <header><h3>Preg. 26 · Agrupar con case_when()</h3><span class="ia permitida">IA permitida</span></header>
+  <div class="cuerpo">
+<p>Escribe un <code>case_when()</code> que agrupe <code>sector</code> en «Comercio y servicios» (Comercio, Servicios, Turismo), «Producción» (Agropecuario, Manufactura, Artesanía) y «Transporte». ¿Para qué sirve <code>TRUE ~</code>? ¿Cómo compruebas que no se perdió ningún caso?</p>  </div>
+  <div class="respuesta"><label for="c2-r57">Tu respuesta</label><textarea id="c2-r57" data-id="c2-r57" data-min="40" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 40 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<ul><li><code>mutate(sector_grupo = case_when(sector %in% c("Comercio", "Servicios", "Turismo") ~ "Comercio y servicios", sector %in% c("Agropecuario", "Manufactura", "Artesanía") ~ "Producción", TRUE ~ "Transporte"))</code>.</li><li><code>TRUE ~</code> es la categoría por defecto para todo lo que no cumplió ninguna condición anterior; hay que revisar que no atrape valores inesperados.</li><li>Se comprueba que la suma de <code>count(sector_grupo)</code> sea igual a <code>nrow()</code> y que no aparezcan <code>NA</code> nuevos.</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c58" data-track="c2-c58"><label for="c2-c58">Analizada</label></li></ul>
+</article>
+
+<article id="ej-27" class="ejercicio">
+  <header><h3>Preg. 27 · Tramos con cut()</h3><span class="ia permitida">IA permitida</span></header>
+  <div class="cuerpo">
+<p>Predice la salida. ¿En qué tramo cae exactamente 1000? ¿Cuántas etiquetas necesitas para 4 cortes?</p><pre data-file="c2-b59.R" data-previo="c2-paquetes"><code class="language-r">cut(c(500, 1000, 1001, 4000, NA),
+    breaks = c(0, 1000, 3000, Inf),
+    labels = c("Pequeño", "Mediano", "Grande"))</code></pre>  </div>
+  <div class="respuesta"><label for="c2-r60">Tu respuesta</label><textarea id="c2-r60" data-id="c2-r60" data-min="40" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 40 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<ul><li>Devuelve Pequeño Pequeño Mediano Grande <code>NA</code>.</li><li>Los intervalos incluyen el límite derecho por defecto, (0, 1000], por eso 1000 es Pequeño y 1001 Mediano.</li><li>Un valor faltante sigue siendo <code>NA</code>.</li><li>Con 4 cortes hay 3 intervalos, así que se necesitan 3 etiquetas.</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c61" data-track="c2-c61"><label for="c2-c61">Analizada</label></li></ul>
+</article>
+
+<article id="ej-28" class="ejercicio">
+  <header><h3>Preg. 28 · Factores al importar</h3><span class="ia permitida">IA permitida</span></header>
+  <div class="cuerpo">
+<p>¿Cómo importarías una columna directamente como factor con <code>read_csv()</code>?</p>  </div>
+  <div class="respuesta"><label for="c2-r62">Tu respuesta</label><textarea id="c2-r62" data-id="c2-r62" data-min="40" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 40 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<ul><li>Con <code>col_types</code>:</li><li><code>read_csv("archivo.csv", col_types = cols(mes = col_factor(niveles_mes)))</code>.</li><li>La columna llega como <code>&lt;fct&gt;</code> con el orden de <code>niveles_mes</code>.</li><li>Igual hay que revisar que no aparezcan <code>NA</code> por valores que no estaban en los niveles.</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c63" data-track="c2-c63"><label for="c2-c63">Analizada</label></li></ul>
+</article>
+
+</section>
+
+<section id="t-fechas">
+  <h2>Teoría 04 · Fechas con lubridate</h2>
+<p>Del texto día/mes/año a fechas de R: conversión, NA nuevos, duraciones y agrupaciones en el tiempo.</p>
+<article id="ej-29" class="ejercicio">
+  <header><h3>Preg. 29 · Texto a fecha</h3><span class="ia permitida">IA permitida</span></header>
+  <div class="cuerpo">
+<p>Una columna dice "15/09/2024" y <code>glimpse()</code> la marca como <code>&lt;chr&gt;</code>. ¿Por qué no puedes restarle otra fecha? Elige entre <code>dmy()</code>, <code>mdy()</code> y <code>ymd()</code> para "15/09/2024", "02/24/2025" y "2025-02-24".</p>  </div>
+  <div class="respuesta"><label for="c2-r64">Tu respuesta</label><textarea id="c2-r64" data-id="c2-r64" data-min="40" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 40 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<ul><li>Es texto:</li><li>R no sabe que representa un día, así que no puede restar, ordenar cronológicamente ni extraer el mes.</li><li>La función se elige por el orden real de los componentes: "15/09/2024" es día/mes/año, <code>dmy()</code>; "02/24/2025" es mes/día/año, <code>mdy()</code>; "2025-02-24" es año-mes-día, <code>ymd()</code>.</li><li>Con la función equivocada aparece <code>NA</code> o una fecha distinta.</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c65" data-track="c2-c65"><label for="c2-c65">Analizada</label></li></ul>
+</article>
+
+<article id="ej-30" class="ejercicio">
+  <header><h3>Preg. 30 · NA nuevos tras convertir</h3><span class="ia permitida">IA permitida</span></header>
+  <div class="cuerpo">
+<p>Antes de convertir había 2 <code>NA</code> en <code>fecha_solicitud</code>; después de <code>dmy()</code> hay 5. ¿Un <code>NA</code> nuevo significa que la celda estaba vacía? Da ejemplos y di qué harías con esos registros.</p>  </div>
+  <div class="respuesta"><label for="c2-r66">Tu respuesta</label><textarea id="c2-r66" data-id="c2-r66" data-min="40" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 40 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<ul><li>No.</li><li>Un <code>NA</code> nuevo indica texto que no se pudo interpretar como fecha: "31/02/2024" (febrero no tiene 31), "29/02/2023" (2023 no es bisiesto) o "15/13/2024" (no existe el mes 13).</li><li>Se inspeccionan con <code>filter(is.na(fecha))</code> junto a la columna original, se documentan y no se inventa una fecha.</li><li>Esos registros salen del análisis temporal, pero se conservan en la base preparada.</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c67" data-track="c2-c67"><label for="c2-c67">Analizada</label></li></ul>
+</article>
+
+<article id="ej-31" class="ejercicio">
+  <header><h3>Preg. 31 · Duraciones</h3><span class="ia permitida">IA permitida</span></header>
+  <div class="cuerpo">
+<p>¿Qué devuelve <code>as.numeric(dmy("20/09/2024") - dmy("15/09/2024"))</code>? ¿Qué significa una duración negativa entre solicitud y desembolso?</p>  </div>
+  <div class="respuesta"><label for="c2-r68">Tu respuesta</label><textarea id="c2-r68" data-id="c2-r68" data-min="40" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 40 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<ul><li>Devuelve 5: la resta de fechas es una diferencia de tiempo en días y <code>as.numeric()</code> la vuelve número.</li><li>Una duración negativa significa que el desembolso figura antes de la solicitud, algo imposible: es un error de registro.</li><li>No es un tiempo válido y se excluye del cálculo de tiempos, aunque el préstamo siga contando como desembolsado.</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c69" data-track="c2-c69"><label for="c2-c69">Analizada</label></li></ul>
+</article>
+
+<article id="ej-32" class="ejercicio">
+  <header><h3>Preg. 32 · Componentes de una fecha</h3><span class="ia permitida">IA permitida</span></header>
+  <div class="cuerpo">
+<p>¿Qué hacen <code>year()</code>, <code>month()</code>, <code>day()</code>, <code>wday(fecha, week_start = 1)</code>, <code>today()</code> y <code>make_date(year, month, day)</code>?</p>  </div>
+  <div class="respuesta"><label for="c2-r70">Tu respuesta</label><textarea id="c2-r70" data-id="c2-r70" data-min="40" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 40 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<ul><li>Las tres primeras extraen año, número de mes y día del mes.</li><li><code>wday()</code> devuelve el día de la semana; con <code>week_start = 1</code> el lunes es 1 y el domingo 7.</li><li><code>today()</code> devuelve la fecha actual.</li><li><code>make_date()</code> construye una fecha a partir de columnas numéricas separadas, como en flights.</li><li><code>make_date(2023, 2, 29)</code> devuelve <code>NA</code> porque esa fecha no existe.</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c71" data-track="c2-c71"><label for="c2-c71">Analizada</label></li></ul>
+</article>
+
+<article id="ej-33" class="ejercicio">
+  <header><h3>Preg. 33 · Mes del año o mes calendario</h3><span class="ia permitida">IA permitida</span></header>
+  <div class="cuerpo">
+<p>Predice la salida y explica la diferencia entre agrupar por <code>month(fecha)</code> y por <code>floor_date(fecha, "month")</code> en una base de 2023 a 2025.</p><pre data-file="c2-b72.R" data-previo="c2-paquetes"><code class="language-r">x &lt;- dmy(c("18/01/2023", "04/01/2024", "27/01/2025"))
+month(x)
+floor_date(x, "month")</code></pre>  </div>
+  <div class="respuesta"><label for="c2-r73">Tu respuesta</label><textarea id="c2-r73" data-id="c2-r73" data-min="40" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 40 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<ul><li><code>month(x)</code> devuelve 1 1 1: las tres fechas caen en «enero» y se mezclan.</li><li><code>floor_date()</code> devuelve 2023-01-01, 2024-01-01 y 2025-01-01: tres meses calendario distintos.</li><li>Agrupar por <code>month()</code> da 12 grupos y sirve para explorar estacionalidad; agrupar por <code>floor_date()</code> da un grupo por mes de cada año (36 en tres años) y conserva la secuencia para una serie de tiempo.</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c74" data-track="c2-c74"><label for="c2-c74">Analizada</label></li></ul>
+</article>
+
+<article id="ej-34" class="ejercicio">
+  <header><h3>Preg. 34 · Misma ventana entre años</h3><span class="ia permitida">IA permitida</span></header>
+  <div class="cuerpo">
+<p>Quieres comparar el volumen de 2025 con años anteriores, pero los datos de 2025 llegan hasta marzo. ¿Por qué comparar enero a marzo de cada año y no 2025 contra un año completo?</p>  </div>
+  <div class="respuesta"><label for="c2-r75">Tu respuesta</label><textarea id="c2-r75" data-id="c2-r75" data-min="40" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 40 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<ul><li>Un año completo tiene doce meses y el otro tres: el total sería menor por tener menos tiempo, no por menos actividad.</li><li>Comparar la misma ventana (enero a marzo de cada año) hace los periodos equivalentes.</li><li>Se filtra con <code>month(fecha) &lt;= 3</code> y se resume por <code>year(fecha)</code>.</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c76" data-track="c2-c76"><label for="c2-c76">Analizada</label></li></ul>
+</article>
+
+</section>
+
+<section id="t-poblaciones">
+  <h2>Teoría 05 · Poblaciones, verificación y comunicación</h2>
+<p>Lo que separa un análisis correcto de uno que solo corre: qué filas usa cada indicador y cómo se comprueba.</p>
+<article id="ej-35" class="ejercicio">
+  <header><h3>Preg. 35 · Una población por pregunta</h3><span class="ia permitida">IA permitida</span></header>
+  <div class="cuerpo">
+<p>¿Por qué no conviene borrar todas las filas que tengan algún <code>NA</code> antes de empezar? Explica la idea de «una población por pregunta».</p>  </div>
+  <div class="respuesta"><label for="c2-r77">Tu respuesta</label><textarea id="c2-r77" data-id="c2-r77" data-min="40" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 40 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<ul><li>Cada indicador necesita variables distintas.</li><li>Un préstamo rechazado no tiene fecha de desembolso, pero sí cuenta para el volumen de solicitudes; un desembolsado sin monto no sirve para describir montos, pero sí para contar desembolsos.</li><li>Borrar todo lo incompleto reduce y sesga la base.</li><li>Se construye un objeto por pregunta: solicitudes con fecha válida, colocaciones con monto conocido y desembolsos con tiempo válido.</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c78" data-track="c2-c78"><label for="c2-c78">Analizada</label></li></ul>
+</article>
+
+<article id="ej-36" class="ejercicio">
+  <header><h3>Preg. 36 · Faltantes no son ceros</h3><span class="ia permitida">IA permitida</span></header>
+  <div class="cuerpo">
+<p>Un compañero reemplaza los montos faltantes por 0 «para que no salgan NA». ¿Qué efecto tiene en la media y en el total? ¿Qué hace en su lugar?</p>  </div>
+  <div class="respuesta"><label for="c2-r79">Tu respuesta</label><textarea id="c2-r79" data-id="c2-r79" data-min="40" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 40 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<ul><li>Un 0 dice «se prestaron 0 dólares», lo cual es falso: baja la media y la mediana y presenta como dato algo desconocido.</li><li>El total también queda subestimado sin advertencia.</li><li>Lo correcto es dejar <code>NA</code>, usar <code>na.rm = TRUE</code> o filtrar la población con monto conocido, e informar cuántos registros quedaron fuera.</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c80" data-track="c2-c80"><label for="c2-c80">Analizada</label></li></ul>
+</article>
+
+<article id="ej-37" class="ejercicio">
+  <header><h3>Preg. 37 · Sumar días no mide rapidez</h3><span class="ia permitida">IA permitida</span></header>
+  <div class="cuerpo">
+<p>Para decir qué sucursal desembolsa más rápido, alguien suma los días de desembolso por sucursal. ¿Por qué es mal indicador? ¿Qué usarías?</p>  </div>
+  <div class="respuesta"><label for="c2-r81">Tu respuesta</label><textarea id="c2-r81" data-id="c2-r81" data-min="40" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 40 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<ul><li>La suma depende de cuántos préstamos tiene cada sucursal: la que más presta acumula más días aunque sea rápida.</li><li>Se compara una medida típica por préstamo (media y mediana de días) junto al número de casos analizados, y la dispersión (caja, <code>sd()</code>).</li><li>Solo se incluyen desembolsos válidos.</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c82" data-track="c2-c82"><label for="c2-c82">Analizada</label></li></ul>
+</article>
+
+<article id="ej-38" class="ejercicio">
+  <header><h3>Preg. 38 · Cuatro comprobaciones</h3><span class="ia permitida">IA permitida</span></header>
+  <div class="cuerpo">
+<p>Nombra cuatro comprobaciones concretas para responder «¿cómo sabemos que este resultado es correcto?» en un flujo de limpieza.</p>  </div>
+  <div class="respuesta"><label for="c2-r83">Tu respuesta</label><textarea id="c2-r83" data-id="c2-r83" data-min="40" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 40 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<ul><li>Comparar <code>nrow()</code> antes y después de cada filtro y explicar la diferencia; comparar <code>nrow()</code> con <code>n_distinct()</code> del identificador; verificar que la suma de un <code>count()</code> por categoría sea igual al total después de recodificar o agrupar; contar <code>NA</code> antes y después de convertir fechas e inspeccionar los nuevos; revisar mínimo y máximo con <code>range()</code> para detectar valores imposibles.</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c84" data-track="c2-c84"><label for="c2-c84">Analizada</label></li></ul>
+</article>
+
+<article id="ej-39" class="ejercicio">
+  <header><h3>Preg. 39 · Recomendar con evidencia</h3><span class="ia permitida">IA permitida</span></header>
+  <div class="cuerpo">
+<p>Escribe una recomendación para la gerencia basada en un hallazgo de EDA. ¿Qué tres elementos debe tener?</p>  </div>
+  <div class="respuesta"><label for="c2-r85">Tu respuesta</label><textarea id="c2-r85" data-id="c2-r85" data-min="40" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 40 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<ul><li>Un hallazgo con una cifra verificada y su población (por ejemplo, la mediana de días por sucursal y cuántos desembolsos se analizaron), una acción proporcional al hallazgo (revisar el proceso o pedir más datos) y una limitación explícita (son asociaciones de datos observados, hay registros excluidos y no se conocen las causas).</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c86" data-track="c2-c86"><label for="c2-c86">Analizada</label></li></ul>
+</article>
+
+</section>
+
+</div>
+</div>
+<div class="tramo" data-tramo="3" data-mom="3" id="tramo-3">
+<div class="tramo-in">
+<header class="tramo-cab"><p class="tramo-n">Momento 3 de 4</p><p class="tramo-tit">Practicar</p></header>
+<section id="practica-r">
+  <h2>Práctica con R en vivo</h2>
+<p>La microfinanciera ficticia <strong>Crece</strong> otorga microcréditos en tres sucursales entre 2023 y 2025 y quiere entender su operación: cuántas solicitudes recibe, cuánto coloca y cuánto tarda en desembolsar. Cada fila debería ser un préstamo, pero la exportación trae duplicados, etiquetas inconsistentes y fechas con problemas. Los datos son simulados para esta guía y no son los del control.</p>
+<div class="box nota"><span class="box-title">La primera ejecución tarda</span><p>La primera vez se descarga R y se instalan <code>readr</code>, <code>dplyr</code>, <code>ggplot2</code>, <code>forcats</code> y <code>lubridate</code>: puede tardar un par de minutos. Cada bloque ejecuta antes, solo, los pasos anteriores que necesita (importar, quitar duplicados, convertir fechas). En RStudio empieza tu script con <code>library(tidyverse)</code>; aquí el bloque de abajo carga esos cinco paquetes.</p></div>
+<pre data-file="paquetes.R" id="c2-paquetes"><code class="language-r">library(readr)
+library(dplyr)
+library(ggplot2)
+library(forcats)
+library(lubridate)</code></pre>
+<div class="table-wrap"><table class="datos"><caption>Vista previa de creditos_crece_practica.csv: las primeras 8 de 649 filas (10 columnas). Las celdas vacías son faltantes.</caption>
+<thead><tr><th>prestamo_id</th><th>fecha_solicitud</th><th>fecha_desembolso</th><th>sucursal</th><th>sector</th><th>estado</th><th>monto_usd</th><th>plazo_meses</th><th>tasa_anual</th><th>calificacion</th></tr></thead><tbody>
+<tr><td>CR0430</td><td>16/2/2025</td><td>26/02/2025</td><td>San Salvador</td><td>Comercio</td><td>Desembolsado</td><td>1150</td><td>12</td><td>19.3</td><td>A</td></tr>
+<tr><td>CR0263</td><td>13/8/2025</td><td></td><td>Santa Ana</td><td>Servicios</td><td>Rechazado</td><td>2960</td><td>6</td><td>26.6</td><td>D</td></tr>
+<tr><td>CR0353</td><td>25/11/2024</td><td>29/11/2024</td><td>San Miguel</td><td>Agropecuario</td><td>Desembolsado</td><td>680</td><td>12</td><td>31.9</td><td>A</td></tr>
+<tr><td>CR0245</td><td>07/02/2025</td><td>8/2/2025</td><td>San Salvador</td><td>Artesanía</td><td>Desembolsado</td><td>2100</td><td>18</td><td>27.8</td><td>C</td></tr>
+<tr><td>CR0459</td><td>2/4/2025</td><td></td><td>Santa Ana</td><td>Comercio</td><td>Rechazado</td><td>870</td><td>6</td><td>18.1</td><td>B</td></tr>
+<tr><td>CR0559</td><td>05/03/2025</td><td>10/3/2025</td><td>San Salvador</td><td>Comercio</td><td>Desembolsado</td><td>610</td><td>36</td><td>30.1</td><td>C</td></tr>
+<tr><td>CR0141</td><td>11/12/2025</td><td>13/12/2025</td><td>Santa Ana</td><td>Agropecuario</td><td>Desembolsado</td><td>990</td><td>12</td><td>30.7</td><td>C</td></tr>
+<tr><td>CR0511</td><td>28/7/2025</td><td>31/07/2025</td><td>Santa Ana</td><td>Agropecuario</td><td>Desembolsado</td><td>4020</td><td>12</td><td>29.9</td><td>b</td></tr>
+</tbody></table></div>
+<div class="table-wrap"><table><caption>Diccionario de variables</caption><thead><tr><th>Variable</th><th>Significado</th></tr></thead><tbody><tr><td><code>prestamo_id</code></td><td>Identificador del préstamo; debería ser único.</td></tr><tr><td><code>fecha_solicitud</code></td><td>Fecha de la solicitud como texto día/mes/año.</td></tr><tr><td><code>fecha_desembolso</code></td><td>Fecha de entrega del dinero como texto día/mes/año; vacía si no hubo desembolso.</td></tr><tr><td><code>sucursal</code></td><td>San Salvador, Santa Ana o San Miguel (con errores de escritura).</td></tr><tr><td><code>sector</code></td><td>Actividad del negocio: Comercio, Servicios, Turismo, Agropecuario, Manufactura, Artesanía o Transporte.</td></tr><tr><td><code>estado</code></td><td>Desembolsado, Rechazado o En_evaluacion.</td></tr><tr><td><code>monto_usd</code></td><td>Monto del préstamo en USD; solo es colocación si fue desembolsado.</td></tr><tr><td><code>plazo_meses</code></td><td>Plazo pactado: 6, 12, 18, 24 o 36 meses.</td></tr><tr><td><code>tasa_anual</code></td><td>Tasa de interés anual en porcentaje.</td></tr><tr><td><code>calificacion</code></td><td>Riesgo del cliente de A (mejor) a E (peor); «Sin calificar» si sigue en evaluación.</td></tr></tbody></table></div>
+<h3 class="caso">Caso 1 · Inspección antes de decidir</h3>
+<article id="ej-40" class="ejercicio">
+  <header><h3>Ej. A · Estructura</h3><span class="ia sin">Sin IA</span></header>
+  <div class="cuerpo">
+<p>Importa el archivo como <code>creditos</code> y no lo modifiques. Antes de ejecutar, escribe cuántas columnas y qué tipos esperas; luego compruébalo con <code>dim()</code> y <code>glimpse()</code>. ¿Las fechas son texto o fechas de R?</p><pre data-file="c2-b89.R" data-previo="c2-paquetes" data-archivos="../datos/creditos_crece_practica.csv"><code class="language-r">creditos &lt;- read_csv("datos/creditos_crece_practica.csv")
+# sigue aquí</code></pre>  </div>
+  <div class="respuesta"><label for="c2-r90">Tu respuesta</label><textarea id="c2-r90" data-id="c2-r90" data-min="30" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 30 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<pre data-file="c2-b88.R" id="c2-sA" data-previo="c2-paquetes" data-archivos="../datos/creditos_crece_practica.csv"><code class="language-r">creditos &lt;- read_csv("datos/creditos_crece_practica.csv")
+dim(creditos)
+glimpse(creditos)</code></pre><ul><li>649 filas y 10 columnas.</li><li><code>fecha_solicitud</code> y <code>fecha_desembolso</code> son <code>&lt;chr&gt;</code> (texto), igual que <code>sucursal</code>, <code>sector</code>, <code>estado</code> y <code>calificacion</code>; <code>monto_usd</code>, <code>plazo_meses</code> y <code>tasa_anual</code> son <code>&lt;dbl&gt;</code>.</li><li>Las fechas todavía no son fechas de R: no se pueden restar ni agrupar por mes.</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c91" data-track="c2-c91"><label for="c2-c91">Analizada</label></li></ul>
+</article>
+
+<article id="ej-41" class="ejercicio">
+  <header><h3>Ej. B · Categorías registradas</h3><span class="ia sin">Sin IA</span></header>
+  <div class="cuerpo">
+<p>Cuenta préstamos por <code>estado</code> y por <code>sucursal</code>. ¿Qué problema muestra el conteo de sucursales?</p><pre data-file="c2-b93.R" data-previo="c2-sA"><code class="language-r"># Categorías registradas: escribe tu código aquí</code></pre>  </div>
+  <div class="respuesta"><label for="c2-r94">Tu respuesta</label><textarea id="c2-r94" data-id="c2-r94" data-min="30" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 30 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<pre data-file="c2-b92.R" id="c2-sB" data-previo="c2-sA"><code class="language-r">creditos |&gt; count(estado)
+creditos |&gt; count(sucursal)</code></pre><ul><li>Estados:</li><li>472 Desembolsado, 108 Rechazado y 69 En_evaluacion (incluye duplicados).</li><li>Sucursal tiene 7 etiquetas para 3 sucursales: "San Salvador" 285, "san salvador" 7, "S.</li><li>Salvador" 7, "Santa Ana" 183, "SantaAna" 6, "San Miguel" 157 y "San miguel" 4.</li><li>Hay que unificarlas antes de comparar sucursales.</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c95" data-track="c2-c95"><label for="c2-c95">Analizada</label></li></ul>
+</article>
+
+<article id="ej-42" class="ejercicio">
+  <header><h3>Ej. C · Identificadores</h3><span class="ia sin">Sin IA</span></header>
+  <div class="cuerpo">
+<p>Compara el número de filas con el número de identificadores distintos. Lista los ids repetidos y comprueba si las repeticiones son exactas o contienen información contradictoria.</p><pre data-file="c2-b97.R" data-previo="c2-sA"><code class="language-r"># Identificadores: escribe tu código aquí</code></pre>  </div>
+  <div class="respuesta"><label for="c2-r98">Tu respuesta</label><textarea id="c2-r98" data-id="c2-r98" data-min="30" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 30 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<pre data-file="c2-b96.R" id="c2-sC" data-previo="c2-sA"><code class="language-r">nrow(creditos)
+n_distinct(creditos$prestamo_id)
+
+creditos |&gt;
+  group_by(prestamo_id) |&gt;
+  summarise(n = n()) |&gt;
+  filter(n &gt; 1)
+
+nrow(distinct(creditos))</code></pre><ul><li>Hay 649 filas y 640 ids distintos:</li><li>9 ids aparecen dos veces.</li><li>Como <code>distinct(creditos)</code> también deja 640 filas, las 9 repeticiones son copias exactas (mismo préstamo exportado dos veces) y no préstamos distintos con igual monto.</li><li>Diagnóstico:</li><li>640 préstamos reales, fechas como texto y etiquetas de sucursal sin unificar.</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c99" data-track="c2-c99"><label for="c2-c99">Analizada</label></li></ul>
+</article>
+
+<h3 class="caso">Caso 2 · Preparación y calidad de las fechas</h3>
+<article id="ej-43" class="ejercicio">
+  <header><h3>Ej. D · Duplicados y conversión</h3><span class="ia sin">Sin IA</span></header>
+  <div class="cuerpo">
+<p>Crea <code>creditos_unicos</code> sin repeticiones exactas. En <code>creditos_prep</code> conserva las columnas originales y crea <code>fecha</code> y <code>desembolso</code> con la función adecuada. Cuenta los <code>NA</code> de <code>fecha_solicitud</code> antes y de <code>fecha</code> después, e inspecciona los textos que no se convirtieron.</p><pre data-file="c2-b101.R" data-previo="c2-sA"><code class="language-r"># Duplicados y conversión: escribe tu código aquí</code></pre>  </div>
+  <div class="respuesta"><label for="c2-r102">Tu respuesta</label><textarea id="c2-r102" data-id="c2-r102" data-min="30" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 30 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<pre data-file="c2-b100.R" id="c2-sD" data-previo="c2-sA"><code class="language-r">creditos_unicos &lt;- creditos |&gt; distinct()
+sum(is.na(creditos_unicos$fecha_solicitud))
+
+creditos_prep &lt;- creditos_unicos |&gt;
+  mutate(
+    fecha      = dmy(fecha_solicitud),
+    desembolso = dmy(fecha_desembolso)
+  )
+sum(is.na(creditos_prep$fecha))
+
+creditos_prep |&gt;
+  filter(is.na(fecha)) |&gt;
+  select(prestamo_id, fecha_solicitud, fecha, estado)</code></pre><ul><li>Se usa <code>dmy()</code> porque el texto es día/mes/año (también lee "7/2/2025" sin ceros).</li><li>Antes había 2 <code>NA</code> (celdas vacías:</li><li>CR0118 y CR0530); después hay 5.</li><li>Los 3 nuevos ("31/02/2024", "29/02/2023" y "15/13/2024") eran textos con fechas imposibles, no celdas vacías.</li><li>No se inventa una fecha: quedan como <code>NA</code> y se documentan.</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c103" data-track="c2-c103"><label for="c2-c103">Analizada</label></li></ul>
+</article>
+
+<article id="ej-44" class="ejercicio">
+  <header><h3>Ej. E · Duraciones e incidencias</h3><span class="ia sin">Sin IA</span></header>
+  <div class="cuerpo">
+<p>Crea <code>dias_desembolso</code> en días y convierte en <code>NA</code> los montos menores o iguales a 0. Identifica desembolsados sin fecha de desembolso y duraciones negativas. ¿Por qué una fecha de desembolso vacía es esperable en algunos estados?</p><pre data-file="c2-b105.R" data-previo="c2-sD"><code class="language-r"># Duraciones e incidencias: escribe tu código aquí</code></pre>  </div>
+  <div class="respuesta"><label for="c2-r106">Tu respuesta</label><textarea id="c2-r106" data-id="c2-r106" data-min="30" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 30 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<pre data-file="c2-b104.R" id="c2-sE" data-previo="c2-sD"><code class="language-r">creditos_prep &lt;- creditos_prep |&gt;
+  mutate(
+    dias_desembolso = as.numeric(desembolso - fecha),
+    monto_usd = if_else(monto_usd &lt;= 0, NA, monto_usd)
+  )
+
+creditos_prep |&gt;
+  filter(estado == "Desembolsado", is.na(desembolso))
+
+creditos_prep |&gt;
+  filter(dias_desembolso &lt; 0) |&gt;
+  select(prestamo_id, fecha, desembolso, dias_desembolso)</code></pre><ul><li>Hay 6 préstamos «Desembolsado» sin fecha de desembolso y 4 duraciones negativas (CR0064 con -12 días, CR0086 con -5, CR0153 con -3 y CR0606 con -1).</li><li>Un Rechazado o En_evaluacion no recibió dinero, así que su fecha vacía es esperable (174 casos).</li><li>Una duración negativa es imposible y no es un tiempo válido.</li><li>El monto 0 de un desembolso es imposible y pasa a <code>NA</code>: ahora hay 10 montos desconocidos.</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c107" data-track="c2-c107"><label for="c2-c107">Analizada</label></li></ul>
+</article>
+
+<article id="ej-45" class="ejercicio">
+  <header><h3>Ej. F · Tres poblaciones</h3><span class="ia sin">Sin IA</span></header>
+  <div class="cuerpo">
+<p>Construye <code>solicitudes_temporales</code> (fecha de solicitud válida, todos los estados), <code>colocaciones</code> (desde la anterior: Desembolsado con monto conocido) y <code>desembolsos_validos</code> (Desembolsado, fecha de desembolso conocida y días mayor o igual a 0). Registra las filas de cada uno.</p><pre data-file="c2-b109.R" data-previo="c2-sE"><code class="language-r"># Tres poblaciones: escribe tu código aquí</code></pre>  </div>
+  <div class="respuesta"><label for="c2-r110">Tu respuesta</label><textarea id="c2-r110" data-id="c2-r110" data-min="30" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 30 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<pre data-file="c2-b108.R" id="c2-sF" data-previo="c2-sE"><code class="language-r">solicitudes_temporales &lt;- creditos_prep |&gt;
+  filter(!is.na(fecha))
+
+colocaciones &lt;- solicitudes_temporales |&gt;
+  filter(estado == "Desembolsado", !is.na(monto_usd))
+
+desembolsos_validos &lt;- solicitudes_temporales |&gt;
+  filter(estado == "Desembolsado", !is.na(desembolso),
+         dias_desembolso &gt;= 0)
+
+nrow(solicitudes_temporales)
+nrow(colocaciones)
+nrow(desembolsos_validos)</code></pre><ul><li>635, 454 y 453 filas.</li><li>De los 640 préstamos únicos, 5 no tienen fecha válida.</li><li>De los 463 desembolsados con fecha válida, 9 no tienen monto conocido (454 colocaciones) y 10 no tienen un tiempo válido (6 sin fecha de desembolso y 4 negativos, 453).</li><li>La exclusión depende de la variable que necesita cada pregunta; <code>creditos_prep</code> sigue con 640 filas.</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c111" data-track="c2-c111"><label for="c2-c111">Analizada</label></li></ul>
+</article>
+
+<h3 class="caso">Caso 3 · Distribución de los montos colocados</h3>
+<article id="ej-46" class="ejercicio">
+  <header><h3>Ej. G · Resumen e histograma</h3><span class="ia sin">Sin IA</span></header>
+  <div class="cuerpo">
+<p>Con <code>colocaciones</code> calcula número de préstamos, monto total, media, mediana, Q1, Q3 y máximo. Construye un histograma y compara media con mediana. ¿Qué sugiere la forma?</p><pre data-file="c2-b113.R" data-previo="c2-sF"><code class="language-r"># Resumen e histograma: escribe tu código aquí</code></pre>  </div>
+  <div class="respuesta"><label for="c2-r114">Tu respuesta</label><textarea id="c2-r114" data-id="c2-r114" data-min="30" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 30 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<pre data-file="c2-b112.R" id="c2-sG" data-previo="c2-sF"><code class="language-r">colocaciones |&gt;
+  summarise(
+    n       = n(),
+    total   = sum(monto_usd),
+    media   = mean(monto_usd),
+    mediana = median(monto_usd),
+    q1      = quantile(monto_usd, 0.25),
+    q3      = quantile(monto_usd, 0.75),
+    maximo  = max(monto_usd)
+  )
+
+colocaciones |&gt;
+  ggplot(aes(x = monto_usd)) +
+  geom_histogram(binwidth = 500, fill = "white", color = "black") +
+  geom_vline(xintercept = mean(colocaciones$monto_usd),
+             color = "red", linetype = "dashed") +
+  labs(title = "Montos colocados", x = "Monto en USD", y = "Préstamos")</code></pre><ul><li>454 préstamos, USD 856,630 colocados; media 1886.9, mediana 1480, Q1 902.5, Q3 2235 y máximo 25,000.</li><li>La media supera a la mediana y la cola se alarga a la derecha: muchos préstamos pequeños y pocos grandes.</li><li>La mediana describe mejor un préstamo típico (la media recortada al 10 % da 1585).</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c115" data-track="c2-c115"><label for="c2-c115">Analizada</label></li></ul>
+</article>
+
+<article id="ej-47" class="ejercicio">
+  <header><h3>Ej. H · ¿Requieren revisión?</h3><span class="ia sin">Sin IA</span></header>
+  <div class="cuerpo">
+<p>Muestra los cinco préstamos de mayor monto con su sector, plazo y calificación. ¿El histograma demuestra que son errores? Propón una comprobación adicional.</p><pre data-file="c2-b117.R" data-previo="c2-sF"><code class="language-r"># ¿Requieren revisión?: escribe tu código aquí</code></pre>  </div>
+  <div class="respuesta"><label for="c2-r118">Tu respuesta</label><textarea id="c2-r118" data-id="c2-r118" data-min="30" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 30 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<pre data-file="c2-b116.R" id="c2-sH" data-previo="c2-sF"><code class="language-r">colocaciones |&gt;
+  slice_max(monto_usd, n = 5) |&gt;
+  select(prestamo_id, sector, monto_usd, plazo_meses, calificacion)</code></pre><ul><li>CR0280 (Transporte, 25,000, 36 meses, D), CR0565 (Manufactura, 22,000, 36 meses, B), CR0271 (Transporte, 18,500, 36 meses, E), CR0549 (Transporte, 7,770) y CR0199 (Manufactura, 7,340).</li><li>Los tres primeros están lejos del resto, pero son de sectores con préstamos más grandes y al plazo máximo: son plausibles.</li><li>El gráfico no demuestra error; se comprueba contra el contrato o el sistema de origen y, mientras tanto, se conservan.</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c119" data-track="c2-c119"><label for="c2-c119">Analizada</label></li></ul>
+</article>
+
+<article id="ej-48" class="ejercicio">
+  <header><h3>Ej. I · Zoom y tramos</h3><span class="ia sin">Sin IA</span></header>
+  <div class="cuerpo">
+<p>Haz zoom al histograma con <code>coord_cartesian(ylim = c(0, 10))</code> para ver los montos raros sin eliminarlos. Después crea <code>tramo_monto</code> con <code>cut()</code> (hasta 1000, hasta 3000, más) en <code>creditos_prep</code> y cuenta préstamos por tramo.</p><pre data-file="c2-b121.R" data-previo="c2-sF"><code class="language-r"># Zoom y tramos: escribe tu código aquí</code></pre>  </div>
+  <div class="respuesta"><label for="c2-r122">Tu respuesta</label><textarea id="c2-r122" data-id="c2-r122" data-min="30" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 30 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<pre data-file="c2-b120.R" id="c2-sI" data-previo="c2-sF"><code class="language-r">colocaciones |&gt;
+  ggplot(aes(x = monto_usd)) +
+  geom_histogram(binwidth = 500) +
+  coord_cartesian(ylim = c(0, 10))
+
+creditos_prep &lt;- creditos_prep |&gt;
+  mutate(tramo_monto = cut(monto_usd,
+                           breaks = c(0, 1000, 3000, Inf),
+                           labels = c("Pequeño", "Mediano", "Grande")))
+creditos_prep |&gt; count(tramo_monto)</code></pre><ul><li>El zoom deja ver las barras casi invisibles de los montos grandes sin quitar observaciones.</li><li>En <code>creditos_prep</code> (todos los estados):</li><li>Pequeño 184, Mediano 359, Grande 87 y 10 <code>NA</code>, que son los montos desconocidos.</li><li><code>cut()</code> no inventa un tramo para ellos.</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c123" data-track="c2-c123"><label for="c2-c123">Analizada</label></li></ul>
+</article>
+
+<h3 class="caso">Caso 4 · Categorías limpias y ordenadas</h3>
+<article id="ej-49" class="ejercicio">
+  <header><h3>Ej. J · Unificar sucursales</h3><span class="ia sin">Sin IA</span></header>
+  <div class="cuerpo">
+<p>Crea <code>sucursal_limpia</code> con <code>fct_recode()</code> conservando <code>sucursal</code>. Compara frecuencias antes y después.</p><pre data-file="c2-b125.R" data-previo="c2-sE"><code class="language-r"># Unificar sucursales: escribe tu código aquí</code></pre>  </div>
+  <div class="respuesta"><label for="c2-r126">Tu respuesta</label><textarea id="c2-r126" data-id="c2-r126" data-min="30" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 30 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<pre data-file="c2-b124.R" id="c2-sJ" data-previo="c2-sE"><code class="language-r">creditos_prep &lt;- creditos_prep |&gt;
+  mutate(sucursal_limpia = fct_recode(factor(sucursal),
+    "San Salvador" = "san salvador",
+    "San Salvador" = "S. Salvador",
+    "Santa Ana"    = "SantaAna",
+    "San Miguel"   = "San miguel"))
+
+creditos_prep |&gt; count(sucursal)
+creditos_prep |&gt; count(sucursal_limpia)</code></pre><ul><li>Quedan 3 categorías:</li><li>San Salvador 296, Santa Ana 184 y San Miguel 160, que suman 640.</li><li>Antes, San Salvador aparecía repartida en tres etiquetas y se habría subestimado.</li><li>La recodificación cambia nombres, no el número de préstamos.</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c127" data-track="c2-c127"><label for="c2-c127">Analizada</label></li></ul>
+</article>
+
+<article id="ej-50" class="ejercicio">
+  <header><h3>Ej. K · Escala de calificación</h3><span class="ia sin">Sin IA</span></header>
+  <div class="cuerpo">
+<p>Intenta crear el factor de calificación con <code>factor()</code> y con <code>fct()</code> usando los niveles A, B, C, D, E y «Sin calificar». ¿Qué pasa en cada caso? Corrige y crea <code>calificacion_f</code> en orden de riesgo.</p><pre data-file="c2-b130.R" data-previo="c2-sE"><code class="language-r"># Escala de calificación: escribe tu código aquí</code></pre>  </div>
+  <div class="respuesta"><label for="c2-r131">Tu respuesta</label><textarea id="c2-r131" data-id="c2-r131" data-min="30" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 30 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<pre data-file="c2-b128.R" data-previo="c2-sE"><code class="language-r">niveles_calif &lt;- c("A", "B", "C", "D", "E", "Sin calificar")
+sum(is.na(factor(creditos_prep$calificacion, levels = niveles_calif)))
+try(fct(creditos_prep$calificacion, levels = niveles_calif))</code></pre><pre data-file="c2-b129.R" id="c2-sK" data-previo="c2-sE"><code class="language-r">niveles_calif &lt;- c("A", "B", "C", "D", "E", "Sin calificar")
+
+creditos_prep &lt;- creditos_prep |&gt;
+  mutate(calificacion_f = fct_recode(factor(calificacion), "A" = "a", "B" = "b") |&gt;
+           fct_relevel(niveles_calif))
+levels(creditos_prep$calificacion_f)
+creditos_prep |&gt; count(calificacion_f)</code></pre><ul><li><code>factor()</code> crea 5 <code>NA</code> en silencio; <code>fct()</code> se detiene con un error (lo envolvemos en <code>try()</code> para que el script siga) y avisa que faltan los niveles "a" y "b" (minúsculas).</li><li>Tras recodificar:</li><li>A 169, B 191, C 115, D 61, E 36 y Sin calificar 68, total 640, en el orden A a E.</li><li>Con el texto original, «Sin calificar» y las minúsculas habrían quedado mezcladas.</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c132" data-track="c2-c132"><label for="c2-c132">Analizada</label></li></ul>
+</article>
+
+<article id="ej-51" class="ejercicio">
+  <header><h3>Ej. L · Agrupar sectores</h3><span class="ia sin">Sin IA</span></header>
+  <div class="cuerpo">
+<p>Crea <code>sector_grupo</code> con <code>case_when()</code> y <code>%in%</code> (Comercio y servicios: Comercio, Servicios, Turismo; Producción: Agropecuario, Manufactura, Artesanía; Transporte) y comprueba que el total se conserva.</p><pre data-file="c2-b134.R" data-previo="c2-sE"><code class="language-r"># Agrupar sectores: escribe tu código aquí</code></pre>  </div>
+  <div class="respuesta"><label for="c2-r135">Tu respuesta</label><textarea id="c2-r135" data-id="c2-r135" data-min="30" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 30 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<pre data-file="c2-b133.R" id="c2-sL" data-previo="c2-sE"><code class="language-r">creditos_prep &lt;- creditos_prep |&gt;
+  mutate(sector_grupo = case_when(
+    sector %in% c("Comercio", "Servicios", "Turismo") ~ "Comercio y servicios",
+    sector %in% c("Agropecuario", "Manufactura", "Artesanía") ~ "Producción",
+    TRUE ~ "Transporte"))
+
+creditos_prep |&gt; count(sector_grupo)
+sum(count(creditos_prep, sector_grupo)$n) == nrow(creditos_prep)</code></pre><ul><li>Comercio y servicios 373, Producción 209 y Transporte 58: suman 640 y la comprobación da TRUE.</li><li>Antes de confiar en <code>TRUE ~ "Transporte"</code> se revisa con <code>count(sector)</code> que solo quede Transporte fuera de las dos listas.</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c136" data-track="c2-c136"><label for="c2-c136">Analizada</label></li></ul>
+</article>
+
+<article id="ej-52" class="ejercicio">
+  <header><h3>Ej. M · Ordenar por frecuencia</h3><span class="ia sin">Sin IA</span></header>
+  <div class="cuerpo">
+<p>Grafica préstamos por <code>sucursal_limpia</code> con barras de mayor a menor (<code>fct_infreq()</code>). Luego invierte el orden con <code>fct_rev()</code>. ¿Qué cambia y qué no?</p><pre data-file="c2-b138.R" data-previo="c2-sJ"><code class="language-r"># Ordenar por frecuencia: escribe tu código aquí</code></pre>  </div>
+  <div class="respuesta"><label for="c2-r139">Tu respuesta</label><textarea id="c2-r139" data-id="c2-r139" data-min="30" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 30 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<pre data-file="c2-b137.R" id="c2-sM" data-previo="c2-sJ"><code class="language-r">creditos_prep |&gt;
+  mutate(sucursal_limpia = fct_infreq(sucursal_limpia)) |&gt;
+  ggplot(aes(x = sucursal_limpia)) +
+  geom_bar() +
+  labs(title = "Préstamos por sucursal", x = "Sucursal", y = "Préstamos")
+
+creditos_prep |&gt;
+  mutate(sucursal_limpia = fct_rev(fct_infreq(sucursal_limpia))) |&gt;
+  ggplot(aes(x = sucursal_limpia)) +
+  geom_bar()</code></pre><ul><li>Orden descendente:</li><li>San Salvador, Santa Ana y San Miguel; con <code>fct_rev()</code> queda San Miguel, Santa Ana y San Salvador.</li><li>Cambia solo la posición de las barras; las alturas (296, 184 y 160) son las mismas.</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c140" data-track="c2-c140"><label for="c2-c140">Analizada</label></li></ul>
+</article>
+
+<h3 class="caso">Caso 5 · Tiempos de desembolso por sucursal</h3>
+<article id="ej-53" class="ejercicio">
+  <header><h3>Ej. N · Resumen, caja y orden</h3><span class="ia sin">Sin IA</span></header>
+  <div class="cuerpo">
+<p>Con <code>desembolsos_validos</code> (vuelve a crearlo desde <code>creditos_prep</code> para que tenga <code>sucursal_limpia</code>) compara por sucursal el número de casos, la media, la mediana y la desviación estándar de días. Haz diagramas de caja con las sucursales ordenadas por su mediana. ¿Cuál tarda más? ¿Cuál es más dispersa?</p><pre data-file="c2-b142.R" data-previo="c2-sJ"><code class="language-r"># Resumen, caja y orden: escribe tu código aquí</code></pre>  </div>
+  <div class="respuesta"><label for="c2-r143">Tu respuesta</label><textarea id="c2-r143" data-id="c2-r143" data-min="30" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 30 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<pre data-file="c2-b141.R" id="c2-sN" data-previo="c2-sJ"><code class="language-r">desembolsos_validos &lt;- creditos_prep |&gt;
+  filter(!is.na(fecha), estado == "Desembolsado",
+         !is.na(desembolso), dias_desembolso &gt;= 0)
+
+desembolsos_validos |&gt;
+  group_by(sucursal_limpia) |&gt;
+  summarise(
+    n       = n(),
+    media   = mean(dias_desembolso),
+    mediana = median(dias_desembolso),
+    sd      = sd(dias_desembolso)
+  )
+
+desembolsos_validos |&gt;
+  mutate(sucursal_limpia = fct_reorder(sucursal_limpia, dias_desembolso, median)) |&gt;
+  ggplot(aes(x = sucursal_limpia, y = dias_desembolso)) +
+  geom_boxplot() +
+  labs(title = "Días entre solicitud y desembolso",
+       x = "Sucursal", y = "Días")</code></pre><ul><li>San Salvador:</li><li>215 casos, media 3.52, mediana 3, sd 2.35.</li><li>Santa Ana:</li><li>128, media 6.20, mediana 6, sd 4.17.</li><li>San Miguel:</li><li>110, media 9.28, mediana 9, sd 5.78.</li><li>San Miguel suele tardar más y además es la más dispersa (caja más alta y mayor sd).</li><li>La suma de días (757, 793 y 1021) no mide rapidez porque depende del número de casos.</li><li>Es una asociación: no prueba que la sucursal cause la demora.</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c144" data-track="c2-c144"><label for="c2-c144">Analizada</label></li></ul>
+</article>
+
+<h3 class="caso">Caso 6 · Evolución temporal</h3>
+<article id="ej-54" class="ejercicio">
+  <header><h3>Ej. O · Mes del año o mes calendario</h3><span class="ia sin">Sin IA</span></header>
+  <div class="cuerpo">
+<p>En <code>solicitudes_temporales</code> crea <code>anio</code>, <code>mes_num</code> y <code>periodo_mes</code>. Compara un conteo por <code>mes_num</code> con otro por <code>periodo_mes</code>. ¿Cuántos grupos produce cada uno y qué pregunta responde?</p><pre data-file="c2-b146.R" data-previo="c2-sE"><code class="language-r"># Mes del año o mes calendario: escribe tu código aquí</code></pre>  </div>
+  <div class="respuesta"><label for="c2-r147">Tu respuesta</label><textarea id="c2-r147" data-id="c2-r147" data-min="30" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 30 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<pre data-file="c2-b145.R" id="c2-sO" data-previo="c2-sE"><code class="language-r">solicitudes_temporales &lt;- creditos_prep |&gt;
+  filter(!is.na(fecha)) |&gt;
+  mutate(anio = year(fecha), mes_num = month(fecha),
+         periodo_mes = floor_date(fecha, "month"))
+
+solicitudes_temporales |&gt; group_by(mes_num) |&gt; summarise(n = n())
+solicitudes_temporales |&gt; group_by(periodo_mes) |&gt; summarise(n = n())</code></pre><ul><li><code>mes_num</code> produce 12 grupos y el primero reúne los eneros de 2023, 2024 y 2025 (52 solicitudes): sirve para explorar estacionalidad.</li><li><code>periodo_mes</code> produce 36 grupos, de enero 2023 a diciembre 2025, y conserva la secuencia para ver la evolución.</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c148" data-track="c2-c148"><label for="c2-c148">Analizada</label></li></ul>
+</article>
+
+<article id="ej-55" class="ejercicio">
+  <header><h3>Ej. P · Serie mensual</h3><span class="ia sin">Sin IA</span></header>
+  <div class="cuerpo">
+<p>Crea <code>resumen_mensual</code> con una fila por <code>periodo_mes</code> y el número de solicitudes (todos los estados). Grafica con líneas e identifica los meses de mayor volumen con su año.</p><pre data-file="c2-b150.R" data-previo="c2-sO"><code class="language-r"># Serie mensual: escribe tu código aquí</code></pre>  </div>
+  <div class="respuesta"><label for="c2-r151">Tu respuesta</label><textarea id="c2-r151" data-id="c2-r151" data-min="30" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 30 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<pre data-file="c2-b149.R" id="c2-sP" data-previo="c2-sO"><code class="language-r">resumen_mensual &lt;- solicitudes_temporales |&gt;
+  group_by(periodo_mes) |&gt;
+  summarise(solicitudes = n()) |&gt;
+  arrange(periodo_mes)
+
+resumen_mensual |&gt;
+  ggplot(aes(x = periodo_mes, y = solicitudes)) +
+  geom_line() +
+  labs(title = "Solicitudes por mes", x = "Mes", y = "Solicitudes")
+
+resumen_mensual |&gt; slice_max(solicitudes, n = 3)</code></pre><ul><li>El mes con más solicitudes es octubre de 2024 (36), seguido de septiembre de 2024 (31); abril y septiembre de 2025 empatan con 29.</li><li>El volumen sube:</li><li>121 solicitudes en 2023, 232 en 2024 y 282 en 2025.</li><li>Son solicitudes, no dinero colocado: no confundir volumen con ingresos.</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c152" data-track="c2-c152"><label for="c2-c152">Analizada</label></li></ul>
+</article>
+
+<article id="ej-56" class="ejercicio">
+  <header><h3>Ej. Q · Misma ventana entre años</h3><span class="ia sin">Sin IA</span></header>
+  <div class="cuerpo">
+<p>Filtra enero a marzo de cada año y resume solicitudes por <code>anio</code>. ¿Por qué esta comparación es más justa que un año completo contra tres meses?</p><pre data-file="c2-b154.R" data-previo="c2-sO"><code class="language-r"># Misma ventana entre años: escribe tu código aquí</code></pre>  </div>
+  <div class="respuesta"><label for="c2-r155">Tu respuesta</label><textarea id="c2-r155" data-id="c2-r155" data-min="30" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 30 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<pre data-file="c2-b153.R" id="c2-sQ" data-previo="c2-sO"><code class="language-r">solicitudes_temporales |&gt;
+  filter(mes_num &lt;= 3) |&gt;
+  group_by(anio) |&gt;
+  summarise(solicitudes = n())</code></pre><ul><li>Enero a marzo:</li><li>33 en 2023, 39 en 2024 y 68 en 2025.</li><li>Se comparan periodos de igual duración; un año completo frente a tres meses mezclaría el efecto del tiempo con el de la actividad.</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c156" data-track="c2-c156"><label for="c2-c156">Analizada</label></li></ul>
+</article>
+
+<h3 class="caso">Caso 7 · Comunicar</h3>
+<article id="ej-57" class="ejercicio">
+  <header><h3>Ej. R · Memo para la gerencia</h3><span class="ia sin">Sin IA</span></header>
+  <div class="cuerpo">
+<p>Redacta cinco líneas: una incidencia de calidad y su tratamiento, un hallazgo sobre montos, uno sobre tiempos, uno temporal con mes y año, y una limitación. Cada hallazgo debe citar una cifra obtenida.</p>  </div>
+  <div class="respuesta"><label for="c2-r157">Tu respuesta</label><textarea id="c2-r157" data-id="c2-r157" data-min="30" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 30 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<ul><li>Ejemplo:</li><li>«La exportación traía 9 préstamos duplicados y 5 fechas inválidas; trabajamos con 640 préstamos únicos y excluimos esas fechas solo del análisis temporal.</li><li>El préstamo típico colocado es de USD 1,480 (mediana), menor que el promedio de 1,887 por unos pocos préstamos grandes de transporte y manufactura.</li><li>San Miguel tarda una mediana de 9 días en desembolsar, frente a 3 en San Salvador, y es la más variable.</li><li>Las solicitudes crecieron de 121 en 2023 a 282 en 2025, con el máximo en octubre de 2024 (36).</li><li>Son asociaciones observadas: no sabemos por qué San Miguel tarda más y 10 desembolsos sin tiempo válido quedaron fuera.» Se aceptan otros memos con cifras verificadas y una limitación explícita.</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c158" data-track="c2-c158"><label for="c2-c158">Analizada</label></li></ul>
+</article>
+
+<div class="box ojo"><span class="box-title">¿Cómo sabemos que este resultado es correcto?</span><ul><li>Conserva la base original y transforma una copia.</li><li>Cuenta filas antes y después de cada filtro, y explica la diferencia.</li><li>Cada pregunta usa su propia población; no borres todo lo que tenga NA.</li><li>Un NA nuevo tras convertir es un texto que no se pudo leer: inspecciónalo.</li><li>No reemplaces faltantes por 0.</li><li>Compara medidas por caso (media, mediana) con su n; no sumas.</li><li>El EDA describe asociaciones, no causas.</li></ul></div>
+</section>
+
+<section id="simulacro">
+  <h2>Simulacro cronometrado</h2>
+<p>Condiciones parecidas al control: <span class="ia sin">Sin IA</span>, 60 minutos y sin ver los criterios hasta que termines. Ejecutar R <strong>sí</strong> está permitido: es la herramienta que se evalúa. Las preguntas son nuevas: obligan a llevar el razonamiento sobre poblaciones, factores y fechas a indicadores distintos de los de la práctica.</p>
+<p>Pulsa <strong>Iniciar simulacro</strong>: el reloj sigue corriendo aunque recargues la página. Las respuestas se abren al pulsar <strong>Finalizar y revisar</strong> o cuando se acaba el tiempo. Los bloques ya traen preparados los objetos de la práctica (<code>creditos_prep</code>, <code>solicitudes_temporales</code>).</p>
+<div class="simulacro" data-id="c2-simulacro" data-minutos="60">
+<div class="simulacro-barra"><span class="reloj" aria-live="off">60:00</span><span class="estado-sim" aria-live="polite"></span><span class="acciones"><button class="btn" type="button" data-sim-iniciar>Iniciar simulacro</button><button class="btn sec" type="button" data-sim-finalizar hidden>Finalizar y revisar</button><button class="btn sec" type="button" data-sim-reiniciar hidden>Reiniciar</button></span></div>
+<article id="ej-58" class="ejercicio">
+  <header><h3>S1 · Diagnóstico en tres líneas</h3><span class="ia sin">Sin IA</span></header>
+  <div class="cuerpo">
+<p>Importa <code>creditos_crece_practica.csv</code>, comprueba dimensiones, tipos e identificadores, y escribe un diagnóstico de tres líneas como comentarios.</p><pre data-file="c2-b159.R" data-previo="c2-paquetes" data-archivos="../datos/creditos_crece_practica.csv"><code class="language-r">creditos &lt;- read_csv("datos/creditos_crece_practica.csv")
+# tu código aquí</code></pre>  </div>
+  <div class="respuesta"><label for="c2-r160">Tu respuesta</label><textarea id="c2-r160" data-id="c2-r160" data-min="40" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 40 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<p>Criterios: marca «Revisada» cuando compares cada uno con tu respuesta.</p><ul><li>Reporta 649 filas, 10 columnas y 640 identificadores distintos.</li><li>Señala que las fechas son texto (<code>&lt;chr&gt;</code>).</li><li>Menciona los 9 duplicados exactos y las etiquetas inconsistentes de sucursal.</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c161" data-track="c2-c161"><label for="c2-c161">Revisada</label></li></ul>
+</article>
+
+<article id="ej-59" class="ejercicio">
+  <header><h3>S2 · Encuentra los errores</h3><span class="ia sin">Sin IA</span></header>
+  <div class="cuerpo">
+<p>Este bloque tiene cuatro errores. Señálalos y escribe la versión corregida.</p><pre data-file="c2-b162.R" data-previo="c2-sA"><code class="language-r">creditos |&gt;
+  mutate(fecha = mdy(fecha_solicitud),
+         sucursal_limpia = fct_recode(factor(sucursal), "san salvador" = "San Salvador")) |&gt;
+  filter(sucursal_limpia == "San Salvador" | "Santa Ana") |&gt;
+  summarise(media_monto = mean(monto_usd))</code></pre>  </div>
+  <div class="respuesta"><label for="c2-r163">Tu respuesta</label><textarea id="c2-r163" data-id="c2-r163" data-min="40" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 40 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<p>Criterios: marca «Revisada» cuando compares cada uno con tu respuesta.</p><ul><li><code>mdy()</code> es incorrecto para día/mes/año: va <code>dmy()</code>.</li><li><code>fct_recode()</code> está invertido: es nuevo = viejo, <code>"San Salvador" = "san salvador"</code>.</li><li>La condición necesita <code>sucursal_limpia %in% c("San Salvador", "Santa Ana")</code>.</li><li><code>mean()</code> necesita <code>na.rm = TRUE</code> (hay montos faltantes) y debería usar solo desembolsados.</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c164" data-track="c2-c164"><label for="c2-c164">Revisada</label></li></ul>
+</article>
+
+<article id="ej-60" class="ejercicio">
+  <header><h3>S3 · Tasa de aprobación por grupo de sector</h3><span class="ia sin">Sin IA</span></header>
+  <div class="cuerpo">
+<p>Calcula la tasa de aprobación (porcentaje de desembolsados) por <code>sector_grupo</code>. Decide primero qué préstamos forman el denominador y justifícalo.</p><pre data-file="c2-b165.R" data-previo="c2-sK c2-sL"><code class="language-r"># usa creditos_prep con sector_grupo y fecha válida</code></pre>  </div>
+  <div class="respuesta"><label for="c2-r166">Tu respuesta</label><textarea id="c2-r166" data-id="c2-r166" data-min="40" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 40 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<p>Criterios: marca «Revisada» cuando compares cada uno con tu respuesta.</p><ul><li>Excluye «En_evaluacion» del denominador: todavía no hay decisión.</li><li>Entre decididos: Comercio y servicios 82.1 % (276/336), Producción 81.2 % (147/181), Transporte 78.4 % (40/51).</li><li>Explica que con todos los estados la tasa sale menor (74.6 %, 71.0 %, 69.0 %) por un denominador mal definido.</li><li>No atribuye la diferencia al sector: con 51 decisiones en Transporte la diferencia es pequeña.</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c167" data-track="c2-c167"><label for="c2-c167">Revisada</label></li></ul>
+</article>
+
+<article id="ej-61" class="ejercicio">
+  <header><h3>S4 · ¿El riesgo se paga con tasa?</h3><span class="ia sin">Sin IA</span></header>
+  <div class="cuerpo">
+<p>Compara la media y la mediana de <code>tasa_anual</code> por <code>calificacion_f</code> (en orden A a E) y por <code>plazo_meses</code>. Haz un gráfico y concluye con prudencia.</p><pre data-file="c2-b168.R" data-previo="c2-sK c2-sL"><code class="language-r"># solicitudes con fecha válida</code></pre>  </div>
+  <div class="respuesta"><label for="c2-r169">Tu respuesta</label><textarea id="c2-r169" data-id="c2-r169" data-min="40" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 40 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<p>Criterios: marca «Revisada» cuando compares cada uno con tu respuesta.</p><ul><li>Por calificación las medias van de 25.0 % a 26.6 %, sin un patrón creciente de A a E.</li><li>Por plazo sí hay un patrón: 24.9 % a 6 meses frente a 27.0 % y 27.5 % a 24 y 36 meses.</li><li>Usa el orden de niveles del factor, no el alfabético.</li><li>Formula asociación, no causa, y pide conocer la política de precios.</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c170" data-track="c2-c170"><label for="c2-c170">Revisada</label></li></ul>
+</article>
+
+<article id="ej-62" class="ejercicio">
+  <header><h3>S5 · Trimestres</h3><span class="ia sin">Sin IA</span></header>
+  <div class="cuerpo">
+<p>Cuenta solicitudes por trimestre con <code>floor_date(fecha, "quarter")</code>. ¿Cuál fue el trimestre con más solicitudes y qué cambió desde mediados de 2024?</p><pre data-file="c2-b171.R" data-previo="c2-sO"><code class="language-r"># solicitudes_temporales</code></pre>  </div>
+  <div class="respuesta"><label for="c2-r172">Tu respuesta</label><textarea id="c2-r172" data-id="c2-r172" data-min="40" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 40 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<p>Criterios: marca «Revisada» cuando compares cada uno con tu respuesta.</p><ul><li>Produce 12 trimestres, de 2023 T1 a 2025 T4.</li><li>El máximo es el cuarto trimestre de 2024 (85 solicitudes).</li><li>Desde 2024 T3 el volumen pasa de unas 24 a 39 por trimestre a 66 a 85.</li><li>No confunde solicitudes con dinero colocado.</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c173" data-track="c2-c173"><label for="c2-c173">Revisada</label></li></ul>
+</article>
+
+<article id="ej-63" class="ejercicio">
+  <header><h3>S6 · Memo de tres líneas</h3><span class="ia sin">Sin IA</span></header>
+  <div class="cuerpo">
+<p>Escribe tres líneas para la gerencia con al menos dos cifras verificadas de este simulacro y una limitación.</p>  </div>
+  <div class="respuesta"><label for="c2-r174">Tu respuesta</label><textarea id="c2-r174" data-id="c2-r174" data-min="40" placeholder="Escribe tu respuesta antes de ver el análisis (mínimo 40 caracteres)…"></textarea><span class="cuenta"></span></div>
+  <details class="solucion"><summary>Respuesta y criterios</summary><div class="det">
+<p>Criterios: marca «Revisada» cuando compares cada uno con tu respuesta.</p><ul><li>Cita al menos dos cifras correctas con su población.</li><li>Hace una recomendación proporcional a la evidencia.</li><li>Incluye una limitación (asociación, datos excluidos o tamaño del grupo).</li></ul></div></details>
+  <ul class="check"><li><input type="checkbox" id="c2-c175" data-track="c2-c175"><label for="c2-c175">Revisada</label></li></ul>
+</article>
+
+</div>
+</section>
+
+</div>
+</div>
+<div class="tramo" data-tramo="4" data-mom="4" id="tramo-4">
+<div class="tramo-in">
+<header class="tramo-cab"><p class="tramo-n">Momento 4 de 4</p><p class="tramo-tit">Cierre</p></header>
+<section id="cheat">
+  <h2>Cheat Sheet del Control 02</h2>
+<p>Todo el temario en una pantalla. Para repasar minutos antes, no para aprender por primera vez.</p>
+<p><strong>Regla central de este control</strong>: cada indicador usa su propia población.</p>
+<ul class="ciclo-leyenda"><li>pregunta</li><li class="sep">→</li><li>población</li><li class="sep">→</li><li>transformación</li><li class="sep">→</li><li>verificación</li><li class="sep">→</li><li>comunicación</li></ul>
+<p>El volumen usa todas las solicitudes con fecha válida; los montos, solo los desembolsados con monto conocido; los tiempos, solo los desembolsos con duración válida. Que el código corra sin errores <strong>no</strong> demuestra que la población sea la correcta.</p>
+<div class="grid">
+<div class="card">
+<h3>Vocabulario clave</h3>
+<ul class="vocab"><li>verbo</li><li>pipe |&gt;</li><li>grupo</li><li>resumen</li><li>duplicado exacto</li><li>distribución</li><li>sesgo</li><li>mediana</li><li>cuartil</li><li>atípico</li><li>zoom</li><li>factor</li><li>nivel</li><li>recodificar</li><li>tramo</li><li>fecha de R</li><li>duración</li><li>mes calendario</li><li>ventana</li><li>población</li></ul>
+</div>
+<div class="card">
+<h3>Transformar (dplyr)</h3>
+<div class="table-wrap"><table><tbody><tr><td><code>filter(cond1, cond2)</code></td><td>Filas que cumplen todo; <code>|</code> es «o», <code>!</code> es «no», <code>%in%</code> pertenece a una lista</td></tr><tr><td><code>arrange(x, desc(y))</code></td><td>Ordena filas; los NA van al final</td></tr><tr><td><code>select(a:c, !d, where(is.character))</code></td><td>Elige columnas; <code>starts_with()</code>, <code>ends_with()</code>, <code>contains()</code></td></tr><tr><td><code>rename(nuevo = viejo)</code></td><td>Cambia nombres de columnas</td></tr><tr><td><code>relocate(x, .before = 1)</code></td><td>Mueve columnas</td></tr><tr><td><code>mutate(z = x / y, .keep = "used")</code></td><td>Crea columnas; <code>.before</code> y <code>.after</code> para ubicarlas</td></tr><tr><td><code>group_by(g) |&gt; summarise(n = n())</code></td><td>Un resumen por grupo</td></tr><tr><td><code>slice_max(x, n = 1) / slice_min / slice_head</code></td><td>Filas extremas dentro de cada grupo</td></tr><tr><td><code>ungroup()</code></td><td>Quita los grupos</td></tr><tr><td><code>distinct() / n_distinct(x)</code></td><td>Quita filas idénticas / cuenta valores únicos</td></tr><tr><td><code>count(x)</code></td><td>Atajo de group_by(x) + summarise(n = n())</td></tr></tbody></table></div>
+</div>
+<div class="card">
+<h3>Explorar (EDA)</h3>
+<div class="table-wrap"><table><tbody><tr><td><code>summary(x), quantile(x)</code></td><td>Mínimo, cuartiles, mediana, media, máximo</td></tr><tr><td><code>mean(x, trim = 0.1, na.rm = TRUE)</code></td><td>Media recortada y sin NA</td></tr><tr><td><code>range(x), diff(range(x)), sd(x)</code></td><td>Extremos, rango y desviación estándar</td></tr><tr><td><code>table(x), prop.table(table(x))</code></td><td>Frecuencias y proporciones de una categoría</td></tr><tr><td><code>geom_histogram(binwidth = )</code></td><td>Distribución de una variable numérica</td></tr><tr><td><code>geom_boxplot()</code></td><td>Mediana, caja Q1 a Q3 y atípicos por grupo</td></tr><tr><td><code>geom_bar() / geom_point() / geom_line()</code></td><td>Conteos / relación entre dos medidas / serie en el tiempo</td></tr><tr><td><code>coord_cartesian(ylim = c(0, 50))</code></td><td>Zoom sin eliminar datos</td></tr><tr><td><code>if_else(cond, NA, x)</code></td><td>Convierte valores imposibles en NA</td></tr><tr><td><code>between(x, a, b)</code></td><td>Equivale a x &gt;= a &amp; x &lt;= b</td></tr></tbody></table></div>
+</div>
+<div class="card">
+<h3>Factores (forcats)</h3>
+<div class="table-wrap"><table><tbody><tr><td><code>factor(x, levels = niv)</code></td><td>Crea un factor; un valor fuera de los niveles pasa a NA en silencio</td></tr><tr><td><code>fct(x, levels = niv)</code></td><td>Igual, pero da error si falta un nivel</td></tr><tr><td><code>levels(f)</code></td><td>Muestra los niveles y su orden</td></tr><tr><td><code>fct_infreq(f) / fct_rev(f)</code></td><td>Orden por frecuencia / invierte el orden</td></tr><tr><td><code>fct_reorder(f, x)</code></td><td>Orden según un valor numérico</td></tr><tr><td><code>fct_relevel(f, "Nivel")</code></td><td>Lleva un nivel al inicio</td></tr><tr><td><code>fct_recode(f, nuevo = "viejo")</code></td><td>Renombra o une etiquetas</td></tr><tr><td><code>case_when(x %in% c(..) ~ "G", TRUE ~ "Otro")</code></td><td>Agrupa categorías</td></tr><tr><td><code>cut(x, breaks, labels)</code></td><td>Tramos a partir de un número, intervalos (a, b]</td></tr><tr><td><code>col_factor(niv) en read_csv()</code></td><td>Importa una columna como factor</td></tr></tbody></table></div>
+</div>
+<div class="card">
+<h3>Fechas (lubridate)</h3>
+<div class="table-wrap"><table><tbody><tr><td><code>dmy() / mdy() / ymd()</code></td><td>Texto a fecha según el orden de los componentes</td></tr><tr><td><code>make_date(year, month, day)</code></td><td>Fecha desde columnas numéricas</td></tr><tr><td><code>year() / month() / day()</code></td><td>Extrae componentes</td></tr><tr><td><code>wday(f, week_start = 1)</code></td><td>Día de la semana (lunes = 1)</td></tr><tr><td><code>today()</code></td><td>Fecha actual</td></tr><tr><td><code>floor_date(f, "month")</code></td><td>Primer día del mes; también "quarter" o "year"</td></tr><tr><td><code>as.numeric(f2 - f1)</code></td><td>Diferencia en días</td></tr></tbody></table></div>
+</div>
+<div class="card">
+<h3>Siete reglas que se evalúan</h3>
+<ol><li>Conserva la base original y transforma una copia.</li><li>Cuenta filas antes y después de cada filtro, y explica la diferencia.</li><li>Cada pregunta usa su propia población; no borres todo lo que tenga NA.</li><li>Un NA nuevo tras convertir es un texto que no se pudo leer: inspecciónalo.</li><li>No reemplaces faltantes por 0.</li><li>Compara medidas por caso (media, mediana) con su n; no sumas.</li><li>El EDA describe asociaciones, no causas.</li></ol>
+</div>
+</div>
+</section>
+
+<section id="fuentes">
+  <h2>Fuentes</h2>
+  <ul>
+    <li>Presentación 06 · Transformación de datos (nycflights13, verbos de dplyr).</li>
+    <li>Presentación 07 · Análisis exploratorio de datos (diamonds).</li>
+    <li>Presentación 08 · Variables categóricas (factores, gss_cat).</li>
+    <li>Clase de fechas (lubridate sobre flights) y guía «EDA y fechas en pedidos comerciales».</li>
+    <li>Guía «EDA y factores: Conecta SV».</li>
+
+    <li><strong>[R4DS]</strong> Wickham, H., Çetinkaya-Rundel, M. y Grolemund, G. (2023). <em>R for Data Science</em>, 2.ª ed. <a href="https://r4ds.hadley.nz/" target="_blank" rel="noopener">r4ds.hadley.nz</a>.</li>
+    <li>Los datos de <code>creditos_crece_practica.csv</code> son simulados para este repaso; no son los del control.</li>
+    <li>La práctica y el simulacro usan <a href="https://docs.r-wasm.org/webr/latest/" target="_blank" rel="noopener">webR</a> (R compilado a WebAssembly, cargado desde webr.r-wasm.org): es la parte de la guía que necesita internet.</li>
+  </ul>
+  <nav class="nav-semanas" aria-label="Navegación">
+    <a class="nav-prev" href="../parcial-01/index.html"><span class="btn-ico" aria-hidden="true"></span><span>Parcial I: repaso animado</span></a>
+    <a class="nav-next" href="../index.html"><span>Inicio y temario</span><span class="btn-ico" aria-hidden="true"></span></a>
+  </nav>
+</section>
+<footer class="pie">Guía de estudio · Fundamentos de Programación para Economía y Negocios · ESEN · Ciclo III/2026 · Catedrático: Alvin Javier Portillo Tiliano. Material de apoyo no oficial: no sustituye la lectura ni la clase; ante cualquier diferencia, mandan el programa del curso y Moodle.</footer>
+</div>
+</div>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-r.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+<script src="../assets/guia.js"></script>
+<script src="../assets/ejecutar-r.js"></script>
+</body>
+</html>

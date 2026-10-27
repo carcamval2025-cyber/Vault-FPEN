@@ -18,4 +18,11 @@ c1 <- read_csv("datos/ventas_campus.csv", show_col_types = FALSE) |> group_by(pu
 out$c1 <- list(etq = c1$punto, val = c1$utilidad, ingreso = c1$ingreso, costo = c1$costo)
 p1 <- read_csv("datos/pedidos_comercio.csv", show_col_types = FALSE) |> count(canal)
 out$s6 <- list(etq = p1$canal, val = p1$n)
+cr <- read_csv("datos/creditos_crece_practica.csv", show_col_types = FALSE) |> distinct() |>
+  mutate(sucursal = case_when(sucursal %in% c("san salvador", "S. Salvador") ~ "San Salvador",
+                              sucursal == "SantaAna" ~ "Santa Ana", sucursal == "San miguel" ~ "San Miguel", TRUE ~ sucursal),
+         dias = as.numeric(lubridate::dmy(fecha_desembolso, quiet = TRUE) - lubridate::dmy(fecha_solicitud, quiet = TRUE))) |>
+  filter(estado == "Desembolsado", !is.na(dias), dias >= 0) |>
+  group_by(sucursal) |> summarise(n = n(), mediana = median(dias)) |> arrange(mediana)
+out$c2 <- list(etq = cr$sucursal, val = cr$mediana, n = cr$n)
 write_json(out, "../herramientas/portadas.json", auto_unbox = FALSE, na = "null", digits = NA)

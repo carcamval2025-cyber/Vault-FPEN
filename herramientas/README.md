@@ -12,7 +12,7 @@ Todos los comandos se ejecutan **desde la raíz del repositorio**.
 
 | Archivo | Para qué sirve |
 |---|---|
-| `fuentes/*.html` | El contenido de cada página: solo las `<section id="…">`, en orden (`s1`…`s5`, `c1g`, `c1r`, `index`). `{RAIZ}` se reemplaza por la ruta a `docs/` |
+| `fuentes/*.html` | El contenido de cada página: solo las `<section id="…">`, en orden (`s1`…`s6`, `c1g`, `c1r`, `c2`, `index`). `{RAIZ}` se reemplaza por la ruta a `docs/` |
 | `paginas.py` | Los datos de cada página: título, portada (número, titular, entrada, pregunta orientadora, ficha) e índice. Los grupos del índice definen los tramos de color |
 | `gen.py` | Genera `docs/*/index.html`, `docs/assets/buscar.json` y las series de fondo (`docs/assets/img/serie-*.svg`) |
 | `portadas.R` → `portadas.json` | Calcula con R los datos de los gráficos de portada a partir de `docs/datos/` |

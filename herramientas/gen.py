@@ -43,6 +43,9 @@ def cinta(raiz, actual):
         if n == 3:  # el Control 01 va después de la semana 3, como en el temario
             cur = ' aria-current="page"' if actual == "c1" else ""
             items.append('<a class="tk" href="%scontrol-01/guia/index.html" data-tk="c1" data-total="%d" data-control="Control 01: lectura, repaso y simulacro"%s><b>C1</b><span class="tk-tit">Control 01</span><span class="tk-pct" data-estado="cero">■ 0 %%</span></a>' % (raiz, _total("c1g", "c1r"), cur))
+        if n == 8:  # el Control 02 cubre lo visto desde la semana 6
+            cur = ' aria-current="page"' if actual == "c2" else ""
+            items.append('<a class="tk" href="%scontrol-02/index.html" data-tk="c2" data-total="%d" data-control="Control 02: repaso y simulacro"%s><b>C2</b><span class="tk-tit">Control 02</span><span class="tk-pct" data-estado="cero">■ 0 %%</span></a>' % (raiz, _total("c2"), cur))
     return "\n        ".join(items)
 
 
@@ -70,7 +73,7 @@ def indice(p):
 
 def barra(raiz, p):
     sem = p.get("semana")
-    nro = ('<span class="nro" aria-hidden="true">%s</span>' % ("C1" if sem == "c1" else sem[1:].zfill(2))) if sem else ""
+    nro = ('<span class="nro" aria-hidden="true">%s</span>' % (sem.upper() if sem.startswith("c") else sem[1:].zfill(2))) if sem else ""
     return ('<a class="saltar" href="#contenido">Saltar al contenido</a>\n'
             '<header class="barra">\n'
             '  <div class="barra-fila">\n'
@@ -199,7 +202,7 @@ def pagina(p):
 
 
 def series():
-    for clave in ["s1", "s2", "s3", "s4", "s5", "s6", "c1"]:
+    for clave in ["s1", "s2", "s3", "s4", "s5", "s6", "c1", "c2"]:
         _, serie = grafico(clave)
         open(os.path.join(DOCS, "assets/img/serie-%s.svg" % clave), "w", encoding="utf-8").write(serie_svg(serie))
     _, serie = grafico("s2")
@@ -210,7 +213,7 @@ def buscador():
     """assets/buscar.json: semanas, secciones, ejercicios y funciones de R (cada función, en la semana que la enseña)."""
     from bs4 import BeautifulSoup
     entradas, vistas = [], set()
-    orden = ["s1", "s2", "s3", "c1g", "c1r", "s4", "s5", "s6"]
+    orden = ["s1", "s2", "s3", "c1g", "c1r", "s4", "s5", "s6", "c2"]
     NO_FUNC = {"geom_algo()", "f()"}
     for n in orden:
         p = PAGINAS[n]

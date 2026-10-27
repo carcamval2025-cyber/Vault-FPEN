@@ -610,6 +610,7 @@ body[data-semana="s3"] .tramo { --serie: url("img/serie-s3.svg"); }
 body[data-semana="s4"] .tramo { --serie: url("img/serie-s4.svg"); }
 body[data-semana="s5"] .tramo { --serie: url("img/serie-s5.svg"); }
 body[data-semana="c1"] .tramo { --serie: url("img/serie-c1.svg"); }
+body[data-semana="c2"] .tramo { --serie: url("img/serie-c2.svg"); }
 .tramo-in { max-width: 940px; margin: 0 auto; padding: 0 16px; }
 .tramo-cab { margin: 0 0 clamp(1.5rem, 4vw, 2.5rem); font-family: var(--titular); }
 .tramo-cab .tramo-n { display: flex; align-items: center; gap: .6rem; margin: 0; font-size: .95rem; font-weight: 800; color: var(--ink-2); }

@@ -125,6 +125,24 @@ PAGINAS["c1r"] = dict(
          "Cierre", ("cheat", "Cheat sheet"), ("fuentes", "Fuentes")],
 )
 
+PAGINAS["c2"] = dict(
+    ruta="control-02/index.html", fragmento="c2.html", raiz="../", semana="c2",
+    title="Control 02 · Repaso y simulacro",
+    description="Repaso del Control 02 de FPEN: dplyr, análisis exploratorio, factores con forcats y fechas con lubridate. 39 preguntas, 18 ejercicios con R en vivo sobre una microfinanciera simulada, simulacro de 60 minutos y cheat sheet.",
+    num="C2", sr="Control 02", mod="Desde la semana 6 · Repaso integrador y simulacro",
+    h1="Del registro desordenado a una conclusión que se sostiene",
+    lead="Transformar con <code>dplyr</code>, explorar distribuciones, ordenar categorías con factores y trabajar con fechas: todo sobre 649 registros de microcréditos con duplicados, fechas imposibles y etiquetas inconsistentes, como en las guías de clase.",
+    pregunta="¿Qué filas necesita cada indicador, y cómo compruebo que mi resultado es correcto?",
+    meta=[("Clases", "Presentaciones 06, 07 y 08 · fechas"), ("Guías", "Conecta SV · pedidos comerciales"), ("!Evaluación", "Control 02 · Sin IA")],
+    ciclo=["importar", "ordenar", "transformar", "visualizar"],
+    toc_titulo="Control 02",
+    toc=["Empezar", ("uso", "Cómo usar el repaso"),
+         "Teoría", ("t-dplyr", "01 · Transformar con dplyr"), ("t-eda", "02 · Explorar (EDA)"), ("t-factores", "03 · Factores"),
+         ("t-fechas", "04 · Fechas"), ("t-poblaciones", "05 · Poblaciones y verificación"),
+         "Practicar", ("practica-r", "Práctica con R"), ("simulacro", "Simulacro (60 min)"),
+         "Cierre", ("cheat", "Cheat sheet"), ("fuentes", "Fuentes")],
+)
+
 PAGINAS["index"] = dict(
     ruta="index.html", fragmento="index.html", raiz="", portada=True, codigo=False, momentos=False, tramos=[2, 3, 4],
     toc_titulo="Inicio", toc=["La guía", ("recorrido", "Del código a una decisión"), ("temario", "Temario"),

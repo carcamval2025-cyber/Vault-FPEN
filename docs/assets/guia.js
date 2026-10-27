@@ -28,7 +28,7 @@
   }
 
   var estado = leer();
-  var semana = document.body.getAttribute("data-semana"); // "s1", "s2"..., "c1" (Control 01) o null en el índice
+  var semana = document.body.getAttribute("data-semana"); // "s1", "s2"..., "c1" o "c2" (controles) o null en el índice
   // clave del progreso: la semana, salvo en el Control 01, donde la guía (c1g) y el repaso (c1r) llevan cuentas separadas
   var claveProg = document.body.getAttribute("data-progreso") || semana;
 
@@ -447,7 +447,7 @@
       var pct = tk.querySelector(".tk-pct");
       pct.textContent = (a.pct > 0 ? "▲ " : "■ ") + a.pct + " %";
       pct.setAttribute("data-estado", a.pct > 0 ? "sube" : "cero");
-      var i = tk.getAttribute("data-tk") === "c1" ? -1 : Number(tk.getAttribute("data-tk").slice(1)) - 1;
+      var i = /^c/.test(tk.getAttribute("data-tk")) ? -1 : Number(tk.getAttribute("data-tk").slice(1)) - 1;
       var titulo = i >= 0 ? "Semana " + (i + 1) + ": " + TITULOS[i] : tk.getAttribute("data-control");
       tk.setAttribute("title", titulo + " · " + (a.total ? a.hechos + " de " + a.total + " actividades" : "sin empezar") + (a.quizTotal ? " · quiz " + a.quizOk + "/" + a.quizTotal : ""));
       tk.setAttribute("aria-label", titulo + ", avance " + a.pct + " por ciento");
@@ -776,7 +776,7 @@
       var total = a.total || Number(el.getAttribute("data-total") || 0);
       tHechos += a.hechos; tTotal += total; tQok += a.quizOk; tQtot += a.quizTotal;
       var aqui = el.getAttribute("aria-current") === "page";
-      var tit = clave === "c1" ? el.getAttribute("data-control") : TITULOS[Number(clave.slice(1)) - 1];
+      var tit = /^c/.test(clave) ? el.getAttribute("data-control") : TITULOS[Number(clave.slice(1)) - 1];
       filas += '<li' + (aqui ? ' class="aqui"' : "") + '><a href="' + el.getAttribute("href") + '"' + (aqui ? ' aria-current="page"' : "") + ">" +
         '<span class="n">' + numero + '</span><span class="t">' + tit + (aqui ? " <em>estás aquí</em>" : "") + "</span>" +
         '<span class="b" aria-hidden="true"><i style="width:' + a.pct + '%"></i></span>' +
